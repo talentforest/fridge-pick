@@ -1,6 +1,5 @@
 import FilterContainer from '@/components/common/container/FilterContainer';
 import CookingMenuCard from '@/components/common/CookingMenuCard';
-import FilterTag from '@/components/common/FilterTag';
 import Indicator from '@/components/common/Indicator';
 import SectionTitle from '@/components/common/SectionTitle';
 import Card from '@/components/common/ui/Card';
@@ -26,12 +25,9 @@ export default function RecommendedCookingMenu() {
             {filterList.length > 0 && (
               <View className="mb-1 flex-row flex-wrap gap-2">
                 {filterList.slice(0, 1).map((filter) => (
-                  <FilterTag
-                    key={filter}
-                    name={filterObj['cookingMenu'][filter].label}
-                    color={filterObj['cookingMenu'][filter].color}
-                    textClassName="text-sm"
-                  />
+                  <Text key={filter} className={`text-md text-red-400`}>
+                    {filterObj['cookingMenu'][filter].label}
+                  </Text>
                 ))}
               </View>
             )}

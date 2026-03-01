@@ -7,7 +7,7 @@ export const cookingMenuList: CookingMenu[] = [
   {
     name: '우삼겹파스타',
     time: 15,
-    filterList: ['expiredSoon', 'atLeast', 'verySimple'],
+    filterList: ['expiredSoon'],
     ingredientList: [
       meat.beef_short_slice,
       noodle.spaghetti,

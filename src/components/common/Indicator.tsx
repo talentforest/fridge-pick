@@ -19,7 +19,7 @@ export default function Indicator({ type, value }: TimeIndicatorProps) {
       {type === 'total' && (
         <>
           <Icon name="ChefHat" size={18} color="neutral" />
-          <Text className="text-gray-500">총 {value}개의 식재료</Text>
+          <Text className="text-gray-500">식재료 {value}개</Text>
         </>
       )}
     </View>
