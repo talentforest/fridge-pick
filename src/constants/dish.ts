@@ -1,16 +1,16 @@
-import { ingredientObj } from '@/constants/ingredients';
-import { CookingMenu } from '@/types/cookingMenu';
+import { ingredientObj } from '@/constants/ingredient';
+import { Dish } from '@/types/dish';
 
-const { noodle, vegetable, fruit, meat } = ingredientObj;
+const { noodle, vegetable, fruit, meat, dairy } = ingredientObj;
 
-export const cookingMenuList: CookingMenu[] = [
+export const dishList: Dish[] = [
   {
     name: '우삼겹파스타',
     time: 15,
     filterList: ['expiredSoon'],
     ingredientList: [
       meat.beef_short_slice,
-      noodle.spaghetti,
+      noodle.spaghetti_noodle,
       vegetable.onion,
       vegetable.asparagus,
       vegetable.carrot,
@@ -26,6 +26,7 @@ export const cookingMenuList: CookingMenu[] = [
     filterList: ['expiredSoon'],
     ingredientList: [
       noodle.tortilla,
+      dairy.shredded_cheese,
       vegetable.button_mushroom,
       vegetable.oyster_mushroom,
       vegetable.onion,

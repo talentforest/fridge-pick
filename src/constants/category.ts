@@ -1,8 +1,7 @@
-export type FoodCategory = keyof typeof foodCategory;
-export type FoodCategoryLabel =
-  (typeof foodCategory)[keyof typeof foodCategory]['label'];
+export type Category = keyof typeof category;
+export type CategoryLabel = (typeof category)[keyof typeof category]['label'];
 
-export const foodCategory = {
+export const category = {
   vegetable: {
     id: 'vegetable',
     label: '채소/버섯',

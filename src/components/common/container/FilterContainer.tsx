@@ -1,5 +1,5 @@
 import FilterTag from '@/components/common/FilterTag';
-import { CookingMenuFilterKey, FilterValue } from '@/types/filter';
+import { DishFilterKey, FilterValue } from '@/types/filter';
 
 import { ReactNode, useState } from 'react';
 import { View } from 'react-native';
@@ -15,7 +15,7 @@ export default function FilterContainer<T extends { filterList: string[] }>({
   dataList,
   children,
 }: FilterContainerProps<T>) {
-  const [activeFilter, setActiveFilter] = useState<CookingMenuFilterKey>('all');
+  const [activeFilter, setActiveFilter] = useState<DishFilterKey>('all');
 
   const filteredDataList =
     activeFilter === 'all'

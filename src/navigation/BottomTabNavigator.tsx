@@ -1,4 +1,4 @@
-import CookingScreen from '@/screens/CookingScreen';
+import DishScreen from '@/screens/DishScreen';
 import HomeScreen from '@/screens/HomeScreen';
 import ManagingFoodScreen from '@/screens/ManagingFoodScreen';
 import ShoppingListScreen from '@/screens/ShoppingListScreen';
@@ -60,7 +60,7 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name="요리"
-        component={CookingScreen}
+        component={DishScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => <CookingPot size={20} color={color} />,

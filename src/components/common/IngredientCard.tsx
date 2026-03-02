@@ -13,7 +13,7 @@ interface FoodCardProps {
 export default function IngredientCard({
   itemWidth,
   isCurrIndex,
-  ingredient: { label, category, name, expirationDate },
+  ingredient: { label, categories, id, expirationDays },
 }: FoodCardProps) {
   const { width } = Dimensions.get('window');
 
@@ -25,20 +25,23 @@ export default function IngredientCard({
         width: CARD_WIDTH,
         transform: !isCurrIndex ? [{ scale: 0.9 }] : [],
       }}
-      className={`h-40 items-center justify-between rounded-2xl bg-card ${isCurrIndex ? 'bg-indigo-700 border-indigo-300 border' : 'opacity-80'}`}
+      className={`h-40 items-center justify-between rounded-2xl bg-card ${isCurrIndex ? 'border border-indigo-300 bg-indigo-700' : 'opacity-80'}`}
     >
-      <Image
-        source={ingredientImagesObj[category][name]}
-        style={{ width: 50, height: 50 }}
-        className="mb-auto aspect-square"
-      />
+      {categories.map((category) => (
+        <Image
+          key={category}
+          source={ingredientImagesObj[category][id]}
+          style={{ width: 50, height: 50 }}
+          className="mb-auto aspect-square"
+        />
+      ))}
 
       <View className="items-center gap-y-2">
-        <Text className={`${isCurrIndex ? 'text-white font-extrabold' : ''}`}>
+        <Text className={`${isCurrIndex ? 'font-extrabold text-white' : ''}`}>
           {label}
         </Text>
         <Text className={`text-base ${isCurrIndex ? 'text-white' : ''}`}>
-          +{expirationDate}일
+          +{expirationDays}일
         </Text>
       </View>
     </Card>

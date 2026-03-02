@@ -2,22 +2,22 @@ import Indicator from '@/components/common/Indicator';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import { ingredientImagesObj } from '@/constants';
-import { CookingMenu } from '@/types/cookingMenu';
+import { Dish } from '@/types/dish';
 import { Image, View } from 'react-native';
 
-interface CookingCardProps {
-  cookingMenu: CookingMenu;
+interface DishCardProps {
+  dish: Dish;
   className?: string;
 }
 
-export default function CookingMenuCard({
-  cookingMenu: { ingredientList, name, filterList, time },
+export default function DishCard({
+  dish: { ingredientList, name, filterList, time },
   className = '',
-}: CookingCardProps) {
+}: DishCardProps) {
   return (
-    <Card className={`${className} bg-white items-start p-5`}>
+    <Card className={`${className} items-start bg-white p-5`}>
       <View className="mb-1 w-full justify-between gap-4">
-        <Text className="line-clamp-2 text-lg font-extrabold">{name}</Text>
+        <Text className="line-clamp-2 font-extrabold text-lg">{name}</Text>
         <View className="flex-row gap-x-3">
           <Indicator type="time" value={time} />
           <Indicator type="total" value={ingredientList.length} />
@@ -26,17 +26,20 @@ export default function CookingMenuCard({
 
       {ingredientList.length > 0 && (
         <View className="flex-row flex-wrap gap-y-2">
-          {ingredientList.slice(0, 8).map(({ category, label, name }) => (
+          {ingredientList.slice(0, 8).map(({ categories, label, id }) => (
             <View
               key={label}
               className="h-20 items-center justify-between px-1.5"
             >
-              <Image
-                source={ingredientImagesObj[category][name]}
-                style={{ width: 60, height: 60 }}
-                className="aspect-square flex-1 "
-              />
-              <Text className={`text-md mt-0.5 text-center`}>{label}</Text>
+              {categories.map((category) => (
+                <Image
+                  key={category}
+                  source={ingredientImagesObj[category][id]}
+                  style={{ width: 60, height: 60 }}
+                  className="aspect-square flex-1 "
+                />
+              ))}
+              <Text className={`mt-0.5 text-center text-md`}>{label}</Text>
             </View>
           ))}
 
