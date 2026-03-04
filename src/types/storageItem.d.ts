@@ -1,6 +1,7 @@
+import { storageObj } from '@/constants/storage';
 import { StockUnit } from '@/types/ingredient';
 
-export type StorageType = 'freezer' | 'fridge' | 'pantry';
+export type StorageType = keyof typeof storageObj;
 
 export type StorageItem = {
   id: string; // firestore auto id
@@ -41,7 +42,7 @@ export type ConsumptionLog = {
 
   consumedAt: string; // YYYY-MM-DD
 
-  sourceInventoryId?: string;
+  sourceStorageId?: string;
 
   createdAt: Timestamp;
 };

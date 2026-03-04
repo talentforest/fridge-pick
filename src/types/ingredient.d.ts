@@ -1,9 +1,10 @@
 import { Category, ingredientObj } from '@/constants';
+import { StorageType } from '@/types/storageItem';
 import { StockUnit, VolumeUnit, WeightUnit } from '@/types/unit';
 
 export type Ingredient = {
   /** Firestore doc id (slug) */
-  id: string;
+  id: IngredientKey;
 
   /** 표시 이름 */
   label: string;
@@ -38,8 +39,12 @@ export type Ingredient = {
 export type IngredientKey =
   | NoodleIngredientKey
   | VegetableIngredientKey
-  | FruitIngredientKey;
+  | FruitIngredientKey
+  | MeatIngredientKey
+  | DiaryIngredientKey;
 
 export type NoodleIngredientKey = keyof (typeof ingredientObj)['noodle'];
 export type VegetableIngredientKey = keyof (typeof ingredientObj)['vegetable'];
 export type FruitIngredientKey = keyof (typeof ingredientObj)['fruit'];
+export type MeatIngredientKey = keyof (typeof ingredientObj)['meat'];
+export type DiaryIngredientKey = keyof (typeof ingredientObj)['dairy'];

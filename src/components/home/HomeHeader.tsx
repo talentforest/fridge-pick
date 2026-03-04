@@ -4,9 +4,9 @@ import { View } from 'react-native';
 
 export default function HomeHeader() {
   return (
-    <View className="mx-2 mb-6 mt-2 flex-row items-center justify-between">
-      <Text className="text-indigo-500 !text-xl font-extrabold">
-        프리지PICK
+    <View className="mx-2 mb-6 flex-row items-center justify-between">
+      <Text className="font-extrabold !text-2xl italic !text-indigo-500">
+        프리지픽
       </Text>
       <View className="flex-row gap-4">
         <PressableIcon icon="Bell" />

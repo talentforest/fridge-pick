@@ -5,8 +5,8 @@ import ShoppingListScreen from '@/screens/ShoppingListScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   CookingPot,
+  Grid2X2Plus,
   House,
-  Refrigerator,
   ShoppingBasket,
 } from 'lucide-react-native';
 import { Appearance } from 'react-native';
@@ -15,9 +15,13 @@ const Tab = createBottomTabNavigator();
 
 const tabList = {
   홈: (color: string) => <House size={20} color={color} />,
-  식재료관리: (color: string) => <Refrigerator size={20} color={color} />,
-  장보기목록: (color: string) => <ShoppingBasket size={20} color={color} />,
-  요리: (color: string) => <CookingPot size={20} color={color} />,
+  식재료관리: (color: string) => <Grid2X2Plus size={20} color={color} />,
+  장보기목록: (color: string) => (
+    <ShoppingBasket size={20} color={color} strokeWidth={1.8} />
+  ),
+  요리: (color: string) => (
+    <CookingPot size={20} color={color} strokeWidth={1.8} />
+  ),
 };
 
 export default function BottomTabNavigator() {
@@ -45,7 +49,7 @@ export default function BottomTabNavigator() {
         component={ManagingFoodScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => <Refrigerator size={20} color={color} />,
+          tabBarIcon: ({ color }) => tabList['식재료관리'](color),
           tabBarActiveTintColor: '#111',
         }}
       />
@@ -54,7 +58,7 @@ export default function BottomTabNavigator() {
         component={ShoppingListScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => <ShoppingBasket size={20} color={color} />,
+          tabBarIcon: ({ color }) => tabList['장보기목록'](color),
           tabBarActiveTintColor: '#111',
         }}
       />
@@ -63,7 +67,7 @@ export default function BottomTabNavigator() {
         component={DishScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => <CookingPot size={20} color={color} />,
+          tabBarIcon: ({ color }) => tabList['요리'](color),
           tabBarActiveTintColor: '#111',
         }}
       />

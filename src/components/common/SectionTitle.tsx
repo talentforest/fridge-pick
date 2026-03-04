@@ -10,10 +10,6 @@ export default function SectionTitle({
   className = '',
 }: SectionTitleProps) {
   return (
-    <Text
-      className={`text-indigo-800 py-4 pl-2 text-xl font-extrabold ${className}`}
-    >
-      {title}
-    </Text>
+    <Text className={`pl-2 font-extrabold text-xl ${className}`}>{title}</Text>
   );
 }

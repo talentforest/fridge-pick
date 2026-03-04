@@ -1,15 +1,21 @@
 import { colorTokens } from '@/constants';
 import {
+  ArrowUp,
   Bell,
   ChefHat,
   Clock,
+  Grid2X2Plus,
   HandPlatter,
   LeafyGreen,
   LucideIcon,
   LucideProps,
   Menu,
+  PlusSquare,
   Refrigerator,
   ShoppingBag,
+  Square,
+  SquareCheckBig,
+  Trash2,
 } from 'lucide-react-native';
 import { useColorScheme } from 'react-native';
 
@@ -21,11 +27,19 @@ export type IconName =
   | 'LeafyGreen'
   | 'ShoppingBag'
   | 'ChefHat'
-  | 'Refrigerator';
+  | 'Refrigerator'
+  | 'SquareCheckBig'
+  | 'Square'
+  | 'Trash2'
+  | 'PlusSquare'
+  | 'ArrowUp'
+  | 'Grid2X2Plus';
+
+export type IconColor = 'yellow' | 'neutral' | 'red' | 'blue' | 'gray';
 
 interface IconProps {
   name: IconName;
-  color?: 'yellow' | 'neutral' | 'red' | 'blue';
+  color?: IconColor;
 }
 
 export default function Icon({
@@ -42,6 +56,7 @@ export default function Icon({
     neutral: scheme.neutral[800],
     red: scheme.red[500],
     blue: scheme.blue[500],
+    gray: scheme.inactive,
   };
 
   const iconObj: { [key in IconName]: LucideIcon } = {
@@ -53,6 +68,12 @@ export default function Icon({
     ChefHat,
     ShoppingBag,
     Refrigerator,
+    ArrowUp,
+    SquareCheckBig,
+    Square,
+    Trash2,
+    PlusSquare,
+    Grid2X2Plus,
   };
 
   const Component = iconObj[name];

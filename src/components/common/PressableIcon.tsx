@@ -1,17 +1,27 @@
-import Icon from '@/components/common/ui/Icon';
+import Icon, { IconColor, IconName } from '@/components/common/ui/Icon';
+import Text from '@/components/common/ui/Text';
 import { Pressable, PressableProps } from 'react-native';
 
 interface PressableIconProps {
-  icon: 'Bell' | 'Menu';
+  icon: IconName;
+  iconSize?: number;
+  text?: string;
+  iconColor?: IconColor;
+  textClassName?: string;
 }
 
 export default function PressableIcon({
   icon,
+  iconSize = 22,
+  iconColor,
+  text,
+  textClassName = '',
   ...props
 }: PressableIconProps & PressableProps) {
   return (
     <Pressable {...props}>
-      <Icon name={icon} />
+      <Icon name={icon} size={iconSize} color={iconColor} />
+      {text ? <Text className={textClassName}>{text}</Text> : <></>}
     </Pressable>
   );
 }

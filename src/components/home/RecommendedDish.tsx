@@ -9,7 +9,7 @@ import { ScrollView, View } from 'react-native';
 
 export default function RecommendedDish() {
   return (
-    <View>
+    <View className="gap-y-3">
       <SectionTitle title="메뉴 추천 리스트" />
 
       <ScrollView

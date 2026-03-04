@@ -6,6 +6,7 @@ export const colorTokens = {
     card: '#F0F0F0',
     text: '#333333',
     border: '#E9E9E9',
+    inactive: '#8A8A8A',
 
     neutral: {
       900: '#151515',
@@ -37,6 +38,7 @@ export const colorTokens = {
     card: '#252525',
     text: '#FFFFFF',
     border: '#555555',
+    inactive: '#666',
 
     neutral: {
       900: '#151515',
@@ -69,6 +71,7 @@ export const lightTheme = vars({
   '--color-card': colorTokens.light.card,
   '--color-text': colorTokens.light.text,
   '--color-border': colorTokens.light.border,
+  '--color-inactive': colorTokens.light.inactive,
 
   '--color-neutral-900': colorTokens.light.neutral[900],
   '--color-neutral-800': colorTokens.light.neutral[800],
@@ -92,6 +95,7 @@ export const darkTheme = vars({
   '--color-card': colorTokens.dark.card,
   '--color-text': colorTokens.dark.text,
   '--color-border': colorTokens.dark.border,
+  '--color-inactive': colorTokens.dark.inactive,
 
   '--color-neutral-900': colorTokens.dark.neutral[900],
   '--color-neutral-800': colorTokens.dark.neutral[800],
