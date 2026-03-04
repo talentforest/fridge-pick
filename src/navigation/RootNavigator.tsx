@@ -1,6 +1,6 @@
-import { theme } from '@/constants/colors';
 import BottomTabNavigator from '@/navigation/BottomTabNavigator';
 import DetailScreen from '@/screens/DetailScreen';
+import { theme } from '@/theme/color';
 import { RootStackParamList } from '@/types/RootStackParamList';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

@@ -27,30 +27,7 @@ module.exports = {
         card: 'var(--color-card)',
         text: 'var(--color-text)',
         border: 'var(--color-border)',
-
-        neutral: {
-          900: 'var(--color-neutral-900)',
-          800: 'var(--color-neutral-800)',
-          500: 'var(--color-neutral-500)',
-          200: 'var(--color-neutral-200)',
-          0: 'var(--color-neutral-0)',
-        },
-
-        blue: {
-          500: 'var(--color-blue-500)',
-          200: 'var(--color-blue-200)',
-        },
-
-        red: {
-          800: 'var(--color-red-500)',
-          400: 'var(--color-red-200)',
-        },
-
-        yellow: {
-          900: 'var(--color-yellow-900)',
-          400: 'var(--color-yellow-400)',
-          100: 'var(--color-yellow-100)',
-        },
+        inactive: 'var(--color-inactive)',
       },
 
       letterSpacing: {

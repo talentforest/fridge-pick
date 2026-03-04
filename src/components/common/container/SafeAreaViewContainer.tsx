@@ -11,7 +11,7 @@ export default function SafeAreaViewContainer({
   className,
 }: SafeAreaViewContainerProps) {
   return (
-    <SafeAreaView edges={['top']} className={`flex-1 ${className}`}>
+    <SafeAreaView edges={['top']} className={`flex-1 pt-2 ${className}`}>
       {children}
     </SafeAreaView>
   );

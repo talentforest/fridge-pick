@@ -3,12 +3,12 @@ import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import { View } from 'react-native';
 
-export default function TodayCookingMenu() {
+export default function TodayDish() {
   return (
-    <Card className="round bg-yellow-300 justify-between gap-y-5 !p-6">
+    <Card className="round justify-between gap-y-5 bg-yellow-300 !p-6">
       <View className="flex-row items-center gap-x-1">
         <Icon name="HandPlatter" color="yellow" />
-        <Text className="text-base font-extrabold text-yellow-900">
+        <Text className="font-extrabold text-base text-yellow-900">
           오늘의 선택 메뉴
         </Text>
       </View>

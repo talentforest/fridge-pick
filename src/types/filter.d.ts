@@ -4,10 +4,9 @@ export type FilterColor = 'green' | 'red' | 'blue' | 'yellow';
 
 export type Filters = typeof filterObj;
 
-export type CookingMenuFilterKey = keyof Filters['cookingMenu'];
-export type CookingMenuFilterLabel =
-  Filters[keyof Filters][CookingMenuFilterKey]['label'];
+export type DishFilterKey = keyof Filters['dish'];
+export type DishFilterLabel = Filters[keyof Filters][DishFilterKey]['label'];
 
-export type FilterValue = Filters[keyof Filters][CookingMenuFilterKey];
+export type FilterValue = Filters[keyof Filters][DishFilterKey];
 
-export type Filter = { name: CookingMenuFilter; color: FilterColor };
+export type Filter = { name: DishFilterKey; color: FilterColor };

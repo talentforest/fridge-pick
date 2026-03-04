@@ -20,19 +20,21 @@ export default function FilterTag({
 }: FilterProps) {
   const bgColor = {
     green: '!bg-green-100',
-    red: 'bg-red-100',
-    blue: 'bg-blue-100',
-    yellow: 'bg-yellow-100',
+    red: '!bg-red-100',
+    blue: '!bg-blue-100',
+    yellow: '!bg-yellow-100',
+    gray: '!bg-gray-100',
   };
 
-  const textColor = {
+  const textColorObj = {
     green: '!text-green-700',
     red: '!text-red-500',
     blue: '!text-blue-700',
     yellow: '!text-yellow-700',
+    gray: '!text-gray-600',
   };
 
-  const inActive = {
+  const inActiveObj = {
     bgColor: 'bg-gray-200',
     textColor: 'text-neutral-400',
   };
@@ -42,17 +44,17 @@ export default function FilterTag({
   return onPress ? (
     <Pressable
       onPress={onPress}
-      className={`${commonClassName} ${isActive ? bgColor[color as FilterColor] : inActive.bgColor}`}
+      className={`${commonClassName} ${isActive ? bgColor[color as FilterColor] : inActiveObj.bgColor}`}
     >
       <Text
-        className={`text-md ${isActive ? textColor[color] : inActive.textColor} ${textClassName}`}
+        className={`text-md ${isActive ? textColorObj[color] : inActiveObj.textColor} ${textClassName}`}
       >
         {name}
       </Text>
     </Pressable>
   ) : (
     <View className={`${commonClassName} ${bgColor[color as FilterColor]}`}>
-      <Text className={`${textColor[color]} ${textClassName}`}>{name}</Text>
+      <Text className={`${textColorObj[color]} ${textClassName}`}>{name}</Text>
     </View>
   );
 }

@@ -8,7 +8,7 @@ export default function ExpiringIngredients() {
   const expiredList = Object.values(ingredientObj['fruit']).slice(0, 8);
 
   return (
-    <View>
+    <View className="gap-y-3">
       <SectionTitle title="지금 써야할 재료" className="pl-6" />
       <CarouselContainer
         data={expiredList}

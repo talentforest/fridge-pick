@@ -44,3 +44,7 @@ yarn-error.*
 /android
 
 
+# ---
+src/constants/dish.ts
+src/constants/ingredient.ts
+

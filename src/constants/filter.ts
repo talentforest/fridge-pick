@@ -1,5 +1,5 @@
 export const filterObj = {
-  cookingMenu: {
+  dish: {
     all: {
       id: 1,
       name: 'all',
@@ -15,7 +15,7 @@ export const filterObj = {
     verySimple: {
       id: 3,
       name: 'verySimple',
-      label: '초간단 10분 완성',
+      label: '초간단 완성',
       color: 'yellow',
     },
     atLeast: {
