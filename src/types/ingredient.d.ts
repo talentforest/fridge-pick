@@ -1,5 +1,5 @@
-import { Category, ingredientObj } from '@/constants';
-import { StorageType } from '@/types/storageItem';
+import { CategoryKey, ingredientObj } from '@/constants';
+import { StorageTypeId } from '@/types/storage';
 import { StockUnit, VolumeUnit, WeightUnit } from '@/types/unit';
 
 export type Ingredient = {
@@ -12,13 +12,13 @@ export type Ingredient = {
   /** 활성 여부 (soft delete 용) */
   isActive: boolean; // 기본 true
 
-  /** UI 분류 (복수 허용) */
-  categories: readonly Category[];
+  /** UI 분류 */
+  category: CategoryKey;
 
   /** 기본 보관 위치 */
-  defaultStorage: readonly StorageType;
+  defaultStorage: readonly StorageTypeId;
 
-  /** 기본 유통기한 (일 단위) */
+  /** 소비기한 (일 단위) */
   expirationDays: number;
 
   /** 기본 표시 단위 */

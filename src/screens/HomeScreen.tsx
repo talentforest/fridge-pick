@@ -10,8 +10,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaViewContainer>
       <ScrollView
-        contentContainerClassName="gap-y-20 pb-32"
-        showsHorizontalScrollIndicator={false}
+        contentContainerClassName="gap-y-20 mt-4 pb-32"
         showsVerticalScrollIndicator={false}
       >
         <View className="px-6">
@@ -22,8 +21,10 @@ export default function HomeScreen() {
 
         <ExpiringIngredients />
 
-        <View className="gap-y-20 px-6">
-          <TodayDish />
+        <View className="gap-y-20">
+          <View className="px-6">
+            <TodayDish />
+          </View>
 
           <RecommendedDish />
         </View>

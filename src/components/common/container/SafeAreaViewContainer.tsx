@@ -1,17 +1,19 @@
 import { ReactNode } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 
 interface SafeAreaViewContainerProps {
   children: ReactNode;
   className?: string;
+  edges?: Edge[];
 }
 
 export default function SafeAreaViewContainer({
   children,
-  className,
+  className = '',
+  edges = ['top'],
 }: SafeAreaViewContainerProps) {
   return (
-    <SafeAreaView edges={['top']} className={`flex-1 pt-2 ${className}`}>
+    <SafeAreaView edges={edges} className={`flex-1 ${className}`}>
       {children}
     </SafeAreaView>
   );

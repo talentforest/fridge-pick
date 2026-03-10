@@ -1,5 +1,5 @@
-import { mockShoppingList } from '@/constants/shoppingList';
-import { ShoppingItem } from '@/types/shoppingItem';
+import { mockShoppingList } from '@/constants';
+import { ShoppingItem } from '@/types/shoppingList';
 import { allIngredients } from '@/utils';
 import { Timestamp } from 'firebase/firestore';
 import { atom } from 'jotai';

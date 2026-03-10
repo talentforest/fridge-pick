@@ -1,5 +1,5 @@
 import { ingredientObj } from '@/constants';
-import { Ingredient } from '@/types/ingredient';
+import { Ingredient, IngredientKey } from '@/types/ingredient';
 
 function normalize(text: string) {
   return text.replace(/\s/g, '').toLowerCase();
@@ -8,6 +8,10 @@ function normalize(text: string) {
 export const allIngredients: Ingredient[] = Object.values(
   ingredientObj,
 ).flatMap((category) => Object.values(category));
+
+export const findIngredient = (ingredientId: IngredientKey) => {
+  return allIngredients.find(({ id }) => id === ingredientId);
+};
 
 export function searchIngredient(keyword: string, max?: number): Ingredient[] {
   if (!keyword) return [];

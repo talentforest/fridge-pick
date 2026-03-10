@@ -28,6 +28,7 @@ export const colorTokens = {
 
     yellow: {
       900: '#625A30',
+      700: '#b45309',
       400: '#FFED95',
       100: '#FFEECF',
     },
@@ -60,6 +61,7 @@ export const colorTokens = {
 
     yellow: {
       900: '#625A30',
+      700: '#b45309',
       400: '#FFED95',
       100: '#FFEECF',
     },
@@ -86,6 +88,7 @@ export const lightTheme = vars({
   '--color-red-200': colorTokens.light.red[200],
 
   '--color-yellow-900': colorTokens.light.yellow[900],
+  '--color-yellow-700': colorTokens.light.yellow[700],
   '--color-yellow-400': colorTokens.light.yellow[400],
   '--color-yellow-100': colorTokens.light.yellow[100],
 });

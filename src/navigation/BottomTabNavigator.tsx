@@ -1,7 +1,7 @@
 import DishScreen from '@/screens/DishScreen';
 import HomeScreen from '@/screens/HomeScreen';
-import ManagingFoodScreen from '@/screens/ManagingFoodScreen';
 import ShoppingListScreen from '@/screens/ShoppingListScreen';
+import StorageScreen from '@/screens/StorageScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   CookingPot,
@@ -46,7 +46,7 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name="식재료관리"
-        component={ManagingFoodScreen}
+        component={StorageScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => tabList['식재료관리'](color),
@@ -54,7 +54,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="장보기목록"
+        name="ShoppingList"
         component={ShoppingListScreen}
         options={{
           headerShown: false,

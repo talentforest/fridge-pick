@@ -1,13 +1,10 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { useMemo, useRef, useState } from 'react';
-import { Dimensions, FlatList, Pressable, View } from 'react-native';
-
-const SPACING = 12;
+import { FlatList, Pressable, View } from 'react-native';
 
 type RenderItemWithIndex<T> = (args: {
   item: T;
-  index: number;
-  currentIndex: number;
+  isCurrIndex: boolean;
 }) => React.ReactElement;
 
 interface CarouselContainerProps<T> {
@@ -16,6 +13,10 @@ interface CarouselContainerProps<T> {
   initialIndex?: number;
   renderItem: RenderItemWithIndex<T>;
   keyExtractor: (item: T, index: number) => string;
+  hasNavigation?: boolean;
+  centerFocus?: boolean;
+  spacing?: number;
+  horizontalPadding?: number;
 }
 
 export default function CarouselContainer<T>({
@@ -24,29 +25,77 @@ export default function CarouselContainer<T>({
   initialIndex = data.length,
   renderItem,
   keyExtractor,
+  hasNavigation,
+  centerFocus,
+  spacing = 6,
+  horizontalPadding,
 }: CarouselContainerProps<T>) {
   const listRef = useRef<FlatList<T>>(null);
+
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [containerWidth, setContainerWidth] = useState(0);
 
-  const { width } = Dimensions.get('window');
-  const CARD_WIDTH = width * itemWidth;
-  const ITEM_SIZE = useMemo(() => CARD_WIDTH + SPACING, [CARD_WIDTH]);
+  /** 실제 carousel width 기준으로 카드 계산 */
+  const CARD_WIDTH = containerWidth * itemWidth;
+  const ITEM_SIZE = useMemo(() => CARD_WIDTH + spacing, [CARD_WIDTH, spacing]);
 
+  /** navigation 버튼 */
   const handleDirection = (direction: 'prev' | 'next') => {
-    const next = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
+    const nextIndex =
+      direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
 
     listRef.current?.scrollToOffset({
-      offset: ITEM_SIZE * next,
+      offset: ITEM_SIZE * nextIndex,
       animated: true,
     });
 
-    setCurrentIndex(next);
+    setCurrentIndex(nextIndex);
   };
 
-  const flatListData = [...data, ...data, ...data];
+  /** infinite scroll 유지 */
+  const handleScrollEnd = (offsetX: number) => {
+    const index = Math.round(offsetX / ITEM_SIZE);
+
+    const total = data.length;
+
+    if (index < total) {
+      const newIndex = index + total;
+
+      listRef.current?.scrollToOffset({
+        offset: ITEM_SIZE * newIndex,
+        animated: false,
+      });
+
+      setCurrentIndex(newIndex);
+      return;
+    }
+
+    if (index >= total * 2) {
+      const newIndex = index - total;
+
+      listRef.current?.scrollToOffset({
+        offset: ITEM_SIZE * newIndex,
+        animated: false,
+      });
+
+      setCurrentIndex(newIndex);
+      return;
+    }
+
+    setCurrentIndex(index);
+  };
+
+  const flatListData = useMemo(() => [...data, ...data, ...data], [data]);
+
+  /** container width 아직 없으면 렌더 안함 */
+  if (!containerWidth) {
+    return (
+      <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)} />
+    );
+  }
 
   return (
-    <View>
+    <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}>
       <FlatList
         ref={listRef}
         data={flatListData}
@@ -56,48 +105,44 @@ export default function CarouselContainer<T>({
         showsHorizontalScrollIndicator={false}
         nestedScrollEnabled
         initialScrollIndex={initialIndex}
-        ItemSeparatorComponent={() => <View style={{ width: SPACING }} />}
+        ItemSeparatorComponent={() => <View style={{ width: spacing }} />}
         contentContainerStyle={{
-          paddingHorizontal: (width - CARD_WIDTH) / 2,
+          paddingHorizontal: (containerWidth - CARD_WIDTH) / 2,
         }}
         getItemLayout={(_, index) => ({
           length: ITEM_SIZE,
           offset: ITEM_SIZE * index,
           index,
         })}
-        onMomentumScrollEnd={(e) => {
-          const offsetX = e.nativeEvent.contentOffset.x;
-          const index = Math.round(offsetX / ITEM_SIZE);
-
-          if (index < initialIndex) {
-            const newIndex = index + initialIndex;
-            listRef.current?.scrollToOffset({
-              offset: ITEM_SIZE * newIndex,
-              animated: false,
-            });
-            setCurrentIndex(newIndex);
-            return;
-          }
-
-          if (index >= initialIndex * 2) {
-            const newIndex = index - initialIndex;
-            listRef.current?.scrollToOffset({
-              offset: ITEM_SIZE * newIndex,
-              animated: false,
-            });
-            setCurrentIndex(newIndex);
-            return;
-          }
-          setCurrentIndex(index);
-        }}
-        renderItem={({ item, index }) =>
-          renderItem({ item, index, currentIndex })
+        onLayout={() => {}}
+        onMomentumScrollEnd={(e) =>
+          handleScrollEnd(e.nativeEvent.contentOffset.x)
         }
+        renderItem={({ item, index }) => {
+          const isCurrIndex =
+            index % data.length === currentIndex % data.length;
+
+          return (
+            <View
+              style={{
+                width: CARD_WIDTH,
+                transform: centerFocus && !isCurrIndex ? [{ scale: 0.92 }] : [],
+              }}
+              className="rounded-2xl"
+            >
+              {renderItem({ item, isCurrIndex })}
+            </View>
+          );
+        }}
         keyExtractor={keyExtractor}
       />
 
-      <HandleBtn direction="prev" onPress={() => handleDirection('prev')} />
-      <HandleBtn direction="next" onPress={() => handleDirection('next')} />
+      {hasNavigation && (
+        <>
+          <HandleBtn direction="prev" onPress={() => handleDirection('prev')} />
+          <HandleBtn direction="next" onPress={() => handleDirection('next')} />
+        </>
+      )}
     </View>
   );
 }
@@ -115,7 +160,7 @@ const HandleBtn = ({
   };
 
   const commonClassName =
-    'bg-white/80 absolute top-1/2 -translate-y-1/2 rounded-full p-2';
+    'bg-gray-200 absolute top-1/2 -translate-y-1/2 rounded-full p-3';
 
   return (
     <Pressable

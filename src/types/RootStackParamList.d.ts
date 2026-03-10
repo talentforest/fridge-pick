@@ -1,6 +1,9 @@
+import { StorageTypeId } from '@/types/storage';
+
 export type RootStackParamList = {
   OnBoarding: undefined;
   Main: undefined;
   Home: undefined;
-  Detail: { id: string };
+  StorageDetail: { id: StorageTypeId };
+  ShoppingList: undefined;
 };

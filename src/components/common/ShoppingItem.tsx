@@ -2,7 +2,7 @@ import { deleteItemsAtom, togglePurchasedAtom } from '@/atom/shoppingListAtom';
 import PressableIcon from '@/components/common/PressableIcon';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import { ShoppingItem as ShoppingItemType } from '@/types/shoppingItem';
+import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
 import { useSetAtom } from 'jotai';
 import { Pressable, View } from 'react-native';
 

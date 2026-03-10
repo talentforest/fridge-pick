@@ -14,8 +14,8 @@ import SectionTitle from '@/components/common/SectionTitle';
 import ShoppingItem from '@/components/common/ShoppingItem';
 import Text from '@/components/common/ui/Text';
 import TextInput from '@/components/common/ui/TextInput';
-import { image_empty_basket } from '@/constants/image';
-import { ShoppingItem as ShoppingItemType } from '@/types/shoppingItem';
+import { image_empty_basket } from '@/constants';
+import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
 import { searchIngredient } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
@@ -41,7 +41,7 @@ export default function ShoppingListScreen() {
 
   return (
     <SafeAreaViewContainer>
-      <View className="flex-1 justify-between gap-y-3 px-6 pb-4">
+      <View className="flex-1 justify-between gap-y-3 px-6 py-4">
         <SectionTitle title="장보기 목록" />
 
         <View className="flex-1 rounded-2xl bg-card px-4 pt-2">

@@ -1,6 +1,6 @@
 import BottomTabNavigator from '@/navigation/BottomTabNavigator';
-import DetailScreen from '@/screens/DetailScreen';
-import { theme } from '@/theme/color';
+import StorageDetailScreen from '@/screens/StorageDetailScreen';
+import { colorTokens, theme } from '@/theme/color';
 import { RootStackParamList } from '@/types/RootStackParamList';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -16,16 +16,16 @@ export default function RootNavigator() {
       <NavigationContainer
         theme={{
           ...DefaultTheme,
-          colors: { ...DefaultTheme.colors, background: 'transparent' },
+          colors: {
+            ...DefaultTheme.colors,
+            background: colorTokens[colorScheme].bg,
+          },
         }}
       >
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Main"
-            component={BottomTabNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="Detail" component={DetailScreen} />
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Main" component={BottomTabNavigator} />
+
+          <Stack.Screen name="StorageDetail" component={StorageDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

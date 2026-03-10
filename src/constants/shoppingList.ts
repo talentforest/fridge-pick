@@ -1,4 +1,4 @@
-import { ShoppingItem } from '@/types/shoppingItem';
+import { ShoppingItem } from '@/types/shoppingList';
 import { Timestamp } from 'firebase/firestore';
 import { nanoid } from 'nanoid/non-secure';
 
