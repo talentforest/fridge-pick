@@ -9,7 +9,8 @@ export const allIngredients: Ingredient[] = Object.values(
   ingredientObj,
 ).flatMap((category) => Object.values(category));
 
-export const findIngredient = (ingredientId: IngredientKey) => {
+export const findIngredient = (ingredientId?: IngredientKey) => {
+  if (!ingredientId) return undefined;
   return allIngredients.find(({ id }) => id === ingredientId);
 };
 

@@ -1,18 +1,26 @@
-import { Ingredient } from '@/types/ingredient';
-import { StorageItem } from '@/types/storage';
-import { addDays, parseISO } from 'date-fns';
+import { formatDateString } from '@/utils/formatDate';
+import { addDays, format } from 'date-fns';
 
+const DEFAULT_EXPIRATION_DAYS = 7;
+
+export function calculateExpiresAt(purchasedAt: Date, expirationDays: number) {
+  return formatDateString(addDays(purchasedAt, expirationDays), 'yyyy-MM-dd');
+}
+
+/** "오늘부터" 소비일수를 통해 소비기한 날짜를 구하는 함수  */
 export function getExpirationDate(
-  item: StorageItem & { ingredient: Ingredient },
-) {
-  if (item.expiresAt) return parseISO(item.expiresAt);
-  return addDays(parseISO(item.purchasedDate), item.ingredient.expirationDays);
+  expirationDays?: number,
+  formatStr?: 'yy.MM.dd',
+): Date | string {
+  const result = addDays(new Date(), expirationDays || DEFAULT_EXPIRATION_DAYS);
+
+  return formatStr ? format(result, formatStr) : result;
 }
 
 export function getRemainingDays(expirationDate: Date) {
   const today = new Date();
 
-  const diff = expirationDate.getTime() - today.getTime();
+  const diff = new Date(expirationDate).getTime() - today.getTime();
 
   const result = Math.ceil(diff / (1000 * 60 * 60 * 24));
 

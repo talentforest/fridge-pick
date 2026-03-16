@@ -1,4 +1,4 @@
-import { storageItemsAtom } from '@/atom/storageItemAtom';
+import { itemListByStorageAtom } from '@/atom/storageItemAtom';
 import { CategoryKey, categoryObj, storageObj } from '@/constants';
 import {
   EnrichStorageItem,
@@ -7,7 +7,7 @@ import {
   StorageSpace,
 } from '@/types/storage';
 import { findIngredient } from '@/utils';
-import { getExpirationDate, getRemainingDays } from '@/utils/getExpirationDate';
+import { getRemainingDays } from '@/utils/getExpirationDate';
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 
@@ -25,7 +25,7 @@ interface useStorageItemListProps {
  * 로 값 넣기
  */
 export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
-  const storageItemList = useAtomValue(storageItemsAtom(storage.type));
+  const storageItemList = useAtomValue(itemListByStorageAtom(storage.type));
 
   const { side } = storageObj[storage.type];
 
@@ -52,18 +52,19 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
     const itemList = hasSide ? currentSideItems : storageItemList;
 
     itemList.forEach((item) => {
-      const ingredient = findIngredient(item.ingredientId);
-      if (!ingredient) return;
+      const ingredient = item.ingredientId
+        ? findIngredient(item.ingredientId)
+        : undefined;
 
-      const category = ingredient.category;
+      const category: CategoryKey = ingredient?.category ?? 'noCategory';
 
       if (!grouped[category]) {
         grouped[category] = [];
       }
 
-      grouped[category]!.push({
+      grouped[category].push({
         ...item,
-        ingredient,
+        ...(ingredient ? { ingredient } : {}),
       });
     });
 
@@ -73,7 +74,7 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
         items: grouped[category.id] ?? [],
       }))
       .filter((group) => group.items.length > 0);
-  }, [currentSideItems]);
+  }, [currentSideItems, storageItemList, hasSide]);
 
   const sideList = useMemo(
     () => Object.values(side) as StorageSide[keyof StorageSide][],
@@ -89,8 +90,7 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
 
     return allStorageItemList
       .map((item) => {
-        const date = getExpirationDate(item);
-        const remainingDays = getRemainingDays(date);
+        const remainingDays = getRemainingDays(new Date(item.expiresAt));
 
         return { item, remainingDays };
       })

@@ -5,7 +5,7 @@ import TextInput from '@/components/common/ui/TextInput';
 import CautionIngredientList from '@/components/storage/CautionIngredientList';
 import Storage from '@/components/storage/Storage';
 import { storageObj } from '@/constants';
-import { useSheet } from '@/provider/SheetProvider';
+import { useOverlay } from '@/provider/OverlayProvider';
 import { RootStackParamList } from '@/types/RootStackParamList';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { ScrollView, View } from 'react-native';
@@ -19,13 +19,13 @@ export default function StorageDetailScreen() {
   const currStorage = storageObj[storageType];
   const { label } = currStorage;
 
-  const { closeSheet, isOpen } = useSheet();
+  const { closeSheet, isOpenOverlay } = useOverlay();
 
   return (
     <SafeAreaViewContainer edges={['top']}>
       <ScreenHeader
         title={label}
-        onLeftPress={isOpen ? closeSheet : undefined}
+        onLeftPress={isOpenOverlay ? closeSheet : undefined}
       />
 
       <ScrollView
@@ -46,7 +46,7 @@ export default function StorageDetailScreen() {
         {/* 나의 공간 */}
         <View className="gap-y-3 px-6">
           <SectionTitle
-            title={`나의 식재료`}
+            title="나의 식재료"
             className="!text-lg"
             icon="Refrigerator"
           />
@@ -56,11 +56,6 @@ export default function StorageDetailScreen() {
               className={`rounded-xl border border-border bg-white`}
               placeholder="찾으시는 식료품을 작성해주세요."
             />
-            {/* <View className="mb-1 flex-row gap-x-2">
-              <StorageItemInfo ingredient="apple_mango" type="favorite" />
-              <StorageItemInfo ingredient="asparagus" type="empty" />
-              <StorageItemInfo ingredient="almond" type="recently" />
-            </View> */}
           </View>
 
           <Storage storageType={storageType} />

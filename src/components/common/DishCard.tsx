@@ -1,9 +1,9 @@
 import Indicator from '@/components/common/Indicator';
+import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
-import { ingredientImagesObj } from '@/constants';
 import { Dish } from '@/types/dish';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 
 interface DishCardProps {
   dish: Dish;
@@ -28,24 +28,17 @@ export default function DishCard({
 
       {ingredientList.length > 0 && (
         <View className="flex-row flex-wrap gap-y-2.5">
-          {ingredientList
-            .slice(0, maxIngredientNum)
-            .map(({ category, label, id }) => (
-              <View
-                key={label}
-                className="items-center  justify-between px-1.5"
-              >
-                <Image
-                  source={ingredientImagesObj[category]![id]}
-                  style={{ width: 45, height: 45 }}
-                  className="aspect-square"
-                />
-
-                <Text className={`mt-0.5 text-center text-md text-stone-600`}>
-                  {label}
-                </Text>
-              </View>
-            ))}
+          {ingredientList.slice(0, maxIngredientNum).map((ingredient) => (
+            <View
+              key={ingredient.label}
+              className="items-center  justify-between px-1.5"
+            >
+              <IngredientImage ingredient={ingredient} size={45} />
+              <Text className={`mt-0.5 text-center text-md text-stone-600`}>
+                {ingredient.label}
+              </Text>
+            </View>
+          ))}
 
           {ingredientList.length > 8 && (
             <View className="mb-0.5 ml-auto justify-end">

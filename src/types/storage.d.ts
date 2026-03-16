@@ -1,6 +1,6 @@
 import { storageObj } from '@/constants';
 import { Ingredient, IngredientKey } from '@/types/ingredient';
-import { StockUnit } from '@/types/unit';
+import { Timestamp } from 'firebase/firestore';
 
 export type Storage = typeof storageObj;
 export type StorageTypeId = keyof Storage;
@@ -20,47 +20,38 @@ export type StorageSpace = {
   section?: StorageSectionId;
 };
 
-export type StorageItem = {
-  id: string; // firestore auto id
-
-  /** FK */
-  ingredientId: IngredientKey;
-
-  /** 사용자 커스텀 이름 */
-  customLabel?: string;
-
-  /** 항상 저장 (override 여부와 무관) */
-  unitLabel: StockUnit;
-
-  /** 구매 날짜 (YYYY-MM-DD) */
-  purchasedDate: string;
-
-  /** 실제 보관 위치 (항상 저장) */
-  storage: StorageSpace;
-
-  /** 실제 유통기한 날짜 Optional 없으면 기본 식재료 정보인 expirationDays 이용 */
-  expiresAt?: string;
-
-  memo?: string;
-
-  quantity?: number;
-
+export type DocMeta = {
+  /** 메타데이터 */
   createdAt: Timestamp;
   updatedAt: Timestamp;
 };
 
-export type ConsumptionLog = {
+/** 내가 실제 갖고 있는 식재료 정보
+ * ingredientId 속성으로 기본 식재료 정보를 찾아 사용
+ */
+type BaseStorageItem = {
   id: string;
-
-  ingredientId: string;
-
-  quantity: number;
-
-  consumedAt: string; // YYYY-MM-DD
-
-  sourceStorageId?: string;
-
-  createdAt: Timestamp;
+  storage: StorageSpace;
+  /** YYYY-MM-DD */
+  purchasedAt: string;
+  /** YYYY-MM-DD 형식 */
+  expiresAt: string;
+  /** Optional */
+  memo?: string;
 };
 
-export type EnrichStorageItem = StorageItem & { ingredient: Ingredient };
+type StorageItemWithIngredient = BaseStorageItem & {
+  ingredientId: IngredientKey;
+  customLabel?: string; // 이름은 커스텀했는데 ingredient 정보를 연결하는 경우.
+};
+
+type StorageItemCustom = BaseStorageItem & {
+  ingredientId?: never;
+  customLabel: string;
+};
+
+export type StorageItem = StorageItemWithIngredient | StorageItemCustom;
+
+export type EnrichStorageItem = StorageItem & { ingredient?: Ingredient };
+
+// TODO: ComsumptionLog 작성하기

@@ -1,5 +1,6 @@
 import RootNavigator from '@/navigation/RootNavigator';
-import { SheetProvider } from '@/provider/SheetProvider';
+import { OverlayProvider } from '@/provider/OverlayProvider';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -18,10 +19,12 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <SheetProvider>
-          <RootNavigator />
-          <StatusBar style="auto" />
-        </SheetProvider>
+        <BottomSheetModalProvider>
+          <OverlayProvider>
+            <RootNavigator />
+            <StatusBar style="auto" />
+          </OverlayProvider>
+        </BottomSheetModalProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

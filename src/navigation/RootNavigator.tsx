@@ -1,4 +1,5 @@
 import BottomTabNavigator from '@/navigation/BottomTabNavigator';
+import ShoppingListDetailScreen from '@/screens/shoppingList/ShoppingListDetailScreen';
 import StorageDetailScreen from '@/screens/StorageDetailScreen';
 import { colorTokens, theme } from '@/theme/color';
 import { RootStackParamList } from '@/types/RootStackParamList';
@@ -26,6 +27,10 @@ export default function RootNavigator() {
           <Stack.Screen name="Main" component={BottomTabNavigator} />
 
           <Stack.Screen name="StorageDetail" component={StorageDetailScreen} />
+          <Stack.Screen
+            name="ShoppingListDetail"
+            component={ShoppingListDetailScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

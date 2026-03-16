@@ -3,7 +3,7 @@ import Text from '@/components/common/ui/Text';
 import CautionStorageItem from '@/components/storage/CautionStorageItem';
 import StorageItemSheet from '@/components/storage/StorageItemSheet';
 import { useStorageItemList } from '@/hooks';
-import { useSheet } from '@/provider/SheetProvider';
+import { useOverlay } from '@/provider/OverlayProvider';
 import { StorageTypeId } from '@/types/storage';
 import { Pressable, View } from 'react-native';
 
@@ -16,7 +16,7 @@ export default function CautionIngredientList({ storageType }: StorageProps) {
     storage: { type: storageType },
   });
 
-  const { openSheet } = useSheet();
+  const { openSheet } = useOverlay();
 
   return (
     <View className="px-6">
@@ -27,7 +27,9 @@ export default function CautionIngredientList({ storageType }: StorageProps) {
               <Pressable
                 key={item.id}
                 onPress={() =>
-                  openSheet(() => <StorageItemSheet storageItem={item} />)
+                  openSheet({
+                    element: <StorageItemSheet storageItem={item} />,
+                  })
                 }
               >
                 <CautionStorageItem item={item} index={index} />

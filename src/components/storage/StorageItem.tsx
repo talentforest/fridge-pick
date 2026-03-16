@@ -1,16 +1,15 @@
+import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import Text from '@/components/common/ui/Text';
-import { expirationStatusObj, ingredientImagesObj } from '@/constants';
-import { Ingredient } from '@/types/ingredient';
-import { StorageItem as StorageItemType } from '@/types/storage';
+import { expirationStatusObj } from '@/constants';
+import { EnrichStorageItem } from '@/types/storage';
 import {
-  getExpirationDate,
   getExpirationStatus,
   getRemainingDays,
 } from '@/utils/getExpirationDate';
-import { Dimensions, Image, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 
 interface StorageItemProps {
-  item: StorageItemType & { ingredient: Ingredient };
+  item: EnrichStorageItem;
   className?: string;
 }
 
@@ -18,11 +17,9 @@ export default function StorageItem({
   item,
   className = '',
 }: StorageItemProps) {
-  const { customLabel, ingredient, ingredientId } = item;
+  const { customLabel, ingredient } = item;
 
-  const expirationDate = getExpirationDate(item);
-
-  const remainingDays = getRemainingDays(expirationDate);
+  const remainingDays = getRemainingDays(new Date(item.expiresAt));
 
   const status = getExpirationStatus(remainingDays);
 
@@ -35,10 +32,7 @@ export default function StorageItem({
       style={{ width: itemWidth }}
       className={`items-center gap-y-1 bg-white pb-1 ${className}`}
     >
-      <Image
-        source={ingredientImagesObj[ingredient.category][ingredientId]}
-        className="mb-auto aspect-square size-14"
-      />
+      <IngredientImage ingredient={ingredient} size={55} />
 
       <View className="flex-row items-center gap-x-0.5">
         {status !== 'unknown' && status !== 'safe' && (
@@ -47,7 +41,7 @@ export default function StorageItem({
           />
         )}
         <Text className="line-clamp-1 text-center text-md text-gray-800">
-          {customLabel ?? ingredient.label}
+          {customLabel ?? ingredient?.label}
         </Text>
       </View>
     </View>

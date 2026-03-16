@@ -1,5 +1,5 @@
 import { shoppingListAtom } from '@/atom/shoppingListAtom';
-import { storageItemsAtom } from '@/atom/storageItemAtom';
+import { itemListByStorageAtom } from '@/atom/storageItemAtom';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import { image_fridge } from '@/constants';
@@ -14,9 +14,9 @@ type StorageDetailNavProp = NativeStackNavigationProp<RootStackParamList>;
 export default function SpaceGrid() {
   const navigation = useNavigation<StorageDetailNavProp>();
 
-  const freezerItemList = useAtomValue(storageItemsAtom('freezer'));
-  const fridgeItemList = useAtomValue(storageItemsAtom('fridge'));
-  const pantryItemList = useAtomValue(storageItemsAtom('pantry'));
+  const freezerItemList = useAtomValue(itemListByStorageAtom('freezer'));
+  const fridgeItemList = useAtomValue(itemListByStorageAtom('fridge'));
+  const pantryItemList = useAtomValue(itemListByStorageAtom('pantry'));
   const shoppingList = useAtomValue(shoppingListAtom);
 
   const storageList = {

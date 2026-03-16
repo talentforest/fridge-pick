@@ -1,6 +1,6 @@
 import DishScreen from '@/screens/DishScreen';
 import HomeScreen from '@/screens/HomeScreen';
-import ShoppingListScreen from '@/screens/ShoppingListScreen';
+import ShoppingListScreen from '@/screens/shoppingList/ShoppingListScreen';
 import StorageScreen from '@/screens/StorageScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
@@ -57,6 +57,7 @@ export default function BottomTabNavigator() {
         name="ShoppingList"
         component={ShoppingListScreen}
         options={{
+          title: '장보기목록',
           headerShown: false,
           tabBarIcon: ({ color }) => tabList['장보기목록'](color),
           tabBarActiveTintColor: '#111',

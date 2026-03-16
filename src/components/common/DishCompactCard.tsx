@@ -34,7 +34,7 @@ export default function DishCompactCard({
         <Indicator type="time" value={dish.time} />
       </View>
 
-      <PressableSquareBtn text="오늘의 메뉴" iconName="CheckCircle" />
+      <PressableSquareBtn name="오늘의 메뉴" iconName="CheckCircle" />
     </Card>
   );
 }

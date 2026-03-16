@@ -1,5 +1,5 @@
 import CarouselContainer from '@/components/common/container/CarouselContainer';
-import IngredientCard from '@/components/common/IngredientCard';
+import IngredientCard from '@/components/common/ingredient/IngredientCard';
 import SectionTitle from '@/components/common/SectionTitle';
 import { ingredientObj } from '@/constants';
 import { View } from 'react-native';

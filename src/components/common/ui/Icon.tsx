@@ -1,5 +1,6 @@
 import { colorTokens } from '@/theme/color';
 import {
+  Apple,
   ArrowDown,
   ArrowLeft,
   ArrowRight,
@@ -7,11 +8,14 @@ import {
   Beef,
   Bell,
   CakeSlice,
+  Calendar,
   CalendarClock,
   CheckCircle,
+  CheckCircle2,
   ChefHat,
   ChevronLeft,
   ChevronRight,
+  Circle,
   Clock,
   ClockAlert,
   Database,
@@ -20,7 +24,6 @@ import {
   Edit3,
   Fish,
   GlassWater,
-  Grape,
   Grid2X2Plus,
   Hamburger,
   HandPlatter,
@@ -38,17 +41,24 @@ import {
   PlusSquare,
   Refrigerator,
   ShoppingBag,
+  Snowflake,
   Soup,
   Square,
   SquareCheckBig,
   SquareSlash,
+  Thermometer,
+  ThermometerSnowflake,
+  ThermometerSun,
   Trash2,
   TriangleAlert,
   Wheat,
+  Wind,
+  X,
 } from 'lucide-react-native';
 import { useColorScheme } from 'react-native';
 
 export type IconName =
+  | 'X'
   | 'Bell'
   | 'Menu'
   | 'HandPlatter'
@@ -58,9 +68,11 @@ export type IconName =
   | 'Refrigerator'
   | 'SquareCheckBig'
   | 'Square'
+  | 'Circle'
   | 'Trash2'
   | 'PlusSquare'
   | 'PlusCircle'
+  | 'CheckCircle2'
   | 'CheckCircle'
   | 'ArrowUp'
   | 'ArrowDown'
@@ -76,6 +88,12 @@ export type IconName =
   | 'Heart'
   | 'TriangleAlert'
   | 'OctagonAlert'
+  | 'Snowflake'
+  | 'ThermometerSnowflake'
+  | 'ThermometerSun'
+  | 'Calendar'
+  | 'Thermometer'
+  | 'Wind'
   | 'Grid2X2Plus';
 
 export type CategoryIconName =
@@ -86,7 +104,7 @@ export type CategoryIconName =
   | 'Wheat'
   | 'Hamburger'
   | 'CakeSlice'
-  | 'Grape'
+  | 'Apple'
   | 'Dessert'
   | 'HeartPulse'
   | 'GlassWater'
@@ -104,6 +122,7 @@ export type IconColor =
   | 'indigo'
   | 'gray'
   | 'teal'
+  | 'cyan'
   | 'white';
 
 interface IconProps {
@@ -123,19 +142,24 @@ export default function Icon({
   const colorMap = {
     yellow: scheme.yellow[700],
     neutral: scheme.neutral[800],
-    red: scheme.red[500],
+    red: '#a30c0c',
     blue: scheme.blue[500],
     gray: scheme.inactive,
     white: '#fff',
     green: '#296416',
     indigo: '#784ef8',
     teal: '#0e4d47',
+    cyan: '#39acc3',
   };
 
   const iconObj: { [key in IconName | CategoryIconName]: LucideIcon } = {
+    X,
     Bell,
     Menu,
     HandPlatter,
+    Calendar,
+    CheckCircle2,
+    Circle,
     Clock,
     LeafyGreen,
     ChefHat,
@@ -146,6 +170,7 @@ export default function Icon({
     ArrowLeft,
     ArrowRight,
     SquareCheckBig,
+    Snowflake,
     Square,
     Trash2,
     PlusSquare,
@@ -165,19 +190,24 @@ export default function Icon({
     CakeSlice,
     Milk,
     Soup,
-    Grape,
+    Apple,
     HeartPulse,
     Pizza,
     Database,
     Dessert,
     SquareSlash,
+    Wind,
     LineSquiggle,
     Heart,
     OctagonAlert,
     TriangleAlert,
+    ThermometerSnowflake,
+    ThermometerSun,
+    Thermometer,
     GlassWater,
   };
 
   const Component = iconObj[name];
-  return <Component stroke={colorMap[color]} {...props} />;
+
+  return <Component stroke={colorMap[color]} strokeWidth={2.2} {...props} />;
 }

@@ -1,13 +1,13 @@
+import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import Text from '@/components/common/ui/Text';
-import { expirationStatusObj, ingredientImagesObj } from '@/constants';
+import { expirationStatusObj } from '@/constants';
 import { EnrichStorageItem } from '@/types/storage';
 import {
   formatRemainingDays,
-  getExpirationDate,
   getExpirationStatus,
   getRemainingDays,
 } from '@/utils/getExpirationDate';
-import { Dimensions, Image, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 
 interface CautionStorageItemProps {
   item: EnrichStorageItem;
@@ -21,8 +21,7 @@ export default function CautionStorageItem({
   const { width } = Dimensions.get('window');
   const itemWidth = (width - 60) / 3;
 
-  const expiredDate = getExpirationDate(item);
-  const remainDays = getRemainingDays(expiredDate);
+  const remainDays = getRemainingDays(new Date(item.expiresAt));
   const status = getExpirationStatus(remainDays);
 
   return (
@@ -37,14 +36,9 @@ export default function CautionStorageItem({
       )}
 
       <View className="aspect-square items-center justify-center rounded-full bg-gray-50">
-        <Image
-          source={
-            ingredientImagesObj[item.ingredient.category][item.ingredientId]
-          }
-          className="aspect-square size-14"
-        />
+        <IngredientImage ingredient={item.ingredient} size={55} />
         <Text className="mb-2 text-center">
-          {item.customLabel || item.ingredient.label}
+          {item.customLabel || item?.ingredient?.label}
         </Text>
       </View>
 

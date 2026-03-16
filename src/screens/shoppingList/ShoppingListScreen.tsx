@@ -10,34 +10,43 @@ import {
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import FilterTag from '@/components/common/FilterTag';
 import PressableIcon from '@/components/common/PressableIcon';
+import PressableSquareBtn from '@/components/common/PressableSquareBtn';
 import SectionTitle from '@/components/common/SectionTitle';
 import ShoppingItem from '@/components/common/ShoppingItem';
 import Text from '@/components/common/ui/Text';
 import TextInput from '@/components/common/ui/TextInput';
 import { image_empty_basket } from '@/constants';
+import { RootStackParamList } from '@/types/RootStackParamList';
 import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
 import { searchIngredient } from '@/utils';
+import { duplicateShoppingItem } from '@/utils/duplicateShoppingItem';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import { FlatList, Image, ScrollView, View } from 'react-native';
 
+type StackNavProp = NativeStackNavigationProp<RootStackParamList>;
+
 export default function ShoppingListScreen() {
   const [inputValue, setInputValue] = useState<string>('');
   const [error, setError] = useState<{
-    errorMsg: string;
+    message: string;
     item: ShoppingItemType;
   } | null>(null);
 
   const shoppingList = useAtomValue(shoppingListAtom);
   const purchasedCount = useAtomValue(purchasedCountAtom);
   const isAllPurchased = useAtomValue(isAllPurchasedAtom);
-  const purchasedItems = useAtomValue(purchasedItemsAtom);
+  const purchasedItemList = useAtomValue(purchasedItemsAtom);
 
   const addItem = useSetAtom(addItemAtom);
   const deleteItems = useSetAtom(deleteItemsAtom);
   const toggleAllPurchased = useSetAtom(toggleAllPurchasedAtom);
 
   const recommendedKeywordList = searchIngredient(inputValue || '', 5);
+
+  const navigation = useNavigation<StackNavProp>();
 
   return (
     <SafeAreaViewContainer>
@@ -66,14 +75,15 @@ export default function ShoppingListScreen() {
               nestedScrollEnabled
               showsVerticalScrollIndicator={false}
               className="flex-1"
+              contentContainerClassName="pb-10"
               ItemSeparatorComponent={() => (
                 <View className="border-b border-dashed border-gray-400" />
               )}
-              keyExtractor={(item) => `${item.label}`}
+              keyExtractor={(item) => `${item.id}`}
               renderItem={({ item }) => (
                 <ShoppingItem
                   item={item}
-                  isError={item.label === error?.item.label}
+                  isError={error?.item.id === item.id}
                 />
               )}
             />
@@ -91,23 +101,19 @@ export default function ShoppingListScreen() {
         {/* 아래 컨트롤 버튼 */}
         {purchasedCount > 0 && (
           <View className="flex-row items-start gap-x-2">
-            <PressableIcon
-              icon="Trash2"
+            <PressableSquareBtn
+              onPress={() => deleteItems(purchasedItemList.map(({ id }) => id))}
+              name="선택항목 삭제하기"
+              iconName="Trash2"
               iconSize={16}
-              iconColor="blue"
-              onPress={() => deleteItems(purchasedItems.map((item) => item.id))}
-              className="flex-row gap-x-1 rounded-xl bg-indigo-200 p-3"
-              text="선택항목 삭제하기"
-              textClassName="text-blue-800"
+              color="yellow"
             />
-            <PressableIcon
-              icon="Grid2X2Plus"
+            <PressableSquareBtn
+              onPress={() => navigation.navigate('ShoppingListDetail')}
+              name="냉장고에 넣기"
+              iconName="Grid2X2Plus"
               iconSize={16}
-              iconColor="yellow"
-              onPress={() => {}}
-              className="flex-row gap-x-1 rounded-xl bg-yellow-200 p-3"
-              text={`냉장고에 넣기`}
-              textClassName="text-yellow-800"
+              color="blue"
             />
           </View>
         )}
@@ -125,7 +131,8 @@ export default function ShoppingListScreen() {
                   key={keywordItem.label}
                   name={keywordItem.label}
                   color={
-                    error?.item.label === keywordItem.label
+                    keywordItem.label === inputValue &&
+                    duplicateShoppingItem(inputValue, shoppingList)
                       ? 'red'
                       : keywordItem.label === inputValue
                         ? 'blue'
@@ -135,7 +142,7 @@ export default function ShoppingListScreen() {
                   onPress={() => {
                     const { result, item } = addItem(keywordItem.label);
                     if (result === 'duplicate') {
-                      setError({ errorMsg: result, item });
+                      setError({ message: result, item });
                       return;
                     }
 
@@ -165,8 +172,7 @@ export default function ShoppingListScreen() {
                 const { result, item } = addItem(inputValue);
 
                 if (result === 'duplicate') {
-                  setError({ errorMsg: result, item });
-                  return;
+                  return setError({ message: result, item });
                 }
 
                 setInputValue('');

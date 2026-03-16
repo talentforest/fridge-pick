@@ -5,7 +5,7 @@ import { View } from 'react-native';
 
 interface CategoryLabelProps {
   category: CategoryItem;
-  color: 'blue' | 'green' | 'yellow';
+  color: 'cyan' | 'blue' | 'yellow';
 }
 
 export default function CategoryLabel({ category, color }: CategoryLabelProps) {
