@@ -1,3 +1,4 @@
+import GridContainer from '@/components/common/container/GridContainer';
 import Indicator from '@/components/common/Indicator';
 import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import Card from '@/components/common/ui/Card';
@@ -27,11 +28,11 @@ export default function DishCard({
       </View>
 
       {ingredientList.length > 0 && (
-        <View className="flex-row flex-wrap gap-y-2.5">
+        <GridContainer columns={5} gap={2}>
           {ingredientList.slice(0, maxIngredientNum).map((ingredient) => (
             <View
               key={ingredient.label}
-              className="items-center  justify-between px-1.5"
+              className="items-center justify-between px-1.5"
             >
               <IngredientImage ingredient={ingredient} size={45} />
               <Text className={`mt-0.5 text-center text-md text-stone-600`}>
@@ -45,7 +46,7 @@ export default function DishCard({
               <Text className="text-sm">...더보기</Text>
             </View>
           )}
-        </View>
+        </GridContainer>
       )}
     </Card>
   );

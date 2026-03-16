@@ -1,3 +1,4 @@
+import GridContainer from '@/components/common/container/GridContainer';
 import DishCompactCard from '@/components/common/DishCompactCard';
 import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import PressableIcon from '@/components/common/PressableIcon';
@@ -101,15 +102,15 @@ export default function StorageItemSheet({
         <View className="flex-1 border border-blue-100" />
       </View>
 
-      <View className="flex-row flex-wrap gap-3">
+      <GridContainer columns={2} gap={10}>
         {dishList.map((item) => (
           <DishCompactCard
             key={item.name}
             dish={item}
-            className={`w-[48%] bg-indigo-100 ${colorByStorage['blue'].border}`}
+            className={`bg-indigo-100 ${colorByStorage['blue'].border}`}
           />
         ))}
-      </View>
+      </GridContainer>
     </View>
   );
 }

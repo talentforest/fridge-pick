@@ -99,10 +99,15 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
       .map(({ item }) => item);
   }, [groupedItemsByCategory]);
 
+  const allStorageItemList = useMemo(() => {
+    return groupedItemsByCategory.map(({ items }) => items).flat();
+  }, [groupedItemsByCategory]);
+
   return {
     sideList,
     itemCountBySide,
     groupedItemsByCategory,
     expiredStorageItemList,
+    allStorageItemList,
   };
 };

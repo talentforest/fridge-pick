@@ -1,7 +1,6 @@
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScreenHeader from '@/components/common/ScreenHeader';
 import SectionTitle from '@/components/common/SectionTitle';
-import TextInput from '@/components/common/ui/TextInput';
 import CautionIngredientList from '@/components/storage/CautionIngredientList';
 import Storage from '@/components/storage/Storage';
 import { storageObj } from '@/constants';
@@ -50,13 +49,6 @@ export default function StorageDetailScreen() {
             className="!text-lg"
             icon="Refrigerator"
           />
-
-          <View className="gap-y-1">
-            <TextInput
-              className={`rounded-xl border border-border bg-white`}
-              placeholder="찾으시는 식료품을 작성해주세요."
-            />
-          </View>
 
           <Storage storageType={storageType} />
         </View>

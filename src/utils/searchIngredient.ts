@@ -1,8 +1,13 @@
 import { ingredientObj } from '@/constants';
 import { Ingredient, IngredientKey } from '@/types/ingredient';
+import { StorageItem } from '@/types/storage';
 
 function normalize(text: string) {
   return text.replace(/\s/g, '').toLowerCase();
+}
+
+function matchText(keyword: string, text: string) {
+  return normalize(text).includes(keyword);
 }
 
 export const allIngredients: Ingredient[] = Object.values(
@@ -14,36 +19,43 @@ export const findIngredient = (ingredientId?: IngredientKey) => {
   return allIngredients.find(({ id }) => id === ingredientId);
 };
 
-export function searchIngredient(keyword: string, max?: number): Ingredient[] {
-  if (!keyword) return [];
-
+export function searchIngredient(
+  keyword: string,
+  maxLength?: number,
+): Ingredient[] {
   const normalized = normalize(keyword);
   if (!normalized) return [];
 
   const results = allIngredients.filter((item) => {
-    const label = normalize(item.label);
+    if (matchText(normalized, item.label)) return true;
 
-    if (label.includes(normalized)) return true;
-
-    return item.synonyms?.some((syn) => normalize(syn).includes(normalized));
+    return item.synonyms?.some((syn) => matchText(normalized, syn));
   });
 
-  return results
-    .sort((a, b) => {
-      const aLabel = normalize(a.label);
-      const bLabel = normalize(b.label);
+  return results.slice(0, maxLength);
+}
 
-      const aExact = aLabel === normalized;
-      const bExact = bLabel === normalized;
+export function searchStorageItem(
+  keyword: string,
+  list: StorageItem[],
+  maxLength?: number,
+) {
+  const normalized = normalize(keyword);
+  if (!normalized) return [];
 
-      if (aExact !== bExact) return aExact ? -1 : 1;
+  const ingredientIds = new Set(searchIngredient(keyword).map(({ id }) => id));
 
-      const aStarts = aLabel.startsWith(normalized);
-      const bStarts = bLabel.startsWith(normalized);
+  return list
+    .filter((item) => {
+      if (item.ingredientId && ingredientIds.has(item.ingredientId)) {
+        return true;
+      }
 
-      if (aStarts !== bStarts) return aStarts ? -1 : 1;
+      if (item.customLabel) {
+        return matchText(normalized, item.customLabel);
+      }
 
-      return aLabel.localeCompare(bLabel);
+      return false;
     })
-    .slice(0, max);
+    .slice(0, maxLength);
 }
