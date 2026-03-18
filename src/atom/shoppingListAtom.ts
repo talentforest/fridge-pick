@@ -104,7 +104,6 @@ export const addItemAtom = atom(
 
     // ingredient 마스터 정보가 있는 경우 customLabel은 작성하지 않는다.
     // 따라서 ingredient의 label과 customLabel 모두를 비교한다.
-
     const duplicateItem = duplicateShoppingItem(inputValue, list);
 
     if (duplicateItem) {

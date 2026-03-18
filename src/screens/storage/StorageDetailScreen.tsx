@@ -1,4 +1,5 @@
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
+import PressableIcon from '@/components/common/PressableIcon';
 import ScreenHeader from '@/components/common/ScreenHeader';
 import SectionTitle from '@/components/common/SectionTitle';
 import CautionIngredientList from '@/components/storage/CautionIngredientList';
@@ -48,7 +49,16 @@ export default function StorageDetailScreen() {
             title="나의 식재료"
             className="!text-lg"
             icon="Refrigerator"
-          />
+          >
+            <PressableIcon
+              icon="PlusCircle"
+              className="p-0.5"
+              iconSize={23}
+              onPress={() => {
+                console.log('//');
+              }}
+            />
+          </SectionTitle>
 
           <Storage storageType={storageType} />
         </View>

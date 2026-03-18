@@ -12,14 +12,14 @@ interface PressableIconProps {
 
 export default function PressableIcon({
   icon,
-  iconSize = 22,
+  iconSize = 20,
   iconColor,
   text,
   textClassName = '',
   ...props
 }: PressableIconProps & PressableProps) {
   return (
-    <Pressable {...props}>
+    <Pressable {...props} className="flex-row items-center gap-x-0.5">
       <Icon name={icon} size={iconSize} color={iconColor} />
       {text ? <Text className={textClassName}>{text}</Text> : <></>}
     </Pressable>

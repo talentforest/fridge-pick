@@ -40,7 +40,7 @@ type BaseStorageItem = {
   memo?: string;
 };
 
-type StorageItemWithIngredient = BaseStorageItem & {
+type StorageItemWithIngredientId = BaseStorageItem & {
   ingredientId: IngredientKey;
   customLabel?: string; // 이름은 커스텀했는데 ingredient 정보를 연결하는 경우.
 };
@@ -50,7 +50,7 @@ type StorageItemCustom = BaseStorageItem & {
   customLabel: string;
 };
 
-export type StorageItem = StorageItemWithIngredient | StorageItemCustom;
+export type StorageItem = StorageItemWithIngredientId | StorageItemCustom;
 
 export type EnrichStorageItem = StorageItem & { ingredient?: Ingredient };
 

@@ -16,7 +16,7 @@ export default function CautionIngredientList({ storageType }: StorageProps) {
     storage: { type: storageType },
   });
 
-  const { openSheet } = useOverlay();
+  const { openSheet, closeSheet, openDatePicker } = useOverlay();
 
   return (
     <View className="px-6">
@@ -28,11 +28,21 @@ export default function CautionIngredientList({ storageType }: StorageProps) {
                 key={item.id}
                 onPress={() =>
                   openSheet({
-                    element: <StorageItemSheet storageItem={item} />,
+                    element: (
+                      <StorageItemSheet
+                        storageItem={item}
+                        closeSheet={closeSheet}
+                        openDatePicker={openDatePicker}
+                      />
+                    ),
                   })
                 }
               >
-                <CautionStorageItem item={item} index={index} />
+                <CautionStorageItem
+                  item={item}
+                  index={index}
+                  isCurrIndex={false}
+                />
               </Pressable>
             );
           })}

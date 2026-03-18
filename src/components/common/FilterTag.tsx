@@ -39,7 +39,7 @@ export default function FilterTag({
     textColor: 'text-neutral-400',
   };
 
-  const commonClassName = 'rounded-xl px-3 py-2.5';
+  const commonClassName = 'rounded-xl p-3.5';
 
   return onPress ? (
     <Pressable
@@ -47,7 +47,7 @@ export default function FilterTag({
       className={`${commonClassName} ${isActive ? bgColor[color as FilterColor] : inActiveObj.bgColor}`}
     >
       <Text
-        className={`text-md ${isActive ? textColorObj[color] : inActiveObj.textColor} ${textClassName}`}
+        className={`text-base ${isActive ? textColorObj[color] : inActiveObj.textColor} ${textClassName}`}
       >
         {name}
       </Text>

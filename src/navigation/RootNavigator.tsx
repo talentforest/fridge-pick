@@ -1,6 +1,6 @@
 import BottomTabNavigator from '@/navigation/BottomTabNavigator';
 import ShoppingListDetailScreen from '@/screens/shoppingList/ShoppingListDetailScreen';
-import StorageDetailScreen from '@/screens/StorageDetailScreen';
+import StorageDetailScreen from '@/screens/storage/StorageDetailScreen';
 import { colorTokens, theme } from '@/theme/color';
 import { RootStackParamList } from '@/types/RootStackParamList';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';

@@ -16,8 +16,8 @@ interface useStorageItemListProps {
 }
 
 /**
- * 현재 보관함 정보(StorageTypeId, SideKey, SectionKey) 파라미터 전달
- * 각 보관함 정보에 맞는 아이템 전달
+ * 현재 보관위치 정보(StorageTypeId, SideKey, SectionKey) 파라미터 전달
+ * 각 보관위치 정보에 맞는 아이템 전달
  *
  * MVP 버전에서는 SideKey와 SectionKey는 다루지 않음.
  * - side: 'inner;
@@ -46,7 +46,7 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
 
   const hasSide = false; // TODO: 사용자가 문쪽 안쪽을 구분해서 사용하길 원하는 경우 처리
 
-  const groupedItemsByCategory = useMemo(() => {
+  const itemListByCategory = useMemo(() => {
     const grouped: Partial<Record<CategoryKey, EnrichStorageItem[]>> = {};
 
     const itemList = hasSide ? currentSideItems : storageItemList;
@@ -81,14 +81,14 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
     [side],
   );
 
+  const itemListByStorage = useMemo(() => {
+    return itemListByCategory.map(({ items }) => items).flat();
+  }, [itemListByCategory]);
+
   const expiredStorageItemList = useMemo(() => {
-    const allStorageItemList = groupedItemsByCategory.map(
-      ({ items }) => items,
-    )[0];
+    if (!itemListByStorage) return [];
 
-    if (!allStorageItemList) return [];
-
-    return allStorageItemList
+    return itemListByStorage
       .map((item) => {
         const remainingDays = getRemainingDays(new Date(item.expiresAt));
 
@@ -97,17 +97,13 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
       .filter(({ remainingDays }) => remainingDays <= 3)
       .sort((a, b) => a.remainingDays - b.remainingDays)
       .map(({ item }) => item);
-  }, [groupedItemsByCategory]);
-
-  const allStorageItemList = useMemo(() => {
-    return groupedItemsByCategory.map(({ items }) => items).flat();
-  }, [groupedItemsByCategory]);
+  }, [itemListByCategory]);
 
   return {
     sideList,
     itemCountBySide,
-    groupedItemsByCategory,
+    itemListByCategory,
+    itemListByStorage,
     expiredStorageItemList,
-    allStorageItemList,
   };
 };

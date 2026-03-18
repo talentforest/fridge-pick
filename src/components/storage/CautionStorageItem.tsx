@@ -1,6 +1,7 @@
 import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import Text from '@/components/common/ui/Text';
 import { expirationStatusObj } from '@/constants';
+import { iosShadowStyle } from '@/constants/shadowStyle';
 import { EnrichStorageItem } from '@/types/storage';
 import {
   formatRemainingDays,
@@ -12,11 +13,13 @@ import { Dimensions, View } from 'react-native';
 interface CautionStorageItemProps {
   item: EnrichStorageItem;
   index: number;
+  isCurrIndex: boolean;
 }
 
 export default function CautionStorageItem({
   item,
   index,
+  isCurrIndex,
 }: CautionStorageItemProps) {
   const { width } = Dimensions.get('window');
   const itemWidth = (width - 60) / 3;
@@ -26,8 +29,8 @@ export default function CautionStorageItem({
 
   return (
     <View
-      style={{ width: itemWidth }}
-      className="relative gap-y-2 overflow-hidden rounded-xl border border-border bg-white px-2 py-3"
+      style={{ width: itemWidth, ...iosShadowStyle }}
+      className={`relative gap-y-2 overflow-hidden rounded-xl border border-border px-3 py-3 ${isCurrIndex ? 'bg-yellow-400' : 'bg-white'}`}
     >
       {index < 3 && (
         <View className="absolute left-0 top-0 z-10 h-10 w-8 items-center justify-center rounded-br-lg bg-amber-500">
@@ -35,14 +38,18 @@ export default function CautionStorageItem({
         </View>
       )}
 
-      <View className="aspect-square items-center justify-center rounded-full bg-gray-50">
+      <View
+        className={`aspect-square items-center justify-center ${isCurrIndex ? '' : 'rounded-full bg-gray-50'}`}
+      >
         <IngredientImage ingredient={item.ingredient} size={55} />
         <Text className="mb-2 text-center">
           {item.customLabel || item?.ingredient?.label}
         </Text>
       </View>
 
-      <Text className={`text-center ${expirationStatusObj[status].textColor}`}>
+      <Text
+        className={`text-center font-extrabold ${expirationStatusObj[status].textColor}`}
+      >
         {formatRemainingDays(remainDays)}
       </Text>
     </View>

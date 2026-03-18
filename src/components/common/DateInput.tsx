@@ -8,16 +8,11 @@ import { getRemainingDays } from '@/utils/getExpirationDate';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface DateInputProps {
-  expirationDays?: number;
   date: Date;
   setDate: (date: Date) => void;
 }
 
-export default function DateInput({
-  expirationDays,
-  date,
-  setDate,
-}: DateInputProps) {
+export default function DateInput({ date, setDate }: DateInputProps) {
   const onChange = (_: any, selectedDate?: Date) => {
     if (selectedDate) {
       setDate(selectedDate);
@@ -33,6 +28,7 @@ export default function DateInput({
           hasDim: true,
           element: (
             <DateTimePicker
+              minimumDate={new Date()}
               value={date}
               mode="date"
               display="spinner"

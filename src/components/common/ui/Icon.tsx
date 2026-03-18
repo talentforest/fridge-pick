@@ -40,6 +40,7 @@ import {
   PlusCircle,
   PlusSquare,
   Refrigerator,
+  Search,
   ShoppingBag,
   Snowflake,
   Soup,
@@ -92,6 +93,7 @@ export type IconName =
   | 'ThermometerSnowflake'
   | 'ThermometerSun'
   | 'Calendar'
+  | 'Search'
   | 'Thermometer'
   | 'Wind'
   | 'Grid2X2Plus';
@@ -195,6 +197,7 @@ export default function Icon({
     Pizza,
     Database,
     Dessert,
+    Search,
     SquareSlash,
     Wind,
     LineSquiggle,

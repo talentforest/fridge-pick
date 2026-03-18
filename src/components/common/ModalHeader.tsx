@@ -5,15 +5,21 @@ import { View } from 'react-native';
 
 interface ModalHeaderProps {
   title: string;
+  isDatePicker?: boolean;
 }
 
-export default function ModalHeader({ title }: ModalHeaderProps) {
-  const { closeModal } = useOverlay();
+export default function ModalHeader({ title, isDatePicker }: ModalHeaderProps) {
+  const { closeModal, closeDatePicker } = useOverlay();
 
   return (
-    <View className="mb-4 flex-row items-center justify-between">
+    <View className="flex-row items-center justify-between">
       <Text className="text-xl">{title}</Text>
-      <PressableIcon icon="X" iconSize={26} onPress={closeModal} />
+      <PressableIcon
+        icon="X"
+        iconSize={26}
+        className="p-2"
+        onPress={isDatePicker ? closeDatePicker : closeModal}
+      />
     </View>
   );
 }

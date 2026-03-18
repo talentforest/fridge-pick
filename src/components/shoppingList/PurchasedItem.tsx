@@ -24,9 +24,9 @@ export default function PurchasedItem({
 }: PurchasedItemProps) {
   const { ingredient, ...storageItem } = item;
 
-  const initialDate = getExpirationDate(ingredient?.expirationDays);
-
   const [isEditing, setIsEditing] = useState(false);
+
+  const initialDate = getExpirationDate(ingredient?.expirationDays);
   const [date, setDate] = useState(new Date(initialDate));
 
   const onItemChange = (
@@ -50,7 +50,7 @@ export default function PurchasedItem({
       icon: 'Calendar' as const,
     },
     {
-      label: '보관함',
+      label: '보관위치',
       value: storageObj[storageItem.storage.type].label,
       icon: storageObj[storageItem.storage.type].icon,
     },
@@ -100,14 +100,10 @@ export default function PurchasedItem({
             {isEditing && (
               <>
                 {label === '소비기한' && (
-                  <DateInput
-                    date={date}
-                    setDate={onChangeDate}
-                    expirationDays={ingredient?.expirationDays}
-                  />
+                  <DateInput date={date} setDate={onChangeDate} />
                 )}
 
-                {label === '보관함' && (
+                {label === '보관위치' && (
                   <View className="flex-row items-center gap-x-2">
                     {Object.values(storageObj).map((storage) => (
                       <PressableSquareBtn

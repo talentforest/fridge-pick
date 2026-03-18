@@ -1,11 +1,18 @@
+import { allStorageItemListAtom } from '@/atom/storageItemAtom';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
-import IngredientCard from '@/components/common/ingredient/IngredientCard';
 import SectionTitle from '@/components/common/SectionTitle';
-import { ingredientObj } from '@/constants';
+import CautionStorageItem from '@/components/storage/CautionStorageItem';
+import { getExpiredStorageItemList } from '@/utils/getExpiredStorageItemList';
+import { useAtomValue } from 'jotai';
+import { useMemo } from 'react';
 import { View } from 'react-native';
 
 export default function ExpiringIngredients() {
-  const expiredList = Object.values(ingredientObj['fruit']).slice(0, 8);
+  const allStorageItemList = useAtomValue(allStorageItemListAtom);
+
+  const expiredStorageItemList = useMemo(() => {
+    return getExpiredStorageItemList(allStorageItemList);
+  }, [allStorageItemList]);
 
   return (
     <View className="gap-y-3">
@@ -15,13 +22,17 @@ export default function ExpiringIngredients() {
         icon="ClockAlert"
       />
       <CarouselContainer
-        data={expiredList}
-        initialIndex={expiredList.length}
+        data={expiredStorageItemList}
+        initialIndex={expiredStorageItemList.length}
         itemWidth={0.27}
         hasNavigation
         centerFocus
-        renderItem={({ item, isCurrIndex }) => (
-          <IngredientCard ingredient={item} isCurrIndex={isCurrIndex} />
+        renderItem={({ item, index, isCurrIndex }) => (
+          <CautionStorageItem
+            item={item}
+            index={index}
+            isCurrIndex={isCurrIndex}
+          />
         )}
         keyExtractor={(_, index) => `${index}`}
       />

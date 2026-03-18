@@ -1,9 +1,13 @@
 import { shoppingListAtom } from '@/atom/shoppingListAtom';
-import { itemListByStorageAtom } from '@/atom/storageItemAtom';
+import {
+  allStorageItemListAtom,
+  itemListByStorageAtom,
+} from '@/atom/storageItemAtom';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import { image_fridge } from '@/constants';
 import { RootStackParamList } from '@/types/RootStackParamList';
+import { getExpiredStorageItemList } from '@/utils/getExpiredStorageItemList';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAtomValue } from 'jotai';
@@ -13,6 +17,8 @@ type StorageDetailNavProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function SpaceGrid() {
   const navigation = useNavigation<StorageDetailNavProp>();
+
+  const allStorageItemList = useAtomValue(allStorageItemListAtom);
 
   const freezerItemList = useAtomValue(itemListByStorageAtom('freezer'));
   const fridgeItemList = useAtomValue(itemListByStorageAtom('fridge'));
@@ -30,13 +36,18 @@ export default function SpaceGrid() {
     ],
   } as const;
 
+  const expiredStorageItemList = getExpiredStorageItemList(allStorageItemList);
+
   return (
     <View className="gap-y-3">
       <View className="flex-row gap-x-3">
+        {/* 나의 냉장고 */}
         <Card className="h-60 w-[38%] gap-y-3 !bg-white">
           <Text className="font-extrabold text-neutral-700">나의 냉장고</Text>
           <View className="w-full flex-1 items-center justify-center p-3">
-            <View className="ml-12 size-2.5 rounded-xl bg-red-500" />
+            {expiredStorageItemList.length > 0 && (
+              <View className="ml-12 size-2.5 rounded-xl bg-red-500" />
+            )}
             <Image source={image_fridge} className="h-full w-full" />
           </View>
         </Card>
@@ -53,7 +64,9 @@ export default function SpaceGrid() {
                   <Text className="mt-0.5 font-extrabold text-neutral-700">
                     {label}
                   </Text>
-                  <Text className="font-extrabold !text-2xl">{total}</Text>
+                  <Text className="font-extrabold !text-2xl text-blue-400">
+                    {total}
+                  </Text>
                 </View>
               </Card>
             </Pressable>
@@ -79,7 +92,9 @@ export default function SpaceGrid() {
                 <Text className="mt-0.5 font-extrabold text-neutral-700">
                   {label}
                 </Text>
-                <Text className="font-extrabold !text-2xl">{total}</Text>
+                <Text className="font-extrabold !text-2xl text-blue-400">
+                  {total}
+                </Text>
               </View>
             </Card>
           </Pressable>

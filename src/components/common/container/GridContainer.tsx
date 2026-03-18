@@ -31,7 +31,7 @@ export default function GridContainer({
   return (
     <View
       onLayout={handleLayout}
-      className={`flex-row flex-wrap ${className}`}
+      className={`w-full flex-row flex-wrap ${className}`}
       style={{ gap }}
     >
       {containerWidth !== null &&

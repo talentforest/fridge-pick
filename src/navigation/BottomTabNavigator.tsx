@@ -1,7 +1,8 @@
 import DishScreen from '@/screens/DishScreen';
 import HomeScreen from '@/screens/HomeScreen';
 import ShoppingListScreen from '@/screens/shoppingList/ShoppingListScreen';
-import StorageScreen from '@/screens/StorageScreen';
+import StorageScreen from '@/screens/storage/StorageScreen';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   CookingPot,

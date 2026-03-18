@@ -33,25 +33,26 @@ export default function Storage({ storageType }: StorageProps) {
     };
   }, [storageType, currSide]);
 
-  const { openSheet } = useOverlay();
+  const { openSheet, closeSheet, openDatePicker } = useOverlay();
 
   const { label, color } = storageObj[storageType];
 
   const {
     sideList,
     itemCountBySide,
-    groupedItemsByCategory,
-    allStorageItemList, //
+    itemListByCategory,
+    itemListByStorage, //
   } = useStorageItemList({ storage });
 
   const searchedStorageItemList = searchStorageItem(
     searchKeyword,
-    allStorageItemList,
+    itemListByStorage,
   );
 
   return (
-    <View className="gap-y-1">
+    <View className="gap-y-3">
       <TextInput
+        icon="Search"
         className={`rounded-xl border border-border bg-white`}
         placeholder="찾으시는 식료품을 작성해주세요."
         value={searchKeyword}
@@ -59,7 +60,7 @@ export default function Storage({ storageType }: StorageProps) {
       />
 
       <Card
-        className={`min-h-[50vh] flex-1 gap-y-6 rounded-2xl !p-0 ${groupedItemsByCategory.length === 0 ? '' : '!border-0 !bg-transparent'}`}
+        className={`min-h-[50vh] flex-1 gap-y-6 rounded-2xl !p-0 ${itemListByCategory.length === 0 ? '' : '!border-0 !bg-transparent'}`}
       >
         {/* side(문쪽, 안쪽) 설정시 버튼 */}
         {SETTING_SIDE && (
@@ -77,7 +78,7 @@ export default function Storage({ storageType }: StorageProps) {
           </View>
         )}
 
-        {/* 내부 */}
+        {/* 검색결과 내부 */}
         {searchKeyword && (
           <ScrollView
             nestedScrollEnabled
@@ -89,14 +90,23 @@ export default function Storage({ storageType }: StorageProps) {
             >
               <Text>검색결과 {searchedStorageItemList.length}개</Text>
 
-              {/* 식재료 리스트 */}
-              <GridContainer gap={10} columns={4}>
+              {/* 검색 결과 식재료 리스트 */}
+              <GridContainer gap={10} columns={5}>
                 {searchedStorageItemList.map((item) => (
                   <Pressable
                     key={item.id}
                     onPress={() =>
                       openSheet({
-                        element: <StorageItemSheet storageItem={item} />,
+                        element: (
+                          <StorageItemSheet
+                            storageItem={item}
+                            closeSheet={closeSheet}
+                            openDatePicker={openDatePicker}
+                          />
+                        ),
+                        options: {
+                          snapPoints: ['80%'],
+                        },
                       })
                     }
                   >
@@ -109,38 +119,44 @@ export default function Storage({ storageType }: StorageProps) {
         )}
 
         {!searchKeyword &&
-          (groupedItemsByCategory.length !== 0 ? (
+          (itemListByCategory.length !== 0 ? (
             <ScrollView
               nestedScrollEnabled
               className="flex-1"
               contentContainerClassName="flex-1"
             >
               <View className="flex-1 gap-y-3">
-                {groupedItemsByCategory.map(({ category, items }, index) => (
+                {itemListByCategory.map(({ category, items }, index) => (
                   <View
                     key={category.id}
-                    className={`flex-1 gap-y-3 border border-border bg-white p-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === groupedItemsByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
+                    className={`flex-1 gap-y-3 border border-border bg-white p-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === itemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
                   >
                     <CategoryLabel category={category} color={color} />
 
-                    <View
-                      className={`flex-1 flex-row flex-wrap items-center justify-between gap-2`}
-                    >
+                    <GridContainer gap={4} columns={5}>
                       {/* 식재료 리스트 */}
-                      {items.map((item, index) => (
+                      {items.map((item) => (
                         <Pressable
                           key={item.id}
                           onPress={() =>
                             openSheet({
-                              element: <StorageItemSheet storageItem={item} />,
+                              element: (
+                                <StorageItemSheet
+                                  storageItem={item}
+                                  closeSheet={closeSheet}
+                                  openDatePicker={openDatePicker}
+                                />
+                              ),
+                              options: {
+                                snapPoints: ['45%'],
+                              },
                             })
                           }
-                          className={`${items.length === index + 1 ? 'mr-auto ' : ''}`}
                         >
                           <StorageItem item={item} />
                         </Pressable>
                       ))}
-                    </View>
+                    </GridContainer>
                   </View>
                 ))}
               </View>

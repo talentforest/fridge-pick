@@ -4,6 +4,7 @@ import { FlatList, Pressable, View } from 'react-native';
 
 type RenderItemWithIndex<T> = (args: {
   item: T;
+  index: number;
   isCurrIndex: boolean;
 }) => React.ReactElement;
 
@@ -16,7 +17,6 @@ interface CarouselContainerProps<T> {
   hasNavigation?: boolean;
   centerFocus?: boolean;
   spacing?: number;
-  horizontalPadding?: number;
 }
 
 export default function CarouselContainer<T>({
@@ -28,10 +28,10 @@ export default function CarouselContainer<T>({
   hasNavigation,
   centerFocus,
   spacing = 6,
-  horizontalPadding,
 }: CarouselContainerProps<T>) {
   const listRef = useRef<FlatList<T>>(null);
 
+  const [isScrolling, setIsScrolling] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -49,7 +49,7 @@ export default function CarouselContainer<T>({
       animated: true,
     });
 
-    setCurrentIndex(nextIndex);
+    setIsScrolling(true);
   };
 
   /** infinite scroll 유지 */
@@ -82,6 +82,7 @@ export default function CarouselContainer<T>({
       return;
     }
 
+    setIsScrolling(false);
     setCurrentIndex(index);
   };
 
@@ -114,23 +115,22 @@ export default function CarouselContainer<T>({
           offset: ITEM_SIZE * index,
           index,
         })}
-        onLayout={() => {}}
         onMomentumScrollEnd={(e) =>
           handleScrollEnd(e.nativeEvent.contentOffset.x)
         }
         renderItem={({ item, index }) => {
-          const isCurrIndex =
-            index % data.length === currentIndex % data.length;
+          const isActive =
+            !isScrolling && index % data.length === currentIndex % data.length;
 
           return (
             <View
               style={{
                 width: CARD_WIDTH,
-                transform: centerFocus && !isCurrIndex ? [{ scale: 0.92 }] : [],
+                transform: centerFocus && !isActive ? [{ scale: 0.88 }] : [],
               }}
               className="rounded-2xl"
             >
-              {renderItem({ item, isCurrIndex })}
+              {renderItem({ item, isCurrIndex: isActive, index })}
             </View>
           );
         }}
@@ -160,7 +160,7 @@ const HandleBtn = ({
   };
 
   const commonClassName =
-    'bg-gray-200 absolute top-1/2 -translate-y-1/2 rounded-full p-3';
+    'bg-gray-600/30 absolute top-1/2 -translate-y-1/2 rounded-full p-3';
 
   return (
     <Pressable

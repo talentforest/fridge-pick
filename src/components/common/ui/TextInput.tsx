@@ -1,11 +1,20 @@
-import { TextInput as RNTextInput, TextInputProps } from 'react-native';
+import Icon, { IconName } from '@/components/common/ui/Icon';
+import { TextInput as RNTextInput, TextInputProps, View } from 'react-native';
 
-export default function TextInput({ ...props }: TextInputProps) {
+export default function TextInput({
+  icon,
+  ...props
+}: { icon?: IconName } & TextInputProps) {
   return (
-    <RNTextInput
-      allowFontScaling
-      {...props}
-      className={`w-full rounded-full bg-neutral-200 p-5 font-bold text-base tracking-tightest placeholder:text-neutral-400 ${props.className}`}
-    />
+    <View
+      className={`w-full flex-row items-center gap-x-2 rounded-full bg-neutral-200 p-5 ${props.className}`}
+    >
+      {icon && <Icon name="Search" size={20} color="gray" />}
+      <RNTextInput
+        allowFontScaling
+        {...props}
+        className={`font-bold text-base tracking-tightest placeholder:text-neutral-400 `}
+      />
+    </View>
   );
 }
