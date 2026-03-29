@@ -3,7 +3,7 @@ import Text from '@/components/common/ui/Text';
 import CautionStorageItem from '@/components/storage/CautionStorageItem';
 import StorageItemSheet from '@/components/storage/StorageItemSheet';
 import { useStorageItemList } from '@/hooks';
-import { useOverlay } from '@/provider/OverlayProvider';
+import { useOverlay } from '@/hooks/common/useOverlay';
 import { StorageItem, StorageTypeId } from '@/types/storage';
 import { Pressable, View } from 'react-native';
 
@@ -16,20 +16,12 @@ export default function CautionIngredientList({ storageType }: StorageProps) {
     storage: { type: storageType },
   });
 
-  const { openSheet, closeModal, closeSheet, openDatePicker, openModal } = useOverlay();
+  const { openSheet } = useOverlay();
 
   const openPress = (storageItem: StorageItem) => {
     openSheet({
       hasDim: true,
-      children: (
-        <StorageItemSheet
-          storageItem={storageItem}
-          closeModal={closeModal}
-          closeSheet={closeSheet}
-          openDatePicker={openDatePicker}
-          openModal={openModal}
-        />
-      ),
+      render: () => <StorageItemSheet storageItem={storageItem} />,
     });
   };
 

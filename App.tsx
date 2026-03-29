@@ -1,5 +1,5 @@
 import RootNavigator from '@/navigation/RootNavigator';
-import { OverlayProvider } from '@/provider/OverlayProvider';
+import { OverlayContainer } from '@/components/common/container/OverlayContainer';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
@@ -20,10 +20,10 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <BottomSheetModalProvider>
-          <OverlayProvider>
+          <OverlayContainer>
             <RootNavigator />
             <StatusBar style="auto" />
-          </OverlayProvider>
+          </OverlayContainer>
         </BottomSheetModalProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

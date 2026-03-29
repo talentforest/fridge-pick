@@ -9,7 +9,7 @@ import StorageItem from '@/components/storage/StorageItem';
 import StorageItemSheet from '@/components/storage/StorageItemSheet';
 import { image_empty_basket, storageObj } from '@/constants';
 import { useStorageItemList } from '@/hooks';
-import { useOverlay } from '@/provider/OverlayProvider';
+import { useOverlay } from '@/hooks/common/useOverlay';
 import {
   StorageItem as StorageItemType,
   StorageSideId,
@@ -37,7 +37,7 @@ export default function Storage({ storageType }: StorageProps) {
     };
   }, [storageType, currSide]);
 
-  const { openSheet, closeSheet, closeModal, openDatePicker, openModal } = useOverlay();
+  const { openSheet, closeSheet } = useOverlay();
 
   const { label, color } = storageObj[storageType];
 
@@ -55,18 +55,10 @@ export default function Storage({ storageType }: StorageProps) {
     return searchStorageItem(searchKeyword, itemListByStorage);
   }, [searchKeyword, itemListByStorage]);
 
-  const openStorageItem = (item: StorageItemType) => {
+  const openStorageItem = async (item: StorageItemType) => {
     openSheet({
       hasDim: true,
-      children: (
-        <StorageItemSheet
-          storageItem={item}
-          closeSheet={closeSheet}
-          closeModal={closeModal}
-          openModal={openModal}
-          openDatePicker={openDatePicker}
-        />
-      ),
+      render: () => <StorageItemSheet storageItem={item} />,
     });
   };
 

@@ -7,9 +7,7 @@ import { StorageItem, StorageTypeId } from '@/types/storage';
 interface FormStorageProps {
   label: string;
   currStorageType: StorageTypeId;
-  onItemChange: (
-    newData: Partial<Pick<StorageItem, 'expiresAt' | 'storage' | 'memo'>>,
-  ) => void;
+  onItemChange: (newData: Pick<StorageItem, 'storage'>) => void;
 }
 
 export default function FormStorage({

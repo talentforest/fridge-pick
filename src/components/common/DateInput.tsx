@@ -10,24 +10,20 @@ import { ReactNode } from 'react';
 import Text from '@/components/common/ui/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ModalHeader from '@/components/common/ModalHeader';
-import { OpenDatePickerOverlayVoid } from '@/provider/OverlayProvider';
+import { useOverlay } from '@/hooks/common/useOverlay';
 
 interface DateInputProps {
   date: string;
   onChangeDate: (date: Date) => void;
-  openDatePicker: OpenDatePickerOverlayVoid;
   children?: ReactNode;
 }
 
-export default function DateInput({
-  date,
-  onChangeDate,
-  openDatePicker,
-  children,
-}: DateInputProps) {
+export default function DateInput({ date, onChangeDate, children }: DateInputProps) {
   const initialDate = new Date(date);
   const remainingDays = getRemainingDays(initialDate);
   const expirationStatus = getExpirationStatus(+remainingDays);
+
+  const { openDatePicker } = useOverlay();
 
   const onChange = (_: any, selectedDate?: Date) => {
     if (selectedDate) {
@@ -38,7 +34,7 @@ export default function DateInput({
   const onEditDatePickerPress = () => {
     openDatePicker({
       hasDim: true,
-      children: (
+      render: () => (
         <View>
           <ModalHeader title="날짜 변경하기" isDatePicker />
 

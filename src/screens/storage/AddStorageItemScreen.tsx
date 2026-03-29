@@ -1,4 +1,14 @@
 import { addItemAtom } from '@/atom/storageItemAtom';
+import { categoryObj, DEFAULT_EXPIRATION_DAYS, storageObj } from '@/constants';
+import { initialStorageItem } from '@/constants/initialItem';
+import { RootStackParamList } from '@/types/RootStackParamList';
+import { EnrichStorageItem, StorageItem } from '@/types/storage';
+import { searchIngredient } from '@/utils';
+import { convertIngredientToStorageItem } from '@/utils/convertToStorageItem';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useSetAtom } from 'jotai';
+import { useState } from 'react';
+import { Pressable, View } from 'react-native';
 import GridContainer from '@/components/common/container/GridContainer';
 import LabelContainer from '@/components/common/container/LabelContainer';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
@@ -13,17 +23,6 @@ import PressableSquareBtn from '@/components/common/PressableSquareBtn';
 import ScreenHeader from '@/components/common/ScreenHeader';
 import Text from '@/components/common/ui/Text';
 import TextInput from '@/components/common/ui/TextInput';
-import { categoryObj, DEFAULT_EXPIRATION_DAYS, storageObj } from '@/constants';
-import { initialStorageItem } from '@/constants/initialItem';
-import { useOverlay } from '@/provider/OverlayProvider';
-import { RootStackParamList } from '@/types/RootStackParamList';
-import { EnrichStorageItem, StorageItem } from '@/types/storage';
-import { searchIngredient } from '@/utils';
-import { convertIngredientToStorageItem } from '@/utils/convertToStorageItem';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { useSetAtom } from 'jotai';
-import { useState } from 'react';
-import { Pressable, View } from 'react-native';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'AddStorageItem'>;
 
@@ -49,8 +48,6 @@ export default function AddStorageItemScreen() {
       return { ...prev, ...newData };
     });
   };
-
-  const { openDatePicker } = useOverlay();
 
   return (
     <SafeAreaViewContainer edges={['top']}>
@@ -152,7 +149,6 @@ export default function AddStorageItemScreen() {
             <FormDateInput
               currDate={currStorageItem.expiresAt}
               onItemChange={onItemChange}
-              openDatePicker={openDatePicker}
               defaultExpirationDays={
                 currStorageItem.ingredient?.expirationDays || DEFAULT_EXPIRATION_DAYS
               }

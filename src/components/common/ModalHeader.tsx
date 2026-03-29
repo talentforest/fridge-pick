@@ -1,6 +1,6 @@
 import PressableIcon from '@/components/common/PressableIcon';
 import Text from '@/components/common/ui/Text';
-import { useOverlay } from '@/provider/OverlayProvider';
+import { useOverlay } from '@/hooks/common/useOverlay';
 import { View } from 'react-native';
 
 interface ModalHeaderProps {

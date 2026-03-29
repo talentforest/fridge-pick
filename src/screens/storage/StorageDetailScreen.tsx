@@ -8,7 +8,7 @@ import CautionIngredientList from '@/components/storage/CautionIngredientList';
 import SearchItemSheet from '@/components/storage/SearchItemSheet';
 import Storage from '@/components/storage/Storage';
 import { storageObj } from '@/constants';
-import { useOverlay } from '@/provider/OverlayProvider';
+import { useOverlay } from '@/hooks/common/useOverlay';
 import { RootStackParamList } from '@/types/RootStackParamList';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -33,7 +33,7 @@ export default function StorageDetailScreen() {
 
   const openSearchPress = () => {
     openSheet({
-      children: <SearchItemSheet storageLabel={currStorage.label} />,
+      render: () => <SearchItemSheet storageLabel={currStorage.label} />,
     });
   };
 

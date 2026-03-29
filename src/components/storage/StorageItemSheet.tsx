@@ -10,8 +10,9 @@ import SectionTitle from '@/components/common/SectionTitle';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import StorageModal from '@/components/storage/StorageModal';
-import { categoryObj, colorByStorage, dishList, storageObj } from '@/constants';
-import { OpenDatePickerOverlayVoid, OpenOverlayVoid } from '@/provider/OverlayProvider';
+import { categoryObj, colorByStorage, dishList } from '@/constants';
+import { useOverlay } from '@/hooks/common/useOverlay';
+
 import { EnrichStorageItem, StorageItem } from '@/types/storage';
 import { formatDateString } from '@/utils';
 
@@ -21,24 +22,16 @@ import { Pressable, View } from 'react-native';
 
 interface StorageItemSheetProps {
   storageItem: EnrichStorageItem;
-  closeSheet: () => void;
-  closeModal: () => void;
-  openDatePicker: OpenDatePickerOverlayVoid;
-  openModal: OpenOverlayVoid;
 }
 
-export default function StorageItemSheet({
-  storageItem,
-  closeSheet,
-  closeModal,
-  openDatePicker,
-  openModal,
-}: StorageItemSheetProps) {
+export default function StorageItemSheet({ storageItem }: StorageItemSheetProps) {
   const { ingredient, customLabel, storage, id, expiresAt, memo } = storageItem;
 
   const [currentValue, setCurrentValue] = useState<
     Pick<StorageItem, 'expiresAt' | 'storage' | 'memo'>
   >({ expiresAt, storage, memo: memo || '' });
+
+  const { closeModal, openModal, closeSheet } = useOverlay();
 
   const [isMemoEditing, setIsMemoEditing] = useState(false);
 
@@ -63,7 +56,8 @@ export default function StorageItemSheet({
             onItemChange({ id, newData });
             closeModal();
             closeSheet();
-            alert(`${storageObj[newData.storage.type].label}으로 옮겼습니다!`);
+
+            // alert(`${storageObj[newData.storage.type].label}으로 옮겼습니다!`);
           }}
         />
       ),
@@ -89,11 +83,7 @@ export default function StorageItemSheet({
 
       <View className="gap-y-3">
         {/* 소비기한 */}
-        <DateInput
-          date={currentValue.expiresAt}
-          onChangeDate={onChangeDate}
-          openDatePicker={openDatePicker}
-        >
+        <DateInput date={currentValue.expiresAt} onChangeDate={onChangeDate}>
           <View className="flex-row gap-x-1 p-5">
             <Icon name="Calendar" size={18} color="gray" />
             <Text className="text-gray-600">연장</Text>

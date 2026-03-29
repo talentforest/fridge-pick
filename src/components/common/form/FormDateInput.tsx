@@ -3,7 +3,6 @@ import DateInput from '@/components/common/DateInput';
 import FilterTag from '@/components/common/FilterTag';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import { OpenDatePickerOverlayVoid } from '@/provider/OverlayProvider';
 import { StorageItem } from '@/types/storage';
 import { formatDateString } from '@/utils';
 import { addDays, addMonths, addWeeks, addYears } from 'date-fns';
@@ -14,7 +13,6 @@ interface FormDateInputProps {
   onItemChange: (
     newData: Partial<Pick<StorageItem, 'expiresAt' | 'storage' | 'memo'>>,
   ) => void;
-  openDatePicker: OpenDatePickerOverlayVoid;
   defaultExpirationDays?: number;
   hasInfo?: boolean;
 }
@@ -22,7 +20,6 @@ interface FormDateInputProps {
 export default function FormDateInput({
   currDate,
   onItemChange,
-  openDatePicker,
   defaultExpirationDays,
   hasInfo,
 }: FormDateInputProps) {
@@ -55,11 +52,7 @@ export default function FormDateInput({
         </View>
       )}
 
-      <DateInput
-        date={currDate}
-        onChangeDate={onChangeDate}
-        openDatePicker={openDatePicker}
-      >
+      <DateInput date={currDate} onChangeDate={onChangeDate}>
         <View className="flex-row gap-x-1 p-5">
           <Icon name="Calendar" size={18} color="gray" />
           <Text className="text-gray-600">변경</Text>

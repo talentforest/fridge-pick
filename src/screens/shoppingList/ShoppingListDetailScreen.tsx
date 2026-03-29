@@ -8,7 +8,7 @@ import ViewContentContainer from '@/components/common/container/ViewContentConta
 import PressableSquareBtn from '@/components/common/PressableSquareBtn';
 import ScreenHeader from '@/components/common/ScreenHeader';
 import PurchasedItem from '@/components/shoppingList/PurchasedItem';
-import { useOverlay } from '@/provider/OverlayProvider';
+import { useOverlay } from '@/hooks/common/useOverlay';
 import { RootStackParamList } from '@/types/RootStackParamList';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
