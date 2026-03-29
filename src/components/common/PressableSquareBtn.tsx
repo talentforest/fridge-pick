@@ -41,7 +41,7 @@ export default function PressableSquareBtn({
   return (
     <Pressable
       {...props}
-      className={`w-fit flex-row items-center justify-center gap-x-1 rounded-xl px-5 py-4 ${bgColorStyle[color]} ${props.className}`}
+      className={`flex-row items-center justify-center gap-x-1 rounded-xl p-5 ${bgColorStyle[color]} ${props.className}`}
     >
       {iconName && (
         <Icon
@@ -51,9 +51,7 @@ export default function PressableSquareBtn({
         />
       )}
 
-      <Text className={`${textColorStyle[color]} ${textClassName}`}>
-        {name}
-      </Text>
+      <Text className={`${textColorStyle[color]} ${textClassName}`}>{name}</Text>
     </Pressable>
   );
 }

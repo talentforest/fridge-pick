@@ -14,7 +14,7 @@ export default function GridContainer({
   gap = 16,
   className = '',
 }: GridContainerProps) {
-  const [containerWidth, setContainerWidth] = useState<number | null>(null);
+  const [containerWidth, setContainerWidth] = useState<number>(0);
 
   const handleLayout = (e: LayoutChangeEvent) => {
     const width = e.nativeEvent.layout.width;
@@ -24,22 +24,26 @@ export default function GridContainer({
   const childrenArray = React.Children.toArray(children);
 
   const itemWidth =
-    containerWidth !== null
-      ? (containerWidth - gap * (columns - 1)) / columns
-      : 0;
+    containerWidth > 0 ? Math.floor((containerWidth - gap * (columns - 1)) / columns) : 0;
 
   return (
-    <View
-      onLayout={handleLayout}
-      className={`w-full flex-row flex-wrap ${className}`}
-      style={{ gap }}
-    >
-      {containerWidth !== null &&
-        childrenArray.map((child, index) => (
-          <View key={index} style={{ width: itemWidth }}>
+    <View onLayout={handleLayout} className={`w-full flex-row flex-wrap ${className}`}>
+      {childrenArray.map((child, index) => {
+        const isLastColumn = (index + 1) % columns === 0;
+
+        return (
+          <View
+            key={index}
+            style={{
+              width: itemWidth,
+              marginRight: isLastColumn ? 0 : gap,
+              marginBottom: gap,
+            }}
+          >
             {child}
           </View>
-        ))}
+        );
+      })}
     </View>
   );
 }

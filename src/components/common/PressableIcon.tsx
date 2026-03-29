@@ -19,7 +19,7 @@ export default function PressableIcon({
   ...props
 }: PressableIconProps & PressableProps) {
   return (
-    <Pressable {...props} className="flex-row items-center gap-x-0.5">
+    <Pressable {...props} className={`flex-row items-center gap-x-1 ${props.className}`}>
       <Icon name={icon} size={iconSize} color={iconColor} />
       {text ? <Text className={textClassName}>{text}</Text> : <></>}
     </Pressable>

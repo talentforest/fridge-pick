@@ -1,5 +1,6 @@
 import { allStorageItemListAtom } from '@/atom/storageItemAtom';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
+import FullBleedSection from '@/components/common/container/FullBleedSection';
 import SectionTitle from '@/components/common/SectionTitle';
 import CautionStorageItem from '@/components/storage/CautionStorageItem';
 import { getExpiredStorageItemList } from '@/utils/getExpiredStorageItemList';
@@ -16,26 +17,21 @@ export default function ExpiringIngredients() {
 
   return (
     <View className="gap-y-3">
-      <SectionTitle
-        title="지금 써야할 재료"
-        className="pl-6"
-        icon="ClockAlert"
-      />
-      <CarouselContainer
-        data={expiredStorageItemList}
-        initialIndex={expiredStorageItemList.length}
-        itemWidth={0.27}
-        hasNavigation
-        centerFocus
-        renderItem={({ item, index, isCurrIndex }) => (
-          <CautionStorageItem
-            item={item}
-            index={index}
-            isCurrIndex={isCurrIndex}
-          />
-        )}
-        keyExtractor={(_, index) => `${index}`}
-      />
+      <SectionTitle title="지금 써야할 재료" icon="ClockAlert" />
+
+      <FullBleedSection>
+        <CarouselContainer
+          data={expiredStorageItemList}
+          initialIndex={expiredStorageItemList.length}
+          itemWidth={0.27}
+          hasNavigation
+          centerFocus
+          renderItem={({ item, index, isCurrIndex }) => (
+            <CautionStorageItem item={item} index={index} isCurrIndex={isCurrIndex} />
+          )}
+          keyExtractor={(_, index) => `${index}`}
+        />
+      </FullBleedSection>
     </View>
   );
 }

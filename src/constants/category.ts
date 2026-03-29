@@ -1,7 +1,7 @@
 export type CategoryKey = keyof typeof categoryObj;
+export type ValidCategoryKey = Exclude<keyof typeof categoryObj, 'noCategory'>;
 
-export type CategoryLabel =
-  (typeof categoryObj)[keyof typeof categoryObj]['label'];
+export type CategoryLabel = (typeof categoryObj)[keyof typeof categoryObj]['label'];
 
 export type CategoryItem = (typeof categoryObj)[CategoryKey];
 
@@ -48,12 +48,21 @@ export const categoryObj = {
     icon: 'Milk',
     color: 'yellow',
   },
+
+  /** 이미 조리 완료된 반찬
+   * sidedish vs conveniencefood
+   * 반찬 vs 한 끼
+   */
   sidedish: {
     id: 'sidedish',
     label: '반찬/요리',
     icon: 'Soup',
     color: 'red',
   },
+
+  /** 한끼 바로 대체 가능한 간편식
+   * 이거 하나로 식사가 가능한가?
+   */
   conveniencefood: {
     id: 'conveniencefood',
     label: '간편식',
@@ -65,6 +74,7 @@ export const categoryObj = {
     label: '조미료/장/오일',
     icon: 'HeartPulse',
     color: 'red',
+    // NOTE: 추후 추가, type: 'basic' | 'sauce' | 'oil'
   },
   powder: {
     id: 'powder',
@@ -72,8 +82,8 @@ export const categoryObj = {
     icon: 'HeartPulse',
     color: 'red',
   },
-  desert: {
-    id: 'desert',
+  dessert: {
+    id: 'dessert',
     label: '간식/베이커리',
     icon: 'Dessert',
     color: 'yellow',
@@ -83,6 +93,7 @@ export const categoryObj = {
     label: '음료/주류',
     icon: 'GlassWater',
     color: 'blue',
+    // NOTE: 추후 추가, type: 'beverage' | 'alcohol'
   },
   health: {
     id: 'health',

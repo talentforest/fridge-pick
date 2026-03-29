@@ -2,113 +2,114 @@ import { iosShadowStyle } from '@/constants/shadowStyle';
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
+  BottomSheetProps,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { Modal, Pressable, View } from 'react-native';
+import { createContext, ReactNode, useContext, useEffect, useRef, useState } from 'react';
+import { Modal, ModalProps, Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-type SheetOptions = {
-  snapPoints?: string[];
-  enableContentPanningGesture?: boolean;
-};
+/** BottomSheet */
+export type SheetParams = BottomSheetProps & { hasDim?: boolean };
+export type OpenSheetOverlayVoid = (options: SheetParams) => void;
 
-type OpenSheetParams = {
-  element: ReactNode;
-  hasDim?: boolean;
-  options?: SheetOptions;
-};
+/** Modal */
+export type ModalParams = ModalProps & { hasDim?: boolean };
+export type OpenOverlayVoid = (options: ModalParams) => void;
+
+/** DatePicker */
+export type DatePickerParams = { children: ReactNode; hasDim?: boolean };
+export type OpenDatePickerOverlayVoid = (options: DatePickerParams) => void;
 
 type OverlayContextType = {
-  isOpenOverlay: boolean;
-
-  openModal: ({ element, hasDim }: OpenSheetParams) => void;
+  openModal: OpenOverlayVoid;
   closeModal: () => void;
 
-  openSheet: ({ element, hasDim, options }: OpenSheetParams) => void;
-  closeSheet: () => void;
-
-  openDatePicker: ({ element, hasDim }: OpenSheetParams) => void;
+  openDatePicker: OpenDatePickerOverlayVoid;
   closeDatePicker: () => void;
+
+  openSheet: OpenSheetOverlayVoid;
+  closeSheet: () => void;
 };
 
 const OverlayContext = createContext<OverlayContextType | null>(null);
 
 export function OverlayProvider({ children }: { children: ReactNode }) {
+  const insets = useSafeAreaInsets();
+
+  const transitionIdRef = useRef(0);
+  const [pendingOpenId, setPendingOpenId] = useState<number | null>(null);
+
+  /* -------------------------------------------------------------------------- */
+  /*                                BottomSheet                                 */
+  /* -------------------------------------------------------------------------- */
   const sheetRef = useRef<BottomSheetModal>(null);
-  const datePickerRef = useRef<BottomSheetModal>(null);
 
-  const [dim, setDim] = useState<boolean>(false);
-  const [sheetOptions, setSheetOptions] = useState<SheetOptions>({});
-  const [isOpen, setIsOpen] = useState(false);
+  const [sheetProps, setSheetProps] = useState<SheetParams | null>(null);
 
-  const [modalContent, setModalContent] = useState<ReactNode>(null);
-  const [sheetContent, setSheetContent] = useState<ReactNode>(null);
-  const [datePickerContent, setDatePickerContent] = useState<ReactNode>(null);
+  const openSheet = async (props: SheetParams) => {
+    const id = ++transitionIdRef.current;
 
-  const [modalVisible, setModalVisible] = useState(false);
-
-  /** modal */
-  const openModal = ({ element, hasDim = false }: OpenSheetParams) => {
-    setDim(hasDim);
-    setModalContent(element);
-    setModalVisible(true);
+    setSheetProps(props);
+    setPendingOpenId(id);
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
-    setModalContent(null);
-  };
-
-  /** sheet */
-  const openSheet = ({ element, hasDim = false, options }: OpenSheetParams) => {
-    setDim(hasDim);
-    setSheetContent(element);
-    setSheetOptions(options ?? {});
-    setIsOpen(true);
-  };
-
-  const closeSheet = () => {
+  const closeSheet = async () => {
+    ++transitionIdRef.current;
+    setPendingOpenId(null);
     sheetRef.current?.dismiss();
   };
 
-  /** datepicker */
-  const openDatePicker = ({ element, hasDim = false }: OpenSheetParams) => {
-    setDim(hasDim);
-    setDatePickerContent(element);
+  useEffect(() => {
+    if (!pendingOpenId) return;
+    if (transitionIdRef.current !== pendingOpenId) return;
+    if (!sheetProps) return;
+
+    sheetRef.current?.present();
+
+    setPendingOpenId(null);
+  }, [pendingOpenId, sheetProps]);
+
+  useEffect(() => {
+    if (!sheetProps) {
+      sheetRef.current?.dismiss();
+    }
+  }, [sheetProps]);
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   Modal                                    */
+  /* -------------------------------------------------------------------------- */
+  const [modalProps, setModalProps] = useState<ModalParams | null>(null);
+
+  const openModal = async (props: ModalParams) => {
+    setModalProps(props);
+  };
+
+  const closeModal = async () => {
+    setModalProps(null);
+  };
+
+  /* -------------------------------------------------------------------------- */
+  /*                                DatePicker                                  */
+  /* -------------------------------------------------------------------------- */
+  const datePickerRef = useRef<BottomSheetModal>(null);
+
+  const [datePickerProps, setDatePickerProps] = useState<DatePickerParams | null>(null);
+
+  const openDatePicker = (props: DatePickerParams) => {
+    setDatePickerProps(props);
     requestAnimationFrame(() => {
       datePickerRef.current?.present();
     });
   };
 
-  const closeDatePicker = () => {
-    setModalVisible(false);
-    setDatePickerContent(null);
+  const closeDatePicker = async () => {
+    setDatePickerProps(null);
   };
-
-  const isOpenOverlay =
-    modalVisible || sheetContent !== null || datePickerContent !== null;
-
-  const insets = useSafeAreaInsets();
-
-  useEffect(() => {
-    if (isOpen) {
-      sheetRef.current?.present();
-      setIsOpen(false);
-    }
-  }, [isOpen, sheetOptions]);
 
   return (
     <OverlayContext.Provider
       value={{
-        isOpenOverlay,
         openModal,
         closeModal,
         openSheet,
@@ -119,26 +120,9 @@ export function OverlayProvider({ children }: { children: ReactNode }) {
     >
       {children}
 
-      {/* bottomSheet */}
+      {/* BottomSheet */}
       <BottomSheetModal
         ref={sheetRef}
-        onChange={(index) => {
-          if (index === -1) setSheetContent(null);
-        }}
-        key={JSON.stringify(sheetOptions.snapPoints)}
-        snapPoints={sheetOptions.snapPoints ?? ['44%']}
-        backdropComponent={
-          dim
-            ? (props) => (
-                <BottomSheetBackdrop
-                  {...props}
-                  appearsOnIndex={0}
-                  disappearsOnIndex={-1}
-                  opacity={0.3}
-                />
-              )
-            : undefined
-        }
         enablePanDownToClose
         enableContentPanningGesture={true}
         maxDynamicContentSize={700}
@@ -152,57 +136,84 @@ export function OverlayProvider({ children }: { children: ReactNode }) {
           width: 80,
           height: 10,
         }}
+        {...sheetProps}
+        snapPoints={sheetProps?.snapPoints ?? ['48%']}
+        onChange={(index, position, type) => {
+          if (index === 0 && !sheetProps) {
+            sheetRef.current?.dismiss();
+            return;
+          }
+          if (index === -1) {
+            setSheetProps(null);
+
+            if (sheetProps?.onChange) {
+              sheetProps.onChange(index, position, type);
+            }
+          }
+        }}
+        backdropComponent={
+          sheetProps?.hasDim
+            ? (props) => (
+                <BottomSheetBackdrop
+                  {...props}
+                  appearsOnIndex={0}
+                  disappearsOnIndex={-1}
+                  opacity={0.3}
+                />
+              )
+            : undefined
+        }
       >
         <BottomSheetScrollView>
-          <View
-            className="flex-1"
-            style={{
-              paddingHorizontal: 24,
-              paddingTop: 0,
-              paddingBottom: insets.bottom,
-            }}
-          >
-            {sheetContent}
-          </View>
+          {sheetProps?.children && (
+            <View
+              className="flex-1"
+              style={{
+                paddingHorizontal: 24,
+                paddingTop: 0,
+                paddingBottom: insets.bottom,
+              }}
+            >
+              {sheetProps?.children}
+            </View>
+          )}
         </BottomSheetScrollView>
       </BottomSheetModal>
 
-      {/* modal */}
-      <Modal transparent visible={modalVisible} animationType="fade">
+      {/* Modal */}
+      <Modal transparent visible={!!modalProps} animationType="fade">
         <View className="flex-1">
-          {/* 모달 Dim */}
-          {dim && (
+          {modalProps?.hasDim && (
             <Pressable className="flex-1 bg-black/30" onPress={closeModal} />
           )}
 
           <View className="absolute h-full w-full items-center justify-center">
-            <View className="max-h-[85%] rounded-3xl bg-white">
-              {modalContent}
-            </View>
+            {modalProps?.children && (
+              <View className="max-h-[85%] w-[85%] rounded-3xl bg-white p-6">
+                {modalProps.children}
+              </View>
+            )}
           </View>
         </View>
       </Modal>
 
-      {/* date picker */}
-      <Modal transparent visible={!!datePickerContent} animationType="fade">
+      {/* DatePicker */}
+      <Modal transparent visible={!!datePickerProps?.children} animationType="fade">
         <View className="flex-1 justify-end">
-          {dim && (
+          {datePickerProps?.hasDim && (
             <Pressable
               className="absolute h-full w-full bg-black/30"
               onPress={closeDatePicker}
             />
           )}
 
-          <View className="rounded-t-3xl bg-gray-200 pt-8">
-            <View
-              className="mx-auto"
-              style={{
-                paddingBottom: insets.bottom,
-              }}
-            >
-              {datePickerContent}
+          {datePickerProps?.children && (
+            <View className="rounded-t-3xl bg-gray-200 pt-8">
+              <View className="mx-auto" style={{ paddingBottom: insets.bottom }}>
+                {datePickerProps.children}
+              </View>
             </View>
-          </View>
+          )}
         </View>
       </Modal>
     </OverlayContext.Provider>

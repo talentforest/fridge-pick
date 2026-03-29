@@ -4,6 +4,7 @@ import {
   deleteItemsAtom,
 } from '@/atom/shoppingListAtom';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
+import ViewContentContainer from '@/components/common/container/ViewContentContainer';
 import PressableSquareBtn from '@/components/common/PressableSquareBtn';
 import ScreenHeader from '@/components/common/ScreenHeader';
 import PurchasedItem from '@/components/shoppingList/PurchasedItem';
@@ -13,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 
 type NavProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -33,7 +34,7 @@ export default function ShoppingListDetailScreen() {
     <SafeAreaViewContainer edges={['top', 'bottom']}>
       <ScreenHeader title="보관함에 추가할 식재료" />
 
-      <View className="flex-1 px-6 py-4">
+      <ViewContentContainer className="pt-4">
         <FlatList
           data={storageItemList}
           nestedScrollEnabled
@@ -61,7 +62,7 @@ export default function ShoppingListDetailScreen() {
             navigation.goBack();
           }}
         />
-      </View>
+      </ViewContentContainer>
     </SafeAreaViewContainer>
   );
 }

@@ -9,4 +9,5 @@ export type RootStackParamList = {
 
   StorageDetail: { id: StorageTypeId };
   ShoppingListDetail: undefined;
+  AddStorageItem: { id: StorageTypeId };
 };

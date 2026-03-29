@@ -7,6 +7,7 @@ import {
   ArrowUp,
   Beef,
   Bell,
+  Info,
   CakeSlice,
   Calendar,
   CalendarClock,
@@ -14,10 +15,12 @@ import {
   CheckCircle2,
   ChefHat,
   ChevronLeft,
+  RotateCcw,
   ChevronRight,
   Circle,
   Clock,
   ClockAlert,
+  Plus,
   Database,
   Dessert,
   Edit,
@@ -30,11 +33,13 @@ import {
   Heart,
   HeartPulse,
   LeafyGreen,
+  RefreshCcw,
   LineSquiggle,
   LucideIcon,
   LucideProps,
   Menu,
   Milk,
+  UtensilsCrossed,
   OctagonAlert,
   Pizza,
   PlusCircle,
@@ -56,7 +61,7 @@ import {
   Wind,
   X,
 } from 'lucide-react-native';
-import { useColorScheme } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 
 export type IconName =
   | 'X'
@@ -66,11 +71,15 @@ export type IconName =
   | 'Clock'
   | 'ShoppingBag'
   | 'ChefHat'
+  | 'RefreshCcw'
+  | 'UtensilsCrossed'
   | 'Refrigerator'
   | 'SquareCheckBig'
   | 'Square'
   | 'Circle'
+  | 'Plus'
   | 'Trash2'
+  | 'Info'
   | 'PlusSquare'
   | 'PlusCircle'
   | 'CheckCircle2'
@@ -83,6 +92,7 @@ export type IconName =
   | 'ChevronRight'
   | 'Edit'
   | 'Edit3'
+  | 'RotateCcw'
   | 'ClockAlert'
   | 'CalendarClock'
   | 'SquareSlash'
@@ -161,10 +171,14 @@ export default function Icon({
     HandPlatter,
     Calendar,
     CheckCircle2,
+    RefreshCcw,
     Circle,
+    Info,
+    Plus,
     Clock,
     LeafyGreen,
     ChefHat,
+    UtensilsCrossed,
     ShoppingBag,
     Refrigerator,
     ArrowUp,
@@ -177,6 +191,7 @@ export default function Icon({
     Trash2,
     PlusSquare,
     PlusCircle,
+    RotateCcw,
     Grid2X2Plus,
     Edit,
     Edit3,
@@ -212,5 +227,9 @@ export default function Icon({
 
   const Component = iconObj[name];
 
-  return <Component stroke={colorMap[color]} strokeWidth={2.2} {...props} />;
+  return (
+    <View className={props.className}>
+      <Component stroke={colorMap[color]} strokeWidth={2.2} {...props} />
+    </View>
+  );
 }

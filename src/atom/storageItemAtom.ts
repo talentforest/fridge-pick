@@ -6,6 +6,8 @@ import { atomFamily } from 'jotai-family';
 /** Basic */
 export const allStorageItemListAtom = atom<StorageItem[]>(mockStorageItemList); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
 
+export const searchKeywordAtom = atom<string>('');
+
 /* -------------------------------------------------------------------------- */
 /*                                  Selector                                  */
 /* -------------------------------------------------------------------------- */
@@ -33,16 +35,13 @@ export type AddResult =
  * - 없으면 label 기준으로 중복 검사
  * - 중복 시 duplicate 결과 반환
  */
-export const addItemAtom = atom(
-  null,
-  (get, set, newItem: StorageItem): AddResult => {
-    const list = get(allStorageItemListAtom);
+export const addItemAtom = atom(null, (get, set, newItem: StorageItem): AddResult => {
+  const list = get(allStorageItemListAtom);
 
-    set(allStorageItemListAtom, [...list, newItem]);
+  set(allStorageItemListAtom, [...list, newItem]);
 
-    return { result: 'success', item: newItem };
-  },
-);
+  return { result: 'success', item: newItem };
+});
 
 /**
  * 여러 아이템을 일괄 삭제한다.
@@ -72,7 +71,7 @@ export const changeItemAtom = atom(
       newData,
     }: {
       id: string;
-      newData: Partial<Pick<StorageItem, 'expiresAt' | 'storage'>>;
+      newData: Partial<Pick<StorageItem, 'expiresAt' | 'storage' | 'memo'>>;
     },
   ) => {
     const list = get(allStorageItemListAtom);

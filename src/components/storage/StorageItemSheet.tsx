@@ -1,74 +1,49 @@
 import { changeItemAtom, deleteItemsAtom } from '@/atom/storageItemAtom';
 import GridContainer from '@/components/common/container/GridContainer';
-import DateTimePicker from '@/components/common/DateTimePicker';
+import DateInput from '@/components/common/DateInput';
 import DishCompactCard from '@/components/common/DishCompactCard';
+import FormMemo from '@/components/common/form/FormMemo';
 import IngredientImage from '@/components/common/ingredient/IngredientImage';
-import ModalHeader from '@/components/common/ModalHeader';
 import PressableIcon from '@/components/common/PressableIcon';
 import PressableSquareBtn from '@/components/common/PressableSquareBtn';
 import SectionTitle from '@/components/common/SectionTitle';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import {
-  categoryObj,
-  colorByStorage,
-  dishList,
-  expirationStatusObj,
-  storageObj,
-} from '@/constants';
+import StorageModal from '@/components/storage/StorageModal';
+import { categoryObj, colorByStorage, dishList, storageObj } from '@/constants';
+import { OpenDatePickerOverlayVoid, OpenOverlayVoid } from '@/provider/OverlayProvider';
 import { EnrichStorageItem, StorageItem } from '@/types/storage';
 import { formatDateString } from '@/utils';
-import {
-  formatRemainingDays,
-  getExpirationStatus,
-  getRemainingDays,
-} from '@/utils/getExpirationDate';
 
-import { format } from 'date-fns';
 import { useSetAtom } from 'jotai';
-import { ReactNode, useState } from 'react';
-import { View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, View } from 'react-native';
 
 interface StorageItemSheetProps {
   storageItem: EnrichStorageItem;
   closeSheet: () => void;
-  openDatePicker: (options: { element: ReactNode; hasDim?: boolean }) => void;
+  closeModal: () => void;
+  openDatePicker: OpenDatePickerOverlayVoid;
+  openModal: OpenOverlayVoid;
 }
 
 export default function StorageItemSheet({
   storageItem,
   closeSheet,
+  closeModal,
   openDatePicker,
+  openModal,
 }: StorageItemSheetProps) {
-  const { ingredient, customLabel, storage, id, expiresAt } = storageItem;
-
-  const [isEditing, setIsEditing] = useState(false);
+  const { ingredient, customLabel, storage, id, expiresAt, memo } = storageItem;
 
   const [currentValue, setCurrentValue] = useState<
-    Pick<StorageItem, 'expiresAt' | 'storage'>
-  >({ expiresAt, storage });
+    Pick<StorageItem, 'expiresAt' | 'storage' | 'memo'>
+  >({ expiresAt, storage, memo: memo || '' });
 
-  const remainingDays = getRemainingDays(new Date(currentValue.expiresAt));
-  const expirationStatus = getExpirationStatus(+remainingDays);
+  const [isMemoEditing, setIsMemoEditing] = useState(false);
 
   const deleteItems = useSetAtom(deleteItemsAtom);
   const onItemChange = useSetAtom(changeItemAtom);
-
-  const storageItemInfo = [
-    {
-      label: '소비기한' as const,
-      value: format(new Date(currentValue.expiresAt), 'yy. MM. dd.'),
-      detail: (
-        <Text className={expirationStatusObj[expirationStatus].textColor}>
-          {formatRemainingDays(remainingDays)}
-        </Text>
-      ),
-    },
-    {
-      label: '보관위치' as const,
-      value: storageObj[currentValue.storage.type].label,
-    },
-  ];
 
   const onChangeDate = (date: Date) => {
     if (!date) return;
@@ -78,8 +53,25 @@ export default function StorageItemSheet({
     onItemChange({ id, newData: { expiresAt } });
   };
 
+  const onEditStoragePress = () => {
+    openModal({
+      hasDim: true,
+      children: (
+        <StorageModal
+          currentValue={currentValue.storage.type}
+          onItemChange={(newData) => {
+            onItemChange({ id, newData });
+            closeModal();
+            closeSheet();
+            alert(`${storageObj[newData.storage.type].label}으로 옮겼습니다!`);
+          }}
+        />
+      ),
+    });
+  };
+
   return (
-    <View className="my-5 w-full flex-1 gap-y-3">
+    <View className="my-2 w-full flex-1 gap-y-1.5">
       <View className="flex-1 flex-row items-center gap-x-3">
         <IngredientImage ingredient={ingredient} size={80} />
 
@@ -87,127 +79,90 @@ export default function StorageItemSheet({
           <Text className="line-clamp-1 text-xl leading-8">
             {customLabel || ingredient?.label}
           </Text>
-
           {ingredient && (
-            <View className="flex-row items-center gap-x-1">
-              <Text className="text-md text-gray-500">
-                {categoryObj[ingredient.category].label}
-              </Text>
-            </View>
+            <Text className="text-md text-gray-500">
+              {categoryObj[ingredient.category].label}
+            </Text>
           )}
         </View>
       </View>
 
       <View className="gap-y-3">
-        {storageItemInfo.map(({ label, value, detail }) => (
-          <View
-            key={label}
-            className="flex-1 flex-row items-start rounded-3xl bg-white pl-5 pr-2"
-          >
-            <Text className="mr-3 py-5 text-gray-500">{label}</Text>
+        {/* 소비기한 */}
+        <DateInput
+          date={currentValue.expiresAt}
+          onChangeDate={onChangeDate}
+          openDatePicker={openDatePicker}
+        >
+          <View className="flex-row gap-x-1 p-5">
+            <Icon name="Calendar" size={18} color="gray" />
+            <Text className="text-gray-600">연장</Text>
+          </View>
+        </DateInput>
 
-            <View className="flex-1 py-5">
-              <>
-                {label === '소비기한' && (
-                  <View className="flex-row gap-x-2">
-                    <Text>{value}</Text>
-                    {detail && detail}
-                  </View>
-                )}
-
-                {label === '보관위치' && (
-                  <View className="flex-row items-center gap-x-1">
-                    <Icon
-                      name={storageObj[currentValue.storage.type].icon}
-                      color={storageObj[currentValue.storage.type].color}
-                      size={18}
-                    />
-                    <Text>{value}</Text>
-                  </View>
-                )}
-              </>
-
-              {isEditing && label === '보관위치' && (
-                <View className="mt-2 flex-row items-center gap-x-2">
-                  {Object.values(storageObj).map(
-                    ({ id: storageType, label, icon, color }) => (
-                      <PressableSquareBtn
-                        key={storageType}
-                        name={label}
-                        className="flex !flex-col gap-y-2 !rounded-xl !px-4 py-4"
-                        textClassName="text-sm font-extrabold"
-                        iconName={icon}
-                        iconSize={22}
-                        color={
-                          currentValue.storage.type === storageType
-                            ? color
-                            : 'inActive'
-                        }
-                        onPress={() => {
-                          setCurrentValue((prev) => ({
-                            ...prev,
-                            storage: { type: storageType },
-                          }));
-                        }}
-                      />
-                    ),
-                  )}
-                </View>
-              )}
-            </View>
-
-            {/* 수정버튼 */}
+        {/* 메모사항 */}
+        {isMemoEditing ? (
+          <View className="mt-1">
+            <FormMemo
+              currMemo={currentValue?.memo || ''}
+              onItemChange={(newData) => {
+                setCurrentValue((prev) => ({ ...prev, ...newData }));
+              }}
+            />
             <PressableIcon
-              icon={
-                label === '소비기한'
-                  ? 'Calendar'
-                  : isEditing
-                    ? 'CheckCircle'
-                    : 'Edit'
-              }
-              iconSize={18}
-              className="p-4"
+              icon="CheckCircle2"
+              text="수정완료"
+              iconSize={19}
+              iconColor="green"
+              className="self-end px-2 py-3"
+              textClassName="text-green-900"
               onPress={() => {
-                if (label === '소비기한') {
-                  return openDatePicker({
-                    hasDim: true,
-                    element: (
-                      <View>
-                        <ModalHeader title="날짜 변경하기" isDatePicker />
-                        <DateTimePicker
-                          value={new Date(storageItem.expiresAt)}
-                          onChange={onChangeDate}
-                        />
-                      </View>
-                    ),
-                  });
-                }
-
-                if (label === '보관위치') {
-                  onItemChange({
-                    id,
-                    newData: { storage: currentValue.storage },
-                  });
-                }
-
-                setIsEditing((prev) => !prev);
+                onItemChange({ id, newData: { memo: currentValue.memo } });
+                setIsMemoEditing((prev) => !prev);
               }}
             />
           </View>
-        ))}
-      </View>
+        ) : (
+          <Pressable
+            onPress={() => setIsMemoEditing((prev) => !prev)}
+            className="items-end rounded-2xl border border-gray-200 bg-white p-4"
+          >
+            <View className="w-full flex-1">
+              {currentValue.memo ? (
+                <Text className="leading-7 text-gray-800">{currentValue.memo}</Text>
+              ) : (
+                <Text className="leading-7 text-gray-400">메모사항이 없습니다.</Text>
+              )}
+            </View>
 
-      {/* 삭제 버튼 */}
-      <PressableSquareBtn
-        iconName="Trash2"
-        name="냉장고에서 제거하기"
-        className="mt-6 flex-1 !py-5"
-        color="yellow"
-        onPress={() => {
-          deleteItems([id]);
-          closeSheet();
-        }}
-      />
+            <View className="mt-1 flex-row items-center gap-x-1 px-1">
+              <Icon name="Edit" size={17} color="gray" />
+              <Text className="text-gray-600">수정</Text>
+            </View>
+          </Pressable>
+        )}
+
+        <View className="flex-row gap-x-3">
+          {/* 보관위치 */}
+          <PressableSquareBtn
+            iconName="Edit"
+            name="보관위치 변경"
+            className="mt-6 flex-1 !py-5"
+            color="indigo"
+            onPress={onEditStoragePress}
+          />
+          <PressableSquareBtn
+            iconName="Trash2"
+            name="냉장고에서 제거"
+            className="mt-6 flex-1 !py-5"
+            color="yellow"
+            onPress={() => {
+              deleteItems([id]);
+              closeSheet();
+            }}
+          />
+        </View>
+      </View>
 
       <View className="mx-4 mb-2 mt-20 flex-row items-center gap-x-2">
         <SectionTitle

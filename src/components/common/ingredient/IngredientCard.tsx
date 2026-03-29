@@ -7,28 +7,32 @@ import { View } from 'react-native';
 interface FoodCardProps {
   ingredient: Ingredient;
   className?: string;
-  isCurrIndex?: boolean;
   textClassName?: string;
+  isCompact?: boolean;
 }
 
 export default function IngredientCard({
   ingredient,
   className = '',
-  isCurrIndex,
   textClassName = '',
+  isCompact = false,
 }: FoodCardProps) {
   const { label, expirationDays } = ingredient;
 
   return (
     <Card
-      className={`h-40 items-center justify-between rounded-2xl ${className}`}
+      className={`items-center justify-between gap-y-1 rounded-2xl !px-2 !pt-2 ${isCompact ? '' : 'h-40'} ${className}`}
     >
       <IngredientImage ingredient={ingredient} size={55} />
 
-      <View className="items-center gap-y-2">
-        <Text className={textClassName}>{label}</Text>
-        <Text className={'text-red-600'}>+{expirationDays}일</Text>
-      </View>
+      {isCompact ? (
+        <Text className={`text-center leading-5 ${textClassName}`}>{label}</Text>
+      ) : (
+        <View className="items-center gap-y-2">
+          <Text className={`text-center leading-5 ${textClassName}`}>{label}</Text>
+          <Text className={'text-red-600'}>+{expirationDays}일</Text>
+        </View>
+      )}
     </Card>
   );
 }

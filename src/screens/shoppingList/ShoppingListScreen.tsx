@@ -8,10 +8,11 @@ import {
   toggleAllPurchasedAtom,
 } from '@/atom/shoppingListAtom';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
+import ViewContentContainer from '@/components/common/container/ViewContentContainer';
 import FilterTag from '@/components/common/FilterTag';
 import PressableIcon from '@/components/common/PressableIcon';
 import PressableSquareBtn from '@/components/common/PressableSquareBtn';
-import SectionTitle from '@/components/common/SectionTitle';
+import ScreenHeader from '@/components/common/ScreenHeader';
 import ShoppingItem from '@/components/common/ShoppingItem';
 import Text from '@/components/common/ui/Text';
 import TextInput from '@/components/common/ui/TextInput';
@@ -49,10 +50,10 @@ export default function ShoppingListScreen() {
   const navigation = useNavigation<StackNavProp>();
 
   return (
-    <SafeAreaViewContainer>
-      <View className="flex-1 justify-between gap-y-3 px-6 py-4">
-        <SectionTitle title="장보기 목록" />
+    <SafeAreaViewContainer edges={['top']}>
+      <ScreenHeader title="장보기 목록" isDetailPage={false} />
 
+      <ViewContentContainer>
         <View className="flex-1 rounded-2xl bg-card px-4 pt-2">
           <View className="flex-row items-center justify-between pr-2">
             <PressableIcon
@@ -81,10 +82,7 @@ export default function ShoppingListScreen() {
               )}
               keyExtractor={(item) => `${item.id}`}
               renderItem={({ item }) => (
-                <ShoppingItem
-                  item={item}
-                  isError={error?.item.id === item.id}
-                />
+                <ShoppingItem item={item} isError={error?.item.id === item.id} />
               )}
             />
           ) : (
@@ -93,7 +91,7 @@ export default function ShoppingListScreen() {
                 source={image_empty_basket}
                 className="aspect-square size-1/4 opacity-60"
               />
-              <Text className="text-inactive">장볼 식료품이 없습니다</Text>
+              <Text className="text-inactive">장볼 식재료가 없습니다</Text>
             </View>
           )}
         </View>
@@ -155,6 +153,7 @@ export default function ShoppingListScreen() {
 
           <View className="relative">
             <TextInput
+              maxLength={50}
               value={inputValue}
               onChangeText={(text) => {
                 setInputValue(text);
@@ -162,10 +161,11 @@ export default function ShoppingListScreen() {
                   setError(null);
                 }
               }}
-              placeholder="장볼 식료품을 작성해주세요"
+              placeholder="장볼 식재료가 작성해주세요"
             />
             <PressableIcon
               icon="ArrowUp"
+              className="absolute bottom-0 right-[8px] top-[7px] z-10 size-11 h-fit items-center justify-center rounded-full bg-gray-50"
               onPress={() => {
                 if (!inputValue) return;
 
@@ -177,11 +177,10 @@ export default function ShoppingListScreen() {
 
                 setInputValue('');
               }}
-              className="absolute bottom-0 right-[8px] top-[7px] size-11 h-fit items-center justify-center rounded-full bg-gray-50"
             />
           </View>
         </View>
-      </View>
+      </ViewContentContainer>
     </SafeAreaViewContainer>
   );
 }

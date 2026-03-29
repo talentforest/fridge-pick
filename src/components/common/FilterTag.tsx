@@ -14,7 +14,7 @@ interface FilterProps {
 export default function FilterTag({
   name,
   color,
-  isActive,
+  isActive = false,
   onPress,
   textClassName = '',
 }: FilterProps) {
@@ -39,11 +39,15 @@ export default function FilterTag({
     textColor: 'text-neutral-400',
   };
 
-  const commonClassName = 'rounded-xl p-3.5';
+  const commonClassName = 'rounded-xl px-3.5 py-3';
 
   return onPress ? (
     <Pressable
       onPress={onPress}
+      style={({ pressed }) => ({
+        transform: [{ scale: pressed ? 0.96 : 1 }],
+        opacity: pressed ? 0.55 : 1,
+      })}
       className={`${commonClassName} ${isActive ? bgColor[color as FilterColor] : inActiveObj.bgColor}`}
     >
       <Text

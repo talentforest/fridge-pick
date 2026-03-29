@@ -3,7 +3,7 @@ import Text from '@/components/common/ui/Text';
 
 export default function DishScreen() {
   return (
-    <SafeAreaViewContainer>
+    <SafeAreaViewContainer edges={['top']}>
       <Text>요리메뉴 스크린</Text>
     </SafeAreaViewContainer>
   );

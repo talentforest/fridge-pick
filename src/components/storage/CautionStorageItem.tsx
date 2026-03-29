@@ -42,7 +42,7 @@ export default function CautionStorageItem({
         className={`aspect-square items-center justify-center ${isCurrIndex ? '' : 'rounded-full bg-gray-50'}`}
       >
         <IngredientImage ingredient={item.ingredient} size={55} />
-        <Text className="mb-2 text-center">
+        <Text className="mb-2 text-center text-md">
           {item.customLabel || item?.ingredient?.label}
         </Text>
       </View>

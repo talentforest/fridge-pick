@@ -40,5 +40,5 @@ export const categoryUnitMap: Record<CategoryKey, StockUnit[]> = {
   sidedish: ['팩', '통', '개'],
   health: ['포', '병', '개', '스틱'],
   grains: ['봉', '개'],
-  desert: ['팩', '개', '조각', '상자', '봉', '묶음'],
+  dessert: ['팩', '개', '조각', '상자', '봉', '묶음'],
 };

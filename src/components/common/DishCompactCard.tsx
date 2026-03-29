@@ -11,10 +11,7 @@ interface DishCompactCardProps {
   className?: string;
 }
 
-export default function DishCompactCard({
-  dish,
-  className = '',
-}: DishCompactCardProps) {
+export default function DishCompactCard({ dish, className = '' }: DishCompactCardProps) {
   return (
     <Card key={dish.name} className={`w-fit gap-y-4 !px-3 !py-5 ${className}`}>
       <Text className="text-lg">{dish.name}</Text>
@@ -34,7 +31,7 @@ export default function DishCompactCard({
         <Indicator type="time" value={dish.time} />
       </View>
 
-      <PressableSquareBtn name="오늘의 메뉴" iconName="CheckCircle" />
+      <PressableSquareBtn name="오늘의 메뉴" iconName="UtensilsCrossed" />
     </Card>
   );
 }

@@ -1,48 +1,80 @@
-import { useOverlay } from '@/provider/OverlayProvider';
-import { Pressable } from 'react-native';
-
-import Icon from '@/components/common/ui/Icon';
-import Text from '@/components/common/ui/Text';
+import { Pressable, View } from 'react-native';
 import { formatDateString } from '@/utils';
-import { getRemainingDays } from '@/utils/getExpirationDate';
+import {
+  formatRemainingDays,
+  getExpirationStatus,
+  getRemainingDays,
+} from '@/utils/getExpirationDate';
+import { expirationStatusObj } from '@/constants';
+import { ReactNode } from 'react';
+import Text from '@/components/common/ui/Text';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import ModalHeader from '@/components/common/ModalHeader';
+import { OpenDatePickerOverlayVoid } from '@/provider/OverlayProvider';
 
 interface DateInputProps {
-  date: Date;
-  setDate: (date: Date) => void;
+  date: string;
+  onChangeDate: (date: Date) => void;
+  openDatePicker: OpenDatePickerOverlayVoid;
+  children?: ReactNode;
 }
 
-export default function DateInput({ date, setDate }: DateInputProps) {
+export default function DateInput({
+  date,
+  onChangeDate,
+  openDatePicker,
+  children,
+}: DateInputProps) {
+  const initialDate = new Date(date);
+  const remainingDays = getRemainingDays(initialDate);
+  const expirationStatus = getExpirationStatus(+remainingDays);
+
   const onChange = (_: any, selectedDate?: Date) => {
     if (selectedDate) {
-      setDate(selectedDate);
+      onChangeDate(selectedDate);
     }
   };
 
-  const { openDatePicker } = useOverlay();
+  const onEditDatePickerPress = () => {
+    openDatePicker({
+      hasDim: true,
+      children: (
+        <View>
+          <ModalHeader title="날짜 변경하기" isDatePicker />
+
+          <DateTimePicker
+            minimumDate={new Date()}
+            value={initialDate}
+            mode="date"
+            display="spinner"
+            onChange={onChange}
+            locale="ko-KR"
+          />
+        </View>
+      ),
+    });
+  };
 
   return (
     <Pressable
-      onPress={() => {
-        openDatePicker({
-          hasDim: true,
-          element: (
-            <DateTimePicker
-              minimumDate={new Date()}
-              value={date}
-              mode="date"
-              display="spinner"
-              onChange={onChange}
-              locale="ko-KR"
-            />
-          ),
-        });
-      }}
-      className="relative h-12 w-full flex-row items-center gap-x-2 overflow-hidden rounded-xl border bg-white px-2.5 py-1"
+      onPress={onEditDatePickerPress}
+      className="h-[56] flex-row items-center gap-x-2 rounded-2xl border border-gray-200 bg-white pl-3"
     >
-      <Icon name="Calendar" size={18} />
-      <Text className="text-lg">{formatDateString(date, 'yy. MM. dd')}</Text>
-      <Text className="text-red-500">(+{getRemainingDays(date)}일)</Text>
+      <View className="flex-1 flex-row items-center gap-2">
+        <View
+          className={`rounded-full px-3 py-2.5 ${expirationStatusObj[expirationStatus].filterColor}`}
+        >
+          <Text
+            className={`font-extrabold !text-md ${expirationStatusObj[expirationStatus].textColor}`}
+          >
+            {formatRemainingDays(remainingDays)}
+          </Text>
+        </View>
+
+        <Text>{formatDateString(initialDate, 'yyyy년 MM월 dd일')}</Text>
+      </View>
+
+      {children}
     </Pressable>
   );
 }

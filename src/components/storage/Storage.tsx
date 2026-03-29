@@ -1,16 +1,22 @@
+import { searchKeywordAtom } from '@/atom/storageItemAtom';
 import GridContainer from '@/components/common/container/GridContainer';
+import PressableIcon from '@/components/common/PressableIcon';
 import PressableSquareBtn from '@/components/common/PressableSquareBtn';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
-import TextInput from '@/components/common/ui/TextInput';
 import CategoryLabel from '@/components/storage/CategoryLabel';
 import StorageItem from '@/components/storage/StorageItem';
 import StorageItemSheet from '@/components/storage/StorageItemSheet';
 import { image_empty_basket, storageObj } from '@/constants';
 import { useStorageItemList } from '@/hooks';
 import { useOverlay } from '@/provider/OverlayProvider';
-import { StorageSideId, StorageTypeId } from '@/types/storage';
+import {
+  StorageItem as StorageItemType,
+  StorageSideId,
+  StorageTypeId,
+} from '@/types/storage';
 import { searchStorageItem } from '@/utils';
+import { useAtom } from 'jotai';
 import { useMemo, useState } from 'react';
 import { Image, Pressable, ScrollView, View } from 'react-native';
 
@@ -23,8 +29,6 @@ const SETTING_SIDE = false;
 export default function Storage({ storageType }: StorageProps) {
   const [currSide, setCurrSide] = useState<StorageSideId>('inner');
 
-  const [searchKeyword, setSearchKeyword] = useState('');
-
   const storage = useMemo(() => {
     return {
       type: storageType,
@@ -33,7 +37,7 @@ export default function Storage({ storageType }: StorageProps) {
     };
   }, [storageType, currSide]);
 
-  const { openSheet, closeSheet, openDatePicker } = useOverlay();
+  const { openSheet, closeSheet, closeModal, openDatePicker, openModal } = useOverlay();
 
   const { label, color } = storageObj[storageType];
 
@@ -44,21 +48,30 @@ export default function Storage({ storageType }: StorageProps) {
     itemListByStorage, //
   } = useStorageItemList({ storage });
 
-  const searchedStorageItemList = searchStorageItem(
-    searchKeyword,
-    itemListByStorage,
-  );
+  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
+
+  const searchedStorageItemList = useMemo(() => {
+    if (!searchKeyword) return itemListByStorage;
+    return searchStorageItem(searchKeyword, itemListByStorage);
+  }, [searchKeyword, itemListByStorage]);
+
+  const openStorageItem = (item: StorageItemType) => {
+    openSheet({
+      hasDim: true,
+      children: (
+        <StorageItemSheet
+          storageItem={item}
+          closeSheet={closeSheet}
+          closeModal={closeModal}
+          openModal={openModal}
+          openDatePicker={openDatePicker}
+        />
+      ),
+    });
+  };
 
   return (
     <View className="gap-y-3">
-      <TextInput
-        icon="Search"
-        className={`rounded-xl border border-border bg-white`}
-        placeholder="찾으시는 식료품을 작성해주세요."
-        value={searchKeyword}
-        onChangeText={setSearchKeyword}
-      />
-
       <Card
         className={`min-h-[50vh] flex-1 gap-y-6 rounded-2xl !p-0 ${itemListByCategory.length === 0 ? '' : '!border-0 !bg-transparent'}`}
       >
@@ -85,35 +98,43 @@ export default function Storage({ storageType }: StorageProps) {
             className="flex-1"
             contentContainerClassName="flex-1"
           >
-            <View
-              className={`flex-1 gap-y-3 rounded-2xl border border-border bg-white p-4`}
-            >
-              <Text>검색결과 {searchedStorageItemList.length}개</Text>
+            <View className={`flex-1 rounded-2xl border border-border bg-white`}>
+              <View className="flex-row items-center justify-between">
+                <Text className="pl-4">검색결과 {searchedStorageItemList.length}개</Text>
+                <PressableIcon
+                  icon="RefreshCcw"
+                  className="px-5 py-4"
+                  iconSize={18}
+                  onPress={() => {
+                    setSearchKeyword('');
+                    closeSheet();
+                  }}
+                />
+              </View>
 
-              {/* 검색 결과 식재료 리스트 */}
-              <GridContainer gap={10} columns={5}>
-                {searchedStorageItemList.map((item) => (
-                  <Pressable
-                    key={item.id}
-                    onPress={() =>
-                      openSheet({
-                        element: (
-                          <StorageItemSheet
-                            storageItem={item}
-                            closeSheet={closeSheet}
-                            openDatePicker={openDatePicker}
-                          />
-                        ),
-                        options: {
-                          snapPoints: ['80%'],
-                        },
-                      })
-                    }
-                  >
-                    <StorageItem item={item} />
-                  </Pressable>
-                ))}
-              </GridContainer>
+              <View className="flex-1 px-4 pb-4">
+                {/* 검색 결과 식재료 리스트 */}
+                {searchedStorageItemList.length > 0 ? (
+                  <GridContainer gap={10} columns={5}>
+                    {searchedStorageItemList.map((item) => (
+                      <Pressable
+                        key={item.id}
+                        onPress={() => {
+                          openStorageItem(item);
+                        }}
+                      >
+                        <StorageItem item={item} />
+                      </Pressable>
+                    ))}
+                  </GridContainer>
+                ) : (
+                  <View className="flex-1 items-center justify-center">
+                    <Text className="mx-4 mb-[40%] text-center leading-7 text-gray-400">
+                      냉장실에 &quot;{searchKeyword}&quot; 식재료가 없습니다.
+                    </Text>
+                  </View>
+                )}
+              </View>
             </View>
           </ScrollView>
         )}
@@ -136,23 +157,7 @@ export default function Storage({ storageType }: StorageProps) {
                     <GridContainer gap={4} columns={5}>
                       {/* 식재료 리스트 */}
                       {items.map((item) => (
-                        <Pressable
-                          key={item.id}
-                          onPress={() =>
-                            openSheet({
-                              element: (
-                                <StorageItemSheet
-                                  storageItem={item}
-                                  closeSheet={closeSheet}
-                                  openDatePicker={openDatePicker}
-                                />
-                              ),
-                              options: {
-                                snapPoints: ['45%'],
-                              },
-                            })
-                          }
-                        >
+                        <Pressable key={item.id} onPress={() => openStorageItem(item)}>
                           <StorageItem item={item} />
                         </Pressable>
                       ))}
@@ -167,9 +172,7 @@ export default function Storage({ storageType }: StorageProps) {
                 source={image_empty_basket}
                 className="aspect-square size-1/4 opacity-60"
               />
-              <Text className="mb-12 text-inactive">
-                갖고있는 식료품이 없습니다.
-              </Text>
+              <Text className="mb-12 text-inactive">갖고있는 식재료가 없습니다.</Text>
             </View>
           ))}
       </Card>

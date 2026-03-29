@@ -7,14 +7,11 @@ interface IngredientImageProps {
   size: number;
 }
 
-export default function IngredientImage({
-  ingredient,
-  size,
-}: IngredientImageProps) {
+export default function IngredientImage({ ingredient, size }: IngredientImageProps) {
   return (
     <Image
       source={
-        ingredient
+        ingredient && ingredient.category !== 'noCategory'
           ? ingredientImagesObj[ingredient.category][ingredient.id]
           : image_empty_basket
       }

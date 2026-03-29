@@ -17,7 +17,7 @@ export default function ModalHeader({ title, isDatePicker }: ModalHeaderProps) {
       <PressableIcon
         icon="X"
         iconSize={26}
-        className="p-2"
+        className="p-1"
         onPress={isDatePicker ? closeDatePicker : closeModal}
       />
     </View>
