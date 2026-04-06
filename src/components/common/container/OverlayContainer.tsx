@@ -17,6 +17,7 @@ import {
   datePickerAtom,
   closeDatePickerAtom,
 } from '@/atom/overlayAtom';
+import Text from '@/components/common/ui/Text';
 
 export function OverlayContainer({ children }: { children: React.ReactNode }) {
   const insets = useSafeAreaInsets();
@@ -88,27 +89,6 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
         </BottomSheetScrollView>
       </BottomSheetModal>
 
-      {/* Modal */}
-      <Modal transparent visible={!!modalProps} animationType="fade">
-        <View className="flex-1">
-          {modalProps?.hasDim && (
-            <Pressable className="flex-1 bg-black/30" onPress={closeModal} />
-          )}
-
-          <View className="absolute h-full w-full items-center justify-center">
-            {modalProps?.children && (
-              <View
-                className={`max-h-[85%] rounded-3xl bg-white ${
-                  modalProps.modalType === 'modal' ? 'w-[85%] p-6' : 'w-[70%]'
-                }`}
-              >
-                {modalProps.children}
-              </View>
-            )}
-          </View>
-        </View>
-      </Modal>
-
       {/* DatePicker */}
       <Modal transparent visible={!!datePickerProps} animationType="fade">
         <View className="flex-1 justify-end">
@@ -128,6 +108,81 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
           )}
         </View>
       </Modal>
+
+      {/* Modal */}
+      {modalProps?.type === 'modal' && (
+        <Modal transparent visible={!!modalProps} animationType="fade">
+          <View className="flex-1">
+            {modalProps?.hasDim && (
+              <Pressable className="flex-1 bg-black/30" onPress={closeModal} />
+            )}
+
+            <View className="absolute h-full w-full items-center justify-center">
+              {modalProps?.children && (
+                <View className={`max-h-[85%] w-[85%] rounded-3xl bg-white p-6`}>
+                  {modalProps.children}
+                </View>
+              )}
+            </View>
+          </View>
+        </Modal>
+      )}
+
+      {/* Alert */}
+      {(modalProps?.type === 'alert' || modalProps?.type === 'confirm') && (
+        <Modal transparent visible={!!modalProps}>
+          <View className="flex-1">
+            {modalProps?.hasDim && (
+              <Pressable className="flex-1 bg-black/30" onPress={closeModal} />
+            )}
+
+            <View className="absolute h-full w-full items-center justify-center">
+              <View
+                className={`max-h-[85%] w-[70%] rounded-3xl bg-amber-200 p-2`}
+                style={{
+                  ...iosShadowStyle,
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowRadius: 15,
+                }}
+              >
+                <View className="px-6 pt-6">
+                  <Text className="mb-5 font-bold text-lg">{modalProps.title}</Text>
+
+                  {modalProps.message && (
+                    <Text className="leading-7 text-neutral-900">
+                      {modalProps.message}
+                    </Text>
+                  )}
+                </View>
+
+                <View className="mt-3 flex-row justify-end p-2">
+                  {modalProps.type === 'confirm' && (
+                    <Pressable
+                      onPress={() => {
+                        modalProps.resolve(false);
+                        closeModal();
+                      }}
+                      className="p-4"
+                    >
+                      <Text className="font-extrabold text-gray-500">취소</Text>
+                    </Pressable>
+                  )}
+
+                  <Pressable
+                    onPress={() => {
+                      modalProps.resolve(true);
+                      closeModal();
+                    }}
+                    className="p-4"
+                  >
+                    <Text className="font-extrabold text-blue-500">확인</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      )}
     </>
   );
 }
