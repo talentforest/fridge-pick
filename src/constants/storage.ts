@@ -136,27 +136,7 @@ export const mockStorageItemList: StorageItem[] = [
     expiresAt: '2026-08-21',
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
-  {
-    id: '7',
-    ingredientId: 'king_oyster',
-    purchasedAt: '2026-03-03',
-    expiresAt: '2026-08-10',
-    storage: { type: 'fridge', side: 'inner', section: '1' },
-  },
-  {
-    id: '8',
-    ingredientId: 'kongnamul',
-    purchasedAt: '2026-03-04',
-    expiresAt: '2026-08-21',
-    storage: { type: 'fridge', side: 'inner', section: '1' },
-  },
-  {
-    id: '9',
-    ingredientId: 'mung_sprout',
-    purchasedAt: '2026-03-04',
-    expiresAt: '2026-08-21',
-    storage: { type: 'fridge', side: 'inner', section: '1' },
-  },
+
   {
     id: '10',
     ingredientId: 'cheongyang_chili',
@@ -196,7 +176,7 @@ export const mockStorageItemList: StorageItem[] = [
   },
   {
     id: '15',
-    ingredientId: 'beef_short_rib',
+    ingredientId: 'beef_brisket',
     purchasedAt: '2026-02-20',
     expiresAt: '2026-08-25',
     storage: { type: 'freezer', side: 'inner', section: '1' },
@@ -217,21 +197,21 @@ export const mockStorageItemList: StorageItem[] = [
   },
   {
     id: '18',
-    ingredientId: 'beef_shabu_slice',
+    ingredientId: 'shabu_slice_meat',
     purchasedAt: '2026-02-21',
     expiresAt: '2026-03-25',
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {
     id: '19',
-    ingredientId: 'beef_brisket_slice',
+    ingredientId: 'thin_beef_brisket',
     purchasedAt: '2026-02-22',
     expiresAt: '2026-03-25',
     storage: { type: 'freezer', side: 'inner', section: '1' },
   },
   {
     id: '20',
-    ingredientId: 'thin_pork_belly',
+    ingredientId: 'pork_belly',
     purchasedAt: '2026-02-24',
     expiresAt: '2026-03-28',
     storage: { type: 'freezer', side: 'inner', section: '1' },

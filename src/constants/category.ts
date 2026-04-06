@@ -48,27 +48,6 @@ export const categoryObj = {
     icon: 'Milk',
     color: 'yellow',
   },
-
-  /** 이미 조리 완료된 반찬
-   * sidedish vs conveniencefood
-   * 반찬 vs 한 끼
-   */
-  sidedish: {
-    id: 'sidedish',
-    label: '반찬/요리',
-    icon: 'Soup',
-    color: 'red',
-  },
-
-  /** 한끼 바로 대체 가능한 간편식
-   * 이거 하나로 식사가 가능한가?
-   */
-  conveniencefood: {
-    id: 'conveniencefood',
-    label: '간편식',
-    icon: 'Pizza',
-    color: 'red',
-  },
   seasoning: {
     id: 'seasoning',
     label: '조미료/장/오일',
@@ -95,18 +74,22 @@ export const categoryObj = {
     color: 'blue',
     // NOTE: 추후 추가, type: 'beverage' | 'alcohol'
   },
-  health: {
-    id: 'health',
-    label: '건강/차',
-    icon: 'HeartPulse',
-    color: 'blue',
-  },
   can: {
     id: 'can',
     label: '통조림/병조림',
     icon: 'Database',
     color: 'blue',
   },
+
+  /** ⭐ 바로 먹을수 있는것 - 요리에 이용되는 식재료가 아님 */
+  meal: {
+    id: 'meal',
+    label: '완성요리',
+    icon: 'Soup',
+    color: 'red',
+  },
+
+  /** 카테고리가 없는 경우 */
   noCategory: {
     id: 'noCategory',
     label: '카테고리 없음',
