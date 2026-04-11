@@ -120,6 +120,7 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
           <TouchableOpacity
             key={route.key}
             onPress={onPress}
+            activeOpacity={0.8}
             className="flex-1 items-center justify-center pt-4"
           >
             <View className="items-center gap-y-2">

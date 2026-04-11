@@ -112,19 +112,18 @@ export default function CarouselContainer<T>({
           offset: ITEM_SIZE * index,
           index,
         })}
-        onMomentumScrollEnd={(e) => handleScrollEnd(e.nativeEvent.contentOffset.x)}
+        onScrollBeginDrag={() => setIsScrolling(true)}
+        onMomentumScrollBegin={() => setIsScrolling(true)}
+        onMomentumScrollEnd={(e) => {
+          handleScrollEnd(e.nativeEvent.contentOffset.x);
+        }}
         renderItem={({ item, index }) => {
           const isActive =
             !isScrolling && index % data.length === currentIndex % data.length;
 
           return (
             <View style={{ width: CARD_WIDTH }}>
-              <View
-                style={{
-                  transform: centerFocus && !isActive ? [{ scale: 0.94 }] : [],
-                }}
-                className={`rounded-2xl ${centerFocus && !isActive ? '' : 'p-1'}`}
-              >
+              <View className={`rounded-2xl ${centerFocus && !isActive ? '' : ''}`}>
                 {renderItem({ item, isCurrIndex: isActive, index })}
               </View>
             </View>

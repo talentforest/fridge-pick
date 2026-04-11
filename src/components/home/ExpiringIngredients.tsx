@@ -23,8 +23,9 @@ export default function ExpiringIngredients() {
         <CarouselContainer
           data={expiredStorageItemList}
           initialIndex={expiredStorageItemList.length}
-          itemWidth={0.31}
+          itemWidth={0.3}
           hasNavigation
+          spacing={8}
           centerFocus
           keyExtractor={(_, index) => `${index}`}
           renderItem={({ item, index, isCurrIndex }) => (
