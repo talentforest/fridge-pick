@@ -27,7 +27,7 @@ export default function CarouselContainer<T>({
   keyExtractor,
   hasNavigation,
   centerFocus,
-  spacing = 0,
+  spacing = 8,
 }: CarouselContainerProps<T>) {
   const listRef = useRef<FlatList<T>>(null);
 
@@ -94,50 +94,61 @@ export default function CarouselContainer<T>({
 
   return (
     <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}>
-      <FlatList
-        ref={listRef}
-        data={flatListData}
-        horizontal
-        snapToInterval={ITEM_SIZE}
-        decelerationRate="fast"
-        showsHorizontalScrollIndicator={false}
-        nestedScrollEnabled
-        initialScrollIndex={initialIndex}
-        ItemSeparatorComponent={() => <View style={{ width: spacing }} />}
-        contentContainerStyle={{
-          paddingHorizontal: (containerWidth - CARD_WIDTH) / 2,
-        }}
-        getItemLayout={(_, index) => ({
-          length: ITEM_SIZE,
-          offset: ITEM_SIZE * index,
-          index,
-        })}
-        onScrollBeginDrag={() => setIsScrolling(true)}
-        onMomentumScrollBegin={() => setIsScrolling(true)}
-        onMomentumScrollEnd={(e) => {
-          handleScrollEnd(e.nativeEvent.contentOffset.x);
-        }}
-        renderItem={({ item, index }) => {
-          const isActive =
-            !isScrolling && index % data.length === currentIndex % data.length;
+      <View>
+        <FlatList
+          ref={listRef}
+          data={flatListData}
+          horizontal
+          snapToInterval={ITEM_SIZE}
+          decelerationRate="fast"
+          showsHorizontalScrollIndicator={false}
+          nestedScrollEnabled
+          initialScrollIndex={initialIndex}
+          ItemSeparatorComponent={() => <View style={{ width: spacing }} />}
+          contentContainerStyle={{
+            paddingHorizontal: (containerWidth - CARD_WIDTH) / 2,
+          }}
+          getItemLayout={(_, index) => ({
+            length: ITEM_SIZE,
+            offset: ITEM_SIZE * index,
+            index,
+          })}
+          onScrollBeginDrag={() => setIsScrolling(true)}
+          onMomentumScrollBegin={() => setIsScrolling(true)}
+          onMomentumScrollEnd={(e) => {
+            handleScrollEnd(e.nativeEvent.contentOffset.x);
+          }}
+          renderItem={({ item, index }) => {
+            const isActive =
+              !isScrolling && index % data.length === currentIndex % data.length;
 
-          return (
-            <View style={{ width: CARD_WIDTH }}>
-              <View className={`rounded-2xl ${centerFocus && !isActive ? '' : ''}`}>
-                {renderItem({ item, isCurrIndex: isActive, index })}
+            return (
+              <View style={{ width: CARD_WIDTH }}>
+                <View className={`rounded-2xl ${centerFocus && !isActive ? '' : ''}`}>
+                  {renderItem({ item, isCurrIndex: isActive, index })}
+                </View>
               </View>
-            </View>
-          );
-        }}
-        keyExtractor={keyExtractor}
-      />
+            );
+          }}
+          keyExtractor={keyExtractor}
+        />
 
-      {hasNavigation && (
-        <>
-          <HandleBtn direction="prev" onPress={() => handleDirection('prev')} />
-          <HandleBtn direction="next" onPress={() => handleDirection('next')} />
-        </>
-      )}
+        {hasNavigation && (
+          <>
+            <HandleBtn direction="prev" onPress={() => handleDirection('prev')} />
+            <HandleBtn direction="next" onPress={() => handleDirection('next')} />
+          </>
+        )}
+      </View>
+
+      <View className="mx-auto mt-4 flex-row gap-x-2.5">
+        {data.map((_, index) => (
+          <View
+            key={index}
+            className={`aspect-square h-2.5 rounded-full ${currentIndex - initialIndex === index ? 'bg-blue-5' : 'bg-inactive-bg'}`}
+          />
+        ))}
+      </View>
     </View>
   );
 }

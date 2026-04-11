@@ -1,5 +1,6 @@
 import { mockStorageItemList } from '@/constants';
 import { EditableStorageItemData, StorageItem, StorageTypeId } from '@/types/storage';
+import { getExpiredStorageItemList } from '@/utils';
 import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
 
@@ -21,6 +22,11 @@ export const itemListByStorageAtom = atomFamily((storage: StorageTypeId) =>
     get(allStorageItemListAtom).filter((item) => item.storage.type === storage),
   ),
 );
+
+export const expiredItemListByStorageAtom = atom((get) => {
+  const allStorageItemList = get(allStorageItemListAtom);
+  return getExpiredStorageItemList(allStorageItemList);
+});
 
 /* -------------------------------------------------------------------------- */
 /*                                  Actions                                   */

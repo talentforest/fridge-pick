@@ -1,19 +1,13 @@
-import { allStorageItemListAtom } from '@/atom/storageItemAtom';
+import { expiredItemListByStorageAtom } from '@/atom/storageItemAtom';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
 import SectionTitle from '@/components/common/SectionTitle';
 import CautionStorageItem from '@/components/storage/CautionStorageItem';
-import { getExpiredStorageItemList } from '@/utils';
 import { useAtomValue } from 'jotai';
-import { useMemo } from 'react';
 import { View } from 'react-native';
 
 export default function ExpiringIngredients() {
-  const allStorageItemList = useAtomValue(allStorageItemListAtom);
-
-  const expiredStorageItemList = useMemo(() => {
-    return getExpiredStorageItemList(allStorageItemList);
-  }, [allStorageItemList]);
+  const expiredStorageItemList = useAtomValue(expiredItemListByStorageAtom);
 
   return (
     <View className="gap-y-3">
@@ -23,9 +17,9 @@ export default function ExpiringIngredients() {
         <CarouselContainer
           data={expiredStorageItemList}
           initialIndex={expiredStorageItemList.length}
-          itemWidth={0.3}
+          itemWidth={0.27}
           hasNavigation
-          spacing={8}
+          spacing={6}
           centerFocus
           keyExtractor={(_, index) => `${index}`}
           renderItem={({ item, index, isCurrIndex }) => (
