@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import { ReactNode } from 'react';
-import { BottomSheetProps } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetProps } from '@gorhom/bottom-sheet';
 
 /** BottomSheet Type*/
 export type SheetParams = Omit<BottomSheetProps, 'children'> & {
@@ -22,7 +22,7 @@ type CustomModal = BaseModal & {
 /** alert */
 type AlertModalState = BaseModal & {
   type: 'alert';
-  title: string;
+  title?: string;
   message?: string;
   resolve: (value: boolean) => void;
 };
@@ -30,7 +30,7 @@ type AlertModalState = BaseModal & {
 /** confirm (확장용) */
 type ConfirmModalState = BaseModal & {
   type: 'confirm';
-  title: string;
+  title?: string;
   message?: string;
   resolve: (value: boolean) => void;
 };
@@ -58,7 +58,19 @@ export const sheetAtom = atom<SheetParams | null>(null);
 export const modalAtom = atom<ModalState | null>(null);
 export const datePickerAtom = atom<DatePickerParams | null>(null);
 
+export const sheetRefAtom = atom<React.RefObject<BottomSheetModal | null> | null>(null);
+
 /** Actions */
+export const expandSheetAtom = atom(null, (get) => {
+  const ref = get(sheetRefAtom);
+  ref?.current?.snapToIndex(1);
+});
+
+export const shrinkSheetAtom = atom(null, (get) => {
+  const ref = get(sheetRefAtom);
+  ref?.current?.snapToIndex(0);
+});
+
 export const openSheetAtom = atom(null, (_get, set, props: SheetParams) => {
   set(sheetAtom, props);
 });
@@ -84,7 +96,7 @@ export const closeDatePickerAtom = atom(null, (_get, set) => {
 });
 
 type AlertParams = {
-  title: string;
+  title?: string;
   message?: string;
 };
 

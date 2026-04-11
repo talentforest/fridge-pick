@@ -18,13 +18,11 @@ export default function SearchedIngredientCard({
 
   return (
     <Card
-      className={`items-center justify-between gap-y-1 rounded-2xl !border-0 !bg-blue-100 !px-2 !pt-2 ${className}`}
+      className={`items-center justify-between gap-y-1 rounded-2xl !border-0 !px-2 !pt-2 ${className}`}
     >
       <IngredientImage ingredient={ingredient} size={55} />
 
-      <Text
-        className={`line-clamp-1 text-center text-md leading-5 text-blue-800 ${textClassName}`}
-      >
+      <Text className={`line-clamp-1 text-center leading-5 ${textClassName}`}>
         {label}
       </Text>
     </Card>

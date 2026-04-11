@@ -12,7 +12,9 @@ export default function IngredientImage({ ingredient, size }: IngredientImagePro
     <Image
       source={
         ingredient && ingredient.category !== 'noCategory'
-          ? ingredientImagesObj[ingredient.category][ingredient.id]
+          ? ingredientImagesObj[ingredient.category][
+              ingredient?.imageName || ingredient.id
+            ]
           : image_empty_basket
       }
       style={{ width: size, height: size }}

@@ -1,5 +1,5 @@
 export const filterObj = {
-  dish: {
+  meal: {
     all: {
       id: 1,
       name: 'all',

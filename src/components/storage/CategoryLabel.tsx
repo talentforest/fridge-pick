@@ -1,21 +1,18 @@
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import { CategoryItem, colorByStorage } from '@/constants';
+import { CategoryItem } from '@/constants';
 import { View } from 'react-native';
 
 interface CategoryLabelProps {
   category: CategoryItem;
-  color: 'cyan' | 'blue' | 'yellow';
 }
 
-export default function CategoryLabel({ category, color }: CategoryLabelProps) {
-  const { text } = colorByStorage[color];
-
+export default function CategoryLabel({ category }: CategoryLabelProps) {
   return (
-    <View className="flex-row gap-x-1">
-      {category.icon && <Icon name={category.icon} size={17} color={color} />}
+    <View className="flex-row items-center gap-x-1">
+      {category.icon && <Icon name={category.icon} size={15} />}
 
-      <Text className={text}>{category.label}</Text>
+      <Text>{category.label}</Text>
     </View>
   );
 }

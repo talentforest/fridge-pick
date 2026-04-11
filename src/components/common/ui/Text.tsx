@@ -1,10 +1,18 @@
 import { Text as RNText, TextProps } from 'react-native';
 
 export default function Text({ ...props }: TextProps) {
+  const hasTextSize = props.className?.match(/text-(xs|sm|md|base|lg|xl|2xl)/);
+
+  const hasTextColor = props.className?.match(
+    /text-(bg|card|text|border|inactive|red|blue|indigo)/,
+  );
+
   return (
     <RNText
       {...props}
-      className={`font-bold text-base tracking-tightest ${props.className}`}
+      className={`font-bold tracking-tightest ${hasTextColor ? hasTextColor[0] : 'text-text'} ${
+        hasTextSize ? props.className : `text-md ${props.className ?? ''}`
+      }`}
     />
   );
 }

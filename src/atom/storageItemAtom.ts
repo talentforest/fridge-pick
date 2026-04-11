@@ -1,5 +1,5 @@
 import { mockStorageItemList } from '@/constants';
-import { StorageItem, StorageTypeId } from '@/types/storage';
+import { EditableStorageItemData, StorageItem, StorageTypeId } from '@/types/storage';
 import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
 
@@ -71,7 +71,7 @@ export const changeItemAtom = atom(
       newData,
     }: {
       id: string;
-      newData: Partial<Pick<StorageItem, 'expiresAt' | 'storage' | 'memo'>>;
+      newData: EditableStorageItemData;
     },
   ) => {
     const list = get(allStorageItemListAtom);

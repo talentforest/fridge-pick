@@ -1,5 +1,7 @@
 import { colorTokens } from '@/theme/color';
 import {
+  House,
+  SunMoon,
   Apple,
   ArrowDown,
   ArrowLeft,
@@ -45,13 +47,14 @@ import {
   PlusCircle,
   PlusSquare,
   Refrigerator,
+  SquareCheck,
   Search,
   ShoppingBag,
   Snowflake,
   Soup,
   Square,
-  SquareCheckBig,
   SquareSlash,
+  ShoppingBasket,
   Thermometer,
   ThermometerSnowflake,
   ThermometerSun,
@@ -61,9 +64,12 @@ import {
   Wind,
   X,
 } from 'lucide-react-native';
-import { useColorScheme, View } from 'react-native';
+import { TouchableOpacity, useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'ShoppingBasket'
+  | 'House'
+  | 'SunMoon'
   | 'X'
   | 'Bell'
   | 'Menu'
@@ -71,10 +77,10 @@ export type IconName =
   | 'Clock'
   | 'ShoppingBag'
   | 'ChefHat'
+  | 'SquareCheck'
   | 'RefreshCcw'
   | 'UtensilsCrossed'
   | 'Refrigerator'
-  | 'SquareCheckBig'
   | 'Square'
   | 'Circle'
   | 'Plus'
@@ -99,6 +105,7 @@ export type IconName =
   | 'Heart'
   | 'TriangleAlert'
   | 'OctagonAlert'
+  | 'ShoppingBasket'
   | 'Snowflake'
   | 'ThermometerSnowflake'
   | 'ThermometerSun'
@@ -126,15 +133,17 @@ export type CategoryIconName =
   | 'Milk';
 
 export type IconColor =
+  | 'text'
   | 'yellow'
   | 'neutral'
+  | 'inactive'
   | 'red'
   | 'blue'
   | 'green'
   | 'indigo'
+  | 'darkGray'
   | 'gray'
-  | 'teal'
-  | 'cyan'
+  | 'ice'
   | 'white';
 
 interface IconProps {
@@ -144,7 +153,7 @@ interface IconProps {
 
 export default function Icon({
   name,
-  color = 'neutral',
+  color = 'text',
   ...props
 }: IconProps & LucideProps) {
   const colorScheme = useColorScheme() ?? 'light';
@@ -152,20 +161,25 @@ export default function Icon({
   const scheme = colorTokens[colorScheme];
 
   const colorMap = {
-    yellow: scheme.yellow[700],
-    neutral: scheme.neutral[800],
-    red: '#a30c0c',
-    blue: scheme.blue[500],
-    gray: scheme.inactive,
     white: '#fff',
-    green: '#296416',
+    text: scheme.text,
+    yellow: scheme.yellow[7],
+    neutral: scheme.neutral[7],
+    red: scheme.red[7],
+    blue: scheme.blue[7],
+    darkGray: scheme.neutral[5],
+    gray: scheme.inactive.bg,
+    green: scheme.green[7],
+    ice: scheme.ice[5],
     indigo: '#784ef8',
-    teal: '#0e4d47',
-    cyan: '#39acc3',
+    inactive: scheme.inactive.text,
   };
 
   const iconObj: { [key in IconName | CategoryIconName]: LucideIcon } = {
+    House,
+    SunMoon,
     X,
+    SquareCheck,
     Bell,
     Menu,
     HandPlatter,
@@ -180,12 +194,12 @@ export default function Icon({
     ChefHat,
     UtensilsCrossed,
     ShoppingBag,
+    ShoppingBasket,
     Refrigerator,
     ArrowUp,
     ArrowDown,
     ArrowLeft,
     ArrowRight,
-    SquareCheckBig,
     Snowflake,
     Square,
     Trash2,
@@ -227,7 +241,20 @@ export default function Icon({
 
   const Component = iconObj[name];
 
-  return (
+  return props.onPress ? (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      className={props.className}
+      onPress={props.onPress}
+    >
+      <Component
+        stroke={colorMap[color]}
+        strokeWidth={2.2}
+        {...props}
+        onPress={undefined}
+      />
+    </TouchableOpacity>
+  ) : (
     <View className={props.className}>
       <Component stroke={colorMap[color]} strokeWidth={2.2} {...props} />
     </View>

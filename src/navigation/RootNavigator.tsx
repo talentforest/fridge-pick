@@ -27,9 +27,12 @@ export default function RootNavigator() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Main" component={BottomTabNavigator} />
 
-          <Stack.Screen name="StorageDetail" component={StorageDetailScreen} />
-          <Stack.Screen name="ShoppingListDetail" component={ShoppingListDetailScreen} />
-          <Stack.Screen name="AddStorageItem" component={AddStorageItemScreen} />
+          <Stack.Screen name="StorageDetailScreen" component={StorageDetailScreen} />
+          <Stack.Screen
+            name="ShoppingListDetailScreen"
+            component={ShoppingListDetailScreen}
+          />
+          <Stack.Screen name="AddStorageItemScreen" component={AddStorageItemScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

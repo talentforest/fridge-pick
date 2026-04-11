@@ -1,6 +1,6 @@
 import FormStorage from '@/components/common/form/FormStorage';
 import ModalHeader from '@/components/common/ModalHeader';
-import PressableSquareBtn from '@/components/common/PressableSquareBtn';
+import SquareBtn from '@/components/common/SquareBtn';
 import { StorageItem, StorageTypeId } from '@/types/storage';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -26,7 +26,7 @@ export default function StorageModal({ currentValue, onItemChange }: StorageModa
         }}
       />
 
-      <PressableSquareBtn
+      <SquareBtn
         name="변경완료"
         onPress={() => onItemChange({ storage: { type: value } })}
       />

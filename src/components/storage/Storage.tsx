@@ -1,12 +1,11 @@
 import { searchKeywordAtom } from '@/atom/storageItemAtom';
 import GridContainer from '@/components/common/container/GridContainer';
-import PressableIcon from '@/components/common/PressableIcon';
-import PressableSquareBtn from '@/components/common/PressableSquareBtn';
+import SquareBtn from '@/components/common/SquareBtn';
 import Card from '@/components/common/ui/Card';
+import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import CategoryLabel from '@/components/storage/CategoryLabel';
 import StorageItem from '@/components/storage/StorageItem';
-import StorageItemSheet from '@/components/storage/StorageItemSheet';
 import { image_empty_basket, storageObj } from '@/constants';
 import { useStorageItemList } from '@/hooks';
 import { useOverlay } from '@/hooks/common/useOverlay';
@@ -22,11 +21,12 @@ import { Image, Pressable, ScrollView, View } from 'react-native';
 
 interface StorageProps {
   storageType: StorageTypeId;
+  openItemPress: (item: StorageItemType) => void;
 }
 
 const SETTING_SIDE = false;
 
-export default function Storage({ storageType }: StorageProps) {
+export default function Storage({ storageType, openItemPress }: StorageProps) {
   const [currSide, setCurrSide] = useState<StorageSideId>('inner');
 
   const storage = useMemo(() => {
@@ -37,9 +37,9 @@ export default function Storage({ storageType }: StorageProps) {
     };
   }, [storageType, currSide]);
 
-  const { openSheet, closeSheet } = useOverlay();
+  const { closeSheet } = useOverlay();
 
-  const { label, color } = storageObj[storageType];
+  const { label } = storageObj[storageType];
 
   const {
     sideList,
@@ -55,13 +55,6 @@ export default function Storage({ storageType }: StorageProps) {
     return searchStorageItem(searchKeyword, itemListByStorage);
   }, [searchKeyword, itemListByStorage]);
 
-  const openStorageItem = async (item: StorageItemType) => {
-    openSheet({
-      hasDim: true,
-      render: () => <StorageItemSheet storageItem={item} />,
-    });
-  };
-
   return (
     <View className="gap-y-3">
       <Card
@@ -72,11 +65,11 @@ export default function Storage({ storageType }: StorageProps) {
           <View className="h-14 flex-row gap-x-3">
             {sideList.map(({ id, label: sideLabel }) => {
               return (
-                <PressableSquareBtn
+                <SquareBtn
                   key={id}
                   name={`${label} ${sideLabel}  ${itemCountBySide[id] ?? 0}개`}
                   onPress={() => setCurrSide(id)}
-                  isInActive={!(id === currSide)}
+                  // isInActive={!(id === currSide)} TODO
                 />
               );
             })}
@@ -90,13 +83,13 @@ export default function Storage({ storageType }: StorageProps) {
             className="flex-1"
             contentContainerClassName="flex-1"
           >
-            <View className={`flex-1 rounded-2xl border border-border bg-white`}>
+            <View className={`flex-1 rounded-2xl border border-border bg-card`}>
               <View className="flex-row items-center justify-between">
                 <Text className="pl-4">검색결과 {searchedStorageItemList.length}개</Text>
-                <PressableIcon
-                  icon="RefreshCcw"
+                <Icon
+                  name="RefreshCcw"
                   className="px-5 py-4"
-                  iconSize={18}
+                  size={18}
                   onPress={() => {
                     setSearchKeyword('');
                     closeSheet();
@@ -109,12 +102,7 @@ export default function Storage({ storageType }: StorageProps) {
                 {searchedStorageItemList.length > 0 ? (
                   <GridContainer gap={10} columns={5}>
                     {searchedStorageItemList.map((item) => (
-                      <Pressable
-                        key={item.id}
-                        onPress={() => {
-                          openStorageItem(item);
-                        }}
-                      >
+                      <Pressable key={item.id} onPress={() => openItemPress(item)}>
                         <StorageItem item={item} />
                       </Pressable>
                     ))}
@@ -142,14 +130,14 @@ export default function Storage({ storageType }: StorageProps) {
                 {itemListByCategory.map(({ category, items }, index) => (
                   <View
                     key={category.id}
-                    className={`flex-1 gap-y-3 border border-border bg-white p-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === itemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
+                    className={`flex-1 gap-y-3 border border-border bg-card p-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === itemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
                   >
-                    <CategoryLabel category={category} color={color} />
+                    <CategoryLabel category={category} />
 
                     <GridContainer gap={4} columns={5}>
                       {/* 식재료 리스트 */}
                       {items.map((item) => (
-                        <Pressable key={item.id} onPress={() => openStorageItem(item)}>
+                        <Pressable key={item.id} onPress={() => openItemPress(item)}>
                           <StorageItem item={item} />
                         </Pressable>
                       ))}
@@ -164,7 +152,9 @@ export default function Storage({ storageType }: StorageProps) {
                 source={image_empty_basket}
                 className="aspect-square size-1/4 opacity-60"
               />
-              <Text className="mb-12 text-inactive">갖고있는 식재료가 없습니다.</Text>
+              <Text className="mb-12 text-inactive-text">
+                갖고있는 식재료가 없습니다.
+              </Text>
             </View>
           ))}
       </Card>

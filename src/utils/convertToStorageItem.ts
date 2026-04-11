@@ -1,3 +1,4 @@
+import { DEFAULT_EXPIRATION_DAYS } from '@/constants';
 import { Ingredient } from '@/types/ingredient';
 import { StorageItemWithIngredientId } from '@/types/storage';
 import { formatDateString } from '@/utils/formatDate';
@@ -19,7 +20,10 @@ export const convertIngredientToStorageItem = (
     storage: {
       type: defaultStorage,
     },
-    expiresAt: calculateExpiresAt(now, expirationDays),
+    expiresAt: calculateExpiresAt(
+      now,
+      expirationDays[defaultStorage] || DEFAULT_EXPIRATION_DAYS,
+    ),
     purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
     ingredientId: id,
     ingredient,

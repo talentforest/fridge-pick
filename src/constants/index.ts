@@ -1,5 +1,5 @@
 export * from '@/constants/category';
-export * from '@/constants/dish';
+export * from '@/constants/meal';
 export * from '@/constants/filter';
 export * from '@/constants/image';
 export * from '@/constants/ingredient';

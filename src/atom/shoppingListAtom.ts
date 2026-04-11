@@ -1,5 +1,6 @@
 import { allStorageItemListAtom } from '@/atom/storageItemAtom';
 import {
+  allIngredients,
   DEFAULT_EXPIRATION_DAYS,
   DEFAULT_STORAGE,
   mockShoppingList,
@@ -7,9 +8,12 @@ import {
 import { ShoppingItem } from '@/types/shoppingList';
 import { StorageItem } from '@/types/storage';
 
-import { allIngredients, enrichIngredient, formatDateString } from '@/utils';
-import { duplicateShoppingItem } from '@/utils/duplicateShoppingItem';
-import { calculateExpiresAt } from '@/utils/getExpirationDate';
+import {
+  enrichIngredient,
+  formatDateString,
+  duplicateShoppingItem,
+  calculateExpiresAt,
+} from '@/utils';
 import { Timestamp } from 'firebase/firestore';
 import { atom } from 'jotai';
 import { nanoid } from 'nanoid/non-secure';
@@ -66,12 +70,17 @@ export const convertedStorageItemListAtom = atom((get) => {
           ...commonBase,
           ...(item.customLabel ? { customLabel: item.customLabel } : {}),
           ingredientId: ingredient.id,
-          expiresAt: calculateExpiresAt(now, DEFAULT_EXPIRATION_DAYS),
+          expiresAt: calculateExpiresAt(
+            now,
+            ingredient?.expirationDays[ingredient.defaultStorage] ||
+              DEFAULT_EXPIRATION_DAYS,
+          ),
+
           storage: { type: ingredient.defaultStorage },
           ...(item.ingredient ? { ingredient: item.ingredient } : {}),
         }
       : {
-          // 완전한 커스텀 정보인 경우, Ingredient 마스터 정보가 있는 경우
+          // 완전한 커스텀 정보인 경우, Ingredient 마스터 정보가 없는 경우
           ...commonBase,
           customLabel: item.customLabel!,
           expiresAt: calculateExpiresAt(now, DEFAULT_EXPIRATION_DAYS),
@@ -97,45 +106,42 @@ export type AddResult =
  * - 없으면 label 기준으로 중복 검사
  * - 중복 시 duplicate 결과 반환
  */
-export const addItemAtom = atom(
-  null,
-  (get, set, inputValue: string): AddResult => {
-    const list = get(shoppingListAtom);
+export const addItemAtom = atom(null, (get, set, inputValue: string): AddResult => {
+  const list = get(shoppingListAtom);
 
-    // ingredient 마스터 정보가 있는 경우 customLabel은 작성하지 않는다.
-    // 따라서 ingredient의 label과 customLabel 모두를 비교한다.
-    const duplicateItem = duplicateShoppingItem(inputValue, list);
+  // ingredient 마스터 정보가 있는 경우 customLabel은 작성하지 않는다.
+  // 따라서 ingredient의 label과 customLabel 모두를 비교한다.
+  const duplicateItem = duplicateShoppingItem(inputValue, list);
 
-    if (duplicateItem) {
-      return {
-        result: 'duplicate',
-        item: duplicateItem,
-      };
-    }
-
-    const ingredient = allIngredients.find(({ label }) => label === inputValue);
-
-    const baseItem = {
-      id: nanoid(),
-      isPurchased: false,
+  if (duplicateItem) {
+    return {
+      result: 'duplicate',
+      item: duplicateItem,
     };
+  }
 
-    const newItem: ShoppingItem = !!ingredient
-      ? {
-          // 마스터 정보가 있는 경우
-          ...baseItem,
-          ingredientId: ingredient.id,
-        }
-      : {
-          ...baseItem,
-          customLabel: inputValue,
-        };
+  const ingredient = allIngredients.find(({ label }) => label === inputValue);
 
-    set(shoppingListAtom, [...list, newItem]);
+  const baseItem = {
+    id: nanoid(),
+    isPurchased: false,
+  };
 
-    return { result: 'success', item: newItem };
-  },
-);
+  const newItem: ShoppingItem = !!ingredient
+    ? {
+        // 마스터 정보가 있는 경우
+        ...baseItem,
+        ingredientId: ingredient.id,
+      }
+    : {
+        ...baseItem,
+        customLabel: inputValue,
+      };
+
+  set(shoppingListAtom, [...list, newItem]);
+
+  return { result: 'success', item: newItem };
+});
 
 /**
  * 여러 아이템을 일괄 삭제한다.
@@ -194,12 +200,9 @@ export const clearAllAtom = atom(null, (_get, set) => {
 /**
  * 구매 완료한 장보기 아이템들을 스토리지로 추가
  */
-export const addToStorageAtom = atom(
-  null,
-  (get, set, storageItemList: StorageItem[]) => {
-    // list를 스토리지 아이템 리스트로 추가
-    const allStorageItemList = get(allStorageItemListAtom);
+export const addToStorageAtom = atom(null, (get, set, storageItemList: StorageItem[]) => {
+  // list를 스토리지 아이템 리스트로 추가
+  const allStorageItemList = get(allStorageItemListAtom);
 
-    set(allStorageItemListAtom, [...allStorageItemList, ...storageItemList]);
-  },
-);
+  set(allStorageItemListAtom, [...allStorageItemList, ...storageItemList]);
+});

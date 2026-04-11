@@ -3,27 +3,6 @@ import { StorageItem } from '@/types/storage';
 export const DEFAULT_EXPIRATION_DAYS = 7;
 export const DEFAULT_STORAGE = 'fridge' as const;
 
-export const colorByStorage = {
-  blue: {
-    bg: 'bg-blue-50',
-    pointBg: 'bg-blue-100',
-    border: '!border-blue-200',
-    text: 'text-blue-700',
-  },
-  yellow: {
-    bg: 'bg-amber-100',
-    pointBg: 'bg-amber-200',
-    border: '!border-amber-300',
-    text: 'text-amber-700',
-  },
-  cyan: {
-    bg: 'bg-cyan-100',
-    pointBg: 'bg-cyan-200',
-    border: '!border-cyan-300',
-    text: 'text-cyan-800',
-  },
-};
-
 export const storageObj = {
   /** 냉동실 */
   freezer: {
@@ -43,7 +22,7 @@ export const storageObj = {
       },
     },
     order: 1,
-    color: 'cyan',
+    color: 'ice',
     icon: 'Snowflake',
   },
 

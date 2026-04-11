@@ -1,74 +1,52 @@
 import { Pressable, View } from 'react-native';
-import { formatDateString } from '@/utils';
 import {
+  formatDateString,
   formatRemainingDays,
   getExpirationStatus,
   getRemainingDays,
-} from '@/utils/getExpirationDate';
+} from '@/utils';
 import { expirationStatusObj } from '@/constants';
 import { ReactNode } from 'react';
 import Text from '@/components/common/ui/Text';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import ModalHeader from '@/components/common/ModalHeader';
-import { useOverlay } from '@/hooks/common/useOverlay';
+import Icon from '@/components/common/ui/Icon';
 
 interface DateInputProps {
-  date: string;
-  onChangeDate: (date: Date) => void;
+  date: string; // yyyy-MM-dd
+  openDatePicker: () => void;
   children?: ReactNode;
+  className?: string;
 }
 
-export default function DateInput({ date, onChangeDate, children }: DateInputProps) {
+export default function DateInput({
+  date,
+  openDatePicker,
+  children,
+  className,
+}: DateInputProps) {
   const initialDate = new Date(date);
   const remainingDays = getRemainingDays(initialDate);
   const expirationStatus = getExpirationStatus(+remainingDays);
 
-  const { openDatePicker } = useOverlay();
-
-  const onChange = (_: any, selectedDate?: Date) => {
-    if (selectedDate) {
-      onChangeDate(selectedDate);
-    }
-  };
-
-  const onEditDatePickerPress = () => {
-    openDatePicker({
-      hasDim: true,
-      render: () => (
-        <View>
-          <ModalHeader title="날짜 변경하기" isDatePicker />
-
-          <DateTimePicker
-            minimumDate={new Date()}
-            value={initialDate}
-            mode="date"
-            display="spinner"
-            onChange={onChange}
-            locale="ko-KR"
-          />
-        </View>
-      ),
-    });
-  };
-
   return (
     <Pressable
-      onPress={onEditDatePickerPress}
-      className="h-[56] flex-row items-center gap-x-2 rounded-2xl border border-gray-200 bg-white pl-3"
+      onPress={openDatePicker}
+      className={`h-[56] flex-row items-center gap-x-1 rounded-2xl border border-inactive-bg bg-card px-3 ${className}`}
     >
       <View className="flex-1 flex-row items-center gap-2">
         <View
           className={`rounded-full px-3 py-2.5 ${expirationStatusObj[expirationStatus].filterColor}`}
         >
           <Text
-            className={`font-extrabold !text-md ${expirationStatusObj[expirationStatus].textColor}`}
+            className={`!text-[15px] ${expirationStatusObj[expirationStatus].textColor}`}
           >
+            {remainingDays < 0 && <Text className="text-sm">❗️</Text>}
             {formatRemainingDays(remainingDays)}
           </Text>
         </View>
-
-        <Text>{formatDateString(initialDate, 'yyyy년 MM월 dd일')}</Text>
+        <Text className="text-base">{formatDateString(initialDate, 'yy년 M월 d일')}</Text>
       </View>
+
+      <Icon name="Calendar" size={20} color="darkGray" className="!mr-2 pb-0.5" />
 
       {children}
     </Pressable>

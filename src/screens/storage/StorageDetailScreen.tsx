@@ -1,81 +1,109 @@
 import { searchKeywordAtom } from '@/atom/storageItemAtom';
+import { storageObj } from '@/constants';
+import { useOverlay } from '@/hooks/common/useOverlay';
+import { RootStackParamList } from '@/types/RootStackParamList';
+import {
+  RouteProp,
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useAtom } from 'jotai';
+import { View } from 'react-native';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
-import PressableIcon from '@/components/common/PressableIcon';
 import ScreenHeader from '@/components/common/ScreenHeader';
 import SectionTitle from '@/components/common/SectionTitle';
 import CautionIngredientList from '@/components/storage/CautionIngredientList';
 import SearchItemSheet from '@/components/storage/SearchItemSheet';
 import Storage from '@/components/storage/Storage';
-import { storageObj } from '@/constants';
-import { useOverlay } from '@/hooks/common/useOverlay';
-import { RootStackParamList } from '@/types/RootStackParamList';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useAtom } from 'jotai';
-import { View } from 'react-native';
+import { useEffect } from 'react';
+import StorageItemSheet from '@/components/storage/StorageItemSheet';
+import { StorageItem } from '@/types/storage';
+import Icon from '@/components/common/ui/Icon';
 
-type DetailRouteProp = RouteProp<RootStackParamList, 'StorageDetail'>;
+type DetailRouteProp = RouteProp<RootStackParamList, 'StorageDetailScreen'>;
 type StackNavProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function StorageDetailScreen() {
-  const route = useRoute<DetailRouteProp>();
-  const { id: storageType } = route.params;
+  const {
+    params: { id: storageType },
+  } = useRoute<DetailRouteProp>();
 
-  const currStorage = storageObj[storageType];
-  const { label } = currStorage;
-
-  const { openSheet } = useOverlay();
-
-  const navigation = useNavigation<StackNavProp>();
+  const { label: storageLabel } = storageObj[storageType];
 
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
 
-  const openSearchPress = () => {
+  const { openSheet, closeSheet } = useOverlay();
+
+  const navigation = useNavigation<StackNavProp>();
+
+  const isFocused = useIsFocused();
+
+  const onSearchPress = () => {
     openSheet({
-      render: () => <SearchItemSheet storageLabel={currStorage.label} />,
+      render: () => <SearchItemSheet storageLabel={storageLabel} />,
     });
   };
 
+  const onItemPress = (storageItem: StorageItem) => {
+    openSheet({
+      snapPoints: ['55%', '80%'],
+      hasDim: true,
+      render: () => <StorageItemSheet storageItem={storageItem} />,
+    });
+  };
+
+  const headerLeftPress = () => {
+    setSearchKeyword('');
+    navigation.goBack();
+  };
+
+  useEffect(() => {
+    if (!isFocused) {
+      closeSheet();
+    }
+    return () => {
+      closeSheet();
+    };
+  }, [isFocused]);
+
   return (
     <SafeAreaViewContainer edges={['top']}>
-      <ScreenHeader
-        title={label}
-        onLeftPress={() => {
-          setSearchKeyword('');
-          navigation.goBack();
-        }}
-      />
+      <ScreenHeader title={storageLabel} onLeftPress={headerLeftPress} />
 
       <ScrollViewContainer contentContainerClassName="gap-y-20 pt-4">
         {/* 소비기한 임박 */}
         <View className="gap-y-3">
           <SectionTitle title="소비기한 주의 식재료" icon="ClockAlert" />
-          <CautionIngredientList storageType={storageType} />
+          <CautionIngredientList storageType={storageType} openItemPress={onItemPress} />
         </View>
 
         {/* 나의 공간 */}
         <View className="gap-y-1">
           <SectionTitle title="나의 식재료" icon="Refrigerator">
             <View className="flex-row items-center">
-              <PressableIcon
-                className="h-12 px-2 py-1"
-                icon={'Search'}
-                iconSize={25}
-                onPress={openSearchPress}
-                iconColor={searchKeyword === '' ? undefined : 'indigo'}
+              <Icon
+                name="Search"
+                className="h-12 w-12 items-center justify-center"
+                size={22}
+                onPress={onSearchPress}
+                color={searchKeyword === '' ? 'text' : 'blue'}
               />
-
-              <PressableIcon
-                className="h-12 px-2 py-1"
-                icon="Plus"
-                iconSize={30}
-                onPress={() => navigation.navigate('AddStorageItem', { id: storageType })}
+              <Icon
+                name="Plus"
+                className="h-12 w-12 items-center justify-center"
+                size={27}
+                color="text"
+                onPress={() =>
+                  navigation.navigate('AddStorageItemScreen', { id: storageType })
+                }
               />
             </View>
           </SectionTitle>
 
-          <Storage storageType={storageType} />
+          <Storage storageType={storageType} openItemPress={onItemPress} />
         </View>
       </ScrollViewContainer>
     </SafeAreaViewContainer>

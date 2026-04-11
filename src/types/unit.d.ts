@@ -23,6 +23,7 @@ export type StockUnit =
   | '알'
   | '장'
   | '스틱'
+  | 'g'
   | '송이';
 
 export const categoryUnitMap: Record<CategoryKey, StockUnit[]> = {

@@ -6,8 +6,12 @@ import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import './global.css';
+import { useColorScheme, View } from 'react-native';
+import { theme } from '@/theme/color';
 
 export default function App() {
+  const scheme = useColorScheme();
+
   const [fontLoaded] = useFonts({
     NanumSquareNeoExtraBold: require('./assets/fonts/NanumSquareNeoExtraBold.ttf'),
     NanumSquareNeoBold: require('./assets/fonts/NanumSquareNeoBold.ttf'),
@@ -19,12 +23,14 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <BottomSheetModalProvider>
-          <OverlayContainer>
-            <RootNavigator />
-            <StatusBar style="auto" />
-          </OverlayContainer>
-        </BottomSheetModalProvider>
+        <View style={theme[scheme ?? 'light']} className="flex-1">
+          <BottomSheetModalProvider>
+            <OverlayContainer>
+              <RootNavigator />
+              <StatusBar style="auto" />
+            </OverlayContainer>
+          </BottomSheetModalProvider>
+        </View>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

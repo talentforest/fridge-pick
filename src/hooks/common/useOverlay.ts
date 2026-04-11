@@ -8,6 +8,8 @@ import {
   closeDatePickerAtom,
   alertAtom,
   confirmAtom,
+  expandSheetAtom,
+  shrinkSheetAtom,
 } from '@/atom/overlayAtom';
 
 export function useOverlay() {
@@ -23,6 +25,9 @@ export function useOverlay() {
   const alert = useSetAtom(alertAtom);
   const confirm = useSetAtom(confirmAtom);
 
+  const expandSheet = useSetAtom(expandSheetAtom);
+  const shrinkSheet = useSetAtom(shrinkSheetAtom);
+
   return {
     openSheet,
     closeSheet,
@@ -32,6 +37,9 @@ export function useOverlay() {
 
     openDatePicker,
     closeDatePicker,
+
+    expandSheet,
+    shrinkSheet,
 
     alert,
     confirm,

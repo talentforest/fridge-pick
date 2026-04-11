@@ -1,7 +1,6 @@
+import { DEFAULT_EXPIRATION_DAYS } from '@/constants';
 import { formatDateString } from '@/utils/formatDate';
 import { addDays, format } from 'date-fns';
-
-const DEFAULT_EXPIRATION_DAYS = 7;
 
 export function calculateExpiresAt(purchasedAt: Date, expirationDays: number) {
   return formatDateString(addDays(purchasedAt, expirationDays), 'yyyy-MM-dd');

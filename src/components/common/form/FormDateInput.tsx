@@ -1,27 +1,25 @@
-import LabelContainer from '@/components/common/container/LabelContainer';
 import DateInput from '@/components/common/DateInput';
 import FilterTag from '@/components/common/FilterTag';
-import Icon from '@/components/common/ui/Icon';
-import Text from '@/components/common/ui/Text';
-import { StorageItem } from '@/types/storage';
+import ModalHeader from '@/components/common/ModalHeader';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { useOverlay } from '@/hooks/common/useOverlay';
 import { formatDateString } from '@/utils';
-import { addDays, addMonths, addWeeks, addYears } from 'date-fns';
+import { addDays, addMonths, addWeeks } from 'date-fns';
 import { View } from 'react-native';
+import LabelContainer from '@/components/common/container/LabelContainer';
+import { EditableStorageItemData } from '@/types/storage';
 
 interface FormDateInputProps {
   currDate: string;
-  onItemChange: (
-    newData: Partial<Pick<StorageItem, 'expiresAt' | 'storage' | 'memo'>>,
-  ) => void;
+  onItemChange: (newData: EditableStorageItemData) => void;
   defaultExpirationDays?: number;
-  hasInfo?: boolean;
+  hasLabel?: boolean;
 }
 
 export default function FormDateInput({
   currDate,
   onItemChange,
-  defaultExpirationDays,
-  hasInfo,
+  hasLabel,
 }: FormDateInputProps) {
   const initialDate = new Date(currDate);
 
@@ -30,42 +28,68 @@ export default function FormDateInput({
     onItemChange({ expiresAt });
   };
 
+  const { openDatePicker } = useOverlay();
+
+  const onChange = (_: any, selectedDate?: Date) => {
+    if (selectedDate) {
+      onChangeDate(selectedDate);
+    }
+  };
+
+  const onEditDatePickerPress = () => {
+    openDatePicker({
+      hasDim: true,
+      render: () => (
+        <View>
+          <ModalHeader title="소비기한 변경하기" isDatePicker />
+          <DateTimePicker
+            minimumDate={new Date()}
+            value={initialDate}
+            mode="date"
+            display="spinner"
+            onChange={onChange}
+            locale="ko-KR"
+          />
+        </View>
+      ),
+    });
+  };
+
   const plusDateBtnList = [
-    { label: '+하루', onPress: () => onChangeDate(addDays(initialDate, 1)) },
-    { label: '+일주일', onPress: () => onChangeDate(addWeeks(initialDate, 1)) },
-    { label: '+한달', onPress: () => onChangeDate(addMonths(initialDate, 1)) },
-    { label: '+일년', onPress: () => onChangeDate(addYears(initialDate, 1)) },
+    {
+      label: '직접변경',
+      onPress: onEditDatePickerPress,
+      color: 'blue' as const,
+    },
+    {
+      label: '+하루',
+      onPress: () => onChangeDate(addDays(initialDate, 1)),
+      color: 'neutral' as const,
+    },
+    {
+      label: '+일주일',
+      onPress: () => onChangeDate(addWeeks(initialDate, 1)),
+      color: 'neutral' as const,
+    },
+    {
+      label: '+한달',
+      onPress: () => onChangeDate(addMonths(initialDate, 1)),
+      color: 'neutral' as const,
+    },
   ];
 
   return (
-    <LabelContainer label="추천 소비기한">
-      {hasInfo && defaultExpirationDays && (
-        <View className="flex-row items-center gap-x-1 rounded-xl px-2 pb-3 pt-2">
-          <Icon name="Info" size={16} />
-          <Text className="text-md text-gray-700">
-            추천 소비기한은{' '}
-            <Text className="font-extrabold text-md text-red-500">
-              {defaultExpirationDays}일
-            </Text>
-            입니다.
-          </Text>
-        </View>
-      )}
-
-      <DateInput date={currDate} onChangeDate={onChangeDate}>
-        <View className="flex-row gap-x-1 p-5">
-          <Icon name="Calendar" size={18} color="gray" />
-          <Text className="text-gray-600">변경</Text>
-        </View>
-      </DateInput>
+    <LabelContainer label={hasLabel ? '소비기한' : undefined}>
+      <DateInput date={currDate} openDatePicker={onEditDatePickerPress} />
 
       <View className="mt-2 flex-row flex-wrap gap-2">
-        {plusDateBtnList.map(({ label, onPress }) => (
+        {plusDateBtnList.map(({ label, onPress, color }) => (
           <FilterTag
             key={label}
+            isActive
             name={label}
-            color="blue"
-            textClassName="text-md"
+            textClassName="text-sm"
+            color={color}
             onPress={onPress}
           />
         ))}

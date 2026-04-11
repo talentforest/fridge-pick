@@ -1,4 +1,4 @@
-import PressableIcon from '@/components/common/PressableIcon';
+import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import { View } from 'react-native';
@@ -14,9 +14,10 @@ export default function ModalHeader({ title, isDatePicker }: ModalHeaderProps) {
   return (
     <View className="flex-row items-center justify-between">
       <Text className="text-xl">{title}</Text>
-      <PressableIcon
-        icon="X"
-        iconSize={26}
+
+      <Icon
+        name="X"
+        size={26}
         className="p-1"
         onPress={isDatePicker ? closeDatePicker : closeModal}
       />

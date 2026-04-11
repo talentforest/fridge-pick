@@ -1,13 +1,10 @@
 import { View, ViewProps } from 'react-native';
 
 interface CardProps {
-  bgColor?: 'bg-white' | 'bg-indigo-100';
+  bgColor?: 'bg-card' | 'bg-indigo-100';
 }
 
-export default function Card({
-  bgColor = 'bg-white',
-  ...props
-}: CardProps & ViewProps) {
+export default function Card({ bgColor = 'bg-card', ...props }: CardProps & ViewProps) {
   return (
     <View
       {...props}

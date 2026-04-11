@@ -1,10 +1,10 @@
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import FilterContainer from '@/components/common/container/FilterContainer';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
-import DishCard from '@/components/common/DishCard';
-import DishCompactCard from '@/components/common/DishCompactCard';
+import MealCard from '@/components/common/MealCard';
+import MealCompactCard from '@/components/common/MealCompactCard';
 import SectionTitle from '@/components/common/SectionTitle';
-import { dishList, filterObj } from '@/constants';
+import { mealList, filterObj } from '@/constants';
 import { View } from 'react-native';
 
 export default function RecommendedDish() {
@@ -14,22 +14,22 @@ export default function RecommendedDish() {
 
       <FullBleedSection>
         <CarouselContainer
-          data={dishList}
-          initialIndex={dishList.length}
-          itemWidth={0.49}
+          data={mealList}
+          initialIndex={mealList.length}
+          itemWidth={0.52}
           hasNavigation
           centerFocus
-          renderItem={({ item }) => <DishCompactCard key={item.name} dish={item} />}
+          renderItem={({ item }) => <MealCompactCard key={item.mealId} meal={item} />}
           keyExtractor={(_, index) => `${index}`}
         />
       </FullBleedSection>
 
-      <View className="min-h-[800]">
+      <View className="min-h-[800] pt-10">
         <FilterContainer
-          filterList={Object.values(filterObj['dish'])}
-          dataList={dishList}
+          filterList={Object.values(filterObj['meal'])}
+          dataList={mealList}
         >
-          {(dish) => <DishCard key={dish.name} dish={dish} className="w-full" />}
+          {(meal) => <MealCard key={meal.mealId} meal={meal} className="w-full" />}
         </FilterContainer>
       </View>
     </View>

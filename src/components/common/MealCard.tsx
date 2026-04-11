@@ -3,43 +3,42 @@ import Indicator from '@/components/common/Indicator';
 import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
-import { Dish } from '@/types/dish';
+import { allIngredients } from '@/constants';
+import { Meal } from '@/types/meal';
 import { View } from 'react-native';
 
-interface DishCardProps {
-  dish: Dish;
+interface MealCardProps {
+  meal: Meal;
   className?: string;
   maxIngredientNum?: number;
 }
 
 export default function DishCard({
-  dish: { ingredientList, name, filterList, time },
+  meal: { mealId, ingredientList, customName, time },
   className = '',
   maxIngredientNum = 9,
-}: DishCardProps) {
+}: MealCardProps) {
+  const currMeal = allIngredients.find((meal) => meal.id === mealId);
+
   return (
-    <Card className={`items-start bg-white p-5 ${className}`}>
+    <Card className={`items-start p-5 ${className}`}>
       <View className="mb-2 w-full justify-between gap-4">
-        <Text className="line-clamp-2 text-lg">{name}</Text>
+        <Text className="line-clamp-2 text-base">{customName || currMeal?.label}</Text>
+
         <View className="flex-row gap-x-3">
-          <Indicator type="time" value={time} />
           <Indicator type="total" value={ingredientList.length} />
+          <Indicator type="time" value={time} />
         </View>
       </View>
 
       {ingredientList.length > 0 && (
-        <GridContainer columns={5} gap={4} className="mt-2">
+        <GridContainer columns={6} gap={4}>
           {ingredientList.slice(0, maxIngredientNum).map((ingredient) => (
             <View
-              key={ingredient.label}
-              className="items-center justify-between rounded-xl bg-gray-100/40 "
+              key={ingredient?.label}
+              className="items-center justify-between rounded-xl bg-neutral-1"
             >
               <IngredientImage ingredient={ingredient} size={45} />
-              <Text
-                className={`mt-0.5 line-clamp-1 text-center text-md text-stone-600`}
-              >
-                {ingredient.label}
-              </Text>
             </View>
           ))}
 

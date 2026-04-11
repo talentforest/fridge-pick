@@ -1,4 +1,4 @@
-import PressableIcon from '@/components/common/PressableIcon';
+import IconWithText from '@/components/common/IconWithText';
 import Text from '@/components/common/ui/Text';
 import { useNavigation } from '@react-navigation/native';
 import { GestureResponderEvent, View } from 'react-native';
@@ -7,7 +7,6 @@ interface ScreenHeaderProps {
   title: string;
   isDetailPage?: boolean;
   onLeftPress?: (event: GestureResponderEvent) => void;
-  onRightPress?: (event: GestureResponderEvent) => void;
   className?: string;
 }
 
@@ -15,35 +14,25 @@ export default function ScreenHeader({
   title,
   isDetailPage = true,
   onLeftPress,
-  onRightPress,
   className = '',
 }: ScreenHeaderProps) {
   const navigation = useNavigation();
 
   return (
     <View
-      className={`h-16 flex-row items-center justify-between px-6 ${isDetailPage ? 'border-b border-border' : ''} ${className}`}
+      className={`flex-row items-end justify-between px-6 pt-3 ${isDetailPage ? 'border-b border-border' : ''} ${className}`}
     >
       {isDetailPage ? (
-        <PressableIcon
+        <IconWithText
           icon="ChevronLeft"
-          iconSize={30}
-          className="w-fit flex-row items-center justify-center py-2"
+          iconSize={28}
+          className="w-fit flex-row items-center justify-center pb-4"
           onPress={onLeftPress ?? (() => navigation.goBack())}
           text={title}
-          textClassName="!text-2xl"
+          textClassName="text-xl"
         />
       ) : (
-        <Text className="pl-2 !text-2xl">{title}</Text>
-      )}
-
-      {onRightPress && (
-        <PressableIcon
-          icon="Edit"
-          className="size-10 items-center justify-center"
-          iconSize={25}
-          onPress={() => {}}
-        />
+        <Text className="pl-2 text-xl">{title}</Text>
       )}
     </View>
   );

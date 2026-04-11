@@ -30,7 +30,9 @@ export default function IngredientCard({
       ) : (
         <View className="items-center gap-y-2">
           <Text className={`text-center leading-5 ${textClassName}`}>{label}</Text>
-          <Text className={'text-red-600'}>+{expirationDays}일</Text>
+          <Text className={'text-red-600'}>
+            +{expirationDays[ingredient.defaultStorage]}일
+          </Text>
         </View>
       )}
     </Card>

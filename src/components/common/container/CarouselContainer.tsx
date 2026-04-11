@@ -27,7 +27,7 @@ export default function CarouselContainer<T>({
   keyExtractor,
   hasNavigation,
   centerFocus,
-  spacing = 6,
+  spacing = 0,
 }: CarouselContainerProps<T>) {
   const listRef = useRef<FlatList<T>>(null);
 
@@ -36,13 +36,12 @@ export default function CarouselContainer<T>({
   const [containerWidth, setContainerWidth] = useState(0);
 
   /** 실제 carousel width 기준으로 카드 계산 */
-  const CARD_WIDTH = containerWidth * itemWidth;
+  const CARD_WIDTH = containerWidth * itemWidth + spacing;
   const ITEM_SIZE = useMemo(() => CARD_WIDTH + spacing, [CARD_WIDTH, spacing]);
 
   /** navigation 버튼 */
   const handleDirection = (direction: 'prev' | 'next') => {
-    const nextIndex =
-      direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
+    const nextIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
 
     listRef.current?.scrollToOffset({
       offset: ITEM_SIZE * nextIndex,
@@ -90,9 +89,7 @@ export default function CarouselContainer<T>({
 
   /** container width 아직 없으면 렌더 안함 */
   if (!containerWidth) {
-    return (
-      <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)} />
-    );
+    return <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)} />;
   }
 
   return (
@@ -115,22 +112,21 @@ export default function CarouselContainer<T>({
           offset: ITEM_SIZE * index,
           index,
         })}
-        onMomentumScrollEnd={(e) =>
-          handleScrollEnd(e.nativeEvent.contentOffset.x)
-        }
+        onMomentumScrollEnd={(e) => handleScrollEnd(e.nativeEvent.contentOffset.x)}
         renderItem={({ item, index }) => {
           const isActive =
             !isScrolling && index % data.length === currentIndex % data.length;
 
           return (
-            <View
-              style={{
-                width: CARD_WIDTH,
-                transform: centerFocus && !isActive ? [{ scale: 0.88 }] : [],
-              }}
-              className="rounded-2xl"
-            >
-              {renderItem({ item, isCurrIndex: isActive, index })}
+            <View style={{ width: CARD_WIDTH }}>
+              <View
+                style={{
+                  transform: centerFocus && !isActive ? [{ scale: 0.94 }] : [],
+                }}
+                className={`rounded-2xl ${centerFocus && !isActive ? '' : 'p-1'}`}
+              >
+                {renderItem({ item, isCurrIndex: isActive, index })}
+              </View>
             </View>
           );
         }}

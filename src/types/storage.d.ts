@@ -52,6 +52,10 @@ type StorageItemCustom = BaseStorageItem & {
 
 export type StorageItem = StorageItemWithIngredientId | StorageItemCustom;
 
+export type EditableStorageItemData = Partial<
+  Pick<StorageItem, 'storage' | 'expiresAt' | 'memo'>
+>;
+
 export type EnrichStorageItem = StorageItem & { ingredient?: Ingredient };
 
 // TODO: ComsumptionLog 작성하기

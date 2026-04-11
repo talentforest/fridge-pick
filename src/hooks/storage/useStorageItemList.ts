@@ -6,8 +6,7 @@ import {
   StorageSideId,
   StorageSpace,
 } from '@/types/storage';
-import { findIngredient } from '@/utils';
-import { getRemainingDays } from '@/utils/getExpirationDate';
+import { findIngredient, getRemainingDays } from '@/utils';
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 

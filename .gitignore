@@ -45,6 +45,6 @@ yarn-error.*
 
 
 # ---
-src/constants/dish.ts
+src/constants/meal.ts
 src/constants/ingredient.ts
 

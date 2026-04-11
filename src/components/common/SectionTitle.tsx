@@ -15,16 +15,18 @@ interface SectionTitleProps {
 export default function SectionTitle({
   title,
   icon,
-  iconColor,
+  iconColor = 'yellow',
   className = '',
   textClassName = '',
   children,
 }: SectionTitleProps) {
   return (
-    <View className={`flex-row items-center gap-x-1.5 pb-1 pl-2 ${className}`}>
+    <View className={`flex-row items-center gap-x-1.5 pl-2 ${className}`}>
       {icon && <Icon name={icon} size={20} strokeWidth="2.5" color={iconColor} />}
 
-      <Text className={`mr-auto font-bold text-xl ${textClassName}`}>{title}</Text>
+      <Text className={`mr-auto font-bold text-lg text-yellow-7 ${textClassName}`}>
+        {title}
+      </Text>
 
       {children}
     </View>

@@ -26,9 +26,13 @@ export default function GridContainer({
   const itemWidth =
     containerWidth > 0 ? Math.floor((containerWidth - gap * (columns - 1)) / columns) : 0;
 
+  const totalRows = Math.ceil(childrenArray.length / columns);
+
   return (
     <View onLayout={handleLayout} className={`w-full flex-row flex-wrap ${className}`}>
       {childrenArray.map((child, index) => {
+        const currentRow = Math.floor(index / columns);
+        const isLastRow = currentRow === totalRows - 1;
         const isLastColumn = (index + 1) % columns === 0;
 
         return (
@@ -37,7 +41,7 @@ export default function GridContainer({
             style={{
               width: itemWidth,
               marginRight: isLastColumn ? 0 : gap,
-              marginBottom: gap,
+              marginBottom: isLastRow ? 0 : gap,
             }}
           >
             {child}

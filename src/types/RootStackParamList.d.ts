@@ -4,10 +4,10 @@ export type RootStackParamList = {
   OnBoarding: undefined;
   Main: undefined;
 
-  Home: undefined;
-  ShoppingList: undefined;
+  HomeScreen: undefined;
+  ShoppingListScreen: undefined;
 
-  StorageDetail: { id: StorageTypeId };
-  ShoppingListDetail: undefined;
-  AddStorageItem: { id: StorageTypeId };
+  StorageDetailScreen: { id: StorageTypeId };
+  ShoppingListDetailScreen: undefined;
+  AddStorageItemScreen: { id: StorageTypeId };
 };

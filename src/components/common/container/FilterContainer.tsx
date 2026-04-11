@@ -1,5 +1,6 @@
 import FilterTag from '@/components/common/FilterTag';
-import { DishFilterKey, FilterValue } from '@/types/filter';
+import Text from '@/components/common/ui/Text';
+import { MealFilterKey, FilterValue } from '@/types/filter';
 
 import { ReactNode, useState } from 'react';
 import { View } from 'react-native';
@@ -15,7 +16,7 @@ export default function FilterContainer<T extends { filterList: string[] }>({
   dataList,
   children,
 }: FilterContainerProps<T>) {
-  const [activeFilter, setActiveFilter] = useState<DishFilterKey>('all');
+  const [activeFilter, setActiveFilter] = useState<MealFilterKey>('all');
 
   const filteredDataList =
     activeFilter === 'all'
@@ -24,7 +25,7 @@ export default function FilterContainer<T extends { filterList: string[] }>({
 
   return (
     <View>
-      <View className="mb-6 flex-row flex-wrap gap-2">
+      <View className="mb-4 flex-row flex-wrap gap-2">
         {Object.values(filterList).map(({ name, label, color }) => (
           <FilterTag
             key={label}
@@ -35,6 +36,8 @@ export default function FilterContainer<T extends { filterList: string[] }>({
           />
         ))}
       </View>
+
+      <Text className="px-2 py-3 pb-4 text-base text-blue-5">추천 메뉴 목록</Text>
 
       <View className="flex-row flex-wrap justify-between gap-5">
         {filteredDataList.map(children)}
