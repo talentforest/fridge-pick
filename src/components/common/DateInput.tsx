@@ -1,4 +1,4 @@
-import { Pressable, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import {
   formatDateString,
   formatRemainingDays,
@@ -28,9 +28,10 @@ export default function DateInput({
   const expirationStatus = getExpirationStatus(+remainingDays);
 
   return (
-    <Pressable
+    <TouchableOpacity
+      activeOpacity={0.7}
       onPress={openDatePicker}
-      className={`h-[56] flex-row items-center gap-x-1 rounded-2xl border border-inactive-bg bg-card px-3 ${className}`}
+      className={`h-[56] flex-row items-center gap-x-1 rounded-2xl border border-border bg-card px-2.5 ${className}`}
     >
       <View className="flex-1 flex-row items-center gap-2">
         <View
@@ -49,6 +50,6 @@ export default function DateInput({
       <Icon name="Calendar" size={20} color="darkGray" className="!mr-2 pb-0.5" />
 
       {children}
-    </Pressable>
+    </TouchableOpacity>
   );
 }

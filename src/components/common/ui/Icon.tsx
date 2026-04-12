@@ -1,5 +1,6 @@
 import { colorTokens } from '@/theme/color';
 import {
+  ExternalLink,
   House,
   SunMoon,
   Apple,
@@ -67,6 +68,7 @@ import {
 import { TouchableOpacity, useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'ExternalLink'
   | 'ShoppingBasket'
   | 'House'
   | 'SunMoon'
@@ -149,11 +151,13 @@ export type IconColor =
 interface IconProps {
   name: IconName | CategoryIconName;
   color?: IconColor;
+  hasFill?: boolean;
 }
 
 export default function Icon({
   name,
   color = 'text',
+  hasFill = false,
   ...props
 }: IconProps & LucideProps) {
   const colorScheme = useColorScheme() ?? 'light';
@@ -176,6 +180,7 @@ export default function Icon({
   };
 
   const iconObj: { [key in IconName | CategoryIconName]: LucideIcon } = {
+    ExternalLink,
     House,
     SunMoon,
     X,
@@ -248,15 +253,21 @@ export default function Icon({
       onPress={props.onPress}
     >
       <Component
-        stroke={colorMap[color]}
         strokeWidth={2.2}
         {...props}
+        stroke={colorMap[color]}
+        fill={hasFill ? colorMap[color] : 'transparent'}
         onPress={undefined}
       />
     </TouchableOpacity>
   ) : (
     <View className={props.className}>
-      <Component stroke={colorMap[color]} strokeWidth={2.2} {...props} />
+      <Component
+        strokeWidth={2.2}
+        {...props}
+        stroke={colorMap[color]}
+        fill={hasFill ? colorMap[color] : 'transparent'}
+      />
     </View>
   );
 }

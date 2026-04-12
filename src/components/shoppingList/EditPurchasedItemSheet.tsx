@@ -7,7 +7,7 @@ import { ScrollView, View } from 'react-native';
 
 interface EditPurchasedItemSheetProps {
   initialItem: EnrichStorageItem;
-  onEditSubmit: (id: string, newData: EditableStorageItemData) => void;
+  onEditSubmit: (id: string, newData: Partial<EditableStorageItemData>) => void;
   scrollRef?: React.RefObject<ScrollView>;
 }
 
@@ -19,7 +19,7 @@ export default function EditPurchasedItemSheet({
 
   const { ingredient, ...storageItem } = currStorageItem || {};
 
-  const onItemChange = (newData: EditableStorageItemData) => {
+  const onItemChange = (newData: Partial<EditableStorageItemData>) => {
     setCurrStorageItem((prev) => ({ ...prev, ...newData }));
   };
 

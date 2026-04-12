@@ -2,7 +2,7 @@ import Icon, { IconName } from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import { FilterColor } from '@/types/filter';
 
-import { Pressable, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
 interface FilterProps {
   name: string;
@@ -47,12 +47,9 @@ export default function FilterTag({
   const commonClassName = 'rounded-xl px-3.5 py-3';
 
   return onPress ? (
-    <Pressable
+    <TouchableOpacity
       onPress={onPress}
-      style={({ pressed }) => ({
-        transform: [{ scale: pressed ? 0.96 : 1 }],
-        opacity: pressed ? 0.55 : 1,
-      })}
+      activeOpacity={0.7}
       className={`${commonClassName} flex-row items-center ${isActive ? bgColor[color as FilterColor] : inActiveObj.bgColor} ${className}`}
     >
       {icon && <Icon name={icon} size={15} color={color} />}
@@ -61,7 +58,7 @@ export default function FilterTag({
       >
         {name}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   ) : (
     <View className={`${commonClassName} ${bgColor[color as FilterColor]} ${className}`}>
       {icon && <Icon name={icon} />}

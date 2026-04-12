@@ -15,9 +15,9 @@ export const colorTokens = {
     neutral: {
       9: '#151515',
       7: '#4f4f4f',
-      5: '#8A8A8A',
+      5: '#999999',
       3: '#E9E9E9',
-      1: '#fff',
+      1: '#FFFFFF',
     },
 
     green: {
@@ -85,7 +85,7 @@ export const colorTokens = {
     neutral: {
       9: '#efefef',
       7: '#d4d4d4',
-      5: '#737373',
+      5: '#999999',
       3: '#404040',
       1: '#171717',
     },

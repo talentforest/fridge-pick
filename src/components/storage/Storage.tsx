@@ -9,19 +9,15 @@ import StorageItem from '@/components/storage/StorageItem';
 import { image_empty_basket, storageObj } from '@/constants';
 import { useStorageItemList } from '@/hooks';
 import { useOverlay } from '@/hooks/common/useOverlay';
-import {
-  StorageItem as StorageItemType,
-  StorageSideId,
-  StorageTypeId,
-} from '@/types/storage';
+import { StorageSideId, StorageTypeId } from '@/types/storage';
 import { searchStorageItem } from '@/utils';
 import { useAtom } from 'jotai';
 import { useMemo, useState } from 'react';
-import { Image, Pressable, ScrollView, View } from 'react-native';
+import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
 
 interface StorageProps {
   storageType: StorageTypeId;
-  openItemPress: (item: StorageItemType) => void;
+  openItemPress: (storageItemId: string) => void;
 }
 
 const SETTING_SIDE = false;
@@ -102,9 +98,13 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                 {searchedStorageItemList.length > 0 ? (
                   <GridContainer gap={10} columns={5}>
                     {searchedStorageItemList.map((item) => (
-                      <Pressable key={item.id} onPress={() => openItemPress(item)}>
+                      <TouchableOpacity
+                        key={item.id}
+                        activeOpacity={0.7}
+                        onPress={() => openItemPress(item.id)}
+                      >
                         <StorageItem item={item} />
-                      </Pressable>
+                      </TouchableOpacity>
                     ))}
                   </GridContainer>
                 ) : (
@@ -137,9 +137,13 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                     <GridContainer gap={4} columns={5}>
                       {/* 식재료 리스트 */}
                       {items.map((item) => (
-                        <Pressable key={item.id} onPress={() => openItemPress(item)}>
+                        <TouchableOpacity
+                          key={item.id}
+                          activeOpacity={0.7}
+                          onPress={() => openItemPress(item.id)}
+                        >
                           <StorageItem item={item} />
-                        </Pressable>
+                        </TouchableOpacity>
                       ))}
                     </GridContainer>
                   </View>

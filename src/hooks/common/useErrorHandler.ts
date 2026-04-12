@@ -1,9 +1,14 @@
 import { useState } from 'react';
 
-export type AppError<T = unknown> = {
-  type: 'duplicate' | 'validation';
-  message: string;
+export type AppSuccess<T = unknown> = {
+  type: 'success';
   item?: T;
+};
+
+export type AppError<T> = {
+  type: 'duplicate' | 'validation' | 'hasIngredientInfo';
+  message?: string;
+  item: T;
 };
 
 type ErrorRule<T> = {
@@ -30,6 +35,7 @@ export const useErrorHandler = <T>() => {
 
   return {
     error,
+    setError,
     handleError,
     clearError,
   };

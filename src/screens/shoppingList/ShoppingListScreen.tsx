@@ -1,21 +1,14 @@
-import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
-import ViewContentContainer from '@/components/common/container/ViewContentContainer';
-import FilterTag from '@/components/common/FilterTag';
-import SquareBtn from '@/components/common/SquareBtn';
-import ScreenHeader from '@/components/common/ScreenHeader';
-import ShoppingItem from '@/components/common/ShoppingItem';
-import Text from '@/components/common/ui/Text';
-import TextInput from '@/components/common/ui/TextInput';
 import {
-  addItemAtom,
-  deleteItemsAtom,
+  addShoppingItemAtom,
+  deleteShoppingItemListAtom,
   isAllPurchasedAtom,
+  isInStorageShoppingItemAtom,
   purchasedCountAtom,
   purchasedItemsAtom,
   shoppingListAtom,
   toggleAllPurchasedAtom,
 } from '@/atom/shoppingListAtom';
-import { image_empty_basket } from '@/constants';
+import { allIngredients, image_empty_basket } from '@/constants';
 import { RootStackParamList } from '@/types/RootStackParamList';
 import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
 import { searchIngredient } from '@/utils';
@@ -23,21 +16,31 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useMemo, useState } from 'react';
-import { FlatList, Image, ScrollView, View } from 'react-native';
+import { FlatList, Image, ScrollView, TouchableOpacity, View } from 'react-native';
+import { useErrorHandler } from '@/hooks/common/useErrorHandler';
+import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
+import ViewContentContainer from '@/components/common/container/ViewContentContainer';
+import SquareBtn from '@/components/common/SquareBtn';
+import ScreenHeader from '@/components/common/ScreenHeader';
+import ShoppingItem from '@/components/common/ShoppingItem';
+import Text from '@/components/common/ui/Text';
+import TextInput from '@/components/common/ui/TextInput';
 import KeyboardAvoidingViewContainer from '@/components/common/container/KeyboardAvoidingViewContainer';
 import Card from '@/components/common/ui/Card';
 import IconWithText from '@/components/common/IconWithText';
 import Icon from '@/components/common/ui/Icon';
+import IngredientCard from '@/components/common/ingredient/IngredientCard';
+import LabelContainer from '@/components/common/container/LabelContainer';
+import { useOverlay } from '@/hooks/common/useOverlay';
 
 type StackNavProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function ShoppingListScreen() {
   const [inputValue, setInputValue] = useState<string>('');
-  const [error, setError] = useState<{
-    message: string;
-    result: 'duplicate';
-    item: ShoppingItemType;
-  } | null>(null);
+
+  const { error, setError, clearError } = useErrorHandler<ShoppingItemType>();
+
+  const { alert } = useOverlay();
 
   const navigation = useNavigation<StackNavProp>();
 
@@ -46,8 +49,10 @@ export default function ShoppingListScreen() {
   const isAllPurchased = useAtomValue(isAllPurchasedAtom);
   const purchasedItemList = useAtomValue(purchasedItemsAtom);
 
-  const addItem = useSetAtom(addItemAtom);
-  const deleteItems = useSetAtom(deleteItemsAtom);
+  const isInStorageItem = useAtomValue(isInStorageShoppingItemAtom);
+
+  const addItem = useSetAtom(addShoppingItemAtom);
+  const deleteItems = useSetAtom(deleteShoppingItemListAtom);
   const toggleAllPurchased = useSetAtom(toggleAllPurchasedAtom);
 
   const recommendedKeywordList = useMemo(() => {
@@ -60,13 +65,36 @@ export default function ShoppingListScreen() {
     toggleAllPurchased();
   };
 
+  const onSubmitPress = (value: string) => {
+    if (!value) return;
+
+    const result = addItem(value);
+
+    if (result.type === 'duplicate') {
+      return setError(result);
+    }
+
+    if (result.type === 'success') {
+      setInputValue('');
+    }
+  };
+
+  /** TODO: 추천 식재료
+   * 1. 자주먹는 식재료인데 없는 경우
+   * 2. 보관함에 날짜가 지난 식재료, 임박식재료는 X
+   */
+  const recommendedIngredientList = allIngredients
+    .slice(0, 20)
+    .filter((item) => !shoppingList.find((i) => i.ingredientId === item.id))
+    .slice(0, 8);
+
   return (
     <KeyboardAvoidingViewContainer>
       <SafeAreaViewContainer>
         <ScreenHeader title="장보기 목록" isDetailPage={false} />
 
         <ViewContentContainer className="pt-5">
-          <Card className="flex-1 rounded-2xl bg-card px-4 pt-2">
+          <Card className="flex-1 rounded-2xl bg-card px-3 pb-3 pt-2">
             {/* 테이블 헤더 */}
             <View className="flex-row items-center justify-between pr-2">
               <IconWithText
@@ -86,14 +114,14 @@ export default function ShoppingListScreen() {
                 data={shoppingList}
                 nestedScrollEnabled
                 showsVerticalScrollIndicator={false}
-                className="flex-1"
+                className="mb-4 flex-1"
                 contentContainerClassName="pb-10"
                 ItemSeparatorComponent={() => (
-                  <View className="border-b border-dashed border-gray-400" />
+                  <View className="border-b border-dashed border-neutral-3" />
                 )}
                 keyExtractor={(item) => `${item.id}`}
                 renderItem={({ item }) => (
-                  <ShoppingItem item={item} isError={error?.item.id === item.id} />
+                  <ShoppingItem item={item} isError={error?.item?.id === item.id} />
                 )}
               />
             ) : (
@@ -104,6 +132,33 @@ export default function ShoppingListScreen() {
                 />
                 <Text className="text-inactive-text">장볼 식재료가 없습니다</Text>
               </View>
+            )}
+
+            {recommendedIngredientList.length > 0 && (
+              <LabelContainer label="장보기 추천 식재료">
+                <ScrollView
+                  horizontal
+                  contentContainerClassName="gap-x-1.5"
+                  showsHorizontalScrollIndicator={false}
+                  keyboardShouldPersistTaps="handled"
+                >
+                  {recommendedIngredientList.map((item) => (
+                    <TouchableOpacity
+                      key={item.id}
+                      onPress={() => onSubmitPress(item.label)}
+                    >
+                      <IngredientCard
+                        key={item.id}
+                        ingredient={item}
+                        className="h-20 min-w-20 bg-neutral-3 pb-2.5"
+                        textClassName="text-sm"
+                        isCompact
+                        imageSize={35}
+                      />
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+              </LabelContainer>
             )}
           </Card>
 
@@ -118,7 +173,13 @@ export default function ShoppingListScreen() {
                 color="yellow"
               />
               <SquareBtn
-                onPress={() => navigation.navigate('ShoppingListDetailScreen')}
+                onPress={() => {
+                  if (isInStorageItem)
+                    return alert({
+                      message: '냉장고에 이미 존재하는 식재료는 다시 추가할수 없어요.',
+                    });
+                  navigation.navigate('AddShoppingListScreen');
+                }}
                 name="냉장고에 넣기"
                 iconName="Grid2X2Plus"
                 iconSize={16}
@@ -134,23 +195,21 @@ export default function ShoppingListScreen() {
                 horizontal
                 contentContainerClassName="gap-x-2"
                 showsHorizontalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
               >
-                {recommendedKeywordList.map(({ label, id }) => (
-                  <FilterTag
-                    key={id}
-                    name={label}
-                    color={label === inputValue ? 'blue' : 'yellow'}
-                    isActive
-                    onPress={() => {
-                      const { result, item } = addItem(label);
-                      if (result === 'duplicate') {
-                        setError({ item, result, message: '이미 목록에 존재해요' });
-                        return;
-                      }
-
-                      setInputValue('');
-                    }}
-                  />
+                {recommendedKeywordList.map((item) => (
+                  <TouchableOpacity
+                    key={item.id}
+                    onPress={() => onSubmitPress(item.label)}
+                  >
+                    <IngredientCard
+                      ingredient={item}
+                      className="h-20 min-w-20 !pt-1 pb-2.5"
+                      isCompact
+                      textClassName="text-sm"
+                      imageSize={35}
+                    />
+                  </TouchableOpacity>
                 ))}
               </ScrollView>
             )}
@@ -164,10 +223,12 @@ export default function ShoppingListScreen() {
                 <TextInput
                   maxLength={50}
                   value={inputValue}
+                  className="pr-12"
                   onChangeText={(text) => {
                     setInputValue(text);
+
                     if (error !== null) {
-                      setError(null);
+                      clearError();
                     }
                   }}
                   placeholder="장볼 식재료가 작성해주세요"
@@ -176,17 +237,7 @@ export default function ShoppingListScreen() {
                   name="ArrowUp"
                   size={20}
                   className="absolute bottom-0 right-[8px] top-[9px] z-10 size-11 h-fit items-center justify-center rounded-full bg-neutral-3"
-                  onPress={() => {
-                    if (!inputValue) return;
-
-                    const { result, item } = addItem(inputValue);
-
-                    if (result === 'duplicate') {
-                      return setError({ result, item, message: '이미 목록에 존재해요' });
-                    }
-
-                    setInputValue('');
-                  }}
+                  onPress={() => onSubmitPress(inputValue)}
                 />
               </View>
             </View>

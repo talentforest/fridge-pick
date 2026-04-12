@@ -1,7 +1,7 @@
-import { addItemAtom } from '@/atom/storageItemAtom';
+import { addStorageItemAtom } from '@/atom/storageItemAtom';
 import { storageObj } from '@/constants';
 import { RootStackParamList } from '@/types/RootStackParamList';
-import { EditableStorageItemData, EnrichStorageItem } from '@/types/storage';
+import { EditableStorageItemData, EnrichStorageItem, StorageItem } from '@/types/storage';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useSetAtom } from 'jotai';
 import { useRef, useState } from 'react';
@@ -14,11 +14,15 @@ import KeyboardAvoidingViewContainer from '@/components/common/container/Keyboar
 import Card from '@/components/common/ui/Card';
 import ViewContentContainer from '@/components/common/container/ViewContentContainer';
 import SearchAddStorageItem from '@/components/storage/SearchAddStorageItem';
-import FormIngredient from '@/components/common/form/FormIngredient';
 import SquareBtn from '@/components/common/SquareBtn';
 import Icon from '@/components/common/ui/Icon';
 import IngredientImageLabel from '@/components/storage/IngredientImageLabel';
 import { useOverlay } from '@/hooks/common/useOverlay';
+import FormMemo from '@/components/common/form/FormMemo';
+import FormDateInput from '@/components/common/form/FormDateInput';
+import Text from '@/components/common/ui/Text';
+import { Ingredient } from '@/types/ingredient';
+import { useErrorHandler } from '@/hooks/common/useErrorHandler';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'AddStorageItemScreen'>;
 
@@ -34,21 +38,24 @@ export default function AddStorageItemScreen() {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [currStorageItem, setCurrStorageItem] = useState<EnrichStorageItem | null>(null);
 
-  const addToStorage = useSetAtom(addItemAtom);
+  const { alert } = useOverlay();
+
+  const { error, setError, clearError } = useErrorHandler<StorageItem | Ingredient>();
+
+  const addToStorage = useSetAtom(addStorageItemAtom);
 
   const initializeStorageItem = () => {
     setSearchKeyword('');
     setCurrStorageItem(null);
+    clearError();
   };
 
-  const onItemChange = (newData: EditableStorageItemData) => {
+  const onItemChange = (newData: Partial<EditableStorageItemData>) => {
     setCurrStorageItem((prev) => {
       if (prev === null) return null;
       return { ...prev, ...newData };
     });
   };
-
-  const { alert } = useOverlay();
 
   return (
     <KeyboardAvoidingViewContainer>
@@ -84,6 +91,8 @@ export default function AddStorageItemScreen() {
                       </Card>
                     ) : (
                       <TextInput
+                        value={currStorageItem.customLabel}
+                        onChangeText={(text) => onItemChange({ customLabel: text })}
                         placeholder="식재료 이름을 작성해주세요."
                         maxLength={30}
                       />
@@ -91,32 +100,48 @@ export default function AddStorageItemScreen() {
                     <Icon
                       name="RotateCcw"
                       size={20}
-                      className={`absolute right-0 mb-auto ml-auto p-4 ${currStorageItem.ingredient ? '' : 'bottom-0 top-0'}`}
+                      className={`absolute right-0 p-5 ${currStorageItem.ingredient ? '' : 'bottom-0 top-0'}`}
                       color="text"
                       onPress={initializeStorageItem}
                     />
                   </View>
                 </LabelContainer>
 
-                <FormIngredient
-                  currStorageItem={currStorageItem}
+                <FormDateInput
+                  hasLabel
+                  currDate={currStorageItem.expiresAt}
                   onItemChange={onItemChange}
-                  onMemoFocus={() => scrollRef.current?.scrollToEnd()}
+                />
+
+                <FormMemo
+                  hasLabel
+                  currMemo={currStorageItem.memo || ''}
+                  onItemChange={onItemChange}
+                  onFocus={() => scrollRef.current?.scrollToEnd()}
                 />
               </ScrollView>
 
+              {error && <Text className="text-red-5">{error?.message}</Text>}
+
               <SquareBtn
                 iconName="Plus"
-                className="mt-5 py-5"
+                className="py-5"
                 textClassName="text-base"
-                name={`${storageObj[currStorageItem.storage.type].label}에 추가하기`}
+                name={`${label}에 추가하기`}
                 onPress={() => {
-                  addToStorage(currStorageItem);
-                  setSearchKeyword('');
-                  setCurrStorageItem(null);
-                  alert({
-                    message: `${storageObj[currStorageItem.storage.type].label}에 성공적으로 추가되었습니다!`,
+                  const result = addToStorage({
+                    ...currStorageItem,
+                    storage: { type: storageType },
                   });
+
+                  if (result.type === 'duplicate') {
+                    return setError(result);
+                  }
+
+                  if (result.type === 'success') {
+                    initializeStorageItem();
+                    alert({ message: `${label}에 성공적으로 추가되었습니다!` });
+                  }
                 }}
               />
             </>

@@ -43,3 +43,12 @@ export function formatRemainingDays(days: number) {
 
   return `${days}일 남음`;
 }
+
+export function formatDaysSince(days: number) {
+  if (days < -2) return `${Math.abs(days)}일 전`;
+  if (days === 0) return '오늘';
+  if (days === -1) return '어제';
+  if (days === -2) return '이틀 전';
+
+  return `${days}일`;
+}

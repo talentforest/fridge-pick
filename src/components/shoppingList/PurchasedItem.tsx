@@ -39,7 +39,7 @@ export default function PurchasedItem({ item, setItems, index }: PurchasedItemPr
     },
   ];
 
-  const onEditSubmit = (id: string, newData: EditableStorageItemData) => {
+  const onEditSubmit = (id: string, newData: Partial<EditableStorageItemData>) => {
     setItems((prev) =>
       prev.map((item) => {
         return item.id === id ? { ...item, ...newData } : item;
@@ -50,6 +50,9 @@ export default function PurchasedItem({ item, setItems, index }: PurchasedItemPr
 
   const onEditPress = () =>
     openSheet({
+      enableDynamicSizing: false,
+      keyboardBehavior: 'extend',
+      snapPoints: [600, 835],
       hasDim: true,
       render: () => (
         <EditPurchasedItemSheet initialItem={item} onEditSubmit={onEditSubmit} />

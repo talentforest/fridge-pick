@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { useMemo, useRef, useState } from 'react';
-import { FlatList, Pressable, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 
 type RenderItemWithIndex<T> = (args: {
   item: T;
@@ -166,14 +166,15 @@ const HandleBtn = ({
   };
 
   const commonClassName =
-    'bg-gray-600/30 absolute top-1/2 -translate-y-1/2 rounded-full p-3';
+    'bg-gray-600/30 absolute top-1/2 -translate-y-1/2 rounded-full p-4';
 
   return (
-    <Pressable
+    <TouchableOpacity
+      activeOpacity={0.7}
       onPress={onPress}
       className={`${commonClassName} ${direction === 'prev' ? 'left-8' : 'right-8'}`}
     >
       {directionIcon[direction]}
-    </Pressable>
+    </TouchableOpacity>
   );
 };

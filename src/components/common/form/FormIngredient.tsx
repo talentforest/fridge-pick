@@ -4,7 +4,7 @@ import { EditableStorageItemData, EnrichStorageItem } from '@/types/storage';
 
 interface FormIngredientProps {
   currStorageItem: EnrichStorageItem;
-  onItemChange: (newData: EditableStorageItemData) => void;
+  onItemChange: (newData: Partial<EditableStorageItemData>) => void;
   onMemoFocus?: () => void;
   isSheetInput?: boolean;
 }

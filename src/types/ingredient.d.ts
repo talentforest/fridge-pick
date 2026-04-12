@@ -6,7 +6,7 @@ export type Ingredient = {
   /** 활성 여부 (soft delete 용) */
   isActive: boolean; // 기본 true
 
-  /** Firestore doc id (slug) */
+  /** IngredientKey: Firestore doc id (slug) */
   id: IngredientKey;
 
   /** Image Route Name: 만약 타식재료 동일 이미지인 경우 */

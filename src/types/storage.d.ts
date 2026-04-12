@@ -52,8 +52,9 @@ type StorageItemCustom = BaseStorageItem & {
 
 export type StorageItem = StorageItemWithIngredientId | StorageItemCustom;
 
-export type EditableStorageItemData = Partial<
-  Pick<StorageItem, 'storage' | 'expiresAt' | 'memo'>
+export type EditableStorageItemData = Pick<
+  StorageItem,
+  'customLabel' | 'storage' | 'expiresAt' | 'memo'
 >;
 
 export type EnrichStorageItem = StorageItem & { ingredient?: Ingredient };

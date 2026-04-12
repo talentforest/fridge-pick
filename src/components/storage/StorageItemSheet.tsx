@@ -1,4 +1,8 @@
-import { changeItemAtom, deleteItemsAtom } from '@/atom/storageItemAtom';
+import {
+  changeStorageItemAtom,
+  deleteStorageItemListAtom,
+  findItemByStorageAtom,
+} from '@/atom/storageItemAtom';
 import MealCompactCard from '@/components/common/MealCompactCard';
 import SquareBtn from '@/components/common/SquareBtn';
 import SectionTitle from '@/components/common/SectionTitle';
@@ -7,10 +11,6 @@ import StorageModal from '@/components/storage/StorageModal';
 import { mealList, storageObj } from '@/constants';
 import { useOverlay } from '@/hooks/common/useOverlay';
 
-import { EditableStorageItemData, EnrichStorageItem, StorageItem } from '@/types/storage';
-import { formatDateString } from '@/utils';
-
-import { useSetAtom } from 'jotai';
 import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
@@ -18,44 +18,40 @@ import FormDateInput from '@/components/common/form/FormDateInput';
 import FormMemo from '@/components/common/form/FormMemo';
 import Icon from '@/components/common/ui/Icon';
 import IngredientImageLabel from '@/components/storage/IngredientImageLabel';
+import FullBleedSection from '@/components/common/container/FullBleedSection';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { findIngredient } from '@/utils';
 
 interface StorageItemSheetProps {
-  storageItem: EnrichStorageItem;
+  storageItemId: string;
 }
 
-export default function StorageItemSheet({ storageItem }: StorageItemSheetProps) {
-  const { ingredient, customLabel, storage, id, expiresAt, memo } = storageItem;
-
-  const [currentValue, setCurrentValue] = useState<
-    Pick<StorageItem, 'expiresAt' | 'storage' | 'memo'>
-  >({ expiresAt, storage, memo: memo || '' });
-
-  const { closeModal, openModal, closeSheet, alert, confirm, expandSheet } = useOverlay();
+export default function StorageItemSheet({ storageItemId }: StorageItemSheetProps) {
+  const currItem = useAtomValue(findItemByStorageAtom(storageItemId));
 
   const [isMemoEditing, setIsMemoEditing] = useState(false);
 
-  const deleteItems = useSetAtom(deleteItemsAtom);
-  const onItemChange = useSetAtom(changeItemAtom);
+  const { closeModal, openModal, closeSheet, alert, confirm, shrinkSheet } = useOverlay();
 
-  const onChangeDate = (newData: EditableStorageItemData) => {
-    if (!newData.expiresAt) return;
+  const deleteItems = useSetAtom(deleteStorageItemListAtom);
+  const onItemChange = useSetAtom(changeStorageItemAtom);
 
-    const expiresAt = formatDateString(new Date(newData.expiresAt), 'yyyy-MM-dd');
-    setCurrentValue((prev) => ({ ...prev, expiresAt }));
-    onItemChange({ id, newData });
-  };
+  if (!currItem) return;
+
+  const { ingredientId, customLabel, id, memo, storage } = currItem;
+
+  const ingredient = findIngredient(ingredientId);
 
   const onEditStoragePress = () => {
     openModal({
       hasDim: true,
       children: (
         <StorageModal
-          currentValue={currentValue.storage.type}
+          currentValue={storage.type}
           onItemChange={async (newData) => {
             onItemChange({ id, newData });
             closeModal();
             closeSheet();
-
             alert({
               title: '보관위치 변경 알림',
               message: `[${ingredient?.label}] 식재료를 ${storageObj[newData.storage.type].label}으로 옮겼습니다.`,
@@ -80,77 +76,94 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
 
   return (
     <View className="my-2 w-full flex-1 gap-y-1.5">
-      {ingredient && (
+      <View className="flex-row items-start justify-between">
         <IngredientImageLabel ingredient={ingredient} customLabel={customLabel} />
-      )}
 
-      <View className="gap-y-3">
-        {/* 소비기한 */}
-        <FormDateInput currDate={currentValue.expiresAt} onItemChange={onChangeDate} />
-
-        {/* 메모사항 */}
-        {isMemoEditing ? (
-          <FormMemo
-            autoFocus={true}
-            currMemo={currentValue?.memo || ''}
-            onItemChange={(newData) => {
-              setCurrentValue((prev) => ({ ...prev, ...newData }));
-            }}
-            onSubmit={() => setIsMemoEditing((prev) => !prev)}
-            onFocus={expandSheet}
-            isSheetInput={true}
-          />
-        ) : (
-          <Pressable
-            onPress={() => setIsMemoEditing((prev) => !prev)}
-            className="flex-row items-start justify-between rounded-2xl border border-border bg-card px-4 py-3"
-          >
-            {currentValue.memo !== '' ? (
-              <Text className="flex-1 pt-1 leading-[22px]">{currentValue.memo}</Text>
-            ) : (
-              <Text className="mt-2 text-inactive-text">메모사항이 없습니다.</Text>
-            )}
-
-            <Icon name="Edit" color="darkGray" size={20} className="p-1.5" />
-          </Pressable>
-        )}
-
-        <View className="flex-row gap-x-3">
-          {/* 보관위치 */}
-          <SquareBtn
-            iconName="Edit"
-            name="보관위치 변경"
-            className="mt-6 flex-1 !py-5"
-            color="indigo"
-            onPress={onEditStoragePress}
-          />
-          <SquareBtn
-            iconName="Trash2"
-            name="냉장고에서 제거"
-            className="mt-6 flex-1 !py-5"
-            color="yellow"
-            onPress={onDeletePress}
-          />
-        </View>
+        {/* <Icon
+          name="Heart"
+          size={25}
+          hasFill={ingredient?.isFavorite} //
+          color={ingredient?.isFavorite ? 'red' : 'inactive'}
+          className="p-3"
+          onPress={() => {}}
+        /> */}
       </View>
 
-      <View className="mb-2 mt-12 flex-row items-center gap-x-2">
+      {currItem && (
+        <View className="gap-y-3">
+          {/* 소비기한 */}
+          <FormDateInput
+            currDate={currItem.expiresAt}
+            onItemChange={(newData) => onItemChange({ id, newData })}
+          />
+
+          {/* 메모사항 */}
+          {isMemoEditing ? (
+            <FormMemo
+              autoFocus={true}
+              currMemo={currItem?.memo || ''}
+              onItemChange={(newData) => onItemChange({ id, newData })}
+              onSubmit={() => {
+                setIsMemoEditing((prev) => !prev);
+                shrinkSheet();
+              }}
+              isSheetInput={true}
+            />
+          ) : (
+            <Pressable
+              onPress={() => setIsMemoEditing((prev) => !prev)}
+              className="flex-row items-start justify-between rounded-2xl border border-border bg-card px-4 py-3"
+            >
+              {memo && memo !== '' ? (
+                <Text className="mt-1 flex-1 text-base leading-[22px]">{memo}</Text>
+              ) : (
+                <Text className="mt-2 text-base text-inactive-text">
+                  메모사항이 없습니다.
+                </Text>
+              )}
+              <Icon name="Edit" color="darkGray" size={20} className="p-1.5" />
+            </Pressable>
+          )}
+
+          <View className="mt-3 flex-row gap-x-3">
+            {/* 보관위치 */}
+            <SquareBtn
+              iconName="Edit"
+              name="보관위치 변경"
+              className="flex-1 !py-5"
+              color="indigo"
+              onPress={onEditStoragePress}
+            />
+            <SquareBtn
+              iconName="Trash2"
+              name="냉장고에서 제거"
+              className="flex-1 !py-5"
+              color="yellow"
+              onPress={onDeletePress}
+            />
+          </View>
+        </View>
+      )}
+
+      <View className="mb-2 mt-8 flex-row items-center gap-x-2">
         <SectionTitle
           icon="HandPlatter"
           iconColor="yellow"
           className="items-center !pl-0"
-          title={`${customLabel || storageItem?.ingredient?.label} 활용 요리`}
+          title={`${customLabel || ingredient?.label} 활용 요리`}
         />
       </View>
 
-      <CarouselContainer
-        data={mealList}
-        initialIndex={mealList.length}
-        itemWidth={0.6}
-        hasNavigation
-        keyExtractor={(_, index) => `${index}`}
-        renderItem={({ item }) => <MealCompactCard key={item.mealId} meal={item} />}
-      />
+      <FullBleedSection>
+        <CarouselContainer
+          data={mealList}
+          initialIndex={mealList.length}
+          itemWidth={0.6}
+          hasNavigation
+          keyExtractor={(_, index) => `${index}`}
+          renderItem={({ item }) => <MealCompactCard key={item.mealId} meal={item} />}
+        />
+      </FullBleedSection>
     </View>
   );
 }

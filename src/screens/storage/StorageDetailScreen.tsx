@@ -20,7 +20,6 @@ import SearchItemSheet from '@/components/storage/SearchItemSheet';
 import Storage from '@/components/storage/Storage';
 import { useEffect } from 'react';
 import StorageItemSheet from '@/components/storage/StorageItemSheet';
-import { StorageItem } from '@/types/storage';
 import Icon from '@/components/common/ui/Icon';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'StorageDetailScreen'>;
@@ -47,11 +46,13 @@ export default function StorageDetailScreen() {
     });
   };
 
-  const onItemPress = (storageItem: StorageItem) => {
+  const onItemPress = (storageItemId: string) => {
     openSheet({
-      snapPoints: ['55%', '80%'],
+      enableDynamicSizing: false,
+      keyboardBehavior: 'extend',
+      snapPoints: [450, 670],
       hasDim: true,
-      render: () => <StorageItemSheet storageItem={storageItem} />,
+      render: () => <StorageItemSheet storageItemId={storageItemId} />,
     });
   };
 

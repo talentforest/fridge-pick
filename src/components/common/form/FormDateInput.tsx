@@ -11,7 +11,7 @@ import { EditableStorageItemData } from '@/types/storage';
 
 interface FormDateInputProps {
   currDate: string;
-  onItemChange: (newData: EditableStorageItemData) => void;
+  onItemChange: (newData: Partial<EditableStorageItemData>) => void;
   defaultExpirationDays?: number;
   hasLabel?: boolean;
 }
@@ -82,7 +82,7 @@ export default function FormDateInput({
     <LabelContainer label={hasLabel ? '소비기한' : undefined}>
       <DateInput date={currDate} openDatePicker={onEditDatePickerPress} />
 
-      <View className="mt-2 flex-row flex-wrap gap-2">
+      <View className="mt-1 flex-row flex-wrap gap-1.5">
         {plusDateBtnList.map(({ label, onPress, color }) => (
           <FilterTag
             key={label}

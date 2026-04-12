@@ -9,6 +9,7 @@ interface FoodCardProps {
   className?: string;
   textClassName?: string;
   isCompact?: boolean;
+  imageSize?: number;
 }
 
 export default function IngredientCard({
@@ -16,6 +17,7 @@ export default function IngredientCard({
   className = '',
   textClassName = '',
   isCompact = false,
+  imageSize = 45,
 }: FoodCardProps) {
   const { label, expirationDays } = ingredient;
 
@@ -23,7 +25,7 @@ export default function IngredientCard({
     <Card
       className={`items-center justify-between gap-y-1 rounded-2xl !px-2 !pt-2 ${isCompact ? '' : 'h-40'} ${className}`}
     >
-      <IngredientImage ingredient={ingredient} size={55} />
+      <IngredientImage ingredient={ingredient} size={imageSize} />
 
       {isCompact ? (
         <Text className={`text-center leading-5 ${textClassName}`}>{label}</Text>

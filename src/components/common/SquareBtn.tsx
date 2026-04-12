@@ -38,7 +38,7 @@ export default function SquareBtn({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.9}
+      activeOpacity={0.8}
       {...props}
       className={`flex-row items-center justify-center gap-x-1 rounded-xl p-5 ${bgColorStyle[color]} ${props.className}`}
     >

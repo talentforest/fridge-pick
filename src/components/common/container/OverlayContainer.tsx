@@ -5,7 +5,7 @@ import {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Appearance, Modal, Pressable, View } from 'react-native';
+import { Appearance, Modal, Pressable, TouchableOpacity, View } from 'react-native';
 import { useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -57,10 +57,10 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
 
       {/* BottomSheet */}
       <BottomSheetModal
-        keyboardBehavior="fillParent"
+        ref={sheetRef}
+        keyboardBehavior="interactive"
         keyboardBlurBehavior="restore"
         enableDynamicSizing={sheetProps?.enableDynamicSizing ?? true}
-        ref={sheetRef}
         enablePanDownToClose
         style={iosShadowStyle}
         backgroundStyle={{
@@ -88,8 +88,10 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
               )
             : undefined
         }
+        {...sheetProps}
       >
         <BottomSheetScrollView
+          keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             paddingBottom: insets.bottom,
@@ -164,51 +166,53 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
 
             <View className="absolute h-full w-full items-center justify-center">
               <View
-                className={`max-h-[85%] w-[70%] rounded-3xl bg-yellow-5 p-2`}
+                className={`max-h-[85%] w-[75%] rounded-3xl bg-neutral-9 p-1`}
                 style={{
                   ...iosShadowStyle,
                   shadowOffset: { width: 0, height: 4 },
                   shadowRadius: 15,
                 }}
               >
-                <View className="px-6 pt-6">
+                <View className="mx-5 mt-5">
                   {modalProps.title && (
-                    <Text className="mb-5 font-bold text-lg !text-neutral-900">
+                    <Text className="mb-5 font-bold text-lg !text-neutral-1">
                       {modalProps.title}
                     </Text>
                   )}
 
                   {modalProps.message && (
-                    <Text className="text-base leading-7 !text-neutral-900">
+                    <Text className="text-base leading-7 !text-neutral-1">
                       {modalProps.message}
                     </Text>
                   )}
                 </View>
 
-                <View className="mt-3 flex-row justify-end p-2">
+                <View className="mx-3 mb-1 mt-3 flex-row justify-end">
                   {modalProps.type === 'confirm' && (
-                    <Pressable
+                    <TouchableOpacity
+                      activeOpacity={0.7}
                       onPress={() => {
                         modalProps.resolve(false);
                         closeModal();
                       }}
                       className="p-4"
                     >
-                      <Text className="font-extrabold text-base !text-gray-500">
+                      <Text className="font-extrabold text-base !text-neutral-3">
                         취소
                       </Text>
-                    </Pressable>
+                    </TouchableOpacity>
                   )}
 
-                  <Pressable
+                  <TouchableOpacity
+                    activeOpacity={0.7}
                     onPress={() => {
                       modalProps.resolve(true);
                       closeModal();
                     }}
                     className="p-4"
                   >
-                    <Text className="font-extrabold text-base !text-blue-700">확인</Text>
-                  </Pressable>
+                    <Text className="font-extrabold text-base !text-blue-5">확인</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>

@@ -6,7 +6,7 @@ import TextInput from '@/components/common/ui/TextInput';
 import { initialStorageItem } from '@/constants/initialItem';
 import { EnrichStorageItem } from '@/types/storage';
 import { convertIngredientToStorageItem, searchIngredient } from '@/utils';
-import { Pressable, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 
 interface SearchAddStorageItemProps {
   searchKeyword: string;
@@ -39,25 +39,41 @@ export default function SearchAddStorageItem({
       {recommendedKeywordList.length ? (
         <GridContainer columns={3} gap={8} className="mt-2">
           {recommendedKeywordList.map((item) => (
-            <Pressable
+            <TouchableOpacity
               key={item.id}
+              activeOpacity={0.7}
               onPress={() => setCurrStorageItem(convertIngredientToStorageItem(item))}
             >
-              <SearchedIngredientCard ingredient={item} />
-            </Pressable>
+              <SearchedIngredientCard
+                ingredient={item}
+                className={item.label === searchKeyword ? '!bg-blue-1' : ''}
+              />
+            </TouchableOpacity>
           ))}
         </GridContainer>
       ) : (
         <></>
       )}
 
-      <IconWithText
-        icon="PlusCircle"
-        iconSize={16}
-        text="식재료 직접 추가하기"
-        className="mt-1 p-3"
-        onPress={() => setCurrStorageItem(initialStorageItem)}
-      />
+      {searchKeyword !== '' && (
+        <IconWithText
+          icon="PlusCircle"
+          iconSize={17}
+          text={`"${searchKeyword}"  식재료 직접 추가하기`}
+          iconColor="blue"
+          className="mt-1 px-3 py-5"
+          textClassName="text-blue-7 !text-[15px]"
+          onPress={() => {
+            const ingredient = searchIngredient(searchKeyword || '', 1)[0];
+
+            const item = ingredient
+              ? convertIngredientToStorageItem(ingredient)
+              : { ...initialStorageItem, customLabel: searchKeyword };
+
+            setCurrStorageItem(item);
+          }}
+        />
+      )}
     </View>
   );
 }

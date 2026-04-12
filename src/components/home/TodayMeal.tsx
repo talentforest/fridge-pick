@@ -14,7 +14,7 @@ export default function TodayMeal() {
 
       <View className="mb-2 mt-6 items-center gap-y-4">
         <Image source={image_empty_plate} className="h-[97px] w-[100px]" />
-        <Text className="text-neutral-7">오늘의 메뉴로 선택한 게 없어요</Text>
+        <Text className="text-neutral-7">오늘의 메뉴가 없어요</Text>
       </View>
     </Card>
   );

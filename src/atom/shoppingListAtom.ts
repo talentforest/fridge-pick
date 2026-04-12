@@ -5,6 +5,7 @@ import {
   DEFAULT_STORAGE,
   mockShoppingList,
 } from '@/constants';
+import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
 import { ShoppingItem } from '@/types/shoppingList';
 import { StorageItem } from '@/types/storage';
 
@@ -34,6 +35,22 @@ export const purchasedItemsAtom = atom<ShoppingItem[]>((get) =>
 /** 구매 완료된 아이템 목록 개수 */
 export const purchasedCountAtom = atom((get) => get(purchasedItemsAtom).length);
 
+/** 구매 완료된 아이템 중 이미 보관함에 하나라도 존재하는 경우 */
+export const isInStorageShoppingItemAtom = atom((get) => {
+  const allStorageItemList = get(allStorageItemListAtom);
+  const purchasedItems = get(purchasedItemsAtom);
+
+  return purchasedItems.some((purchasedItem) =>
+    allStorageItemList.some(
+      (storageItem) =>
+        (purchasedItem.ingredientId &&
+          storageItem.ingredientId === purchasedItem.ingredientId) ||
+        (purchasedItem.customLabel &&
+          storageItem.customLabel === purchasedItem.customLabel),
+    ),
+  );
+});
+
 /** 구매 완료된 아이템이 하나라도 존재하는지 여부 */
 export const hasPurchasedAtom = atom((get) =>
   get(shoppingListAtom).some((x) => x.isPurchased),
@@ -49,7 +66,7 @@ export const isAllPurchasedAtom = atom((get) => {
 });
 
 /**
- * 구매 완료한 장보기 아이템을 스토리지 아이템으로 전환한 목록
+ * 구매 완료한 장보기 아이템을 보관함 아이템으로 전환한 목록
  */
 export const convertedStorageItemListAtom = atom((get) => {
   const purchasedItemList = get(purchasedItemsAtom);
@@ -97,57 +114,60 @@ export const convertedStorageItemListAtom = atom((get) => {
 /*                                  Actions                                   */
 /* -------------------------------------------------------------------------- */
 
-export type AddResult =
-  | { result: 'success'; item: ShoppingItem }
-  | { result: 'duplicate'; item: ShoppingItem };
-
 /**
  * 장보기 아이템 추가.
  * - 없으면 label 기준으로 중복 검사
  * - 중복 시 duplicate 결과 반환
  */
-export const addItemAtom = atom(null, (get, set, inputValue: string): AddResult => {
-  const list = get(shoppingListAtom);
+export const addShoppingItemAtom = atom(
+  null,
+  (get, set, inputValue: string): AppError<ShoppingItem> | AppSuccess => {
+    const list = get(shoppingListAtom);
 
-  // ingredient 마스터 정보가 있는 경우 customLabel은 작성하지 않는다.
-  // 따라서 ingredient의 label과 customLabel 모두를 비교한다.
-  const duplicateItem = duplicateShoppingItem(inputValue, list);
+    // ingredient 마스터 정보가 있는 경우 customLabel은 작성하지 않는다.
+    // 따라서 ingredient의 label과 customLabel 모두를 비교한다.
+    const duplicateItem = duplicateShoppingItem(inputValue, list);
 
-  if (duplicateItem) {
-    return {
-      result: 'duplicate',
-      item: duplicateItem,
-    };
-  }
-
-  const ingredient = allIngredients.find(({ label }) => label === inputValue);
-
-  const baseItem = {
-    id: nanoid(),
-    isPurchased: false,
-  };
-
-  const newItem: ShoppingItem = !!ingredient
-    ? {
-        // 마스터 정보가 있는 경우
-        ...baseItem,
-        ingredientId: ingredient.id,
-      }
-    : {
-        ...baseItem,
-        customLabel: inputValue,
+    if (duplicateItem) {
+      return {
+        type: 'duplicate',
+        item: duplicateItem,
+        message: '이미 목록에 존재해요',
       };
+    }
 
-  set(shoppingListAtom, [...list, newItem]);
+    const ingredient = allIngredients.find(({ label }) => label === inputValue);
 
-  return { result: 'success', item: newItem };
-});
+    const baseItem = {
+      id: nanoid(),
+      isPurchased: false,
+    };
+
+    const newItem: ShoppingItem = !!ingredient
+      ? {
+          // 마스터 정보가 있는 경우
+          ...baseItem,
+          ingredientId: ingredient.id,
+        }
+      : {
+          ...baseItem,
+          customLabel: inputValue,
+        };
+
+    set(shoppingListAtom, [...list, newItem]);
+
+    return {
+      type: 'success',
+      item: newItem,
+    };
+  },
+);
 
 /**
  * 여러 아이템을 일괄 삭제한다.
  * - 만약 하나만 삭제할 경우 하나를 배열로 감싸서 파라미터로 보내면 된다.
  */
-export const deleteItemsAtom = atom(null, (get, set, ids: string[]) => {
+export const deleteShoppingItemListAtom = atom(null, (get, set, ids: string[]) => {
   const list = get(shoppingListAtom);
   const idSet = new Set(ids);
 
@@ -198,11 +218,14 @@ export const clearAllAtom = atom(null, (_get, set) => {
 });
 
 /**
- * 구매 완료한 장보기 아이템들을 스토리지로 추가
+ * 구매 완료한 장보기 아이템들을 보관함에 추가
  */
-export const addToStorageAtom = atom(null, (get, set, storageItemList: StorageItem[]) => {
-  // list를 스토리지 아이템 리스트로 추가
-  const allStorageItemList = get(allStorageItemListAtom);
+export const addShoppingListToStorageAtom = atom(
+  null,
+  (get, set, storageItemList: StorageItem[]) => {
+    // list를 보관함 아이템 리스트로 추가
+    const allStorageItemList = get(allStorageItemListAtom);
 
-  set(allStorageItemListAtom, [...allStorageItemList, ...storageItemList]);
-});
+    set(allStorageItemListAtom, [...allStorageItemList, ...storageItemList]);
+  },
+);
