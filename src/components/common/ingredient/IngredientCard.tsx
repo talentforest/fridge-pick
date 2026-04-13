@@ -1,11 +1,11 @@
 import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
-import { Ingredient } from '@/types/ingredient';
+import { CustomIngredient, Ingredient } from '@/types/ingredient';
 import { View } from 'react-native';
 
 interface FoodCardProps {
-  ingredient: Ingredient;
+  ingredient: Ingredient | CustomIngredient;
   className?: string;
   textClassName?: string;
   isCompact?: boolean;

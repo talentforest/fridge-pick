@@ -1,4 +1,12 @@
-import { searchKeywordAtom } from '@/atom/storageItemAtom';
+import { itemListByStorageAtom, searchKeywordAtom } from '@/atom/storageItemAtom';
+import { image_empty_basket, storageObj } from '@/constants';
+import { useStorageItemList } from '@/hooks';
+import { useOverlay } from '@/hooks/common/useOverlay';
+import { StorageSideId, StorageTypeId } from '@/types/storage';
+import { searchStorageItem } from '@/utils';
+import { useAtom, useAtomValue } from 'jotai';
+import { useMemo, useState } from 'react';
+import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import GridContainer from '@/components/common/container/GridContainer';
 import SquareBtn from '@/components/common/SquareBtn';
 import Card from '@/components/common/ui/Card';
@@ -6,14 +14,6 @@ import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import CategoryLabel from '@/components/storage/CategoryLabel';
 import StorageItem from '@/components/storage/StorageItem';
-import { image_empty_basket, storageObj } from '@/constants';
-import { useStorageItemList } from '@/hooks';
-import { useOverlay } from '@/hooks/common/useOverlay';
-import { StorageSideId, StorageTypeId } from '@/types/storage';
-import { searchStorageItem } from '@/utils';
-import { useAtom } from 'jotai';
-import { useMemo, useState } from 'react';
-import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
 
 interface StorageProps {
   storageType: StorageTypeId;
@@ -24,6 +24,10 @@ const SETTING_SIDE = false;
 
 export default function Storage({ storageType, openItemPress }: StorageProps) {
   const [currSide, setCurrSide] = useState<StorageSideId>('inner');
+
+  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
+
+  const storageItemList = useAtomValue(itemListByStorageAtom(storageType));
 
   const storage = useMemo(() => {
     return {
@@ -37,24 +41,24 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
 
   const { label } = storageObj[storageType];
 
-  const {
-    sideList,
-    itemCountBySide,
-    itemListByCategory,
-    itemListByStorage, //
-  } = useStorageItemList({ storage });
-
-  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
+  const { sideList, itemCountBySide, storageItemListByCategory } = useStorageItemList({
+    storage,
+  });
 
   const searchedStorageItemList = useMemo(() => {
-    if (!searchKeyword) return itemListByStorage;
-    return searchStorageItem(searchKeyword, itemListByStorage);
-  }, [searchKeyword, itemListByStorage]);
+    if (!searchKeyword) return storageItemList;
+    return searchStorageItem(searchKeyword, storageItemList);
+  }, [searchKeyword, storageItemList]);
+
+  const onRefreshPress = () => {
+    setSearchKeyword('');
+    closeSheet();
+  };
 
   return (
     <View className="gap-y-3">
       <Card
-        className={`min-h-[50vh] flex-1 gap-y-6 rounded-2xl !p-0 ${itemListByCategory.length === 0 ? '' : '!border-0 !bg-transparent'}`}
+        className={`min-h-[50vh] flex-1 gap-y-6 rounded-2xl !p-0 ${storageItemListByCategory.length === 0 ? '' : '!border-0 !bg-transparent'}`}
       >
         {/* side(문쪽, 안쪽) 설정시 버튼 */}
         {SETTING_SIDE && (
@@ -65,7 +69,6 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                   key={id}
                   name={`${label} ${sideLabel}  ${itemCountBySide[id] ?? 0}개`}
                   onPress={() => setCurrSide(id)}
-                  // isInActive={!(id === currSide)} TODO
                 />
               );
             })}
@@ -86,10 +89,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                   name="RefreshCcw"
                   className="px-5 py-4"
                   size={18}
-                  onPress={() => {
-                    setSearchKeyword('');
-                    closeSheet();
-                  }}
+                  onPress={onRefreshPress}
                 />
               </View>
 
@@ -97,13 +97,13 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                 {/* 검색 결과 식재료 리스트 */}
                 {searchedStorageItemList.length > 0 ? (
                   <GridContainer gap={10} columns={5}>
-                    {searchedStorageItemList.map((item) => (
+                    {searchedStorageItemList.map((storageItem) => (
                       <TouchableOpacity
-                        key={item.id}
+                        key={storageItem.id}
                         activeOpacity={0.7}
-                        onPress={() => openItemPress(item.id)}
+                        onPress={() => openItemPress(storageItem.id)}
                       >
-                        <StorageItem item={item} />
+                        <StorageItem storageItem={storageItem} />
                       </TouchableOpacity>
                     ))}
                   </GridContainer>
@@ -120,29 +120,29 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
         )}
 
         {!searchKeyword &&
-          (itemListByCategory.length !== 0 ? (
+          (storageItemListByCategory.length !== 0 ? (
             <ScrollView
               nestedScrollEnabled
               className="flex-1"
               contentContainerClassName="flex-1"
             >
               <View className="flex-1 gap-y-3">
-                {itemListByCategory.map(({ category, items }, index) => (
+                {storageItemListByCategory.map(({ category, items }, index) => (
                   <View
                     key={category.id}
-                    className={`flex-1 gap-y-3 border border-border bg-card p-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === itemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
+                    className={`flex-1 gap-y-3 border border-border bg-card p-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === storageItemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
                   >
                     <CategoryLabel category={category} />
 
                     <GridContainer gap={4} columns={5}>
                       {/* 식재료 리스트 */}
-                      {items.map((item) => (
+                      {items.map((storageItem) => (
                         <TouchableOpacity
-                          key={item.id}
+                          key={storageItem.id}
                           activeOpacity={0.7}
-                          onPress={() => openItemPress(item.id)}
+                          onPress={() => openItemPress(storageItem.id)}
                         >
-                          <StorageItem item={item} />
+                          <StorageItem storageItem={storageItem} />
                         </TouchableOpacity>
                       ))}
                     </GridContainer>

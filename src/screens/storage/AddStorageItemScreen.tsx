@@ -1,11 +1,14 @@
 import { addStorageItemAtom } from '@/atom/storageItemAtom';
 import { storageObj } from '@/constants';
 import { RootStackParamList } from '@/types/RootStackParamList';
-import { EditableStorageItemData, EnrichStorageItem, StorageItem } from '@/types/storage';
+import { EditableStorageItemData, StorageItem } from '@/types/storage';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useSetAtom } from 'jotai';
 import { useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
+import { Ingredient } from '@/types/ingredient';
+import { useErrorHandler } from '@/hooks/common/useErrorHandler';
+import { useOverlay } from '@/hooks/common/useOverlay';
 import LabelContainer from '@/components/common/container/LabelContainer';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScreenHeader from '@/components/common/ScreenHeader';
@@ -17,12 +20,10 @@ import SearchAddStorageItem from '@/components/storage/SearchAddStorageItem';
 import SquareBtn from '@/components/common/SquareBtn';
 import Icon from '@/components/common/ui/Icon';
 import IngredientImageLabel from '@/components/storage/IngredientImageLabel';
-import { useOverlay } from '@/hooks/common/useOverlay';
 import FormMemo from '@/components/common/form/FormMemo';
 import FormDateInput from '@/components/common/form/FormDateInput';
 import Text from '@/components/common/ui/Text';
-import { Ingredient } from '@/types/ingredient';
-import { useErrorHandler } from '@/hooks/common/useErrorHandler';
+import { findIngredient } from '@/utils';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'AddStorageItemScreen'>;
 
@@ -36,7 +37,9 @@ export default function AddStorageItemScreen() {
   const scrollRef = useRef<ScrollView>(null);
 
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [currStorageItem, setCurrStorageItem] = useState<EnrichStorageItem | null>(null);
+  const [currStorageItem, setCurrStorageItem] = useState<StorageItem | null>(null);
+
+  const ingredient = findIngredient(currStorageItem?.ingredientId);
 
   const { alert } = useOverlay();
 
@@ -78,14 +81,12 @@ export default function AddStorageItemScreen() {
                 keyboardShouldPersistTaps="handled"
               >
                 {/* 선택한 식재료 정보 */}
-                <LabelContainer
-                  label={currStorageItem.ingredient ? '식재료 정보' : '식재료 이름'}
-                >
+                <LabelContainer label={ingredient ? '식재료 정보' : '식재료 이름'}>
                   <View>
-                    {currStorageItem.ingredient ? (
+                    {ingredient ? (
                       <Card className="flex-row items-center gap-x-1.5 !py-0">
                         <IngredientImageLabel
-                          ingredient={currStorageItem.ingredient}
+                          ingredient={ingredient}
                           customLabel={currStorageItem.customLabel}
                         />
                       </Card>
@@ -100,7 +101,7 @@ export default function AddStorageItemScreen() {
                     <Icon
                       name="RotateCcw"
                       size={20}
-                      className={`absolute right-0 p-5 ${currStorageItem.ingredient ? '' : 'bottom-0 top-0'}`}
+                      className={`absolute right-0 p-5 ${ingredient ? '' : 'bottom-0 top-0'}`}
                       color="text"
                       onPress={initializeStorageItem}
                     />

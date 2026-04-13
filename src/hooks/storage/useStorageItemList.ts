@@ -45,14 +45,14 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
 
   const hasSide = false; // TODO: 사용자가 문쪽 안쪽을 구분해서 사용하길 원하는 경우 처리
 
-  const itemListByCategory = useMemo(() => {
+  const storageItemListByCategory = useMemo(() => {
     const grouped: Partial<Record<CategoryKey, EnrichStorageItem[]>> = {};
 
-    const itemList = hasSide ? currentSideItems : storageItemList;
+    const currStorageItemList = hasSide ? currentSideItems : storageItemList;
 
-    itemList.forEach((item) => {
-      const ingredient = item.ingredientId
-        ? findIngredient(item.ingredientId)
+    currStorageItemList.forEach((storageItem) => {
+      const ingredient = storageItem.ingredientId
+        ? findIngredient(storageItem.ingredientId)
         : undefined;
 
       const category: CategoryKey = ingredient?.category ?? 'noCategory';
@@ -62,7 +62,7 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
       }
 
       grouped[category].push({
-        ...item,
+        ...storageItem,
         ...(ingredient ? { ingredient } : {}),
       });
     });
@@ -80,14 +80,10 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
     [side],
   );
 
-  const itemListByStorage = useMemo(() => {
-    return itemListByCategory.map(({ items }) => items).flat();
-  }, [itemListByCategory]);
-
   const expiredStorageItemList = useMemo(() => {
-    if (!itemListByStorage) return [];
+    if (!storageItemList) return [];
 
-    return itemListByStorage
+    return storageItemList
       .map((item) => {
         const remainingDays = getRemainingDays(new Date(item.expiresAt));
 
@@ -96,13 +92,12 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
       .filter(({ remainingDays }) => remainingDays <= 3)
       .sort((a, b) => a.remainingDays - b.remainingDays)
       .map(({ item }) => item);
-  }, [itemListByCategory]);
+  }, [storageItemList]);
 
   return {
     sideList,
     itemCountBySide,
-    itemListByCategory,
-    itemListByStorage,
+    storageItemListByCategory,
     expiredStorageItemList,
   };
 };

@@ -3,15 +3,15 @@ import LabelContainer from '@/components/common/container/LabelContainer';
 import IconWithText from '@/components/common/IconWithText';
 import SearchedIngredientCard from '@/components/common/ingredient/SearchedIngredientCard';
 import TextInput from '@/components/common/ui/TextInput';
-import { initialStorageItem } from '@/constants/initialItem';
-import { EnrichStorageItem } from '@/types/storage';
+import { initialCustomStorageItem } from '@/constants/initialItem';
+import { StorageItem } from '@/types/storage';
 import { convertIngredientToStorageItem, searchIngredient } from '@/utils';
 import { TouchableOpacity, View } from 'react-native';
 
 interface SearchAddStorageItemProps {
   searchKeyword: string;
   setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
-  setCurrStorageItem: React.Dispatch<React.SetStateAction<EnrichStorageItem | null>>;
+  setCurrStorageItem: React.Dispatch<React.SetStateAction<StorageItem | null>>;
 }
 
 export default function SearchAddStorageItem({
@@ -38,15 +38,17 @@ export default function SearchAddStorageItem({
       {/* 추천 식재료 */}
       {recommendedKeywordList.length ? (
         <GridContainer columns={3} gap={8} className="mt-2">
-          {recommendedKeywordList.map((item) => (
+          {recommendedKeywordList.map((ingredient) => (
             <TouchableOpacity
-              key={item.id}
+              key={ingredient.id}
               activeOpacity={0.7}
-              onPress={() => setCurrStorageItem(convertIngredientToStorageItem(item))}
+              onPress={() =>
+                setCurrStorageItem(convertIngredientToStorageItem(ingredient))
+              }
             >
               <SearchedIngredientCard
-                ingredient={item}
-                className={item.label === searchKeyword ? '!bg-blue-1' : ''}
+                ingredient={ingredient}
+                className={ingredient.label === searchKeyword ? '!bg-blue-1' : ''}
               />
             </TouchableOpacity>
           ))}
@@ -68,7 +70,10 @@ export default function SearchAddStorageItem({
 
             const item = ingredient
               ? convertIngredientToStorageItem(ingredient)
-              : { ...initialStorageItem, customLabel: searchKeyword };
+              : {
+                  ...initialCustomStorageItem,
+                  customLabel: searchKeyword,
+                };
 
             setCurrStorageItem(item);
           }}

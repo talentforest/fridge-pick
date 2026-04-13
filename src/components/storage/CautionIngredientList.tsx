@@ -23,14 +23,18 @@ export default function CautionIngredientList({
     <View>
       {expiredStorageItemList.length ? (
         <GridContainer columns={3} gap={10}>
-          {expiredStorageItemList.map((item, index) => {
+          {expiredStorageItemList.map((storageItem, index) => {
             return (
               <TouchableOpacity
-                key={item.id}
+                key={storageItem.id}
                 activeOpacity={0.8}
-                onPress={() => openItemPress(item.id)}
+                onPress={() => openItemPress(storageItem.id)}
               >
-                <CautionStorageItem item={item} index={index} isCurrIndex={false} />
+                <CautionStorageItem
+                  storageItem={storageItem}
+                  index={index}
+                  isCurrIndex={false}
+                />
               </TouchableOpacity>
             );
           })}

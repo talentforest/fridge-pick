@@ -40,17 +40,20 @@ type BaseStorageItem = {
   memo?: string;
 };
 
-type StorageItemWithIngredientId = BaseStorageItem & {
+type IngredientStorageItem = BaseStorageItem & {
+  type: 'ingredient';
   ingredientId: IngredientKey;
-  customLabel?: string; // 이름은 커스텀했는데 ingredient 정보를 연결하는 경우.
+  /** 이름은 커스텀했는데 ingredient 정보를 연결하는 경우. */
+  customLabel?: string;
 };
 
-type StorageItemCustom = BaseStorageItem & {
-  ingredientId?: never;
+type CustomStorageItem = BaseStorageItem & {
+  type: 'custom';
   customLabel: string;
+  ingredientId?: never;
 };
 
-export type StorageItem = StorageItemWithIngredientId | StorageItemCustom;
+export type StorageItem = IngredientStorageItem | CustomStorageItem;
 
 export type EditableStorageItemData = Pick<
   StorageItem,

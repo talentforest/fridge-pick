@@ -1,33 +1,28 @@
 import { IngredientKey } from '@/types/ingredient';
 import { Timestamp } from 'firebase/firestore';
 
-export type ShoppingList = {
-  id: string;
-  title: string;
-  status: 'active' | 'archived';
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-};
-
 type BaseShoppingItem = {
-  /** 유니크 아이디 */
+  /** uuid 아이디 */
   id: string;
-
   /** 구매 완료 여부 */
   isPurchased: boolean;
 };
 
-type ShoppingItemWithIngredient = BaseShoppingItem & {
+type IngredientShoppingItem = BaseShoppingItem & {
+  type: 'ingredient';
   ingredientId: IngredientKey;
+  /** 등록된 식재료 아이템에서는 customLabel 원천 차단 */
   customLabel?: never;
 };
 
-type ShoppingItemCustom = BaseShoppingItem & {
-  ingredientId?: never;
+type CustomShoppingItem = BaseShoppingItem & {
+  type: 'custom';
   customLabel: string;
+  /** 커스텀 식재료 아이템에서는 ingredientId 원천 차단 */
+  ingredientId?: never;
 };
 
-export type ShoppingItem = ShoppingItemWithIngredient | ShoppingItemCustom;
+export type ShoppingItem = IngredientShoppingItem | CustomShoppingItem;
 
 export type PurchaseLog = {
   id: string;

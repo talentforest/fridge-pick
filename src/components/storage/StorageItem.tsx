@@ -1,23 +1,23 @@
 import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import { expirationStatusObj } from '@/constants';
-import { EnrichStorageItem } from '@/types/storage';
-import { getExpirationStatus, getRemainingDays } from '@/utils';
+import { StorageItem as StorageItemType } from '@/types/storage';
+import { findIngredient, getExpirationStatus, getRemainingDays } from '@/utils';
 import { View } from 'react-native';
 
 interface StorageItemProps {
-  item: EnrichStorageItem;
+  storageItem: StorageItemType;
   className?: string;
 }
 
-export default function StorageItem({ item, className = '' }: StorageItemProps) {
-  const { ingredient } = item;
-
-  const remainingDays = getRemainingDays(new Date(item.expiresAt));
+export default function StorageItem({ storageItem, className = '' }: StorageItemProps) {
+  const remainingDays = getRemainingDays(new Date(storageItem.expiresAt));
 
   const status = getExpirationStatus(remainingDays);
 
+  const ingredient = findIngredient(storageItem?.ingredientId);
+
   return (
-    <View className={`relative items-center gap-y-1 bg-card pb-1 ${className}`}>
+    <View className={`relative items-center bg-card ${className}`}>
       <IngredientImage ingredient={ingredient} size={55} />
 
       {status !== 'unknown' && status !== 'safe' && (

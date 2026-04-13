@@ -3,24 +3,28 @@ import {
   deleteStorageItemListAtom,
   findItemByStorageAtom,
 } from '@/atom/storageItemAtom';
+import { mealList, storageObj } from '@/constants';
+import { useOverlay } from '@/hooks/common/useOverlay';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { findIngredient } from '@/utils';
+import {
+  addFavoriteItemAtom,
+  deleteFavoriteItemAtom,
+  findFavoriteItemAtom,
+} from '@/atom/favoritesAtom';
+import { View } from 'react-native';
 import MealCompactCard from '@/components/common/MealCompactCard';
 import SquareBtn from '@/components/common/SquareBtn';
 import SectionTitle from '@/components/common/SectionTitle';
-import Text from '@/components/common/ui/Text';
 import StorageModal from '@/components/storage/StorageModal';
-import { mealList, storageObj } from '@/constants';
-import { useOverlay } from '@/hooks/common/useOverlay';
-
-import { useState } from 'react';
-import { Pressable, View } from 'react-native';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import FormDateInput from '@/components/common/form/FormDateInput';
-import FormMemo from '@/components/common/form/FormMemo';
 import Icon from '@/components/common/ui/Icon';
 import IngredientImageLabel from '@/components/storage/IngredientImageLabel';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { findIngredient } from '@/utils';
+import { CustomIngredient } from '@/types/ingredient';
+import { nanoid } from 'nanoid/non-secure';
+import { initialCustomIngredient } from '@/constants/initialItem';
 
 interface StorageItemSheetProps {
   storageItemId: string;
@@ -29,16 +33,19 @@ interface StorageItemSheetProps {
 export default function StorageItemSheet({ storageItemId }: StorageItemSheetProps) {
   const currItem = useAtomValue(findItemByStorageAtom(storageItemId));
 
-  const [isMemoEditing, setIsMemoEditing] = useState(false);
-
-  const { closeModal, openModal, closeSheet, alert, confirm, shrinkSheet } = useOverlay();
+  const { closeModal, openModal, closeSheet, alert, confirm } = useOverlay();
 
   const deleteItems = useSetAtom(deleteStorageItemListAtom);
   const onItemChange = useSetAtom(changeStorageItemAtom);
 
+  const key = `${currItem?.ingredientId || ''}|${currItem?.customLabel || ''}`;
+  const favoriteItem = useAtomValue(findFavoriteItemAtom(key));
+  const addFavoriteItem = useSetAtom(addFavoriteItemAtom);
+  const deleteFavoriteItem = useSetAtom(deleteFavoriteItemAtom);
+
   if (!currItem) return;
 
-  const { ingredientId, customLabel, id, memo, storage } = currItem;
+  const { ingredientId, customLabel, id, storage } = currItem;
 
   const ingredient = findIngredient(ingredientId);
 
@@ -79,14 +86,30 @@ export default function StorageItemSheet({ storageItemId }: StorageItemSheetProp
       <View className="flex-row items-start justify-between">
         <IngredientImageLabel ingredient={ingredient} customLabel={customLabel} />
 
-        {/* <Icon
+        <Icon
           name="Heart"
           size={25}
-          hasFill={ingredient?.isFavorite} //
-          color={ingredient?.isFavorite ? 'red' : 'inactive'}
+          hasFill={!!favoriteItem}
+          color={!!favoriteItem ? 'red' : 'inactive'}
           className="p-3"
-          onPress={() => {}}
-        /> */}
+          onPress={() => {
+            if (!favoriteItem) {
+              const ingredientItem =
+                ingredient ||
+                ({
+                  ...initialCustomIngredient,
+                  id: nanoid(),
+                  label: customLabel,
+                  defaultStorage: storage.type,
+                  expirationDays: { [storage.type]: currItem.expiresAt },
+                } as CustomIngredient);
+
+              addFavoriteItem(ingredientItem);
+            } else {
+              deleteFavoriteItem(ingredient?.id || favoriteItem.id);
+            }
+          }}
+        />
       </View>
 
       {currItem && (
@@ -98,7 +121,7 @@ export default function StorageItemSheet({ storageItemId }: StorageItemSheetProp
           />
 
           {/* 메모사항 */}
-          {isMemoEditing ? (
+          {/* {isMemoEditing ? (
             <FormMemo
               autoFocus={true}
               currMemo={currItem?.memo || ''}
@@ -123,21 +146,21 @@ export default function StorageItemSheet({ storageItemId }: StorageItemSheetProp
               )}
               <Icon name="Edit" color="darkGray" size={20} className="p-1.5" />
             </Pressable>
-          )}
+          )} */}
 
           <View className="mt-3 flex-row gap-x-3">
             {/* 보관위치 */}
             <SquareBtn
               iconName="Edit"
               name="보관위치 변경"
-              className="flex-1 !py-5"
+              className="flex-1 !py-4"
               color="indigo"
               onPress={onEditStoragePress}
             />
             <SquareBtn
               iconName="Trash2"
               name="냉장고에서 제거"
-              className="flex-1 !py-5"
+              className="flex-1 !py-4"
               color="yellow"
               onPress={onDeletePress}
             />

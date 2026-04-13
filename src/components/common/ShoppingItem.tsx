@@ -1,5 +1,5 @@
 import { togglePurchasedAtom } from '@/atom/shoppingListAtom';
-import { findStorageItemWithKey } from '@/atom/storageItemAtom';
+import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import { storageObj } from '@/constants';
@@ -29,7 +29,7 @@ export default function ShoppingItem({ item, isError }: ShoppingItemProps) {
 
   const key = `${ingredientId ?? ''}|${customLabel ?? ''}`;
 
-  const isInStorage = useAtomValue(findStorageItemWithKey(key));
+  const isInStorageShoppingItem = useAtomValue(findStorageItemWithKeyAtom(key));
 
   const navigation = useNavigation<StorageDetailNavProp>();
 
@@ -50,16 +50,18 @@ export default function ShoppingItem({ item, isError }: ShoppingItemProps) {
         </Text>
       </View>
 
-      {isInStorage && (
+      {isInStorageShoppingItem && (
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate('StorageDetailScreen', { id: isInStorage.storage.type })
+            navigation.navigate('StorageDetailScreen', {
+              id: isInStorageShoppingItem.storage.type,
+            })
           }
           activeOpacity={0.7}
           className="ml-2 flex-row items-center gap-x-1 rounded-full bg-blue-1 px-2 py-2"
         >
           <Text className="text-sm text-blue-7">
-            {storageObj[isInStorage.storage.type].label}에 있어요
+            {storageObj[isInStorageShoppingItem.storage.type].label}에 있어요
           </Text>
 
           <Icon name="ExternalLink" size={14} color="blue" />

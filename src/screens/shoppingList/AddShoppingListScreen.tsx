@@ -55,7 +55,11 @@ export default function AddShoppingListScreen() {
           contentContainerClassName="gap-2 pb-10 pt-4"
           keyExtractor={(item) => `${item.id}`}
           renderItem={({ item, index }) => (
-            <PurchasedItem item={item} index={index + 1} setItems={setStorageItemList} />
+            <PurchasedItem
+              storageItem={item}
+              index={index + 1}
+              setItems={setStorageItemList}
+            />
           )}
         />
 

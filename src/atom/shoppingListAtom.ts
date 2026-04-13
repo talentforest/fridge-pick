@@ -1,19 +1,15 @@
 import { allStorageItemListAtom } from '@/atom/storageItemAtom';
-import {
-  allIngredients,
-  DEFAULT_EXPIRATION_DAYS,
-  DEFAULT_STORAGE,
-  mockShoppingList,
-} from '@/constants';
+import { allIngredients, mockShoppingList } from '@/constants';
+import { initialCustomStorageItem } from '@/constants/initialItem';
 import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
 import { ShoppingItem } from '@/types/shoppingList';
 import { StorageItem } from '@/types/storage';
 
 import {
-  enrichIngredient,
   formatDateString,
   duplicateShoppingItem,
-  calculateExpiresAt,
+  convertIngredientToStorageItem,
+  findIngredient,
 } from '@/utils';
 import { Timestamp } from 'firebase/firestore';
 import { atom } from 'jotai';
@@ -68,43 +64,31 @@ export const isAllPurchasedAtom = atom((get) => {
 /**
  * 구매 완료한 장보기 아이템을 보관함 아이템으로 전환한 목록
  */
-export const convertedStorageItemListAtom = atom((get) => {
+export const convertedStorageItemListAtom = atom((get): StorageItem[] => {
   const purchasedItemList = get(purchasedItemsAtom);
 
   const now = new Date();
 
-  const itemList = purchasedItemList.map(enrichIngredient).map((item) => {
-    const commonBase = {
+  const itemList = purchasedItemList.map((item) => {
+    const common = {
       id: item.id,
       purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
     };
 
-    const ingredient = item.ingredient;
+    const ingredient = findIngredient(item.ingredientId);
 
-    const storageItem: StorageItem = ingredient
-      ? {
-          // Ingredient 마스터 정보가 있는 경우, 있는 커스텀 라벨을 정한경우,
-          ...commonBase,
-          ...(item.customLabel ? { customLabel: item.customLabel } : {}),
-          ingredientId: ingredient.id,
-          expiresAt: calculateExpiresAt(
-            now,
-            ingredient?.expirationDays[ingredient.defaultStorage] ||
-              DEFAULT_EXPIRATION_DAYS,
-          ),
+    if (ingredient && item.type === 'ingredient') {
+      return {
+        ...convertIngredientToStorageItem(ingredient),
+        ...common,
+      };
+    }
 
-          storage: { type: ingredient.defaultStorage },
-          ...(item.ingredient ? { ingredient: item.ingredient } : {}),
-        }
-      : {
-          // 완전한 커스텀 정보인 경우, Ingredient 마스터 정보가 없는 경우
-          ...commonBase,
-          customLabel: item.customLabel!,
-          expiresAt: calculateExpiresAt(now, DEFAULT_EXPIRATION_DAYS),
-          storage: { type: DEFAULT_STORAGE },
-        };
-
-    return storageItem;
+    return {
+      ...initialCustomStorageItem,
+      ...common,
+      customLabel: item.customLabel!, //TODO: 타입 안정성 강화하기
+    };
   });
 
   return itemList;
@@ -145,12 +129,13 @@ export const addShoppingItemAtom = atom(
 
     const newItem: ShoppingItem = !!ingredient
       ? {
-          // 마스터 정보가 있는 경우
           ...baseItem,
+          type: 'ingredient',
           ingredientId: ingredient.id,
         }
       : {
           ...baseItem,
+          type: 'custom',
           customLabel: inputValue,
         };
 

@@ -2,7 +2,20 @@ import { CategoryKey, categoryObj, ingredientObj } from '@/constants';
 import { StorageTypeId } from '@/types/storage';
 import { StockUnit, VolumeUnit, WeightUnit } from '@/types/unit';
 
+/** 커스텀 Ingredient: 등록된 Ingredient 정보가 없는 경우의 식재료. */
+export type CustomIngredient = Pick<
+  Ingredient,
+  'label' | 'category' | 'defaultStorage' | 'expirationDays'
+> & {
+  type: 'custom';
+  /** nanoid */
+  id: string;
+};
+
+/** 등록된 Ingredient */
 export type Ingredient = {
+  type: 'ingredient';
+
   /** 활성 여부 (soft delete 용) */
   isActive: boolean; // 기본 true
 

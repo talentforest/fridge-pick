@@ -122,7 +122,7 @@ const TouchableSpaceCard = ({
         <View className="flex-1 flex-row justify-between">
           <Text>{label}</Text>
           {id === 'favorites' ? (
-            <Icon name="Heart" color="red" size={22} />
+            <Icon name="Heart" hasFill color="red" size={22} />
           ) : (
             <Text className="font-extrabold text-2xl text-blue-5">{total}</Text>
           )}

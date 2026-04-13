@@ -5,24 +5,28 @@ import Text from '@/components/common/ui/Text';
 import EditPurchasedItemSheet from '@/components/shoppingList/EditPurchasedItemSheet';
 import { storageObj } from '@/constants';
 import { useOverlay } from '@/hooks/common/useOverlay';
-import { EditableStorageItemData, EnrichStorageItem, StorageItem } from '@/types/storage';
-import { formatDateString, getRemainingDays } from '@/utils';
+import { EditableStorageItemData, StorageItem } from '@/types/storage';
+import { findIngredient, formatDateString, getRemainingDays } from '@/utils';
 import { View } from 'react-native';
 
 interface PurchasedItemProps {
-  item: EnrichStorageItem;
+  storageItem: StorageItem;
   setItems: React.Dispatch<React.SetStateAction<StorageItem[]>>;
   index?: number;
 }
 
-export default function PurchasedItem({ item, setItems, index }: PurchasedItemProps) {
-  const { ingredient, ...storageItem } = item;
-
+export default function PurchasedItem({
+  storageItem,
+  setItems,
+  index,
+}: PurchasedItemProps) {
   const { openSheet, closeSheet } = useOverlay();
 
-  const date = new Date(item.expiresAt);
+  const date = new Date(storageItem.expiresAt);
 
   const currentStorage = storageObj[storageItem.storage.type];
+
+  const ingredient = findIngredient(storageItem?.ingredientId);
 
   const infoByItem = [
     {
@@ -41,9 +45,7 @@ export default function PurchasedItem({ item, setItems, index }: PurchasedItemPr
 
   const onEditSubmit = (id: string, newData: Partial<EditableStorageItemData>) => {
     setItems((prev) =>
-      prev.map((item) => {
-        return item.id === id ? { ...item, ...newData } : item;
-      }),
+      prev.map((item) => (item.id === id ? { ...item, ...newData } : item)),
     );
     closeSheet();
   };
@@ -52,10 +54,13 @@ export default function PurchasedItem({ item, setItems, index }: PurchasedItemPr
     openSheet({
       enableDynamicSizing: false,
       keyboardBehavior: 'extend',
-      snapPoints: [600, 835],
+      snapPoints: [570, 790],
       hasDim: true,
       render: () => (
-        <EditPurchasedItemSheet initialItem={item} onEditSubmit={onEditSubmit} />
+        <EditPurchasedItemSheet
+          initialStorageItem={storageItem}
+          onEditSubmit={onEditSubmit}
+        />
       ),
     });
 

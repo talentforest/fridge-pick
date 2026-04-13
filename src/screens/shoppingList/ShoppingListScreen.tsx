@@ -8,7 +8,7 @@ import {
   shoppingListAtom,
   toggleAllPurchasedAtom,
 } from '@/atom/shoppingListAtom';
-import { allIngredients, image_empty_basket } from '@/constants';
+import { image_empty_basket } from '@/constants';
 import { RootStackParamList } from '@/types/RootStackParamList';
 import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
 import { searchIngredient } from '@/utils';
@@ -30,7 +30,6 @@ import Card from '@/components/common/ui/Card';
 import IconWithText from '@/components/common/IconWithText';
 import Icon from '@/components/common/ui/Icon';
 import IngredientCard from '@/components/common/ingredient/IngredientCard';
-import LabelContainer from '@/components/common/container/LabelContainer';
 import { useOverlay } from '@/hooks/common/useOverlay';
 
 type StackNavProp = NativeStackNavigationProp<RootStackParamList>;
@@ -48,16 +47,19 @@ export default function ShoppingListScreen() {
   const purchasedCount = useAtomValue(purchasedCountAtom);
   const isAllPurchased = useAtomValue(isAllPurchasedAtom);
   const purchasedItemList = useAtomValue(purchasedItemsAtom);
-
   const isInStorageItem = useAtomValue(isInStorageShoppingItemAtom);
 
-  const addItem = useSetAtom(addShoppingItemAtom);
-  const deleteItems = useSetAtom(deleteShoppingItemListAtom);
+  const addShoppingItem = useSetAtom(addShoppingItemAtom);
+  const deleteShoppingItemList = useSetAtom(deleteShoppingItemListAtom);
   const toggleAllPurchased = useSetAtom(toggleAllPurchasedAtom);
 
-  const recommendedKeywordList = useMemo(() => {
-    return searchIngredient(inputValue || '', 6) //
-      .filter(({ id }) => !shoppingList.map((item) => item.ingredientId).includes(id));
+  const recommendedIngredientList = useMemo(() => {
+    const searchedIngredientList = searchIngredient(inputValue || '', 6);
+
+    const result = searchedIngredientList.filter(
+      ({ id }) => !shoppingList.map((item) => item.ingredientId).includes(id),
+    );
+    return result; //
   }, [inputValue, shoppingList]);
 
   const onAllPurchasedClick = () => {
@@ -65,10 +67,30 @@ export default function ShoppingListScreen() {
     toggleAllPurchased();
   };
 
-  const onSubmitPress = (value: string) => {
+  const onDeletePress = () => {
+    deleteShoppingItemList(purchasedItemList.map(({ id }) => id));
+  };
+
+  const onAddToStoragePress = () => {
+    if (isInStorageItem)
+      return alert({
+        message: '냉장고에 이미 존재하는 식재료는 추가할수 없어요.',
+      });
+
+    navigation.navigate('AddShoppingListScreen');
+  };
+
+  const onChangeText = (text: string) => {
+    setInputValue(text);
+    if (error !== null) {
+      clearError();
+    }
+  };
+
+  const onSubmitPress = (value?: string) => {
     if (!value) return;
 
-    const result = addItem(value);
+    const result = addShoppingItem(value);
 
     if (result.type === 'duplicate') {
       return setError(result);
@@ -78,15 +100,6 @@ export default function ShoppingListScreen() {
       setInputValue('');
     }
   };
-
-  /** TODO: 추천 식재료
-   * 1. 자주먹는 식재료인데 없는 경우
-   * 2. 보관함에 날짜가 지난 식재료, 임박식재료는 X
-   */
-  const recommendedIngredientList = allIngredients
-    .slice(0, 20)
-    .filter((item) => !shoppingList.find((i) => i.ingredientId === item.id))
-    .slice(0, 8);
 
   return (
     <KeyboardAvoidingViewContainer>
@@ -133,71 +146,40 @@ export default function ShoppingListScreen() {
                 <Text className="text-inactive-text">장볼 식재료가 없습니다</Text>
               </View>
             )}
-
-            {recommendedIngredientList.length > 0 && (
-              <LabelContainer label="장보기 추천 식재료">
-                <ScrollView
-                  horizontal
-                  contentContainerClassName="gap-x-1.5"
-                  showsHorizontalScrollIndicator={false}
-                  keyboardShouldPersistTaps="handled"
-                >
-                  {recommendedIngredientList.map((item) => (
-                    <TouchableOpacity
-                      key={item.id}
-                      onPress={() => onSubmitPress(item.label)}
-                    >
-                      <IngredientCard
-                        key={item.id}
-                        ingredient={item}
-                        className="h-20 min-w-20 bg-neutral-3 pb-2.5"
-                        textClassName="text-sm"
-                        isCompact
-                        imageSize={35}
-                      />
-                    </TouchableOpacity>
-                  ))}
-                </ScrollView>
-              </LabelContainer>
-            )}
           </Card>
 
           {/* 아래 컨트롤 버튼 */}
           {purchasedCount > 0 && (
             <View className="flex-row items-start gap-x-2">
               <SquareBtn
-                onPress={() => deleteItems(purchasedItemList.map(({ id }) => id))}
+                onPress={onDeletePress}
                 name="선택항목 삭제하기"
                 iconName="Trash2"
                 iconSize={16}
                 color="yellow"
+                className="!py-4"
               />
               <SquareBtn
-                onPress={() => {
-                  if (isInStorageItem)
-                    return alert({
-                      message: '냉장고에 이미 존재하는 식재료는 다시 추가할수 없어요.',
-                    });
-                  navigation.navigate('AddShoppingListScreen');
-                }}
+                onPress={onAddToStoragePress}
                 name="냉장고에 넣기"
                 iconName="Grid2X2Plus"
                 iconSize={16}
                 color="blue"
+                className="!py-4"
               />
             </View>
           )}
 
           {/* 태그들과 인풋 */}
           <View className="gap-y-2">
-            {recommendedKeywordList.length > 0 && (
+            {recommendedIngredientList.length > 0 && (
               <ScrollView
                 horizontal
                 contentContainerClassName="gap-x-2"
                 showsHorizontalScrollIndicator={false}
                 keyboardShouldPersistTaps="handled"
               >
-                {recommendedKeywordList.map((item) => (
+                {recommendedIngredientList.map((item) => (
                   <TouchableOpacity
                     key={item.id}
                     onPress={() => onSubmitPress(item.label)}
@@ -219,18 +201,13 @@ export default function ShoppingListScreen() {
               {error?.message && (
                 <Text className="mb-2 text-red-600">{error?.message}</Text>
               )}
+
               <View className="relative">
                 <TextInput
                   maxLength={50}
                   value={inputValue}
                   className="pr-12"
-                  onChangeText={(text) => {
-                    setInputValue(text);
-
-                    if (error !== null) {
-                      clearError();
-                    }
-                  }}
+                  onChangeText={onChangeText}
                   placeholder="장볼 식재료가 작성해주세요"
                 />
                 <Icon

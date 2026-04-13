@@ -1,9 +1,9 @@
 import { image_empty_basket, ingredientImagesObj } from '@/constants';
-import { Ingredient } from '@/types/ingredient';
+import { CustomIngredient, Ingredient } from '@/types/ingredient';
 import { Image } from 'react-native';
 
 interface IngredientImageProps {
-  ingredient?: Ingredient;
+  ingredient?: Ingredient | CustomIngredient;
   size: number;
 }
 

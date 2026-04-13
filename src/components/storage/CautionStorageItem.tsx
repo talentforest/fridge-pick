@@ -2,23 +2,30 @@ import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import Text from '@/components/common/ui/Text';
 import { expirationStatusObj } from '@/constants';
 import { iosShadowStyle } from '@/constants/shadowStyle';
-import { EnrichStorageItem } from '@/types/storage';
-import { formatRemainingDays, getExpirationStatus, getRemainingDays } from '@/utils';
+import { StorageItem } from '@/types/storage';
+import {
+  findIngredient,
+  formatRemainingDays,
+  getExpirationStatus,
+  getRemainingDays,
+} from '@/utils';
 import { View } from 'react-native';
 
 interface CautionStorageItemProps {
-  item: EnrichStorageItem;
+  storageItem: StorageItem;
   index: number;
   isCurrIndex: boolean;
 }
 
 export default function CautionStorageItem({
-  item,
+  storageItem,
   index,
   isCurrIndex,
 }: CautionStorageItemProps) {
-  const remainDays = getRemainingDays(new Date(item.expiresAt));
+  const remainDays = getRemainingDays(new Date(storageItem.expiresAt));
   const status = getExpirationStatus(remainDays);
+
+  const ingredient = findIngredient(storageItem.ingredientId);
 
   return (
     <View
@@ -32,9 +39,9 @@ export default function CautionStorageItem({
       )}
 
       <View className={`aspect-square items-center justify-center`}>
-        <IngredientImage ingredient={item.ingredient} size={70} />
+        <IngredientImage ingredient={ingredient} size={70} />
         <Text className={`text-center ${isCurrIndex ? '!text-black' : ''}`}>
-          {item.customLabel || item?.ingredient?.label}
+          {storageItem.customLabel || ingredient?.label}
         </Text>
       </View>
 

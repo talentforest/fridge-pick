@@ -1,8 +1,8 @@
 import { allIngredients, mockStorageItemList, storageObj } from '@/constants';
 import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
-import { Ingredient } from '@/types/ingredient';
+import { Ingredient, IngredientKey } from '@/types/ingredient';
 import { EditableStorageItemData, StorageItem, StorageTypeId } from '@/types/storage';
-import { getExpiredStorageItemList } from '@/utils';
+import { findStorageItemWithKey, getExpiredStorageItemList } from '@/utils';
 import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
 import { nanoid } from 'nanoid/non-secure';
@@ -24,27 +24,29 @@ export const itemListByStorageAtom = atomFamily((storage: StorageTypeId) =>
 );
 
 /** nanoid id로 보관함 속 특정 식재료 아이템 찾기
- * ingredientKey로 하지않는 이유는 없는 커스텀 식재료가 있기 때문
+ * ingredientId로 하지않는 이유는 없는 커스텀 식재료가 있기 때문
  */
 export const findItemByStorageAtom = atomFamily((storageItemId: string) =>
   atom((get) => get(allStorageItemListAtom).find((item) => item.id === storageItemId)),
 );
 
-/** ingredientKey id로 보관함 속 특정 식재료 아이템 찾기
+/** ingredientId나 customLabel로 보관함 속 특정 식재료 아이템 찾기
  * @param key `${ingredientId}|${customLabel}` 형식
  */
-export const findStorageItemWithKey = atomFamily((key: string) =>
-  atom((get) =>
-    get(allStorageItemListAtom).find((item) => {
-      const [ingredientId, customLabel] = key.split('|');
-      return item.ingredientId === ingredientId || item.customLabel === customLabel;
-    }),
-  ),
+export const findStorageItemWithKeyAtom = atomFamily((key: string) =>
+  atom((get) => {
+    const [ingredientId, customLabel] = key.split('|') as [IngredientKey, string];
+
+    const storageItemList = get(allStorageItemListAtom);
+
+    return findStorageItemWithKey({ storageItemList, ingredientId, customLabel });
+  }),
 );
 
 /** 보관함 속 소비기한이 지난 식재료 아이템 찾기 */
 export const expiredItemListByStorageAtom = atom((get) => {
   const allStorageItemList = get(allStorageItemListAtom);
+
   return getExpiredStorageItemList(allStorageItemList);
 });
 

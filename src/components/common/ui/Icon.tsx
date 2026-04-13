@@ -1,5 +1,6 @@
 import { colorTokens } from '@/theme/color';
 import {
+  EggFried,
   ExternalLink,
   House,
   SunMoon,
@@ -68,6 +69,7 @@ import {
 import { TouchableOpacity, useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'EggFried'
   | 'ExternalLink'
   | 'ShoppingBasket'
   | 'House'
@@ -169,7 +171,7 @@ export default function Icon({
     text: scheme.text,
     yellow: scheme.yellow[7],
     neutral: scheme.neutral[7],
-    red: scheme.red[7],
+    red: scheme.red[5],
     blue: scheme.blue[7],
     darkGray: scheme.neutral[5],
     gray: scheme.inactive.bg,
@@ -180,6 +182,7 @@ export default function Icon({
   };
 
   const iconObj: { [key in IconName | CategoryIconName]: LucideIcon } = {
+    EggFried,
     ExternalLink,
     House,
     SunMoon,
