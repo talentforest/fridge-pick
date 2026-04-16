@@ -1,8 +1,8 @@
 import { IngredientKey } from '@/types/ingredient';
 
-export type Favorites = {
+export type FavoriteIngredient = {
   /** string: Firestore doc id (slug) */
-  id: IngredientKey;
+  id: string;
 
   /** IngredientKey */
   ingredientId: IngredientKey;

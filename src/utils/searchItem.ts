@@ -1,6 +1,7 @@
-import { allIngredients } from '@/constants';
-import { Ingredient, IngredientKey } from '@/types/ingredient';
-import { StorageItem } from '@/types/storage';
+import { allIngredientList, allMealList } from '@/constants';
+import { SelectableItem } from '@/types/selectableItem';
+import { EnrichStorageItem, StorageItem } from '@/types/storage';
+import { findIngredient, findMeal } from '@/utils/findItem';
 
 const CHOSUNG = [
   'ㄱ',
@@ -56,13 +57,18 @@ function matchText(keyword: string, text: string) {
   return false;
 }
 
-export function searchIngredient(keyword: string, maxLength?: number): Ingredient[] {
+export function searchIngredientAndMeal(
+  keyword: string,
+  maxLength?: number,
+): SelectableItem[] {
   const normalized = normalize(keyword);
   if (!normalized) return [];
 
   const isChosungSearch = /^[ㄱ-ㅎ]+$/.test(keyword);
 
-  const results = allIngredients
+  const selectableItemList = [...allIngredientList, ...allMealList];
+
+  const results = selectableItemList
     .map((item) => {
       let score = 0;
 
@@ -105,32 +111,40 @@ export function searchIngredient(keyword: string, maxLength?: number): Ingredien
   return maxLength ? results.slice(0, maxLength) : results;
 }
 
-export function findIngredient(ingredientId?: IngredientKey) {
-  if (!ingredientId) return undefined;
-  return allIngredients.find(({ id }) => id === ingredientId);
-}
-
 export function searchStorageItem(
   keyword: string,
   list: StorageItem[],
   maxLength?: number,
-) {
+): EnrichStorageItem[] {
   const normalized = normalize(keyword);
   if (!normalized) return [];
 
-  const ingredientIds = new Set(searchIngredient(keyword).map(({ id }) => id));
+  const ingredientIds = new Set(searchIngredientAndMeal(keyword).map(({ id }) => id));
 
   return list
     .filter((item) => {
-      if (item.ingredientId && ingredientIds.has(item.ingredientId)) {
+      if (item.type === 'ingredient' && ingredientIds.has(item.ingredientId)) {
         return true;
       }
 
-      if (item.customLabel) {
+      if (item.type === 'custom') {
         return matchText(normalized, item.customLabel);
       }
 
       return false;
+    })
+    .map((storageItem) => {
+      if (storageItem.type === 'ingredient') {
+        const ingredient = findIngredient(storageItem.ingredientId);
+        return { ...storageItem, ingredient };
+      }
+
+      if (storageItem.type === 'meal') {
+        const meal = findMeal(storageItem.mealId);
+        return { ...storageItem, meal };
+      }
+
+      return storageItem;
     })
     .slice(0, maxLength);
 }

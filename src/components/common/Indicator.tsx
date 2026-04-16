@@ -12,13 +12,13 @@ export default function Indicator({ type, value }: TimeIndicatorProps) {
     <View className="flex-row items-center gap-0.5">
       {type === 'time' && (
         <>
-          <Icon name="Clock" size={16} color="blue" strokeWidth={2.6} />
+          <Icon name="Timer" size={16} color="blue" strokeWidth={2.6} />
           <Text className="text-[15px] text-blue-7">{value}분</Text>
         </>
       )}
       {type === 'total' && (
         <>
-          <Icon name="ChefHat" size={16} color="yellow" />
+          <Icon name="EggFried" size={16} color="yellow" />
           <Text className="text-[15px] text-yellow-7">식재료 {value}개</Text>
         </>
       )}

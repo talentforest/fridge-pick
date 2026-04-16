@@ -1,43 +1,34 @@
 import { togglePurchasedAtom } from '@/atom/shoppingListAtom';
 import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
-import Icon from '@/components/common/ui/Icon';
-import Text from '@/components/common/ui/Text';
 import { storageObj } from '@/constants';
-import { RootStackParamList } from '@/types/RootStackParamList';
-import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
-import { findIngredient } from '@/utils';
+import { StackNavProp } from '@/types/RootStackParamList';
+import { EnrichShoppingItem } from '@/types/shoppingList';
+import { createTrackedItemKey, getTrackedItemLabel } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Pressable, TouchableOpacity, View } from 'react-native';
+import Icon from '@/components/common/ui/Icon';
+import Text from '@/components/common/ui/Text';
 
 interface ShoppingItemProps {
-  item: ShoppingItemType;
+  shoppingItem: EnrichShoppingItem;
   isError: boolean;
 }
 
-type StorageDetailNavProp = NativeStackNavigationProp<RootStackParamList>;
-
-export default function ShoppingItem({ item, isError }: ShoppingItemProps) {
-  const { isPurchased, customLabel, ingredientId } = item;
+export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProps) {
+  const { id, isPurchased } = shoppingItem;
 
   const togglePurchased = useSetAtom(togglePurchasedAtom);
 
-  const ingredient = findIngredient(item.ingredientId);
-
-  // 보관함에 갖고 있는지 확인
-
-  const key = `${ingredientId ?? ''}|${customLabel ?? ''}`;
+  const key = createTrackedItemKey(shoppingItem);
 
   const isInStorageShoppingItem = useAtomValue(findStorageItemWithKeyAtom(key));
 
-  const navigation = useNavigation<StorageDetailNavProp>();
+  const navigation = useNavigation<StackNavProp>();
 
   return (
     <Pressable
-      onPress={() => {
-        togglePurchased(item.id);
-      }}
+      onPress={() => togglePurchased(id)}
       className={`h-14 flex-row items-center px-1 py-3 ${isPurchased ? 'opacity-40' : ''}`}
     >
       <View className="flex-1 flex-row gap-x-1.5">
@@ -46,7 +37,7 @@ export default function ShoppingItem({ item, isError }: ShoppingItemProps) {
         <Text
           className={`line-clamp-1 flex-1 ${isPurchased ? 'line-through' : ''} ${isError ? 'text-red-500' : ''}`}
         >
-          {customLabel || ingredient?.label}
+          {getTrackedItemLabel(shoppingItem).label}
         </Text>
       </View>
 

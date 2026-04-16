@@ -46,18 +46,18 @@ export default function FilterTag({
 
   const commonClassName = 'rounded-xl px-3.5 py-3';
 
+  const currBgColor = isActive ? bgColor[color as FilterColor] : inActiveObj.bgColor;
+
+  const currTextColor = isActive ? textColorObj[color] : inActiveObj.textColor;
+
   return onPress ? (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      className={`${commonClassName} flex-row items-center ${isActive ? bgColor[color as FilterColor] : inActiveObj.bgColor} ${className}`}
+      className={`${commonClassName} flex-row items-center gap-x-0.5 ${currBgColor} ${className}`}
     >
-      {icon && <Icon name={icon} size={15} color={color} />}
-      <Text
-        className={`${isActive ? textColorObj[color] : inActiveObj.textColor} ${textClassName}`}
-      >
-        {name}
-      </Text>
+      {icon && <Icon name={icon} size={15} color={isActive ? color : 'inactive'} />}
+      <Text className={`${currTextColor} ${textClassName}`}>{name}</Text>
     </TouchableOpacity>
   ) : (
     <View className={`${commonClassName} ${bgColor[color as FilterColor]} ${className}`}>

@@ -4,19 +4,16 @@ import {
   deleteShoppingItemListAtom,
 } from '@/atom/shoppingListAtom';
 import { useOverlay } from '@/hooks/common/useOverlay';
-import { RootStackParamList } from '@/types/RootStackParamList';
+import { StackNavProp } from '@/types/RootStackParamList';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import { FlatList } from 'react-native';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ViewContentContainer from '@/components/common/container/ViewContentContainer';
 import SquareBtn from '@/components/common/SquareBtn';
-import ScreenHeader from '@/components/common/ScreenHeader';
-import PurchasedItem from '@/components/shoppingList/PurchasedItem';
-
-type NavProp = NativeStackNavigationProp<RootStackParamList>;
+import ScreenHeader from '@/components/common/header/ScreenHeader';
+import PurchasedItem from '@/components/trackedItem/shoppingList/PurchasedItem';
 
 export default function AddShoppingListScreen() {
   const converted = useAtomValue(convertedStorageItemListAtom);
@@ -25,7 +22,7 @@ export default function AddShoppingListScreen() {
 
   const { closeModal, alert } = useOverlay();
 
-  const navigation = useNavigation<NavProp>();
+  const navigation = useNavigation<StackNavProp>();
 
   const addToStorage = useSetAtom(addShoppingListToStorageAtom);
   const deleteItemList = useSetAtom(deleteShoppingItemListAtom);
@@ -58,7 +55,7 @@ export default function AddShoppingListScreen() {
             <PurchasedItem
               storageItem={item}
               index={index + 1}
-              setItems={setStorageItemList}
+              setStorageItemList={setStorageItemList}
             />
           )}
         />

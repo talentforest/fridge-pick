@@ -166,13 +166,13 @@ const HandleBtn = ({
   };
 
   const commonClassName =
-    'bg-gray-600/30 absolute top-1/2 -translate-y-1/2 rounded-full p-4';
+    'bg-neutral-7 absolute top-1/2 -translate-y-1/2 rounded-full p-4';
 
   return (
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={onPress}
-      className={`${commonClassName} ${direction === 'prev' ? 'left-8' : 'right-8'}`}
+      className={`${commonClassName} opacity-40 ${direction === 'prev' ? 'left-8' : 'right-8'}`}
     >
       {directionIcon[direction]}
     </TouchableOpacity>

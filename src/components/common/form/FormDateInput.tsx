@@ -1,6 +1,6 @@
 import DateInput from '@/components/common/DateInput';
 import FilterTag from '@/components/common/FilterTag';
-import ModalHeader from '@/components/common/ModalHeader';
+import ModalHeader from '@/components/common/header/ModalHeader';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import { formatDateString } from '@/utils';
@@ -82,7 +82,7 @@ export default function FormDateInput({
     <LabelContainer label={hasLabel ? '소비기한' : undefined}>
       <DateInput date={currDate} openDatePicker={onEditDatePickerPress} />
 
-      <View className="mt-1 flex-row flex-wrap gap-1.5">
+      <View className="mt-1.5 flex-row flex-wrap gap-1.5">
         {plusDateBtnList.map(({ label, onPress, color }) => (
           <FilterTag
             key={label}

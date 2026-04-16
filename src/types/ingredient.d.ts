@@ -1,38 +1,30 @@
-import { CategoryKey, categoryObj, ingredientObj } from '@/constants';
+import { ingredientObj } from '@/constants';
+import { CategoryKey } from '@/types/category';
 import { StorageTypeId } from '@/types/storage';
 import { StockUnit, VolumeUnit, WeightUnit } from '@/types/unit';
 
-/** 커스텀 Ingredient: 등록된 Ingredient 정보가 없는 경우의 식재료. */
-export type CustomIngredient = Pick<
-  Ingredient,
-  'label' | 'category' | 'defaultStorage' | 'expirationDays'
-> & {
-  type: 'custom';
-  /** nanoid */
-  id: string;
-};
+/* -------------------------------------------------------------------------- */
+/*                              Ingredient Type                               */
+/* -------------------------------------------------------------------------- */
 
-/** 등록된 Ingredient */
+/** 등록 Ingredient */
 export type Ingredient = {
   type: 'ingredient';
 
-  /** 활성 여부 (soft delete 용) */
-  isActive: boolean; // 기본 true
-
   /** IngredientKey: Firestore doc id (slug) */
   id: IngredientKey;
+
+  /** UI 분류 */
+  category: Exclude<CategoryKey, 'meal'>;
+
+  /** 활성 여부 (soft delete 용) */
+  isActive: boolean; // 기본 true
 
   /** Image Route Name: 만약 타식재료 동일 이미지인 경우 */
   imageName?: string;
 
   /** 표시 이름 */
   label: string;
-
-  /** UI 분류 */
-  category: CategoryKey;
-
-  /** category가 'meal'인 경우 - 반찬/메인요리/간편요리 타입구분 */
-  mealType?: 'side' | 'main' | 'instant';
 
   /** 기본 보관 위치 */
   defaultStorage: readonly StorageTypeId;
@@ -59,6 +51,16 @@ export type Ingredient = {
   synonyms?: readonly string[];
 };
 
+/** 커스텀 Ingredient */
+export type CustomIngredient = Pick<
+  Ingredient,
+  'label' | 'category' | 'defaultStorage' | 'expirationDays'
+> & {
+  type: 'custom';
+  /** nanoid */
+  id: string;
+};
+
 export type IngredientKey =
   | NoodleIngredientKey
   | VegetableIngredientKey
@@ -71,8 +73,7 @@ export type IngredientKey =
   | PowderIngredientKey
   | SeafoodIngredientKey
   | SeasoningIngredientKey
-  | DrinkIngredientKey
-  | MealKey;
+  | DrinkIngredientKey;
 
 export type NoodleIngredientKey = keyof (typeof ingredientObj)['noodle'];
 export type VegetableIngredientKey = keyof (typeof ingredientObj)['vegetable'];
@@ -86,11 +87,3 @@ export type PowderIngredientKey = keyof (typeof ingredientObj)['powder'];
 export type SeafoodIngredientKey = keyof (typeof ingredientObj)['seafood'];
 export type SeasoningIngredientKey = keyof (typeof ingredientObj)['seasoning'];
 export type DrinkIngredientKey = keyof (typeof ingredientObj)['drink'];
-
-export type ValidCategoryKey = Exclude<keyof typeof categoryObj, 'noCategory'>;
-
-export type CategoryLabel = (typeof categoryObj)[keyof typeof categoryObj]['label'];
-
-export type CategoryItem = (typeof categoryObj)[CategoryKey];
-
-export type MealKey = keyof (typeof ingredientObj)['meal'];

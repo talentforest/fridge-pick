@@ -1,29 +1,28 @@
 import { searchKeywordAtom } from '@/atom/storageItemAtom';
 import { storageObj } from '@/constants';
 import { useOverlay } from '@/hooks/common/useOverlay';
-import { RootStackParamList } from '@/types/RootStackParamList';
+import { RootStackParamList, StackNavProp } from '@/types/RootStackParamList';
 import {
   RouteProp,
   useIsFocused,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAtom } from 'jotai';
 import { View } from 'react-native';
+import { useEffect } from 'react';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
-import ScreenHeader from '@/components/common/ScreenHeader';
-import SectionTitle from '@/components/common/SectionTitle';
-import CautionIngredientList from '@/components/storage/CautionIngredientList';
-import SearchItemSheet from '@/components/storage/SearchItemSheet';
-import Storage from '@/components/storage/Storage';
-import { useEffect } from 'react';
-import StorageItemSheet from '@/components/storage/StorageItemSheet';
+import ScreenHeader from '@/components/common/header/ScreenHeader';
+import SectionTitle from '@/components/common/header/SectionTitle';
 import Icon from '@/components/common/ui/Icon';
+import { EnrichStorageItem } from '@/types/storage';
+import SearchItemSheet from '@/components/trackedItem/storage/SearchItemSheet';
+import StorageItemSheet from '@/components/trackedItem/storage/StorageItemSheet';
+import Storage from '@/components/trackedItem/storage/Storage';
+import CautionStorageItemList from '@/components/trackedItem/storage/CautionStorageItemList';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'StorageDetailScreen'>;
-type StackNavProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function StorageDetailScreen() {
   const {
@@ -46,13 +45,13 @@ export default function StorageDetailScreen() {
     });
   };
 
-  const onItemPress = (storageItemId: string) => {
+  const onItemPress = (item: EnrichStorageItem) => {
     openSheet({
       enableDynamicSizing: false,
       keyboardBehavior: 'extend',
       snapPoints: [450, 670],
       hasDim: true,
-      render: () => <StorageItemSheet storageItemId={storageItemId} />,
+      render: () => <StorageItemSheet storageItem={item} />,
     });
   };
 
@@ -68,6 +67,7 @@ export default function StorageDetailScreen() {
     return () => {
       closeSheet();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 
   return (
@@ -78,12 +78,12 @@ export default function StorageDetailScreen() {
         {/* 소비기한 임박 */}
         <View className="gap-y-3">
           <SectionTitle title="소비기한 주의 식재료" icon="ClockAlert" />
-          <CautionIngredientList storageType={storageType} openItemPress={onItemPress} />
+          <CautionStorageItemList storageType={storageType} openItemPress={onItemPress} />
         </View>
 
         {/* 나의 공간 */}
         <View className="gap-y-1">
-          <SectionTitle title="나의 식재료" icon="Refrigerator">
+          <SectionTitle title={`나의 ${storageLabel} 식재료`} icon="Refrigerator">
             <View className="flex-row items-center">
               <Icon
                 name="Search"

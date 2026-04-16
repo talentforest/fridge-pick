@@ -14,7 +14,7 @@ interface FormStorageProps {
   label: string;
   currStorageType: StorageTypeId;
   currDate?: string;
-  onItemChange: (newData: EditableStorageItemData) => void;
+  onItemChange: (newData: Partial<EditableStorageItemData>) => void;
   ingredientExpirationDays?: { fridge?: number; freezer?: number; pantry?: number };
 }
 

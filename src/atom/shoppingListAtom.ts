@@ -1,30 +1,31 @@
 import { allStorageItemListAtom } from '@/atom/storageItemAtom';
-import { allIngredients, mockShoppingList } from '@/constants';
+import { mockShoppingList } from '@/constants';
 import { initialCustomStorageItem } from '@/constants/initialItem';
 import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
 import { ShoppingItem } from '@/types/shoppingList';
-import { StorageItem } from '@/types/storage';
-
+import { EnrichStorageItem } from '@/types/storage';
 import {
   formatDateString,
-  duplicateShoppingItem,
   convertIngredientToStorageItem,
-  findIngredient,
+  createTrackedItemKey,
+  enrichShoppinItem,
+  findTrackedItemWithKey,
+  createShoppingItem,
+  convertMealToStorageItem,
 } from '@/utils';
 import { Timestamp } from 'firebase/firestore';
 import { atom } from 'jotai';
-import { nanoid } from 'nanoid/non-secure';
 
 const now = () => Timestamp.now();
 
-export const shoppingListAtom = atom<ShoppingItem[]>(mockShoppingList); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
+export const shoppingListAtom = atom(mockShoppingList.map(enrichShoppinItem)); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
 
 /* -------------------------------------------------------------------------- */
 /*                                  Selector                                  */
 /* -------------------------------------------------------------------------- */
 
 /** 구매 완료된 아이템 목록 */
-export const purchasedItemsAtom = atom<ShoppingItem[]>((get) =>
+export const purchasedItemsAtom = atom((get) =>
   get(shoppingListAtom).filter((x) => x.isPurchased),
 );
 
@@ -36,15 +37,12 @@ export const isInStorageShoppingItemAtom = atom((get) => {
   const allStorageItemList = get(allStorageItemListAtom);
   const purchasedItems = get(purchasedItemsAtom);
 
-  return purchasedItems.some((purchasedItem) =>
-    allStorageItemList.some(
-      (storageItem) =>
-        (purchasedItem.ingredientId &&
-          storageItem.ingredientId === purchasedItem.ingredientId) ||
-        (purchasedItem.customLabel &&
-          storageItem.customLabel === purchasedItem.customLabel),
-    ),
-  );
+  return purchasedItems.some((purchaseItem) => {
+    const key = createTrackedItemKey(purchaseItem);
+    return allStorageItemList.some((storageItem) =>
+      findTrackedItemWithKey(storageItem, key),
+    );
+  });
 });
 
 /** 구매 완료된 아이템이 하나라도 존재하는지 여부 */
@@ -61,10 +59,8 @@ export const isAllPurchasedAtom = atom((get) => {
   return list.length > 0 && list.every((x) => x.isPurchased);
 });
 
-/**
- * 구매 완료한 장보기 아이템을 보관함 아이템으로 전환한 목록
- */
-export const convertedStorageItemListAtom = atom((get): StorageItem[] => {
+/** 구매 완료한 장보기 아이템을 보관함 아이템으로 전환한 목록 */
+export const convertedStorageItemListAtom = atom((get): EnrichStorageItem[] => {
   const purchasedItemList = get(purchasedItemsAtom);
 
   const now = new Date();
@@ -75,11 +71,16 @@ export const convertedStorageItemListAtom = atom((get): StorageItem[] => {
       purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
     };
 
-    const ingredient = findIngredient(item.ingredientId);
-
-    if (ingredient && item.type === 'ingredient') {
+    if (item.type === 'meal') {
       return {
-        ...convertIngredientToStorageItem(ingredient),
+        ...convertMealToStorageItem(item.meal),
+        ...common,
+      };
+    }
+
+    if (item.type === 'ingredient') {
+      return {
+        ...convertIngredientToStorageItem(item.ingredient),
         ...common,
       };
     }
@@ -87,7 +88,7 @@ export const convertedStorageItemListAtom = atom((get): StorageItem[] => {
     return {
       ...initialCustomStorageItem,
       ...common,
-      customLabel: item.customLabel!, //TODO: 타입 안정성 강화하기
+      customLabel: item.customLabel!, // TODO: 타입 안정성 강화하기
     };
   });
 
@@ -106,11 +107,20 @@ export const convertedStorageItemListAtom = atom((get): StorageItem[] => {
 export const addShoppingItemAtom = atom(
   null,
   (get, set, inputValue: string): AppError<ShoppingItem> | AppSuccess => {
-    const list = get(shoppingListAtom);
+    const shoppingList = get(shoppingListAtom);
 
-    // ingredient 마스터 정보가 있는 경우 customLabel은 작성하지 않는다.
-    // 따라서 ingredient의 label과 customLabel 모두를 비교한다.
-    const duplicateItem = duplicateShoppingItem(inputValue, list);
+    // 장보기 목록에 있는지 검사
+    const duplicateItem = shoppingList.find((shoppingItem) => {
+      if (shoppingItem.type === 'ingredient') {
+        return shoppingItem.ingredient.label === inputValue;
+      }
+
+      if (shoppingItem.type === 'meal') {
+        return shoppingItem.meal.label === inputValue;
+      }
+
+      return shoppingItem.customLabel === inputValue;
+    });
 
     if (duplicateItem) {
       return {
@@ -120,26 +130,9 @@ export const addShoppingItemAtom = atom(
       };
     }
 
-    const ingredient = allIngredients.find(({ label }) => label === inputValue);
+    const newItem = createShoppingItem(inputValue);
 
-    const baseItem = {
-      id: nanoid(),
-      isPurchased: false,
-    };
-
-    const newItem: ShoppingItem = !!ingredient
-      ? {
-          ...baseItem,
-          type: 'ingredient',
-          ingredientId: ingredient.id,
-        }
-      : {
-          ...baseItem,
-          type: 'custom',
-          customLabel: inputValue,
-        };
-
-    set(shoppingListAtom, [...list, newItem]);
+    set(shoppingListAtom, [...shoppingList, newItem]);
 
     return {
       type: 'success',
@@ -207,7 +200,7 @@ export const clearAllAtom = atom(null, (_get, set) => {
  */
 export const addShoppingListToStorageAtom = atom(
   null,
-  (get, set, storageItemList: StorageItem[]) => {
+  (get, set, storageItemList: EnrichStorageItem[]) => {
     // list를 보관함 아이템 리스트로 추가
     const allStorageItemList = get(allStorageItemListAtom);
 

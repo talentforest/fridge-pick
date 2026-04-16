@@ -1,11 +1,13 @@
 import { colorTokens } from '@/theme/color';
 import {
   EggFried,
+  Amphora,
   ExternalLink,
   House,
   SunMoon,
   Apple,
   ArrowDown,
+  Siren,
   ArrowLeft,
   ArrowRight,
   ArrowUp,
@@ -13,12 +15,15 @@ import {
   Bell,
   Info,
   CakeSlice,
+  Hourglass,
+  SquircleDashed,
   Calendar,
   CalendarClock,
   CheckCircle,
   CheckCircle2,
   ChefHat,
   ChevronLeft,
+  Timer,
   RotateCcw,
   ChevronRight,
   Circle,
@@ -70,13 +75,17 @@ import { TouchableOpacity, useColorScheme, View } from 'react-native';
 
 export type IconName =
   | 'EggFried'
+  | 'Amphora'
   | 'ExternalLink'
   | 'ShoppingBasket'
   | 'House'
+  | 'Hourglass'
   | 'SunMoon'
   | 'X'
   | 'Bell'
   | 'Menu'
+  | 'Siren'
+  | 'SquircleDashed'
   | 'HandPlatter'
   | 'Clock'
   | 'ShoppingBag'
@@ -91,6 +100,7 @@ export type IconName =
   | 'Trash2'
   | 'Info'
   | 'PlusSquare'
+  | 'SquircleDashed'
   | 'PlusCircle'
   | 'CheckCircle2'
   | 'CheckCircle'
@@ -102,6 +112,7 @@ export type IconName =
   | 'ChevronRight'
   | 'Edit'
   | 'Edit3'
+  | 'Timer'
   | 'RotateCcw'
   | 'ClockAlert'
   | 'CalendarClock'
@@ -117,6 +128,7 @@ export type IconName =
   | 'Search'
   | 'Thermometer'
   | 'Wind'
+  | 'Timer'
   | 'Grid2X2Plus';
 
 export type CategoryIconName =
@@ -183,15 +195,20 @@ export default function Icon({
 
   const iconObj: { [key in IconName | CategoryIconName]: LucideIcon } = {
     EggFried,
+    Amphora,
     ExternalLink,
+    SquircleDashed,
     House,
+    Timer,
     SunMoon,
     X,
+    Hourglass,
     SquareCheck,
     Bell,
     Menu,
     HandPlatter,
     Calendar,
+    Siren,
     CheckCircle2,
     RefreshCcw,
     Circle,

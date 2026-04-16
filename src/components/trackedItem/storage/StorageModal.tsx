@@ -1,5 +1,5 @@
 import FormStorage from '@/components/common/form/FormStorage';
-import ModalHeader from '@/components/common/ModalHeader';
+import ModalHeader from '@/components/common/header/ModalHeader';
 import SquareBtn from '@/components/common/SquareBtn';
 import { StorageItem, StorageTypeId } from '@/types/storage';
 import { useState } from 'react';

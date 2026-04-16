@@ -1,22 +1,35 @@
 import FilterTag from '@/components/common/FilterTag';
+import Card from '@/components/common/ui/Card';
+import { IconName } from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import { MealFilterKey, FilterValue } from '@/types/filter';
+import { FilterColor } from '@/types/filter';
 
 import { ReactNode, useState } from 'react';
 import { View } from 'react-native';
 
-interface FilterContainerProps<T> {
-  filterList: FilterValue[];
+type HasFilter<K> = {
+  filterList: readonly K[];
+};
+
+type FilterItem<K> = {
+  name: K;
+  label: string;
+  color: FilterColor;
+  icon?: IconName;
+};
+
+interface FilterContainerProps<T extends HasFilter<K>, K> {
+  filterList: FilterItem<K>[];
   dataList: T[];
   children: (data: T) => ReactNode;
 }
 
-export default function FilterContainer<T extends { filterList: string[] }>({
+export default function FilterContainer<T extends HasFilter<K>, K>({
   filterList,
   dataList,
   children,
-}: FilterContainerProps<T>) {
-  const [activeFilter, setActiveFilter] = useState<MealFilterKey>('all');
+}: FilterContainerProps<T, K>) {
+  const [activeFilter, setActiveFilter] = useState<K | 'all'>('all');
 
   const filteredDataList =
     activeFilter === 'all'
@@ -26,22 +39,30 @@ export default function FilterContainer<T extends { filterList: string[] }>({
   return (
     <View>
       <View className="mb-4 flex-row flex-wrap gap-2">
-        {Object.values(filterList).map(({ name, label, color }) => (
+        {filterList.map(({ name, label, color, icon }) => (
           <FilterTag
-            key={label}
+            key={String(name)}
+            icon={icon}
             name={label}
             color={color}
             isActive={activeFilter === name}
             onPress={() => setActiveFilter(name)}
+            className={icon ? 'pl-3' : ''}
           />
         ))}
       </View>
 
       <Text className="px-2 py-3 pb-4 text-base text-blue-5">추천 메뉴 목록</Text>
 
-      <View className="flex-row flex-wrap justify-between gap-5">
-        {filteredDataList.map(children)}
-      </View>
+      {filteredDataList.length > 0 ? (
+        <View className="flex-row flex-wrap justify-between gap-5">
+          {filteredDataList.map(children)}
+        </View>
+      ) : (
+        <Card className="h-80 items-center justify-center border">
+          <Text className="text-inactive-text">추천 메뉴가 없어요</Text>
+        </Card>
+      )}
     </View>
   );
 }

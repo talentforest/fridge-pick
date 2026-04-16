@@ -1,23 +1,23 @@
-import IngredientImage from '@/components/common/ingredient/IngredientImage';
 import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import EditPurchasedItemSheet from '@/components/shoppingList/EditPurchasedItemSheet';
+import EditPurchasedItemSheet from '@/components/trackedItem/shoppingList/EditPurchasedItemSheet';
 import { storageObj } from '@/constants';
 import { useOverlay } from '@/hooks/common/useOverlay';
-import { EditableStorageItemData, StorageItem } from '@/types/storage';
-import { findIngredient, formatDateString, getRemainingDays } from '@/utils';
+import { EditableStorageItemData, EnrichStorageItem } from '@/types/storage';
+import { formatDateString, getRemainingDays } from '@/utils';
 import { View } from 'react-native';
+import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 
 interface PurchasedItemProps {
-  storageItem: StorageItem;
-  setItems: React.Dispatch<React.SetStateAction<StorageItem[]>>;
+  storageItem: EnrichStorageItem;
+  setStorageItemList: React.Dispatch<React.SetStateAction<EnrichStorageItem[]>>;
   index?: number;
 }
 
 export default function PurchasedItem({
   storageItem,
-  setItems,
+  setStorageItemList,
   index,
 }: PurchasedItemProps) {
   const { openSheet, closeSheet } = useOverlay();
@@ -25,8 +25,6 @@ export default function PurchasedItem({
   const date = new Date(storageItem.expiresAt);
 
   const currentStorage = storageObj[storageItem.storage.type];
-
-  const ingredient = findIngredient(storageItem?.ingredientId);
 
   const infoByItem = [
     {
@@ -44,8 +42,16 @@ export default function PurchasedItem({
   ];
 
   const onEditSubmit = (id: string, newData: Partial<EditableStorageItemData>) => {
-    setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, ...newData } : item)),
+    setStorageItemList((prev) =>
+      prev.map((item) => {
+        // eslint-disable-next-line unused-imports/no-unused-vars
+        const { customLabel, ...rest } = newData;
+        if (item.type !== 'custom') {
+          return { ...item, ...rest };
+        }
+
+        return { ...item, ...newData };
+      }),
     );
     closeSheet();
   };
@@ -74,12 +80,7 @@ export default function PurchasedItem({
       )}
 
       {/* 식재료 이미지 */}
-      <View className={`w-24 items-center justify-center gap-y-1.5 `}>
-        <IngredientImage ingredient={ingredient} size={60} />
-        <Text className="line-clamp-2 text-center leading-6">
-          {storageItem.customLabel || ingredient?.label}
-        </Text>
-      </View>
+      <TrackedItemImageLabel item={storageItem} className="w-28 pt-0.5" />
 
       {/* 중간선 */}
       <View className="ml-1 mr-3.5 border-r border-neutral-3" />

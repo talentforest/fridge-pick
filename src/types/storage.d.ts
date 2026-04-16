@@ -1,5 +1,6 @@
 import { storageObj } from '@/constants';
 import { Ingredient, IngredientKey } from '@/types/ingredient';
+import { Meal, MealKey } from '@/types/meal';
 import { Timestamp } from 'firebase/firestore';
 
 export type Storage = typeof storageObj;
@@ -43,8 +44,7 @@ type BaseStorageItem = {
 type IngredientStorageItem = BaseStorageItem & {
   type: 'ingredient';
   ingredientId: IngredientKey;
-  /** 이름은 커스텀했는데 ingredient 정보를 연결하는 경우. */
-  customLabel?: string;
+  customLabel?: never;
 };
 
 type CustomStorageItem = BaseStorageItem & {
@@ -53,13 +53,23 @@ type CustomStorageItem = BaseStorageItem & {
   ingredientId?: never;
 };
 
-export type StorageItem = IngredientStorageItem | CustomStorageItem;
+type MealStorageItem = BaseStorageItem & {
+  type: 'meal';
+  mealId: MealKey;
+}; // 커스텀 Meal은 없음.
 
-export type EditableStorageItemData = Pick<
-  StorageItem,
-  'customLabel' | 'storage' | 'expiresAt' | 'memo'
->;
+export type StorageItem = IngredientStorageItem | CustomStorageItem | MealStorageItem;
 
-export type EnrichStorageItem = StorageItem & { ingredient?: Ingredient };
+type EditableCustomStorageItem = Pick<CustomStorageItem, 'customLabel'>;
+type EditableStorageItem = Pick<IngredientStorageItem, 'storage' | 'expiresAt' | 'memo'> &
+  EditableCustomStorageItem;
+type EditableMealStorageItem = Pick<MealStorageItem, 'storage' | 'expiresAt' | 'memo'>;
+
+export type EditableStorageItemData = EditableStorageItem;
+
+export type EnrichStorageItem =
+  | CustomStorageItem
+  | (IngredientStorageItem & { ingredient: Ingredient })
+  | (MealStorageItem & { meal: Meal });
 
 // TODO: ComsumptionLog 작성하기

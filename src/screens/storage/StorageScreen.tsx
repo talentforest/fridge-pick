@@ -1,5 +1,5 @@
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
-import SectionTitle from '@/components/common/SectionTitle';
+import SectionTitle from '@/components/common/header/SectionTitle';
 
 export default function StorageScreen() {
   return (

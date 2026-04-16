@@ -19,3 +19,5 @@ export type RootStackParamList = {
   /** 자주먹는 식재료 */
   FavoritesScreen: undefined;
 };
+
+export type StackNavProp = NativeStackNavigationProp<RootStackParamList>;

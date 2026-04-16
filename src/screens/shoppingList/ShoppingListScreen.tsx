@@ -9,30 +9,27 @@ import {
   toggleAllPurchasedAtom,
 } from '@/atom/shoppingListAtom';
 import { image_empty_basket } from '@/constants';
-import { RootStackParamList } from '@/types/RootStackParamList';
+import { StackNavProp } from '@/types/RootStackParamList';
 import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
-import { searchIngredient } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useMemo, useState } from 'react';
 import { FlatList, Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useErrorHandler } from '@/hooks/common/useErrorHandler';
+import { useOverlay } from '@/hooks/common/useOverlay';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ViewContentContainer from '@/components/common/container/ViewContentContainer';
 import SquareBtn from '@/components/common/SquareBtn';
-import ScreenHeader from '@/components/common/ScreenHeader';
-import ShoppingItem from '@/components/common/ShoppingItem';
+import ScreenHeader from '@/components/common/header/ScreenHeader';
+import ShoppingItem from '@/components/trackedItem/shoppingList/ShoppingItem';
 import Text from '@/components/common/ui/Text';
 import TextInput from '@/components/common/ui/TextInput';
 import KeyboardAvoidingViewContainer from '@/components/common/container/KeyboardAvoidingViewContainer';
 import Card from '@/components/common/ui/Card';
 import IconWithText from '@/components/common/IconWithText';
 import Icon from '@/components/common/ui/Icon';
-import IngredientCard from '@/components/common/ingredient/IngredientCard';
-import { useOverlay } from '@/hooks/common/useOverlay';
-
-type StackNavProp = NativeStackNavigationProp<RootStackParamList>;
+import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
+import { searchIngredientAndMeal } from '@/utils';
 
 export default function ShoppingListScreen() {
   const [inputValue, setInputValue] = useState<string>('');
@@ -54,10 +51,21 @@ export default function ShoppingListScreen() {
   const toggleAllPurchased = useSetAtom(toggleAllPurchasedAtom);
 
   const recommendedIngredientList = useMemo(() => {
-    const searchedIngredientList = searchIngredient(inputValue || '', 6);
+    const searchedIngredientList = searchIngredientAndMeal(inputValue || '', 6);
 
     const result = searchedIngredientList.filter(
-      ({ id }) => !shoppingList.map((item) => item.ingredientId).includes(id),
+      ({ id }) =>
+        !shoppingList
+          .map((item) => {
+            if (item.type === 'ingredient') {
+              return item.ingredientId;
+            }
+            if (item.type === 'meal') {
+              return item.mealId;
+            }
+            return item.customLabel;
+          })
+          .includes(id),
     );
     return result; //
   }, [inputValue, shoppingList]);
@@ -127,14 +135,17 @@ export default function ShoppingListScreen() {
                 data={shoppingList}
                 nestedScrollEnabled
                 showsVerticalScrollIndicator={false}
-                className="mb-4 flex-1"
+                className="mb-3 flex-1"
                 contentContainerClassName="pb-10"
                 ItemSeparatorComponent={() => (
                   <View className="border-b border-dashed border-neutral-3" />
                 )}
                 keyExtractor={(item) => `${item.id}`}
                 renderItem={({ item }) => (
-                  <ShoppingItem item={item} isError={error?.item?.id === item.id} />
+                  <ShoppingItem
+                    shoppingItem={item}
+                    isError={error?.item?.id === item.id}
+                  />
                 )}
               />
             ) : (
@@ -184,8 +195,8 @@ export default function ShoppingListScreen() {
                     key={item.id}
                     onPress={() => onSubmitPress(item.label)}
                   >
-                    <IngredientCard
-                      ingredient={item}
+                    <SelectableItemCard
+                      item={item}
                       className="h-20 min-w-20 !pt-1 pb-2.5"
                       isCompact
                       textClassName="text-sm"
@@ -213,7 +224,7 @@ export default function ShoppingListScreen() {
                 <Icon
                   name="ArrowUp"
                   size={20}
-                  className="absolute bottom-0 right-[8px] top-[9px] z-10 size-11 h-fit items-center justify-center rounded-full bg-neutral-3"
+                  className="absolute right-[8px] top-[8px] z-10 size-11 h-fit items-center justify-center rounded-full bg-neutral-3"
                   onPress={() => onSubmitPress(inputValue)}
                 />
               </View>

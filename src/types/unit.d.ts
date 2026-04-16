@@ -1,4 +1,4 @@
-import { CategoryKey } from '@/constants';
+import { ValidCategoryKey } from '@/types/category';
 
 export type WeightUnit = 'g' | 'kg';
 export type VolumeUnit = 'ml' | 'L';
@@ -26,7 +26,7 @@ export type StockUnit =
   | 'g'
   | '송이';
 
-export const categoryUnitMap: Record<CategoryKey, StockUnit[]> = {
+export const categoryUnitMap: Record<ValidCategoryKey, StockUnit[]> = {
   noodle: ['봉', '개'],
   meat: ['팩', '마리', '개'],
   seafood: ['팩', '마리', '상자', '개'],

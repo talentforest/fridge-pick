@@ -1,11 +1,9 @@
 import FormMemo from '@/components/common/form/FormMemo';
 import FormStorage from '@/components/common/form/FormStorage';
-import { Ingredient } from '@/types/ingredient';
-import { EditableStorageItemData, StorageItem } from '@/types/storage';
+import { EditableStorageItemData, EnrichStorageItem } from '@/types/storage';
 
 interface FormIngredientProps {
-  currStorageItem: StorageItem;
-  ingredient?: Ingredient;
+  currStorageItem: EnrichStorageItem;
   onItemChange: (newData: Partial<EditableStorageItemData>) => void;
   onMemoFocus?: () => void;
   isSheetInput?: boolean;
@@ -13,11 +11,17 @@ interface FormIngredientProps {
 
 export default function FormIngredient({
   currStorageItem,
-  ingredient,
   onItemChange,
   onMemoFocus,
   isSheetInput = false,
 }: FormIngredientProps) {
+  const days =
+    currStorageItem.type === 'ingredient'
+      ? currStorageItem.ingredient?.expirationDays
+      : currStorageItem.type === 'meal'
+        ? currStorageItem.meal.expirationDays
+        : undefined;
+
   return (
     <>
       <FormStorage
@@ -25,7 +29,7 @@ export default function FormIngredient({
         currStorageType={currStorageItem.storage.type}
         currDate={currStorageItem.expiresAt}
         onItemChange={onItemChange}
-        ingredientExpirationDays={ingredient?.expirationDays}
+        ingredientExpirationDays={days}
       />
 
       <FormMemo

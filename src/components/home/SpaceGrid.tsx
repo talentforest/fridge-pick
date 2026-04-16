@@ -2,19 +2,16 @@ import {
   expiredItemListByStorageAtom,
   itemListByStorageAtom,
 } from '@/atom/storageItemAtom';
-import Card from '@/components/common/ui/Card';
-import Icon from '@/components/common/ui/Icon';
-import Text from '@/components/common/ui/Text';
 import { image_fridge } from '@/constants';
-import { RootStackParamList } from '@/types/RootStackParamList';
+import { StackNavProp } from '@/types/RootStackParamList';
 import { StorageTypeId } from '@/types/storage';
 import { formatDaysSince } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAtomValue } from 'jotai';
 import { Image, TouchableOpacity, View } from 'react-native';
-
-type StorageDetailNavProp = NativeStackNavigationProp<RootStackParamList>;
+import Card from '@/components/common/ui/Card';
+import Icon from '@/components/common/ui/Icon';
+import Text from '@/components/common/ui/Text';
 
 export default function SpaceGrid() {
   const freezerItemList = useAtomValue(itemListByStorageAtom('freezer'));
@@ -24,7 +21,9 @@ export default function SpaceGrid() {
   const expiredStorageItemList = useAtomValue(expiredItemListByStorageAtom);
 
   const hasExpiredItem = (storageType: StorageTypeId): boolean => {
-    return expiredStorageItemList.some((item) => item.storage.type === storageType);
+    return expiredStorageItemList.some(
+      ({ storageItem }) => storageItem.storage.type === storageType,
+    );
   };
 
   const storageList = {
@@ -104,7 +103,7 @@ const TouchableSpaceCard = ({
     hasNotAllFavorites?: boolean;
   };
 }) => {
-  const navigation = useNavigation<StorageDetailNavProp>();
+  const navigation = useNavigation<StackNavProp>();
 
   return (
     <TouchableOpacity
@@ -121,6 +120,7 @@ const TouchableSpaceCard = ({
       <Card key={label} className="flex-1 !py-5">
         <View className="flex-1 flex-row justify-between">
           <Text>{label}</Text>
+
           {id === 'favorites' ? (
             <Icon name="Heart" hasFill color="red" size={22} />
           ) : (
@@ -141,13 +141,13 @@ const TouchableSpaceCard = ({
           recentlyUpdate !== undefined &&
           recentlyUpdate <= 0 &&
           recentlyUpdate >= -3 && (
-            <Text className="text-[13px] text-neutral-5">
+            <Text className="text-[13px] !text-neutral-5">
               {formatDaysSince(recentlyUpdate)} 추가
             </Text>
           )}
 
         {id === 'favorites' && hasNotAllFavorites && (
-          <Text className="text-[13px] text-neutral-5">없는 식재료가 있어요</Text>
+          <Text className="text-[13px] !text-neutral-5">없는 식재료가 있어요</Text>
         )}
       </Card>
     </TouchableOpacity>

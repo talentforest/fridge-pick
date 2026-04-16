@@ -1,7 +1,7 @@
 import { addStorageItemAtom } from '@/atom/storageItemAtom';
 import { storageObj } from '@/constants';
 import { RootStackParamList } from '@/types/RootStackParamList';
-import { EditableStorageItemData, StorageItem } from '@/types/storage';
+import { EditableStorageItemData, EnrichStorageItem, StorageItem } from '@/types/storage';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useSetAtom } from 'jotai';
 import { useRef, useState } from 'react';
@@ -11,35 +11,33 @@ import { useErrorHandler } from '@/hooks/common/useErrorHandler';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import LabelContainer from '@/components/common/container/LabelContainer';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
-import ScreenHeader from '@/components/common/ScreenHeader';
+import ScreenHeader from '@/components/common/header/ScreenHeader';
 import TextInput from '@/components/common/ui/TextInput';
 import KeyboardAvoidingViewContainer from '@/components/common/container/KeyboardAvoidingViewContainer';
-import Card from '@/components/common/ui/Card';
 import ViewContentContainer from '@/components/common/container/ViewContentContainer';
-import SearchAddStorageItem from '@/components/storage/SearchAddStorageItem';
 import SquareBtn from '@/components/common/SquareBtn';
 import Icon from '@/components/common/ui/Icon';
-import IngredientImageLabel from '@/components/storage/IngredientImageLabel';
 import FormMemo from '@/components/common/form/FormMemo';
 import FormDateInput from '@/components/common/form/FormDateInput';
 import Text from '@/components/common/ui/Text';
-import { findIngredient } from '@/utils';
+import SearchAddStorageItem from '@/components/trackedItem/storage/SearchAddStorageItem';
+import Card from '@/components/common/ui/Card';
+import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'AddStorageItemScreen'>;
 
 export default function AddStorageItemScreen() {
+  const scrollRef = useRef<ScrollView>(null);
+
   const {
     params: { id: storageType },
   } = useRoute<DetailRouteProp>();
 
   const { label } = storageObj[storageType];
 
-  const scrollRef = useRef<ScrollView>(null);
-
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [currStorageItem, setCurrStorageItem] = useState<StorageItem | null>(null);
 
-  const ingredient = findIngredient(currStorageItem?.ingredientId);
+  const [currStorageItem, setCurrStorageItem] = useState<EnrichStorageItem | null>(null);
 
   const { alert } = useOverlay();
 
@@ -55,7 +53,14 @@ export default function AddStorageItemScreen() {
 
   const onItemChange = (newData: Partial<EditableStorageItemData>) => {
     setCurrStorageItem((prev) => {
-      if (prev === null) return null;
+      if (!prev) return null;
+
+      // eslint-disable-next-line unused-imports/no-unused-vars
+      const { customLabel, ...rest } = newData;
+      if (prev.type !== 'custom') {
+        return { ...prev, ...rest };
+      }
+
       return { ...prev, ...newData };
     });
   };
@@ -81,27 +86,34 @@ export default function AddStorageItemScreen() {
                 keyboardShouldPersistTaps="handled"
               >
                 {/* 선택한 식재료 정보 */}
-                <LabelContainer label={ingredient ? '식재료 정보' : '식재료 이름'}>
+                <LabelContainer
+                  label={`식재료 ${currStorageItem.type === 'custom' ? '이름' : '정보'}`}
+                >
                   <View>
-                    {ingredient ? (
-                      <Card className="flex-row items-center gap-x-1.5 !py-0">
-                        <IngredientImageLabel
-                          ingredient={ingredient}
-                          customLabel={currStorageItem.customLabel}
-                        />
-                      </Card>
-                    ) : (
+                    {currStorageItem.type === 'custom' ? (
                       <TextInput
                         value={currStorageItem.customLabel}
                         onChangeText={(text) => onItemChange({ customLabel: text })}
                         placeholder="식재료 이름을 작성해주세요."
-                        maxLength={30}
+                        maxLength={50}
+                        className="border pr-12"
                       />
+                    ) : (
+                      <Card className="flex-row items-center gap-x-1.5 !py-1">
+                        <TrackedItemImageLabel
+                          item={currStorageItem}
+                          isHorizontal
+                          imageSize={70}
+                          hasCategory
+                          textClassName="text-base"
+                        />
+                      </Card>
                     )}
+
                     <Icon
                       name="RotateCcw"
                       size={20}
-                      className={`absolute right-0 p-5 ${ingredient ? '' : 'bottom-0 top-0'}`}
+                      className={`absolute right-2 top-2 rounded-2xl bg-neutral-3 p-3`}
                       color="text"
                       onPress={initializeStorageItem}
                     />

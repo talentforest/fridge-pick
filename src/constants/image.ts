@@ -1,11 +1,11 @@
-import { ValidCategoryKey } from '@/constants';
+import { ValidCategoryKey } from '@/types/category';
 import { ImageSourcePropType } from 'react-native';
 
 export const image_empty_basket = require('../../assets/images/empty_basket.png');
 export const image_fridge = require('../../assets/images/fridge.png');
 export const image_empty_plate = require('../../assets/images/empty_plate.png');
 
-export const ingredientImagesObj: {
+export const categoryImagesObj: {
   [key in ValidCategoryKey]: { [key in string]: ImageSourcePropType };
 } = {
   noodle: {
@@ -666,7 +666,3 @@ export const ingredientImagesObj: {
     zucchini_pancake: require('../../assets/images/ingredients/meal/zucchini_pancake.png'),
   },
 } as const;
-
-export const calculateImagesByCategory = (category: ValidCategoryKey) => {
-  return Object.keys(ingredientImagesObj[category]).length;
-};

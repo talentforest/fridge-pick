@@ -1,14 +1,26 @@
-import { allIngredients, mockStorageItemList, storageObj } from '@/constants';
+import { mockStorageItemList, storageObj } from '@/constants';
 import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
-import { Ingredient, IngredientKey } from '@/types/ingredient';
-import { EditableStorageItemData, StorageItem, StorageTypeId } from '@/types/storage';
-import { findStorageItemWithKey, getExpiredStorageItemList } from '@/utils';
+import { Ingredient } from '@/types/ingredient';
+import {
+  EditableStorageItemData,
+  EnrichStorageItem,
+  StorageItem,
+  StorageTypeId,
+} from '@/types/storage';
+import {
+  createTrackedItemKey,
+  enrichStorageItem,
+  findTrackedItemWithKey,
+  getCautionStorageItemList,
+} from '@/utils';
 import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
 import { nanoid } from 'nanoid/non-secure';
 
+const enrichStorageItemList = mockStorageItemList.map(enrichStorageItem);
+
 /** Basic */
-export const allStorageItemListAtom = atom<StorageItem[]>(mockStorageItemList); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
+export const allStorageItemListAtom = atom<EnrichStorageItem[]>(enrichStorageItemList); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
 
 export const searchKeywordAtom = atom<string>('');
 
@@ -18,36 +30,38 @@ export const searchKeywordAtom = atom<string>('');
 
 /** 각 보관함 식재료 아이템 목록 */
 export const itemListByStorageAtom = atomFamily((storage: StorageTypeId) =>
-  atom((get) =>
-    get(allStorageItemListAtom).filter((item) => item.storage.type === storage),
-  ),
+  atom((get) => {
+    const allStorageItemList = get(allStorageItemListAtom);
+    return allStorageItemList.filter((item) => item.storage.type === storage);
+  }),
 );
 
 /** nanoid id로 보관함 속 특정 식재료 아이템 찾기
  * ingredientId로 하지않는 이유는 없는 커스텀 식재료가 있기 때문
  */
 export const findItemByStorageAtom = atomFamily((storageItemId: string) =>
-  atom((get) => get(allStorageItemListAtom).find((item) => item.id === storageItemId)),
+  atom((get) => {
+    const allStorageItemList = get(allStorageItemListAtom);
+    return allStorageItemList.find((item) => item.id === storageItemId);
+  }),
 );
 
 /** ingredientId나 customLabel로 보관함 속 특정 식재료 아이템 찾기
- * @param key `${ingredientId}|${customLabel}` 형식
+ * @param key `${ingredientId}|${customLabel}|${mealId}` 형식
  */
 export const findStorageItemWithKeyAtom = atomFamily((key: string) =>
   atom((get) => {
-    const [ingredientId, customLabel] = key.split('|') as [IngredientKey, string];
-
     const storageItemList = get(allStorageItemListAtom);
-
-    return findStorageItemWithKey({ storageItemList, ingredientId, customLabel });
+    return storageItemList.find((storageItem) =>
+      findTrackedItemWithKey(storageItem, key),
+    );
   }),
 );
 
 /** 보관함 속 소비기한이 지난 식재료 아이템 찾기 */
 export const expiredItemListByStorageAtom = atom((get) => {
   const allStorageItemList = get(allStorageItemListAtom);
-
-  return getExpiredStorageItemList(allStorageItemList);
+  return getCautionStorageItemList(allStorageItemList);
 });
 
 /* -------------------------------------------------------------------------- */
@@ -61,14 +75,17 @@ export const expiredItemListByStorageAtom = atom((get) => {
  */
 export const addStorageItemAtom = atom(
   null,
-  (get, set, newItem: StorageItem): AppError<StorageItem | Ingredient> | AppSuccess => {
+  (
+    get,
+    set,
+    newItem: EnrichStorageItem,
+  ): AppError<StorageItem | Ingredient> | AppSuccess => {
     const list = get(allStorageItemListAtom);
 
-    const ingredient = allIngredients.find(({ id }) => id === newItem.ingredientId);
+    const duplicateItem = list.find((storageItem) => {
+      const key = createTrackedItemKey(newItem);
 
-    const duplicateItem = list.find(({ customLabel, ingredientId }) => {
-      if (ingredient) return ingredientId === ingredient?.id;
-      return customLabel === newItem.customLabel;
+      return !!findTrackedItemWithKey(storageItem, key);
     });
 
     if (duplicateItem) {
@@ -79,7 +96,7 @@ export const addStorageItemAtom = atom(
       };
     }
 
-    const newStorageItem: StorageItem = {
+    const newStorageItem: EnrichStorageItem = {
       ...newItem,
       id: nanoid(),
     };
@@ -104,30 +121,26 @@ export const deleteStorageItemListAtom = atom(null, (get, set, ids: string[]) =>
   );
 });
 
-/**
- * 특정 아이템을 수정한다.
- */
-export const changeStorageItemAtom = atom(
-  null,
-  (
-    get,
-    set,
-    {
-      id,
-      newData,
-    }: {
-      id: string;
-      newData: Partial<EditableStorageItemData>;
-    },
-  ) => {
-    if (!id || !newData) return;
+interface Props {
+  id: string;
+  newData: Partial<EditableStorageItemData>;
+}
+/** 특정 아이템을 수정한다. */
+export const changeStorageItemAtom = atom(null, (get, set, { id, newData }: Props) => {
+  if (!id || !newData) return;
 
-    const list = get(allStorageItemListAtom);
+  const list = get(allStorageItemListAtom);
 
-    const changedList = list.map((item) =>
-      item.id === id ? { ...item, ...newData } : item,
-    );
+  const changedList = list.map((item) => {
+    // eslint-disable-next-line unused-imports/no-unused-vars
+    const { customLabel, ...rest } = newData;
 
-    set(allStorageItemListAtom, changedList);
-  },
-);
+    if (item.type !== 'custom') {
+      return { ...item, ...rest };
+    }
+
+    return { ...item, ...newData };
+  });
+
+  set(allStorageItemListAtom, changedList);
+});

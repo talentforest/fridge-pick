@@ -1,10 +1,3 @@
-export type CategoryKey = keyof typeof categoryObj;
-export type ValidCategoryKey = Exclude<keyof typeof categoryObj, 'noCategory'>;
-
-export type CategoryLabel = (typeof categoryObj)[keyof typeof categoryObj]['label'];
-
-export type CategoryItem = (typeof categoryObj)[CategoryKey];
-
 export const categoryObj = {
   vegetable: {
     id: 'vegetable',
@@ -51,7 +44,7 @@ export const categoryObj = {
   seasoning: {
     id: 'seasoning',
     label: '조미료/장/오일',
-    icon: 'HeartPulse',
+    icon: 'Amphora',
     color: 'red',
     // NOTE: 추후 추가, type: 'basic' | 'sauce' | 'oil'
   },

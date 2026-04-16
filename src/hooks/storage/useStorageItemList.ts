@@ -1,12 +1,13 @@
 import { itemListByStorageAtom } from '@/atom/storageItemAtom';
-import { CategoryKey, categoryObj, storageObj } from '@/constants';
+import { categoryObj, storageObj } from '@/constants';
+import { CategoryKey } from '@/types/category';
 import {
   EnrichStorageItem,
   StorageSide,
   StorageSideId,
   StorageSpace,
 } from '@/types/storage';
-import { findIngredient, getRemainingDays } from '@/utils';
+import { findIngredient, getCautionStorageItemList, findMeal } from '@/utils';
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 
@@ -32,7 +33,7 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
     return storageItemList.filter((item) => item.storage.side === storage.side);
   }, [storageItemList, storage.side]);
 
-  const itemCountBySide = useMemo(() => {
+  const storageItemCountBySide = useMemo(() => {
     return storageItemList.reduce(
       (acc, item) => {
         if (!item.storage.side) return acc;
@@ -51,20 +52,42 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
     const currStorageItemList = hasSide ? currentSideItems : storageItemList;
 
     currStorageItemList.forEach((storageItem) => {
-      const ingredient = storageItem.ingredientId
-        ? findIngredient(storageItem.ingredientId)
-        : undefined;
+      let category: CategoryKey = 'noCategory';
+      let enrichedItem: EnrichStorageItem = storageItem;
 
-      const category: CategoryKey = ingredient?.category ?? 'noCategory';
+      switch (storageItem.type) {
+        case 'ingredient': {
+          const ingredient = findIngredient(storageItem.ingredientId);
+          category = ingredient?.category ?? 'noCategory';
+          enrichedItem = {
+            ...storageItem,
+            ...(ingredient ? { ingredient } : {}),
+          };
+          break;
+        }
+
+        case 'meal': {
+          category = 'meal';
+          const meal = findMeal(storageItem.mealId);
+          enrichedItem = {
+            ...storageItem,
+            ...(meal ? { meal } : {}),
+          };
+          break;
+        }
+
+        case 'custom': {
+          category = 'noCategory';
+          enrichedItem = storageItem;
+          break;
+        }
+      }
 
       if (!grouped[category]) {
         grouped[category] = [];
       }
 
-      grouped[category].push({
-        ...storageItem,
-        ...(ingredient ? { ingredient } : {}),
-      });
+      grouped[category]!.push(enrichedItem);
     });
 
     return Object.values(categoryObj)
@@ -80,24 +103,14 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
     [side],
   );
 
-  const expiredStorageItemList = useMemo(() => {
-    if (!storageItemList) return [];
-
-    return storageItemList
-      .map((item) => {
-        const remainingDays = getRemainingDays(new Date(item.expiresAt));
-
-        return { item, remainingDays };
-      })
-      .filter(({ remainingDays }) => remainingDays <= 3)
-      .sort((a, b) => a.remainingDays - b.remainingDays)
-      .map(({ item }) => item);
+  const cautionStorageItemList = useMemo(() => {
+    return getCautionStorageItemList(storageItemList);
   }, [storageItemList]);
 
   return {
     sideList,
-    itemCountBySide,
+    storageItemCountBySide,
     storageItemListByCategory,
-    expiredStorageItemList,
+    cautionStorageItemList,
   };
 };

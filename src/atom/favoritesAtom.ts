@@ -1,9 +1,10 @@
 import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
-import { CustomIngredient, Ingredient, IngredientKey } from '@/types/ingredient';
+import { SelectableItem } from '@/types/selectableItem';
+import { findSelectableItemWithKey } from '@/utils';
 import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
 
-export const favoriteStorageItemListAtom = atom<(Ingredient | CustomIngredient)[]>([]);
+export const favoriteStorageItemListAtom = atom<SelectableItem[]>([]);
 
 /* -------------------------------------------------------------------------- */
 /*                                  Selector                                  */
@@ -13,14 +14,9 @@ export const favoriteStorageItemListAtom = atom<(Ingredient | CustomIngredient)[
  * @param key `${ingredientId}|${customLabel}` 형식
  */
 export const findFavoriteItemAtom = atomFamily((key: string) => {
-  const [ingredientId, customLabel] = key.split('|') as [IngredientKey, string];
-
   return atom((get) => {
     const favorites = get(favoriteStorageItemListAtom);
-
-    return favorites.find(
-      (item) => item.id === ingredientId || item.label === customLabel,
-    );
+    return favorites.find((ingredient) => findSelectableItemWithKey(ingredient, key));
   });
 });
 
@@ -33,11 +29,7 @@ export const findFavoriteItemAtom = atomFamily((key: string) => {
  */
 export const addFavoriteItemAtom = atom(
   null,
-  (
-    get,
-    set,
-    newItem: Ingredient | CustomIngredient,
-  ): AppError<Ingredient | CustomIngredient> | AppSuccess => {
+  (get, set, newItem: SelectableItem): AppError<SelectableItem> | AppSuccess => {
     const list = get(favoriteStorageItemListAtom);
     set(favoriteStorageItemListAtom, [...list, newItem]);
 

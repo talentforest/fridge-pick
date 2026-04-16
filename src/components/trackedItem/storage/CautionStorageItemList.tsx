@@ -1,46 +1,46 @@
 import GridContainer from '@/components/common/container/GridContainer';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
-import CautionStorageItem from '@/components/storage/CautionStorageItem';
+import CautionStorageItem from '@/components/trackedItem/storage/CautionStorageItem';
 import { useStorageItemList } from '@/hooks';
-import { StorageTypeId } from '@/types/storage';
+import { EnrichStorageItem, StorageTypeId } from '@/types/storage';
 import { TouchableOpacity, View } from 'react-native';
 
-interface StorageProps {
+interface CautionStorageItemListProps {
   storageType: StorageTypeId;
-  openItemPress: (id: string) => void;
+  openItemPress: (item: EnrichStorageItem) => void;
 }
 
-export default function CautionIngredientList({
+export default function CautionStorageItemList({
   storageType,
   openItemPress,
-}: StorageProps) {
-  const { expiredStorageItemList } = useStorageItemList({
-    storage: { type: storageType },
-  });
+}: CautionStorageItemListProps) {
+  const storage = { type: storageType };
+  const { cautionStorageItemList } = useStorageItemList({ storage });
 
   return (
     <View>
-      {expiredStorageItemList.length ? (
-        <GridContainer columns={3} gap={10}>
-          {expiredStorageItemList.map((storageItem, index) => {
+      {cautionStorageItemList.length ? (
+        <GridContainer columns={3}>
+          {cautionStorageItemList.map(({ storageItem, remainingDays }, index) => {
             return (
               <TouchableOpacity
                 key={storageItem.id}
                 activeOpacity={0.8}
-                onPress={() => openItemPress(storageItem.id)}
+                onPress={() => openItemPress(storageItem)}
               >
                 <CautionStorageItem
                   storageItem={storageItem}
-                  index={index}
+                  index={index + 1}
                   isCurrIndex={false}
+                  remainingDays={remainingDays}
                 />
               </TouchableOpacity>
             );
           })}
         </GridContainer>
       ) : (
-        <Card className="min-h-36 justify-center">
+        <Card className="min-h-40 justify-center">
           <Text className="text-center text-inactive-text">
             소비기한 주의 식재료가 없어요
           </Text>

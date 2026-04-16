@@ -1,16 +1,28 @@
 import { favoriteStorageItemListAtom } from '@/atom/favoritesAtom';
+import { useOverlay } from '@/hooks/common/useOverlay';
+import { useAtomValue } from 'jotai';
+import { TouchableOpacity, View } from 'react-native';
+import { SelectableItem } from '@/types/selectableItem';
 import GridContainer from '@/components/common/container/GridContainer';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
-import IngredientCard from '@/components/common/ingredient/IngredientCard';
-import ScreenHeader from '@/components/common/ScreenHeader';
-import SectionTitle from '@/components/common/SectionTitle';
+import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
+import ScreenHeader from '@/components/common/header/ScreenHeader';
+import SectionTitle from '@/components/common/header/SectionTitle';
 import Text from '@/components/common/ui/Text';
-import { useAtomValue } from 'jotai';
-import { View } from 'react-native';
+import FavoriteItem from '@/components/favorites/FavoriteItem';
 
 export default function FavoritesScreen() {
   const favoriteList = useAtomValue(favoriteStorageItemListAtom);
+
+  const { openSheet } = useOverlay();
+
+  const onOpenSheetPress = (item: SelectableItem) => {
+    openSheet({
+      hasDim: true,
+      render: () => <FavoriteItem item={item} />,
+    });
+  };
 
   return (
     <SafeAreaViewContainer edges={['top', 'bottom']}>
@@ -19,15 +31,20 @@ export default function FavoritesScreen() {
       <ScrollViewContainer contentContainerClassName="pt-5">
         <View>
           <SectionTitle title="좋아하는 식재료" icon="EggFried" />
-          <GridContainer columns={4} className="mt-4" gap={10}>
+          <GridContainer columns={4} className="mt-4" gap={6}>
             {favoriteList.map((item) => (
-              <IngredientCard
+              <TouchableOpacity
                 key={item.id}
-                ingredient={item}
-                isCompact
-                className="h-24"
-                textClassName="!text-[13px]"
-              />
+                activeOpacity={0.8}
+                onPress={() => onOpenSheetPress(item)}
+              >
+                <SelectableItemCard
+                  item={item}
+                  isCompact
+                  className="!px-1 pb-3"
+                  textClassName="!text-[13px] line-clamp-1"
+                />
+              </TouchableOpacity>
             ))}
           </GridContainer>
         </View>

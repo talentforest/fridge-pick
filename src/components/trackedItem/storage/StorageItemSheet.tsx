@@ -1,53 +1,43 @@
-import {
-  changeStorageItemAtom,
-  deleteStorageItemListAtom,
-  findItemByStorageAtom,
-} from '@/atom/storageItemAtom';
-import { mealList, storageObj } from '@/constants';
+import { changeStorageItemAtom, deleteStorageItemListAtom } from '@/atom/storageItemAtom';
+import { currMealList, storageObj } from '@/constants';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { findIngredient } from '@/utils';
+import { createTrackedItemKey } from '@/utils';
 import {
   addFavoriteItemAtom,
   deleteFavoriteItemAtom,
   findFavoriteItemAtom,
 } from '@/atom/favoritesAtom';
 import { View } from 'react-native';
-import MealCompactCard from '@/components/common/MealCompactCard';
+import { nanoid } from 'nanoid/non-secure';
+import { initialCustomIngredient } from '@/constants/initialItem';
+import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 import SquareBtn from '@/components/common/SquareBtn';
-import SectionTitle from '@/components/common/SectionTitle';
-import StorageModal from '@/components/storage/StorageModal';
+import SectionTitle from '@/components/common/header/SectionTitle';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import FormDateInput from '@/components/common/form/FormDateInput';
 import Icon from '@/components/common/ui/Icon';
-import IngredientImageLabel from '@/components/storage/IngredientImageLabel';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
 import { CustomIngredient } from '@/types/ingredient';
-import { nanoid } from 'nanoid/non-secure';
-import { initialCustomIngredient } from '@/constants/initialItem';
+import { EnrichStorageItem } from '@/types/storage';
+import StorageModal from '@/components/trackedItem/storage/StorageModal';
+import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 
 interface StorageItemSheetProps {
-  storageItemId: string;
+  storageItem: EnrichStorageItem;
 }
 
-export default function StorageItemSheet({ storageItemId }: StorageItemSheetProps) {
-  const currItem = useAtomValue(findItemByStorageAtom(storageItemId));
-
+export default function StorageItemSheet({ storageItem }: StorageItemSheetProps) {
   const { closeModal, openModal, closeSheet, alert, confirm } = useOverlay();
 
   const deleteItems = useSetAtom(deleteStorageItemListAtom);
   const onItemChange = useSetAtom(changeStorageItemAtom);
 
-  const key = `${currItem?.ingredientId || ''}|${currItem?.customLabel || ''}`;
-  const favoriteItem = useAtomValue(findFavoriteItemAtom(key));
   const addFavoriteItem = useSetAtom(addFavoriteItemAtom);
   const deleteFavoriteItem = useSetAtom(deleteFavoriteItemAtom);
 
-  if (!currItem) return;
-
-  const { ingredientId, customLabel, id, storage } = currItem;
-
-  const ingredient = findIngredient(ingredientId);
+  const key = createTrackedItemKey(storageItem);
+  const favoriteItem = useAtomValue(findFavoriteItemAtom(key));
 
   const onEditStoragePress = () => {
     openModal({
@@ -61,7 +51,7 @@ export default function StorageItemSheet({ storageItemId }: StorageItemSheetProp
             closeSheet();
             alert({
               title: '보관위치 변경 알림',
-              message: `[${ingredient?.label}] 식재료를 ${storageObj[newData.storage.type].label}으로 옮겼습니다.`,
+              message: `식재료를 ${storageObj[newData.storage.type].label}으로 옮겼습니다.`,
             });
           }}
         />
@@ -81,10 +71,20 @@ export default function StorageItemSheet({ storageItemId }: StorageItemSheetProp
     closeSheet();
   };
 
+  if (!storageItem) return;
+
+  const { id, storage } = storageItem;
+
   return (
     <View className="my-2 w-full flex-1 gap-y-1.5">
       <View className="flex-row items-start justify-between">
-        <IngredientImageLabel ingredient={ingredient} customLabel={customLabel} />
+        <TrackedItemImageLabel
+          item={storageItem}
+          imageSize={85}
+          hasCategory
+          textClassName="text-base"
+          isHorizontal
+        />
 
         <Icon
           name="Heart"
@@ -94,29 +94,44 @@ export default function StorageItemSheet({ storageItemId }: StorageItemSheetProp
           className="p-3"
           onPress={() => {
             if (!favoriteItem) {
-              const ingredientItem =
-                ingredient ||
-                ({
+              if (storageItem.type === 'ingredient') {
+                return addFavoriteItem(storageItem.ingredient);
+              }
+
+              if (storageItem.type === 'meal') {
+                return addFavoriteItem(storageItem.meal);
+              }
+
+              if (storageItem.type === 'custom') {
+                const customIngredient: CustomIngredient = {
                   ...initialCustomIngredient,
                   id: nanoid(),
-                  label: customLabel,
+                  label: storageItem.customLabel,
                   defaultStorage: storage.type,
-                  expirationDays: { [storage.type]: currItem.expiresAt },
-                } as CustomIngredient);
-
-              addFavoriteItem(ingredientItem);
+                  expirationDays: { [storage.type]: storageItem.expiresAt },
+                };
+                return addFavoriteItem(customIngredient);
+              }
             } else {
-              deleteFavoriteItem(ingredient?.id || favoriteItem.id);
+              if (storageItem.type === 'ingredient') {
+                return deleteFavoriteItem(storageItem.ingredient.id);
+              }
+
+              if (storageItem.type === 'meal') {
+                return deleteFavoriteItem(storageItem.meal.id);
+              }
+
+              deleteFavoriteItem(favoriteItem.id);
             }
           }}
         />
       </View>
 
-      {currItem && (
+      {storageItem && (
         <View className="gap-y-3">
           {/* 소비기한 */}
           <FormDateInput
-            currDate={currItem.expiresAt}
+            currDate={storageItem.expiresAt}
             onItemChange={(newData) => onItemChange({ id, newData })}
           />
 
@@ -173,18 +188,18 @@ export default function StorageItemSheet({ storageItemId }: StorageItemSheetProp
           icon="HandPlatter"
           iconColor="yellow"
           className="items-center !pl-0"
-          title={`${customLabel || ingredient?.label} 활용 요리`}
+          title={`활용 요리`}
         />
       </View>
 
       <FullBleedSection>
         <CarouselContainer
-          data={mealList}
-          initialIndex={mealList.length}
+          data={currMealList.slice(0, 6)}
+          initialIndex={currMealList.slice(0, 6).length}
           itemWidth={0.6}
           hasNavigation
           keyExtractor={(_, index) => `${index}`}
-          renderItem={({ item }) => <MealCompactCard key={item.mealId} meal={item} />}
+          renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
         />
       </FullBleedSection>
     </View>
