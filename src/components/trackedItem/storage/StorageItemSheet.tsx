@@ -1,27 +1,20 @@
 import { changeStorageItemAtom, deleteStorageItemListAtom } from '@/atom/storageItemAtom';
 import { currMealList, storageObj } from '@/constants';
 import { useOverlay } from '@/hooks/common/useOverlay';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { createTrackedItemKey } from '@/utils';
-import {
-  addFavoriteItemAtom,
-  deleteFavoriteItemAtom,
-  findFavoriteItemAtom,
-} from '@/atom/favoritesAtom';
+import { useSetAtom } from 'jotai';
+import { getTrackedItemLabel } from '@/utils';
+import { EnrichStorageItem, StorageItem } from '@/types/storage';
+import { useState } from 'react';
 import { View } from 'react-native';
-import { nanoid } from 'nanoid/non-secure';
-import { initialCustomIngredient } from '@/constants/initialItem';
 import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 import SquareBtn from '@/components/common/SquareBtn';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import FormDateInput from '@/components/common/form/FormDateInput';
-import Icon from '@/components/common/ui/Icon';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
-import { CustomIngredient } from '@/types/ingredient';
-import { EnrichStorageItem } from '@/types/storage';
 import StorageModal from '@/components/trackedItem/storage/StorageModal';
 import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
+import FavoriteBtn from '@/components/common/FavoriteBtn';
 
 interface StorageItemSheetProps {
   storageItem: EnrichStorageItem;
@@ -30,14 +23,14 @@ interface StorageItemSheetProps {
 export default function StorageItemSheet({ storageItem }: StorageItemSheetProps) {
   const { closeModal, openModal, closeSheet, alert, confirm } = useOverlay();
 
+  const { id, storage, expiresAt } = storageItem;
+
+  const [editableCurrItem, onCurrItemChange] = useState<
+    Pick<StorageItem, 'memo' | 'expiresAt'>
+  >({ expiresAt, memo: storageItem.memo });
+
   const deleteItems = useSetAtom(deleteStorageItemListAtom);
   const onItemChange = useSetAtom(changeStorageItemAtom);
-
-  const addFavoriteItem = useSetAtom(addFavoriteItemAtom);
-  const deleteFavoriteItem = useSetAtom(deleteFavoriteItemAtom);
-
-  const key = createTrackedItemKey(storageItem);
-  const favoriteItem = useAtomValue(findFavoriteItemAtom(key));
 
   const onEditStoragePress = () => {
     openModal({
@@ -47,8 +40,10 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
           currentValue={storage.type}
           onItemChange={async (newData) => {
             onItemChange({ id, newData });
+
             closeModal();
             closeSheet();
+
             alert({
               title: '보관위치 변경 알림',
               message: `식재료를 ${storageObj[newData.storage.type].label}으로 옮겼습니다.`,
@@ -73,8 +68,6 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
 
   if (!storageItem) return;
 
-  const { id, storage } = storageItem;
-
   return (
     <View className="my-2 w-full flex-1 gap-y-1.5">
       <View className="flex-row items-start justify-between">
@@ -86,53 +79,18 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
           isHorizontal
         />
 
-        <Icon
-          name="Heart"
-          size={25}
-          hasFill={!!favoriteItem}
-          color={!!favoriteItem ? 'red' : 'inactive'}
-          className="p-3"
-          onPress={() => {
-            if (!favoriteItem) {
-              if (storageItem.type === 'ingredient') {
-                return addFavoriteItem(storageItem.ingredient);
-              }
-
-              if (storageItem.type === 'meal') {
-                return addFavoriteItem(storageItem.meal);
-              }
-
-              if (storageItem.type === 'custom') {
-                const customIngredient: CustomIngredient = {
-                  ...initialCustomIngredient,
-                  id: nanoid(),
-                  label: storageItem.customLabel,
-                  defaultStorage: storage.type,
-                  expirationDays: { [storage.type]: storageItem.expiresAt },
-                };
-                return addFavoriteItem(customIngredient);
-              }
-            } else {
-              if (storageItem.type === 'ingredient') {
-                return deleteFavoriteItem(storageItem.ingredient.id);
-              }
-
-              if (storageItem.type === 'meal') {
-                return deleteFavoriteItem(storageItem.meal.id);
-              }
-
-              deleteFavoriteItem(favoriteItem.id);
-            }
-          }}
-        />
+        <FavoriteBtn storageItem={storageItem} />
       </View>
 
       {storageItem && (
         <View className="gap-y-3">
           {/* 소비기한 */}
           <FormDateInput
-            currDate={storageItem.expiresAt}
-            onItemChange={(newData) => onItemChange({ id, newData })}
+            currDate={editableCurrItem.expiresAt}
+            onItemChange={(newData) => {
+              onCurrItemChange({ ...editableCurrItem, ...newData });
+              onItemChange({ id, newData });
+            }}
           />
 
           {/* 메모사항 */}
@@ -188,7 +146,8 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
           icon="HandPlatter"
           iconColor="yellow"
           className="items-center !pl-0"
-          title={`활용 요리`}
+          highlight={getTrackedItemLabel(storageItem).label}
+          title={`${getTrackedItemLabel(storageItem).label} 활용 요리`}
         />
       </View>
 
@@ -196,7 +155,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
         <CarouselContainer
           data={currMealList.slice(0, 6)}
           initialIndex={currMealList.slice(0, 6).length}
-          itemWidth={0.6}
+          itemWidth={0.48}
           hasNavigation
           keyExtractor={(_, index) => `${index}`}
           renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}

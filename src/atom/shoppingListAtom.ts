@@ -15,6 +15,7 @@ import {
 } from '@/utils';
 import { Timestamp } from 'firebase/firestore';
 import { atom } from 'jotai';
+import { atomFamily } from 'jotai-family';
 
 const now = () => Timestamp.now();
 
@@ -23,6 +24,14 @@ export const shoppingListAtom = atom(mockShoppingList.map(enrichShoppinItem)); /
 /* -------------------------------------------------------------------------- */
 /*                                  Selector                                  */
 /* -------------------------------------------------------------------------- */
+
+/** 특정 식재료가 장보기목록에 포함되어있는지 검사 */
+export const findShoppingItem = atomFamily((key: string) => {
+  return atom((get) => {
+    const favorites = get(shoppingListAtom);
+    return favorites.find((item) => findTrackedItemWithKey(item, key));
+  });
+});
 
 /** 구매 완료된 아이템 목록 */
 export const purchasedItemsAtom = atom((get) =>

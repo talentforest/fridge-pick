@@ -1,14 +1,14 @@
 import { togglePurchasedAtom } from '@/atom/shoppingListAtom';
 import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
-import { storageObj } from '@/constants';
-import { StackNavProp } from '@/types/RootStackParamList';
 import { EnrichShoppingItem } from '@/types/shoppingList';
 import { createTrackedItemKey, getTrackedItemLabel } from '@/utils';
-import { useNavigation } from '@react-navigation/native';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Pressable, TouchableOpacity, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
+import NavigateToStorageBtn from '@/components/common/NavigateToStorageBtn';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavProp } from '@/types/RootStackParamList';
 
 interface ShoppingItemProps {
   shoppingItem: EnrichShoppingItem;
@@ -42,21 +42,14 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
       </View>
 
       {isInStorageShoppingItem && (
-        <TouchableOpacity
+        <NavigateToStorageBtn
           onPress={() =>
             navigation.navigate('StorageDetailScreen', {
               id: isInStorageShoppingItem.storage.type,
             })
           }
-          activeOpacity={0.7}
-          className="ml-2 flex-row items-center gap-x-1 rounded-full bg-blue-1 px-2 py-2"
-        >
-          <Text className="text-sm text-blue-7">
-            {storageObj[isInStorageShoppingItem.storage.type].label}에 있어요
-          </Text>
-
-          <Icon name="ExternalLink" size={14} color="blue" />
-        </TouchableOpacity>
+          storageType={isInStorageShoppingItem.storage.type}
+        />
       )}
     </Pressable>
   );

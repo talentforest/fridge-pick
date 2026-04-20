@@ -4,6 +4,19 @@ import { MealKey } from '@/types/meal';
 import { SelectableItem, TrackedItem } from '@/types/selectableItem';
 
 /** 실제 사용자 아이템을 찾을 수 있는 키 생성
+ * @param item: SelectableItem
+ * `${ingredientId}|${customLabel}|${mealId}`; 형식으로 반환
+ */
+export function createSelectableItemKey(item?: SelectableItem) {
+  if (!item) return `||`;
+  const ingredientId = item.type === 'ingredient' ? item.id : '';
+  const customLabel = item.type === 'custom' ? item.label : '';
+  const mealId = item.type === 'meal' ? item.id : '';
+
+  return `${ingredientId}|${customLabel}|${mealId}`;
+}
+
+/** 실제 사용자 아이템을 찾을 수 있는 키 생성
  * @param item: TrackedItem
  * `${ingredientId}|${customLabel}|${mealId}`; 형식으로 반환
  */

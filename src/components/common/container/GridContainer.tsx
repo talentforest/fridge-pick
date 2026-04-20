@@ -11,7 +11,7 @@ interface GridContainerProps {
 export default function GridContainer({
   children,
   columns = 2,
-  gap = 12,
+  gap = 10,
   className = '',
 }: GridContainerProps) {
   const [containerWidth, setContainerWidth] = useState<number>(0);

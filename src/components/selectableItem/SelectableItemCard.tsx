@@ -20,7 +20,7 @@ export default function SelectableItemCard({
 }: SelectableItemCardProps) {
   return (
     <Card
-      className={`items-center justify-center gap-y-1 rounded-2xl !p-2 !pt-1 ${className}`}
+      className={`items-center justify-center gap-y-1 rounded-2xl !p-4 !pt-2 ${className}`}
     >
       {/* 이미지 */}
       <ItemImage selectableItem={item} imageSize={imageSize} />

@@ -1,10 +1,22 @@
+import { initialCustomIngredient } from '@/constants/initialItem';
 import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
 import { SelectableItem } from '@/types/selectableItem';
+import { EnrichStorageItem } from '@/types/storage';
 import { findSelectableItemWithKey } from '@/utils';
 import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
 
-export const favoriteStorageItemListAtom = atom<SelectableItem[]>([]);
+export const favoriteItemListAtom = atom<SelectableItem[]>([]);
+
+export const favoriteIngredientAtom = atom((get) => {
+  const favoriteList = get(favoriteItemListAtom);
+  return favoriteList.filter((selectableItem) => selectableItem.type !== 'meal');
+});
+
+export const favoriteMealAtom = atom((get) => {
+  const favoriteList = get(favoriteItemListAtom);
+  return favoriteList.filter((selectableItem) => selectableItem.type === 'meal');
+});
 
 /* -------------------------------------------------------------------------- */
 /*                                  Selector                                  */
@@ -15,7 +27,7 @@ export const favoriteStorageItemListAtom = atom<SelectableItem[]>([]);
  */
 export const findFavoriteItemAtom = atomFamily((key: string) => {
   return atom((get) => {
-    const favorites = get(favoriteStorageItemListAtom);
+    const favorites = get(favoriteItemListAtom);
     return favorites.find((ingredient) => findSelectableItemWithKey(ingredient, key));
   });
 });
@@ -27,11 +39,39 @@ export const findFavoriteItemAtom = atomFamily((key: string) => {
 /** 자주먹는 아이템 리스트에 추가.
  * 자주먹는 식재료: 등록된 Ingredient, 커스텀 Ingredient 등록
  */
-export const addFavoriteItemAtom = atom(
+export const addFavoriteStorageItemAtom = atom(
+  null,
+  (get, set, newItem: EnrichStorageItem): AppError<EnrichStorageItem> | AppSuccess => {
+    const list = get(favoriteItemListAtom);
+
+    if (newItem.type === 'ingredient') {
+      set(favoriteItemListAtom, [...list, newItem.ingredient]);
+    }
+    if (newItem.type === 'meal') {
+      set(favoriteItemListAtom, [...list, newItem.meal]);
+    }
+    if (newItem.type === 'custom') {
+      const customIngredient = {
+        ...initialCustomIngredient,
+        label: newItem.customLabel,
+        defaultStorage: newItem.storage.type,
+        expirationDays: { [newItem.storage.type]: newItem.expiresAt },
+      };
+      set(favoriteItemListAtom, [...list, customIngredient]);
+    }
+    return { type: 'success', item: newItem };
+  },
+);
+
+/** 자주먹는 아이템 리스트에 추가.
+ * 자주먹는 식재료: 등록된 Ingredient, 커스텀 Ingredient 등록
+ */
+export const addFavoriteSelectableItemAtom = atom(
   null,
   (get, set, newItem: SelectableItem): AppError<SelectableItem> | AppSuccess => {
-    const list = get(favoriteStorageItemListAtom);
-    set(favoriteStorageItemListAtom, [...list, newItem]);
+    const list = get(favoriteItemListAtom);
+
+    set(favoriteItemListAtom, [...list, newItem]);
 
     return { type: 'success', item: newItem };
   },
@@ -41,10 +81,10 @@ export const addFavoriteItemAtom = atom(
  * 자주먹는 식재료: 등록된 Ingredient, 커스텀 Ingredient 등록
  */
 export const deleteFavoriteItemAtom = atom(null, (get, set, id: string) => {
-  const list = get(favoriteStorageItemListAtom);
+  const list = get(favoriteItemListAtom);
 
   set(
-    favoriteStorageItemListAtom,
+    favoriteItemListAtom,
     list.filter((x) => x.id !== id),
   );
 });

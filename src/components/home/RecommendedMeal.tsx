@@ -16,7 +16,7 @@ export default function RecommendedDish() {
         <CarouselContainer
           data={currMealList.slice(0, 4)}
           initialIndex={currMealList.slice(0, 4).length}
-          itemWidth={0.52}
+          itemWidth={0.5}
           hasNavigation
           centerFocus
           renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}

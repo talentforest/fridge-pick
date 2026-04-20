@@ -24,7 +24,7 @@ export default function SectionTitle({
 }: SectionTitleProps) {
   return (
     <View className={`flex-row items-center gap-x-1.5 pl-2 ${className}`}>
-      {icon && <Icon name={icon} size={18} strokeWidth="2.5" color={iconColor} />}
+      {icon && <Icon name={icon} size={20} strokeWidth="2.5" color={iconColor} />}
 
       {highlight ? (
         <TitleWithHighlight highlight={highlight} text={title} />

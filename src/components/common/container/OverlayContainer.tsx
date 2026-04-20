@@ -12,7 +12,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   sheetAtom,
   modalAtom,
-  closeSheetAtom,
   closeModalAtom,
   datePickerAtom,
   closeDatePickerAtom,
@@ -29,7 +28,6 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
   const modalProps = useAtomValue(modalAtom);
   const datePickerProps = useAtomValue(datePickerAtom);
 
-  const closeSheet = useSetAtom(closeSheetAtom);
   const closeModal = useSetAtom(closeModalAtom);
   const closeDatePicker = useSetAtom(closeDatePickerAtom);
 
@@ -46,7 +44,8 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (sheetProps) {
       sheetRef.current?.present();
-    } else {
+    }
+    if (sheetProps === null) {
       sheetRef.current?.dismiss();
     }
   }, [sheetProps]);
@@ -74,7 +73,9 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
           height: 10,
         }}
         snapPoints={sheetProps?.snapPoints}
-        onDismiss={closeSheet}
+        onDismiss={() => {
+          sheetRef.current?.dismiss();
+        }}
         backdropComponent={
           sheetProps?.hasDim
             ? (props) => (

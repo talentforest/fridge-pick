@@ -52,7 +52,7 @@ export default function SpaceGrid() {
       },
       {
         id: 'favorites',
-        label: '자주먹어요',
+        label: '나의 픽!',
         total: 0,
         recentlyUpdate: -2,
         hasNotAllFavorites: true,

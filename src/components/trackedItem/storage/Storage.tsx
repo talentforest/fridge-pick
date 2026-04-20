@@ -127,7 +127,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
               className="flex-1"
               contentContainerClassName="flex-1"
             >
-              <View className="flex-1 gap-y-3 ">
+              <View className="flex-1 gap-y-3">
                 {storageItemListByCategory.map(({ category, items }, index) => (
                   <View
                     key={category.id}

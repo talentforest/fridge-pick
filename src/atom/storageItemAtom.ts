@@ -125,6 +125,7 @@ interface Props {
   id: string;
   newData: Partial<EditableStorageItemData>;
 }
+
 /** 특정 아이템을 수정한다. */
 export const changeStorageItemAtom = atom(null, (get, set, { id, newData }: Props) => {
   if (!id || !newData) return;
@@ -132,14 +133,18 @@ export const changeStorageItemAtom = atom(null, (get, set, { id, newData }: Prop
   const list = get(allStorageItemListAtom);
 
   const changedList = list.map((item) => {
-    // eslint-disable-next-line unused-imports/no-unused-vars
-    const { customLabel, ...rest } = newData;
+    if (item.id === id) {
+      // eslint-disable-next-line unused-imports/no-unused-vars
+      const { customLabel, ...rest } = newData;
 
-    if (item.type !== 'custom') {
-      return { ...item, ...rest };
+      if (item.type !== 'custom') {
+        return { ...item, ...rest };
+      }
+
+      return { ...item, ...newData };
+    } else {
+      return item;
     }
-
-    return { ...item, ...newData };
   });
 
   set(allStorageItemListAtom, changedList);

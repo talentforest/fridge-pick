@@ -28,13 +28,13 @@ export default function FormDateInput({
     onItemChange({ expiresAt });
   };
 
-  const { openDatePicker } = useOverlay();
-
   const onChange = (_: any, selectedDate?: Date) => {
     if (selectedDate) {
       onChangeDate(selectedDate);
     }
   };
+
+  const { openDatePicker } = useOverlay();
 
   const onEditDatePickerPress = () => {
     openDatePicker({
