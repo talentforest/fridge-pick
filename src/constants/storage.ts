@@ -76,7 +76,7 @@ export const storageObj = {
     },
     order: 3,
     color: 'yellow',
-    icon: 'ThermometerSun',
+    icon: 'ShelvingUnit',
   },
 } as const;
 

@@ -15,7 +15,6 @@ import Card from '@/components/common/ui/Card';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavProp } from '@/types/RootStackParamList';
 import { StorageTypeId } from '@/types/storage';
-import FavoriteBtn from '@/components/common/FavoriteBtn';
 
 export default function FavoritesScreen() {
   const favoriteMealList = useAtomValue(favoriteMealAtom);
@@ -62,14 +61,9 @@ export default function FavoritesScreen() {
                   <SelectableItemCard
                     item={item}
                     isCompact
-                    className="pb-3sdsd h-32 !px-2"
-                    imageSize={55}
-                    textClassName="!text-[13px] line-clamp-1"
-                  />
-                  <FavoriteBtn
-                    selectableItem={item}
-                    className="absolute right-2 top-1.5"
-                    size={22}
+                    className="h-32 !px-2"
+                    imageSize={60}
+                    textClassName="text-md line-clamp-1"
                   />
                 </TouchableOpacity>
               ))}

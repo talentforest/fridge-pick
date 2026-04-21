@@ -1,9 +1,39 @@
 import { mealObj } from '@/constants';
-import { CategoryKey } from '@/types/category';
-import { MealFilterKey } from '@/types/filter';
 import { Ingredient } from '@/types/ingredient';
 import { StorageTypeId } from '@/types/storage';
 import { StockUnit, VolumeUnit, WeightUnit } from '@/types/unit';
+
+/** [반찬 | 메인요리 | 간편요리] 타입구분 */
+type MealType = 'main' | 'side' | 'instant';
+
+type MealCategory =
+  | 'rice' // 밥류
+  | 'noodle_dumpling' // 면/만두
+  | 'soup_stew' // 국/찌개/전골
+  | 'stir_fry' // 볶음
+  | 'grill' // 구이
+  | 'braise' // 조림
+  | 'steam' // 찜
+  | 'pan_fry' // 부침
+  | 'salad_namul' // 나물/샐러드
+  | 'side_dish'; // 밑반찬/김치
+
+type Difficulty = 'easy' | 'medium' | 'hard';
+
+/** 재료 구조 (추천엔진 핵심) */
+type IngredientStructure = {
+  /** 없으면 요리 성립 안됨 */
+  readonly essential: NonEmptyArray<Ingredient>;
+
+  /** 이 중 하나는 반드시 필요 */
+  readonly requiredOneOf?: readonly (readonly Ingredient[])[];
+
+  /** 보통 들어가는 재료 */
+  readonly common: readonly Ingredient[];
+
+  /** 있으면 좋은 재료 */
+  readonly optional: readonly Ingredient[];
+};
 
 /* -------------------------------------------------------------------------- */
 /*                                Meal Type                                   */
@@ -11,7 +41,7 @@ import { StockUnit, VolumeUnit, WeightUnit } from '@/types/unit';
 
 export type MealKey = keyof typeof mealObj;
 
-export type Meal = {
+export type BaseMeal = {
   type: 'meal';
 
   /** 활성 여부 (soft delete 용) */
@@ -24,34 +54,28 @@ export type Meal = {
   label: string;
 
   /** UI 분류 */
-  category: Extract<CategoryKey, 'meal'>;
-
-  /** [반찬 | 메인요리 | 간편요리] 타입구분 */
-  mealType?: 'side' | 'main' | 'instant';
+  category: 'meal';
 
   /** 조리시간 */
-  time: number;
+  cookTime: number; // minutes
 
-  filterList: readonly Exclude<MealFilterKey, 'all'>[];
+  /** 난이도 */
+  difficulty: Difficulty;
 
   /** 필요 식재료 */
-  ingredientList: readonly Ingredient[];
+  ingredientStructure: IngredientStructure;
 
   /** Image Route Name: 만약 타요리 동일 이미지인 경우 */
   imageName?: string;
 
   /** 기본 보관 위치 */
-  defaultStorage: readonly StorageTypeId;
+  defaultStorage: StorageTypeId;
 
   /** 소비기한 (일 단위) */
-  expirationDays: {
-    fridge?: number;
-    freezer?: number;
-    pantry?: number;
-  };
+  expirationDays: Partial<Record<StorageTypeId, number>>;
 
   /** 기본 표시 단위 */
-  defaultUnitLabel: readonly StockUnit;
+  defaultUnitLabel: StockUnit;
 
   /** 선택 가능한 단위 (없으면 default만 사용) */
   unitOptions?: readonly StockUnit[];
@@ -64,3 +88,16 @@ export type Meal = {
   /** 검색용 동의어 */
   synonyms?: readonly string[];
 };
+
+type InstantMeal = Omit<BaseMeal, 'ingredientStructure'> & {
+  mealType: 'instant';
+  mealCategory: null;
+  ingredientStructure?: IngredientStructure;
+};
+
+type CookedMeal = BaseMeal & {
+  mealType: 'main' | 'side';
+  mealCategory: MealCategory;
+};
+
+export type Meal = InstantMeal | CookedMeal;

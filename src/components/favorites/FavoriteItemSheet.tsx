@@ -1,12 +1,5 @@
 import { addShoppingItemAtom, findShoppingItem } from '@/atom/shoppingListAtom';
 import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
-import LabelContainer from '@/components/common/container/LabelContainer';
-import FavoriteBtn from '@/components/common/FavoriteBtn';
-import SquareBtn from '@/components/common/SquareBtn';
-import Card from '@/components/common/ui/Card';
-import Icon from '@/components/common/ui/Icon';
-import Text from '@/components/common/ui/Text';
-import SelectableItemImageLabel from '@/components/selectableItem/SelectableItemImageLabel';
 import { storageObj } from '@/constants';
 import { useErrorHandler } from '@/hooks/common/useErrorHandler';
 import { useOverlay } from '@/hooks/common/useOverlay';
@@ -15,8 +8,14 @@ import { ShoppingItem } from '@/types/shoppingList';
 import { StorageTypeId } from '@/types/storage';
 import { createSelectableItemKey } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useMemo } from 'react';
 import { View } from 'react-native';
+import LabelContainer from '@/components/common/container/LabelContainer';
+import FavoriteBtn from '@/components/common/FavoriteBtn';
+import SquareBtn from '@/components/common/SquareBtn';
+import Card from '@/components/common/ui/Card';
+import Icon from '@/components/common/ui/Icon';
+import Text from '@/components/common/ui/Text';
+import SelectableItemImageLabel from '@/components/selectableItem/SelectableItemImageLabel';
 
 interface FavoriteItemSheetProps {
   item: SelectableItem;
@@ -27,15 +26,9 @@ export default function FavoriteItemSheet({
   item,
   onNavigatePress,
 }: FavoriteItemSheetProps) {
-  const storage = storageObj[item.defaultStorage];
-
-  const { error, setError, clearError } = useErrorHandler<ShoppingItem>();
+  const { setError } = useErrorHandler<ShoppingItem>();
 
   const { closeSheet, alert } = useOverlay();
-
-  const otherStorageList = useMemo(() => {
-    return Object.values(storageObj).filter((item) => item.id !== storage.id);
-  }, [storage.id]);
 
   const key = createSelectableItemKey(item);
 
@@ -65,46 +58,21 @@ export default function FavoriteItemSheet({
     <View className="mb-8 mt-3">
       <Text className="text-xl">식재료 정보</Text>
 
-      <View className="mt-2 flex-row items-start justify-between px-2 py-2">
+      <View className="my-2 flex-row items-center justify-between px-2">
         <SelectableItemImageLabel item={item} imageSize={80} />
         <FavoriteBtn selectableItem={item} />
       </View>
 
       <LabelContainer label="보관함별 소비기한 정보">
-        <Card className="h-16 flex-row items-center justify-between">
-          <View className="flex-row items-center gap-x-2">
-            <View className="flex-row items-center">
-              <Icon name={storage.icon} size={16} color={storage.color} />
-              <Text className="text-base">{storage.label}</Text>
-            </View>
-
-            <View className="h-8 items-center justify-center rounded-lg bg-blue-7 p-2">
-              <Text className="text-sm text-blue-1">기본 보관위치</Text>
-            </View>
-          </View>
-
-          {item.expirationDays[storage.id] ? (
-            <View className="flex-row items-center gap-x-1">
-              <Text className="text-base text-neutral-5">약</Text>
-
-              <Text className="font-extrabold text-base">
-                {item.expirationDays[storage.id]}일
-              </Text>
-            </View>
-          ) : (
-            <Text className="text-base text-neutral-5">정보 없음</Text>
-          )}
-        </Card>
-
-        <View className="mt-1.5 flex-row gap-x-1.5">
-          {otherStorageList.map((storage) => (
+        <View className="flex-row gap-x-2">
+          {Object.values(storageObj).map((storage) => (
             <Card
               key={storage.id}
-              className="h-16 flex-1 flex-row items-center justify-between"
+              className={`h-[80px] flex-1 items-center justify-between gap-y-4 ${storage.id === item.defaultStorage ? '' : '!bg-neutral-3'}`}
             >
               <View className="flex-row items-center">
-                <Icon name={storage.icon} size={16} color={storage.color} />
-                <Text className="text-base">{storage.label}</Text>
+                <Icon name={storage.icon} size={15} color={storage.color} />
+                <Text className="text-[15px]">{storage.label}</Text>
               </View>
 
               {item.expirationDays[storage.id] ? (

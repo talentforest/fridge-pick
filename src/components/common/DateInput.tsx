@@ -24,7 +24,7 @@ export default function DateInput({
   className,
 }: DateInputProps) {
   const initialDate = new Date(date);
-  const remainingDays = getRemainingDays(initialDate);
+  const remainingDays = getRemainingDays(date);
   const expirationStatus = getExpirationStatus(+remainingDays);
 
   return (

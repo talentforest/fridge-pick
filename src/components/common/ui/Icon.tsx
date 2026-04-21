@@ -1,5 +1,8 @@
 import { colorTokens } from '@/theme/color';
 import {
+  BadgeAlert,
+  Box,
+  ShelvingUnit,
   EggFried,
   Amphora,
   ExternalLink,
@@ -74,6 +77,7 @@ import {
 import { TouchableOpacity, useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'BadgeAlert'
   | 'EggFried'
   | 'Amphora'
   | 'ExternalLink'
@@ -89,6 +93,7 @@ export type IconName =
   | 'HandPlatter'
   | 'Clock'
   | 'ShoppingBag'
+  | 'Box'
   | 'ChefHat'
   | 'SquareCheck'
   | 'RefreshCcw'
@@ -98,6 +103,7 @@ export type IconName =
   | 'Circle'
   | 'Plus'
   | 'Trash2'
+  | 'ShelvingUnit'
   | 'Info'
   | 'PlusSquare'
   | 'SquircleDashed'
@@ -114,6 +120,7 @@ export type IconName =
   | 'Edit3'
   | 'Timer'
   | 'RotateCcw'
+  | 'Box'
   | 'ClockAlert'
   | 'CalendarClock'
   | 'SquareSlash'
@@ -194,12 +201,15 @@ export default function Icon({
   };
 
   const iconObj: { [key in IconName | CategoryIconName]: LucideIcon } = {
+    BadgeAlert,
     EggFried,
     Amphora,
+    Box,
     ExternalLink,
     SquircleDashed,
     House,
     Timer,
+    ShelvingUnit,
     SunMoon,
     X,
     Hourglass,

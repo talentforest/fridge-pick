@@ -83,7 +83,10 @@ export default function StorageDetailScreen() {
 
         {/* 나의 공간 */}
         <View className="gap-y-1">
-          <SectionTitle title={`나의 ${storageLabel} 식재료`} icon="Refrigerator">
+          <SectionTitle
+            title={`나의 ${storageLabel} 식재료`}
+            icon={storageLabel === '실온보관' ? 'ShelvingUnit' : 'Refrigerator'}
+          >
             <View className="flex-row items-center">
               <Icon
                 name="Search"

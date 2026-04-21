@@ -16,10 +16,13 @@ export function getExpirationDate(
   return formatStr ? format(result, formatStr) : result;
 }
 
-export function getRemainingDays(expirationDate: Date) {
+export function getRemainingDays(expirationDate: Date | string) {
   const today = new Date();
 
-  const diff = new Date(expirationDate).getTime() - today.getTime();
+  const date =
+    typeof expirationDate === 'string' ? new Date(expirationDate) : expirationDate;
+
+  const diff = date.getTime() - today.getTime();
 
   const result = Math.ceil(diff / (1000 * 60 * 60 * 24));
 

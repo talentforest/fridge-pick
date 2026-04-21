@@ -2,6 +2,7 @@ import FilterTag from '@/components/common/FilterTag';
 import Card from '@/components/common/ui/Card';
 import { IconName } from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
+import { allFilterObj } from '@/constants';
 import { FilterColor } from '@/types/filter';
 
 import { ReactNode, useState } from 'react';
@@ -39,20 +40,16 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
   return (
     <View>
       <View className="mb-4 flex-row flex-wrap gap-2">
-        {filterList.map(({ name, label, color, icon }) => (
+        {[allFilterObj, ...filterList].map(({ name, label, color }) => (
           <FilterTag
             key={String(name)}
-            icon={icon}
             name={label}
             color={color}
             isActive={activeFilter === name}
             onPress={() => setActiveFilter(name)}
-            className={icon ? 'pl-3' : ''}
           />
         ))}
       </View>
-
-      <Text className="px-2 py-3 pb-4 text-base text-blue-5">추천 메뉴 목록</Text>
 
       {filteredDataList.length > 0 ? (
         <View className="flex-row flex-wrap justify-between gap-5">

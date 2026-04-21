@@ -18,8 +18,8 @@ export default function Indicator({ type, value }: TimeIndicatorProps) {
       )}
       {type === 'total' && (
         <>
-          <Icon name="EggFried" size={16} color="yellow" />
-          <Text className="text-[15px] text-yellow-7">식재료 {value}개</Text>
+          <Icon name="EggFried" size={16} color="green" />
+          <Text className="text-[15px] text-green-7">필수 식재료 {value}개</Text>
         </>
       )}
     </View>

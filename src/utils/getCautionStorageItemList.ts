@@ -9,7 +9,7 @@ export const getCautionStorageItemList = (
 ): CautionStorageItem[] => {
   return storageItemList
     .map((item) => {
-      const remainingDays = getRemainingDays(new Date(item.expiresAt));
+      const remainingDays = getRemainingDays(item.expiresAt);
 
       if (item.type === 'ingredient') {
         const ingredient = findIngredient(item.ingredientId)!;

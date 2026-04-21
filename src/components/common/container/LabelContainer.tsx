@@ -9,7 +9,7 @@ interface LabelContainerProps {
 
 export default function LabelContainer({ children, label }: LabelContainerProps) {
   return (
-    <View>
+    <View className="w-full">
       {/* 라벨 */}
       {label && <Text className="mb-2 pl-1.5 text-yellow-7">{label}</Text>}
 

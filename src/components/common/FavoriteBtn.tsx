@@ -21,7 +21,7 @@ export default function FavoriteBtn({
   storageItem,
   selectableItem,
   className,
-  size = 25,
+  size = 24,
 }: FavoriteBtnProps) {
   const addFavoriteStorageItem = useSetAtom(addFavoriteStorageItemAtom);
   const addFavoriteSelectableItem = useSetAtom(addFavoriteSelectableItemAtom);

@@ -12,6 +12,7 @@ interface FilterProps {
   isActive?: boolean;
   textClassName?: string;
   className?: string;
+  iconSize?: number;
 }
 
 export default function FilterTag({
@@ -22,6 +23,7 @@ export default function FilterTag({
   onPress,
   textClassName,
   className = '',
+  iconSize = 15,
 }: FilterProps) {
   const bgColor = {
     green: '!bg-green-1',
@@ -56,12 +58,14 @@ export default function FilterTag({
       activeOpacity={0.7}
       className={`${commonClassName} flex-row items-center gap-x-0.5 ${currBgColor} ${className}`}
     >
-      {icon && <Icon name={icon} size={15} color={isActive ? color : 'inactive'} />}
+      {icon && <Icon name={icon} size={iconSize} color={isActive ? color : 'inactive'} />}
       <Text className={`${currTextColor} ${textClassName}`}>{name}</Text>
     </TouchableOpacity>
   ) : (
-    <View className={`${commonClassName} ${bgColor[color as FilterColor]} ${className}`}>
-      {icon && <Icon name={icon} />}
+    <View
+      className={`${commonClassName} flex-row items-center gap-x-0.5 ${currBgColor} ${className}`}
+    >
+      {icon && <Icon name={icon} size={iconSize} color={isActive ? color : 'inactive'} />}
       <Text className={`${textColorObj[color]} ${textClassName}`}>{name}</Text>
     </View>
   );

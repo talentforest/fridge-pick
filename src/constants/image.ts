@@ -159,6 +159,7 @@ export const categoryImagesObj: {
 
   seafood: {
     abalone: require('../../assets/images/ingredients/seafood/abalone.png'),
+    anglerfish: require('../../assets/images/ingredients/seafood/anglerfish.png'),
     clam: require('../../assets/images/ingredients/seafood/clam.png'),
     cockle: require('../../assets/images/ingredients/seafood/cockle.png'),
     cod: require('../../assets/images/ingredients/seafood/cod.png'),

@@ -10,7 +10,7 @@ interface StorageItemProps {
 }
 
 export default function StorageItem({ storageItem, className = '' }: StorageItemProps) {
-  const remainingDays = getRemainingDays(new Date(storageItem.expiresAt));
+  const remainingDays = getRemainingDays(storageItem.expiresAt);
 
   const status = getExpirationStatus(remainingDays);
 
