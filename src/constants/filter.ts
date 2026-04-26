@@ -28,5 +28,19 @@ export const filterObj = {
       color: 'green',
       icon: 'SquircleDashed' as const,
     },
+    fastest: {
+      id: 5,
+      name: 'fastest',
+      label: '빠르게 완성',
+      color: 'green',
+      icon: 'Zap' as const,
+    },
+    hasAll: {
+      id: 6,
+      name: 'hasAll',
+      label: '모든 재료 있음',
+      color: 'red',
+      icon: 'ShoppingBag' as const,
+    },
   },
 } as const;

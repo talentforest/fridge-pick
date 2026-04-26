@@ -20,12 +20,4 @@ export const mockShoppingList: (ShoppingItem & DocMeta)[] = [
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
   },
-  {
-    type: 'meal',
-    id: nanoid(),
-    mealId: 'abalone_porridge',
-    isPurchased: false,
-    createdAt: Timestamp.now(),
-    updatedAt: Timestamp.now(),
-  },
 ];

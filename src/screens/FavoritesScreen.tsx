@@ -2,7 +2,7 @@ import { favoriteIngredientAtom, favoriteMealAtom } from '@/atom/favoritesAtom';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import { useAtomValue } from 'jotai';
 import { TouchableOpacity, View } from 'react-native';
-import { SelectableItem } from '@/types/selectableItem';
+import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import GridContainer from '@/components/common/container/GridContainer';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
@@ -43,7 +43,7 @@ export default function FavoritesScreen() {
 
   return (
     <SafeAreaViewContainer edges={['top', 'bottom']}>
-      <ScreenHeader title="자주먹는 식재료와 요리" />
+      <ScreenHeader title="자주먹는 식재료와 메뉴" />
 
       <ScrollViewContainer contentContainerClassName="pt-5">
         <View className="gap-y-3">
@@ -96,7 +96,7 @@ export default function FavoritesScreen() {
             </GridContainer>
           ) : (
             <Card className="h-32 items-center justify-center">
-              <Text className="text-inactive-text">좋아하는 요리가 아직 없어요</Text>
+              <Text className="text-inactive-text">좋아하는 메뉴가 아직 없어요</Text>
             </Card>
           )}
         </View>

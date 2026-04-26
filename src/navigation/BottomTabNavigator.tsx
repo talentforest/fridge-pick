@@ -60,8 +60,8 @@ export default function BottomTabNavigator() {
         component={MealScreen}
         options={{
           headerShown: false,
-          tabBarLabel: '요리',
-          tabBarIcon: ({ focused }) => TabIcon({ name: '요리', focused }),
+          tabBarLabel: '식사',
+          tabBarIcon: ({ focused }) => TabIcon({ name: '식사', focused }),
         }}
       />
     </Tab.Navigator>
@@ -72,14 +72,14 @@ function TabIcon({
   name,
   focused,
 }: {
-  name: '홈' | '식재료관리' | '장보기목록' | '요리';
+  name: '홈' | '식재료관리' | '장보기목록' | '식사';
   focused: boolean;
 }) {
   const tabIconList = {
     홈: 'House' as const,
     식재료관리: 'Grid2X2Plus' as const,
     장보기목록: 'ShoppingBasket' as const,
-    요리: 'ChefHat' as const,
+    식사: 'HandPlatter' as const,
   };
 
   return (

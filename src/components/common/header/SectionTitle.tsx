@@ -1,4 +1,4 @@
-import Icon, { IconColor, IconName } from '@/components/common/ui/Icon';
+import Icon, { IconName } from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import { ReactNode, useMemo } from 'react';
 import { View } from 'react-native';
@@ -8,7 +8,7 @@ interface SectionTitleProps {
   className?: string;
   textClassName?: string;
   icon?: IconName;
-  iconColor?: IconColor;
+  color?: 'yellow' | 'red';
   children?: ReactNode;
   highlight?: string;
 }
@@ -16,20 +16,25 @@ interface SectionTitleProps {
 export default function SectionTitle({
   title,
   icon,
-  iconColor = 'yellow',
+  color = 'yellow',
   className = '',
   textClassName = '',
   children,
   highlight,
 }: SectionTitleProps) {
+  const colorObj = {
+    yellow: 'text-yellow-7',
+    red: 'text-red-5',
+  };
+
   return (
     <View className={`flex-row items-center gap-x-1.5 pl-2 ${className}`}>
-      {icon && <Icon name={icon} size={20} strokeWidth="2.5" color={iconColor} />}
+      {icon && <Icon name={icon} size={20} strokeWidth="2.5" color={color} />}
 
       {highlight ? (
         <TitleWithHighlight highlight={highlight} text={title} />
       ) : (
-        <Text className={`mr-auto font-bold text-lg text-yellow-7 ${textClassName}`}>
+        <Text className={`mr-auto font-bold text-lg ${colorObj[color]} ${textClassName}`}>
           {title}
         </Text>
       )}

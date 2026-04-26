@@ -1,5 +1,5 @@
 import {
-  expiredItemListByStorageAtom,
+  cautionStorageItemListAtom,
   itemListByStorageAtom,
 } from '@/atom/storageItemAtom';
 import { image_fridge } from '@/constants';
@@ -18,7 +18,7 @@ export default function SpaceGrid() {
   const fridgeItemList = useAtomValue(itemListByStorageAtom('fridge'));
   const pantryItemList = useAtomValue(itemListByStorageAtom('pantry'));
 
-  const expiredStorageItemList = useAtomValue(expiredItemListByStorageAtom);
+  const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom('caution'));
 
   const hasExpiredItem = (storageType: StorageTypeId): boolean => {
     return expiredStorageItemList.some(
@@ -66,7 +66,7 @@ export default function SpaceGrid() {
       <View className="flex-row gap-x-3">
         {/* 나의 냉장고 */}
         <Card className="h-[190px] w-[38%] gap-y-[10px] !py-5">
-          <Text className=" text-neutral-700">나의 냉장고</Text>
+          <Text>나의 냉장고</Text>
           <View className="w-full flex-1 items-center justify-center p-3">
             {expiredStorageItemList.length > 0 && (
               <View className="ml-12 size-2.5 rounded-xl bg-red-500" />

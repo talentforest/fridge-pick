@@ -5,7 +5,7 @@ import {
   findFavoriteItemAtom,
 } from '@/atom/favoritesAtom';
 import Icon from '@/components/common/ui/Icon';
-import { SelectableItem } from '@/types/selectableItem';
+import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import { EnrichStorageItem } from '@/types/storage';
 import { createSelectableItemKey, createTrackedItemKey } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';

@@ -1,3 +1,4 @@
+import GridContainer from '@/components/common/container/GridContainer';
 import FilterTag from '@/components/common/FilterTag';
 import Card from '@/components/common/ui/Card';
 import { IconName } from '@/components/common/ui/Icon';
@@ -23,12 +24,16 @@ interface FilterContainerProps<T extends HasFilter<K>, K> {
   filterList: FilterItem<K>[];
   dataList: T[];
   children: (data: T) => ReactNode;
+  columns?: number;
+  listTitle?: string;
 }
 
 export default function FilterContainer<T extends HasFilter<K>, K>({
   filterList,
   dataList,
   children,
+  columns,
+  listTitle,
 }: FilterContainerProps<T, K>) {
   const [activeFilter, setActiveFilter] = useState<K | 'all'>('all');
 
@@ -52,12 +57,21 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
       </View>
 
       {filteredDataList.length > 0 ? (
-        <View className="flex-row flex-wrap justify-between gap-5">
-          {filteredDataList.map(children)}
+        <View className="flex-row flex-wrap justify-between gap-3">
+          {listTitle && (
+            <Text className="pl-1 text-base text-neutral-7">{listTitle}</Text>
+          )}
+          {columns ? (
+            <GridContainer columns={columns}>
+              {filteredDataList.map(children)}
+            </GridContainer>
+          ) : (
+            filteredDataList.map(children)
+          )}
         </View>
       ) : (
         <Card className="h-80 items-center justify-center border">
-          <Text className="text-inactive-text">추천 메뉴가 없어요</Text>
+          <Text className="text-inactive-text">식사메뉴가 없어요</Text>
         </Card>
       )}
     </View>

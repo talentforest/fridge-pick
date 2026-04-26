@@ -12,7 +12,7 @@ import {
   shrinkSheetAtom,
 } from '@/atom/overlayAtom';
 
-export function useOverlay() {
+export const useOverlay = () => {
   const openSheet = useSetAtom(openSheetAtom);
   const closeSheet = useSetAtom(closeSheetAtom);
 
@@ -44,4 +44,4 @@ export function useOverlay() {
     alert,
     confirm,
   };
-}
+};

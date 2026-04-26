@@ -9,7 +9,7 @@ export default function TodayMeal() {
     <Card className="round justify-between gap-y-2 !p-6">
       <View className="flex-row items-center gap-x-1">
         <Icon name="UtensilsCrossed" size={18} />
-        <Text className="text-base">오늘의 선택 메뉴</Text>
+        <Text className="text-base">오늘의 식사</Text>
       </View>
 
       <View className="mb-2 mt-6 items-center gap-y-4">

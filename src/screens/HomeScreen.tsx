@@ -1,6 +1,7 @@
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
-import ExpiringIngredients from '@/components/home/ExpiringIngredients';
+import SectionTitle from '@/components/common/header/SectionTitle';
+import CautionIngredientList from '@/components/home/CautionIngredientList';
 import HomeHeader from '@/components/home/HomeHeader';
 import RecommendedMeal from '@/components/home/RecommendedMeal';
 import SpaceGrid from '@/components/home/SpaceGrid';
@@ -16,8 +17,9 @@ export default function HomeScreen() {
           <SpaceGrid />
         </View>
 
-        <View>
-          <ExpiringIngredients />
+        <View className="gap-y-3">
+          <SectionTitle title="지금 주의해야하는 식재료" icon="ClockAlert" />
+          <CautionIngredientList />
         </View>
 
         <View>

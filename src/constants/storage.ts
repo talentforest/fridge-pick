@@ -86,7 +86,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '1',
     ingredientId: 'egg',
     purchasedAt: '2026-03-01',
-    expiresAt: '2026-05-21',
+    expiresAt: '2026-04-25',
     storage: { type: 'fridge', side: 'inner', section: '1' },
     memo: '유정란',
   },
@@ -116,6 +116,14 @@ export const mockStorageItemList: StorageItem[] = [
   },
   {
     type: 'ingredient',
+    id: '4',
+    ingredientId: 'potato',
+    purchasedAt: '2026-03-01',
+    expiresAt: '2026-04-26',
+    storage: { type: 'fridge', side: 'inner', section: '1' },
+  },
+  {
+    type: 'ingredient',
     id: '5',
     ingredientId: 'korean_zucchini',
     purchasedAt: '2026-03-02',
@@ -139,21 +147,20 @@ export const mockStorageItemList: StorageItem[] = [
     expiresAt: '2026-08-21',
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
-
-  {
-    type: 'custom',
-    id: '11',
-    purchasedAt: '2026-02-10',
-    expiresAt: '2026-04-10',
-    storage: { type: 'freezer', side: 'inner', section: '1' },
-    customLabel: '코스트코 냉동삼겹살',
-  },
   {
     type: 'ingredient',
     id: '12',
     ingredientId: 'chicken_breast',
     purchasedAt: '2026-02-25',
     expiresAt: '2026-08-10',
+    storage: { type: 'freezer', side: 'inner', section: '1' },
+  },
+  {
+    type: 'ingredient',
+    id: '12',
+    ingredientId: 'chicken_leg',
+    purchasedAt: '2026-02-25',
+    expiresAt: '2026-04-27',
     storage: { type: 'freezer', side: 'inner', section: '1' },
   },
   {

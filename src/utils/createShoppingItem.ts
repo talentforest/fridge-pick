@@ -1,5 +1,5 @@
 import { allIngredientList, allMealList } from '@/constants';
-import { SelectableItem } from '@/types/selectableItem';
+import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import { EnrichShoppingItem, ShoppingItem } from '@/types/shoppingList';
 import { nanoid } from 'nanoid/non-secure';
 

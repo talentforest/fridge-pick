@@ -1,4 +1,5 @@
 import { DEFAULT_EXPIRATION_DAYS } from '@/constants';
+import { ExpirationStatus } from '@/types/storage';
 import { formatDateString } from '@/utils/formatDate';
 import { addDays, format } from 'date-fns';
 
@@ -6,7 +7,7 @@ export function calculateExpiresAt(purchasedAt: Date, expirationDays: number) {
   return formatDateString(addDays(purchasedAt, expirationDays), 'yyyy-MM-dd');
 }
 
-/** "오늘부터" 소비일수를 통해 소비기한 날짜를 구하는 함수  */
+/** "오늘부터" 소비일수를 통해 "소비기한 날짜"를 구하는 함수  */
 export function getExpirationDate(
   expirationDays?: number,
   formatStr?: 'yy.MM.dd',
@@ -29,12 +30,13 @@ export function getRemainingDays(expirationDate: Date | string) {
   return result;
 }
 
-export function getExpirationStatus(days: number) {
+/** 소비기한 기준은 이 함수로 통일 */
+export function getExpirationStatus(days: number): ExpirationStatus {
   if (Number.isNaN(days)) return 'unknown';
 
-  if (days === 0) return 'today';
   if (days < 0) return 'expired';
-  if (days <= 3) return 'warning';
+
+  if (days >= 0 && days <= 3) return 'expiredSoon';
 
   return 'safe';
 }

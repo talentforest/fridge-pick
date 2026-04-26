@@ -3,6 +3,8 @@ import { Ingredient, IngredientKey } from '@/types/ingredient';
 import { Meal, MealKey } from '@/types/meal';
 import { Timestamp } from 'firebase/firestore';
 
+export type ExpirationStatus = 'safe' | 'expired' | 'expiredSoon' | 'unknown';
+
 export type Storage = typeof storageObj;
 export type StorageTypeId = keyof Storage;
 export type StorageTypeLabel = Storage[StorageTypeId]['label'];

@@ -3,7 +3,7 @@ import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
 import { storageObj } from '@/constants';
 import { useErrorHandler } from '@/hooks/common/useErrorHandler';
 import { useOverlay } from '@/hooks/common/useOverlay';
-import { SelectableItem } from '@/types/selectableItem';
+import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import { ShoppingItem } from '@/types/shoppingList';
 import { StorageTypeId } from '@/types/storage';
 import { createSelectableItemKey } from '@/utils';

@@ -1,5 +1,5 @@
 import { allIngredientList, allMealList } from '@/constants';
-import { SelectableItem } from '@/types/selectableItem';
+import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import { EnrichStorageItem, StorageItem } from '@/types/storage';
 import { findIngredient, findMeal } from '@/utils/findItem';
 
@@ -72,7 +72,7 @@ export function searchIngredientAndMeal(
     .map((item) => {
       let score = 0;
 
-      const id = normalize(item.id);
+      const id = normalize(item.id as string);
       const label = normalize(item.label);
       const chosung = getChosung(item.label);
 

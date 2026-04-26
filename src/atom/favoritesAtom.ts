@@ -1,6 +1,6 @@
 import { initialCustomIngredient } from '@/constants/initialItem';
 import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
-import { SelectableItem } from '@/types/selectableItem';
+import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import { EnrichStorageItem } from '@/types/storage';
 import { findSelectableItemWithKey } from '@/utils';
 import { atom } from 'jotai';

@@ -1,5 +1,5 @@
 import { changeStorageItemAtom, deleteStorageItemListAtom } from '@/atom/storageItemAtom';
-import { currMealList, storageObj } from '@/constants';
+import { allMealList, storageObj } from '@/constants';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import { useSetAtom } from 'jotai';
 import { getTrackedItemLabel } from '@/utils';
@@ -11,10 +11,10 @@ import SquareBtn from '@/components/common/SquareBtn';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import FormDateInput from '@/components/common/form/FormDateInput';
-import FullBleedSection from '@/components/common/container/FullBleedSection';
 import StorageModal from '@/components/trackedItem/storage/StorageModal';
 import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 import FavoriteBtn from '@/components/common/FavoriteBtn';
+import FullBleedSection from '@/components/common/container/FullBleedSection';
 
 interface StorageItemSheetProps {
   storageItem: EnrichStorageItem;
@@ -144,17 +144,17 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
       <View className="mb-2 mt-8 flex-row items-center gap-x-2">
         <SectionTitle
           icon="HandPlatter"
-          iconColor="yellow"
+          color="yellow"
           className="items-center !pl-0"
           highlight={getTrackedItemLabel(storageItem).label}
-          title={`${getTrackedItemLabel(storageItem).label} 활용 요리`}
+          title={`${getTrackedItemLabel(storageItem).label} 활용 메뉴`}
         />
       </View>
 
       <FullBleedSection>
         <CarouselContainer
-          data={currMealList.slice(0, 6)}
-          initialIndex={currMealList.slice(0, 6).length}
+          data={allMealList.slice(0, 6)}
+          initialIndex={allMealList.slice(0, 6).length}
           itemWidth={0.48}
           hasNavigation
           keyExtractor={(_, index) => `${index}`}

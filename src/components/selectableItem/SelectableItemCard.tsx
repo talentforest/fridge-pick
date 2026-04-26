@@ -1,6 +1,6 @@
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
-import { SelectableItem } from '@/types/selectableItem';
+import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import ItemImage from '@/components/common/ItemImage';
 import { createSelectableItemKey } from '@/utils';
 import { useAtomValue } from 'jotai';

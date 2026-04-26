@@ -1,7 +1,7 @@
 import { allIngredientList, allMealList } from '@/constants';
 import { IngredientKey } from '@/types/ingredient';
 import { MealKey } from '@/types/meal';
-import { SelectableItem, TrackedItem } from '@/types/selectableItem';
+import { SelectableItem, TrackedItem } from '@/types/selectableItemAndTrackedItem';
 
 /** 실제 사용자 아이템을 찾을 수 있는 키 생성
  * @param item: SelectableItem

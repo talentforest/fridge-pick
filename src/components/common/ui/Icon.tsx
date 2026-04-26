@@ -9,6 +9,7 @@ import {
   House,
   SunMoon,
   Apple,
+  Zap,
   ArrowDown,
   Siren,
   ArrowLeft,
@@ -80,6 +81,7 @@ export type IconName =
   | 'BadgeAlert'
   | 'EggFried'
   | 'Amphora'
+  | 'Zap'
   | 'ExternalLink'
   | 'ShoppingBasket'
   | 'House'
@@ -153,6 +155,7 @@ export type CategoryIconName =
   | 'Pizza'
   | 'LineSquiggle'
   | 'Database'
+  | 'Zap'
   | 'Milk';
 
 export type IconColor =
@@ -196,12 +199,13 @@ export default function Icon({
     gray: scheme.inactive.bg,
     green: scheme.green[7],
     ice: scheme.ice[5],
-    indigo: '#784ef8',
+    indigo: scheme.indigo[5],
     inactive: scheme.inactive.text,
   };
 
   const iconObj: { [key in IconName | CategoryIconName]: LucideIcon } = {
     BadgeAlert,
+    Zap,
     EggFried,
     Amphora,
     Box,

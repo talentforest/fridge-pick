@@ -1,11 +1,13 @@
+import GridContainer from '@/components/common/container/GridContainer';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
-import { useMemo, useRef, useState } from 'react';
+import { ReactNode, useMemo, useRef, useState } from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 
 type RenderItemWithIndex<T> = (args: {
   item: T;
-  index: number;
-  isCurrIndex: boolean;
+  index?: number;
+  isCurrIndex?: boolean;
+  onPress?: () => void;
 }) => React.ReactElement;
 
 interface CarouselContainerProps<T> {
@@ -17,6 +19,9 @@ interface CarouselContainerProps<T> {
   hasNavigation?: boolean;
   centerFocus?: boolean;
   spacing?: number;
+  hasPagination?: boolean;
+  requiredMinimum?: number;
+  children?: (focusedItem: T) => ReactNode;
 }
 
 export default function CarouselContainer<T>({
@@ -27,17 +32,22 @@ export default function CarouselContainer<T>({
   keyExtractor,
   hasNavigation,
   centerFocus,
+  requiredMinimum = 2,
   spacing = 8,
+  hasPagination,
+  children,
 }: CarouselContainerProps<T>) {
   const listRef = useRef<FlatList<T>>(null);
 
   const [isScrolling, setIsScrolling] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex); // 무제한 데이터라서 앞뒤로 배열을 복제해놔서
   const [containerWidth, setContainerWidth] = useState(0);
 
   /** 실제 carousel width 기준으로 카드 계산 */
   const CARD_WIDTH = containerWidth * itemWidth + spacing;
   const ITEM_SIZE = useMemo(() => CARD_WIDTH + spacing, [CARD_WIDTH, spacing]);
+
+  const focusedItem = data[currentIndex - data.length];
 
   /** navigation 버튼 */
   const handleDirection = (direction: 'prev' | 'next') => {
@@ -92,21 +102,19 @@ export default function CarouselContainer<T>({
     return <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)} />;
   }
 
-  return (
+  return data.length > requiredMinimum ? (
     <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}>
       <View>
         <FlatList
           ref={listRef}
           data={flatListData}
           horizontal
-          snapToInterval={ITEM_SIZE}
-          decelerationRate="fast"
           showsHorizontalScrollIndicator={false}
           nestedScrollEnabled
           initialScrollIndex={initialIndex}
           ItemSeparatorComponent={() => <View style={{ width: spacing }} />}
           contentContainerStyle={{
-            paddingHorizontal: (containerWidth - CARD_WIDTH) / 2,
+            paddingHorizontal: centerFocus ? (containerWidth - CARD_WIDTH) / 2 : 0,
           }}
           getItemLayout={(_, index) => ({
             length: ITEM_SIZE,
@@ -124,31 +132,65 @@ export default function CarouselContainer<T>({
 
             return (
               <View style={{ width: CARD_WIDTH }}>
-                <View className={`rounded-2xl ${centerFocus && !isActive ? '' : ''}`}>
+                <View className={`rounded-2xl`}>
                   {renderItem({ item, isCurrIndex: isActive, index })}
                 </View>
               </View>
             );
           }}
           keyExtractor={keyExtractor}
+          snapToInterval={centerFocus ? ITEM_SIZE : undefined}
+          decelerationRate={centerFocus ? 'fast' : 'normal'}
         />
-
+        {/* Navigation Button */}
         {hasNavigation && (
           <>
-            <HandleBtn direction="prev" onPress={() => handleDirection('prev')} />
+            {centerFocus && (
+              <HandleBtn direction="prev" onPress={() => handleDirection('prev')} />
+            )}
             <HandleBtn direction="next" onPress={() => handleDirection('next')} />
           </>
         )}
       </View>
 
-      <View className="mx-auto mt-4 flex-row gap-x-2.5">
-        {data.map((_, index) => (
-          <View
-            key={index}
-            className={`aspect-square h-2.5 rounded-full ${currentIndex - initialIndex === index ? 'bg-blue-5' : 'bg-inactive-bg'}`}
-          />
-        ))}
+      {/* Pagination Dot */}
+      {hasPagination && (
+        <View className="mx-auto mt-4 flex-row gap-x-2.5">
+          {data.map((_, index) => (
+            <View
+              key={index}
+              className={`aspect-square h-2.5 rounded-full ${currentIndex - initialIndex === index ? 'bg-blue-5' : 'bg-inactive-bg'}`}
+            />
+          ))}
+        </View>
+      )}
+
+      {children && focusedItem ? (
+        <View className="pt-5">{children(focusedItem)}</View>
+      ) : (
+        <></>
+      )}
+    </View>
+  ) : (
+    <View>
+      <View className="px-6">
+        <GridContainer columns={requiredMinimum}>
+          {data.map((item, index) => {
+            const isCurrIndex = currentIndex - data.length === index;
+            return renderItem({
+              item,
+              isCurrIndex,
+              onPress: () => setCurrentIndex(index + data.length),
+            });
+          })}
+        </GridContainer>
       </View>
+
+      {children && focusedItem ? (
+        <View className="w-full pt-5">{children(focusedItem)}</View>
+      ) : (
+        <></>
+      )}
     </View>
   );
 }

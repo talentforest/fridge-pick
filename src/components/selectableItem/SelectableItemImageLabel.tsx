@@ -1,6 +1,6 @@
 import { categoryObj } from '@/constants';
 import { View } from 'react-native';
-import { SelectableItem } from '@/types/selectableItem';
+import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import Text from '@/components/common/ui/Text';
 import ItemImage from '@/components/common/ItemImage';
 

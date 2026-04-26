@@ -1,6 +1,6 @@
 import IngredientImage from '@/components/selectableItem/ingredient/IngredientImage';
 import MealImage from '@/components/selectableItem/meal/MealImage';
-import { SelectableItem } from '@/types/selectableItem';
+import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import { EnrichShoppingItem } from '@/types/shoppingList';
 import { EnrichStorageItem } from '@/types/storage';
 
