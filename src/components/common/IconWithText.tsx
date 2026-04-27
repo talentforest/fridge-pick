@@ -1,6 +1,7 @@
 import Icon, { IconColor, IconName } from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import { TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import { TouchableOpacityProps, View } from 'react-native';
 
 interface IconWithTextProps {
   icon: IconName;
@@ -20,7 +21,6 @@ export default function IconWithText({
 }: IconWithTextProps & TouchableOpacityProps) {
   return props.onPress ? (
     <TouchableOpacity
-      activeOpacity={0.8}
       {...props}
       className={`flex-row items-center gap-x-1 ${props.className}`}
     >

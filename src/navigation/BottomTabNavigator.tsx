@@ -1,10 +1,10 @@
-import MealScreen from '@/screens/MealScreen';
+import MealScreen from '@/screens/meal/MealScreen';
 import HomeScreen from '@/screens/HomeScreen';
 import ShoppingListScreen from '@/screens/shoppingList/ShoppingListScreen';
 import StorageScreen from '@/screens/storage/StorageScreen';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Appearance, View, TouchableOpacity } from 'react-native';
+import { Appearance, View } from 'react-native';
 
 import type {
   BottomTabBarProps,
@@ -13,6 +13,7 @@ import type {
 import Icon from '@/components/common/ui/Icon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Text from '@/components/common/ui/Text';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 const Tab = createBottomTabNavigator();
 
@@ -120,7 +121,6 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
           <TouchableOpacity
             key={route.key}
             onPress={onPress}
-            activeOpacity={0.8}
             className="flex-1 items-center justify-center pt-4"
           >
             <View className="items-center gap-y-2">

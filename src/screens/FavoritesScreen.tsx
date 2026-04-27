@@ -1,7 +1,7 @@
 import { favoriteIngredientAtom, favoriteMealAtom } from '@/atom/favoritesAtom';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import { useAtomValue } from 'jotai';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import GridContainer from '@/components/common/container/GridContainer';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
@@ -15,6 +15,7 @@ import Card from '@/components/common/ui/Card';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavProp } from '@/types/RootStackParamList';
 import { StorageTypeId } from '@/types/storage';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 export default function FavoritesScreen() {
   const favoriteMealList = useAtomValue(favoriteMealAtom);
@@ -45,7 +46,7 @@ export default function FavoritesScreen() {
     <SafeAreaViewContainer edges={['top', 'bottom']}>
       <ScreenHeader title="자주먹는 식재료와 메뉴" />
 
-      <ScrollViewContainer contentContainerClassName="pt-5">
+      <ScrollViewContainer contentContainerClassName="pt-4">
         <View className="gap-y-3">
           <SectionTitle title="좋아하는 식재료" icon="Heart" />
 
@@ -54,7 +55,6 @@ export default function FavoritesScreen() {
               {favoriteIngredientList.map((item) => (
                 <TouchableOpacity
                   key={item.id}
-                  activeOpacity={0.8}
                   onPress={() => onOpenSheetPress(item)}
                   className="relative"
                 >
@@ -80,11 +80,7 @@ export default function FavoritesScreen() {
           {favoriteMealList.length > 0 ? (
             <GridContainer columns={4}>
               {favoriteMealList.map((item) => (
-                <TouchableOpacity
-                  key={item.id}
-                  activeOpacity={0.8}
-                  onPress={() => onOpenSheetPress(item)}
-                >
+                <TouchableOpacity key={item.id} onPress={() => onOpenSheetPress(item)}>
                   <SelectableItemCard
                     item={item}
                     isCompact

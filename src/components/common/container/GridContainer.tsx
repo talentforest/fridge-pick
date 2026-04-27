@@ -35,7 +35,7 @@ export default function GridContainer({
         const isLastRow = currentRow === totalRows - 1;
         const isLastColumn = (index + 1) % columns === 0;
 
-        return (
+        return child ? (
           <View
             key={index}
             style={{
@@ -46,6 +46,8 @@ export default function GridContainer({
           >
             {child}
           </View>
+        ) : (
+          <View className="border border-red-5" />
         );
       })}
     </View>

@@ -1,6 +1,7 @@
 import Icon, { IconName } from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import { TouchableOpacityProps } from 'react-native';
 
 interface SquareBtnProps {
   name: string;
@@ -38,7 +39,6 @@ export default function SquareBtn({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
       {...props}
       className={`flex-row items-center justify-center gap-x-1 rounded-xl p-5 ${bgColorStyle[color]} ${props.className}`}
     >
@@ -50,9 +50,7 @@ export default function SquareBtn({
         />
       )}
 
-      <Text className={`${textColorStyle[color]} !text-[15px] ${textClassName}`}>
-        {name}
-      </Text>
+      <Text className={`${textColorStyle[color]} ${textClassName}`}>{name}</Text>
     </TouchableOpacity>
   );
 }

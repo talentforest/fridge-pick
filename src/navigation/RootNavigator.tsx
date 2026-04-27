@@ -1,5 +1,6 @@
 import BottomTabNavigator from '@/navigation/BottomTabNavigator';
 import FavoritesScreen from '@/screens/FavoritesScreen';
+import AllMealListScreen from '@/screens/meal/AllMealListScreen';
 import AddShoppingListScreen from '@/screens/shoppingList/AddShoppingListScreen';
 import AddStorageItemScreen from '@/screens/storage/AddStorageItemScreen';
 import StorageDetailScreen from '@/screens/storage/StorageDetailScreen';
@@ -27,11 +28,12 @@ export default function RootNavigator() {
       >
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Main" component={BottomTabNavigator} />
-
+          {/* 디테일페이지 */}
           <Stack.Screen name="StorageDetailScreen" component={StorageDetailScreen} />
           <Stack.Screen name="FavoritesScreen" component={FavoritesScreen} />
           <Stack.Screen name="AddShoppingListScreen" component={AddShoppingListScreen} />
           <Stack.Screen name="AddStorageItemScreen" component={AddStorageItemScreen} />
+          <Stack.Screen name="AllMealListScreen" component={AllMealListScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

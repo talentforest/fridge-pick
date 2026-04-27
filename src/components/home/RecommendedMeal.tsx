@@ -2,43 +2,65 @@ import CarouselContainer from '@/components/common/container/CarouselContainer';
 import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import FilterContainer from '@/components/common/container/FilterContainer';
-import MealCard from '@/components/selectableItem/meal/MealCard';
+import FullBleedSection from '@/components/common/container/FullBleedSection';
+import NavigateBtn from '@/components/common/NavigateBtn';
+import LabelContainer from '@/components/common/container/LabelContainer';
+import TextInput from '@/components/common/ui/TextInput';
 import { View } from 'react-native';
 import { useGetMealList } from '@/hooks/meal/useGetMealList';
-import FullBleedSection from '@/components/common/container/FullBleedSection';
+import { useAtom } from 'jotai';
+import { searchKeywordAtom } from '@/atom/storageItemAtom';
 
 export default function RecommendedDish() {
-  const { mealFilterList, allFilteredMealList } = useGetMealList();
+  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
+
+  const { mealFilterList, searchKeywordMealList, fastestMealList } = useGetMealList();
 
   return (
     <View className="gap-y-3">
-      <SectionTitle title="식사메뉴 추천 리스트" icon="HandPlatter" />
+      <SectionTitle title="오늘의 식사 메뉴 추천" icon="HandPlatter" />
 
       <FullBleedSection>
         <CarouselContainer
-          data={allFilteredMealList} // TODO 추천 리스트 계산필요
-          initialIndex={allFilteredMealList.length}
+          data={fastestMealList} // TODO 추천 리스트 계산필요
+          initialIndex={fastestMealList.length}
           itemWidth={0.43}
           hasNavigation
+          hasPagination
           requiredMinimum={3}
           centerFocus
+          keyExtractor={(item, index) => `${item.id}:${index}`}
           renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
-          keyExtractor={(_, index) => `${index}`}
         />
       </FullBleedSection>
 
-      <View className="mt-10 min-h-[800px]">
-        <FilterContainer filterList={mealFilterList} dataList={allFilteredMealList}>
+      <View className="mt-12 min-h-[800px]">
+        <LabelContainer label="메뉴 검색">
+          <TextInput
+            value={searchKeyword}
+            onChangeText={setSearchKeyword}
+            placeholder="찾으시는 메뉴를 검색해주세요."
+            icon="Search"
+          />
+        </LabelContainer>
+
+        <FilterContainer
+          columns={2}
+          filterList={mealFilterList}
+          dataList={searchKeywordMealList}
+          maximum={10}
+        >
           {(meal) => (
-            <MealCard
+            <MealCompactCard
               key={meal.id}
               meal={meal}
               ingredientStructure={meal.ingredientStructure}
-              filterList={meal.filterList}
               className="w-full"
             />
           )}
         </FilterContainer>
+
+        <NavigateBtn navigateTo={'AllMealListScreen'} />
       </View>
     </View>
   );

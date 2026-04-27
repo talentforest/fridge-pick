@@ -1,3 +1,4 @@
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { colorTokens } from '@/theme/color';
 import {
   BadgeAlert,
@@ -75,7 +76,7 @@ import {
   Wind,
   X,
 } from 'lucide-react-native';
-import { TouchableOpacity, useColorScheme, View } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 
 export type IconName =
   | 'BadgeAlert'
@@ -281,11 +282,7 @@ export default function Icon({
   const Component = iconObj[name];
 
   return props.onPress ? (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      className={props.className}
-      onPress={props.onPress}
-    >
+    <TouchableOpacity className={props.className} onPress={props.onPress}>
       <Component
         strokeWidth={2.2}
         {...props}

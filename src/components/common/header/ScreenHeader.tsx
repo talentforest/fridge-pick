@@ -20,13 +20,13 @@ export default function ScreenHeader({
 
   return (
     <View
-      className={`flex-row items-end justify-between px-6 pt-3 ${isDetailPage ? 'border-b border-border' : ''} ${className}`}
+      className={`flex-row items-end justify-between px-6 pb-4 pt-3 ${isDetailPage ? 'border-b border-border' : ''} ${className}`}
     >
       {isDetailPage ? (
         <IconWithText
           icon="ChevronLeft"
           iconSize={28}
-          className="w-fit flex-row items-center justify-center pb-4"
+          className="w-fit flex-row items-center justify-center"
           onPress={onLeftPress ?? (() => navigation.goBack())}
           text={title}
           textClassName="text-xl"

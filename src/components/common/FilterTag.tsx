@@ -1,8 +1,8 @@
 import Icon, { IconName } from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { FilterColor } from '@/types/filter';
-
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 
 interface FilterProps {
   name: string;
@@ -55,7 +55,6 @@ export default function FilterTag({
   return onPress ? (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={0.7}
       className={`${commonClassName} flex-row items-center gap-x-0.5 ${currBgColor} ${className}`}
     >
       {icon && <Icon name={icon} size={iconSize} color={isActive ? color : 'inactive'} />}

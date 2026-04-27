@@ -21,11 +21,10 @@ export default function MealCompactCard({
     ? ingredientStructure?.essential.length + ingredientStructure?.common.length
     : 0;
 
+  const onPress = () => {};
+
   return (
-    <Card
-      key={meal.id}
-      className={`w-fit justify-center overflow-hidden !p-0 ${className}`}
-    >
+    <Card key={meal.id} className={`justify-center overflow-hidden !p-0 ${className}`}>
       <View className="items-center justify-center bg-neutral-3 pb-5">
         <MealImage meal={meal} size={110} />
         <Text className="-mt-2 text-base">{meal.label}</Text>
@@ -39,11 +38,12 @@ export default function MealCompactCard({
         </View>
 
         <SquareBtn
-          name="식사메뉴 선택"
-          className="mt-2 py-4"
+          name="오늘의 식사 선택"
+          className="mt-2 py-4 text-md"
           iconName="UtensilsCrossed"
           color="blue"
           iconSize={14}
+          onPress={onPress}
         />
       </View>
     </Card>

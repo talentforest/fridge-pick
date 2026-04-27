@@ -5,7 +5,7 @@ import {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Appearance, Modal, Pressable, TouchableOpacity, View } from 'react-native';
+import { Appearance, Modal, Pressable, View } from 'react-native';
 import { useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -19,6 +19,7 @@ import {
 } from '@/atom/overlayAtom';
 import Text from '@/components/common/ui/Text';
 import { colorTokens } from '@/theme/color';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 export function OverlayContainer({ children }: { children: React.ReactNode }) {
   const insets = useSafeAreaInsets();
@@ -191,7 +192,6 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
                 <View className="mx-3 mb-1 mt-3 flex-row justify-end">
                   {modalProps.type === 'confirm' && (
                     <TouchableOpacity
-                      activeOpacity={0.7}
                       onPress={() => {
                         modalProps.resolve(false);
                         closeModal();
@@ -205,7 +205,6 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
                   )}
 
                   <TouchableOpacity
-                    activeOpacity={0.7}
                     onPress={() => {
                       modalProps.resolve(true);
                       closeModal();

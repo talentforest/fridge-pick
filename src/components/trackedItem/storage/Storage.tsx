@@ -6,13 +6,14 @@ import { EnrichStorageItem, StorageSideId, StorageTypeId } from '@/types/storage
 import { searchStorageItem } from '@/utils';
 import { useAtom, useAtomValue } from 'jotai';
 import { useMemo, useState } from 'react';
-import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, View } from 'react-native';
 import GridContainer from '@/components/common/container/GridContainer';
 import SquareBtn from '@/components/common/SquareBtn';
 import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import StorageItem from '@/components/trackedItem/storage/StorageItem';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 interface StorageProps {
   storageType: StorageTypeId;
@@ -101,7 +102,6 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                     {searchedStorageItemList.map((storageItem) => (
                       <TouchableOpacity
                         key={storageItem.id}
-                        activeOpacity={0.7}
                         onPress={() => openItemPress(storageItem)}
                       >
                         <StorageItem storageItem={storageItem} />
@@ -144,7 +144,6 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                       {items.map((storageItem) => (
                         <TouchableOpacity
                           key={storageItem.id}
-                          activeOpacity={0.7}
                           onPress={() => openItemPress(storageItem)}
                         >
                           <StorageItem storageItem={storageItem} />

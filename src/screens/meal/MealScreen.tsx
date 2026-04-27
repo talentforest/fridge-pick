@@ -1,20 +1,24 @@
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import FilterContainer from '@/components/common/container/FilterContainer';
-import FullBleedSection from '@/components/common/container/FullBleedSection';
 import LabelContainer from '@/components/common/container/LabelContainer';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
-import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import TextInput from '@/components/common/ui/TextInput';
-import TodayMeal from '@/components/home/TodayMeal';
 import CautionMealListByIngredient from '@/components/meal/CautionMealListByIngredient';
 import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 import CautionStorageItem from '@/components/trackedItem/storage/CautionStorageItem';
+import TodayMeal from '@/components/home/TodayMeal';
+import FullBleedSection from '@/components/common/container/FullBleedSection';
 import { cautionStorageItemListAtom, searchKeywordAtom } from '@/atom/storageItemAtom';
 import { useGetMealList } from '@/hooks/meal/useGetMealList';
 import { useAtom, useAtomValue } from 'jotai';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
+import { useCallback } from 'react';
+import { EnrichMealIngredientStructure, Meal } from '@/types/meal';
+import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import NavigateBtn from '@/components/common/NavigateBtn';
 
 export default function MealScreen() {
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
@@ -26,10 +30,22 @@ export default function MealScreen() {
   const { mealFilterList, fastestMealList, hasAllMealList, searchKeywordMealList } =
     useGetMealList();
 
+  const data = useCallback(
+    (meal: Meal & { ingredientStructure: EnrichMealIngredientStructure }) => (
+      <MealCompactCard
+        key={meal.id}
+        ingredientStructure={meal.ingredientStructure}
+        meal={meal}
+      />
+    ),
+    [],
+  );
+
   return (
     <SafeAreaViewContainer edges={['top']}>
-      <ScreenHeader title="식사 메뉴" isDetailPage={false} className="mb-4" />
+      <ScreenHeader title="식사 메뉴" isDetailPage={false} />
 
+      {/* 전체 식사 메뉴 리스트 */}
       <ScrollViewContainer>
         <TodayMeal />
 
@@ -41,7 +57,6 @@ export default function MealScreen() {
               icon="TriangleAlert"
               color="red"
             />
-
             <FullBleedSection>
               <CarouselContainer
                 data={expiredSoonStorageItemList}
@@ -86,7 +101,7 @@ export default function MealScreen() {
 
         {/* 10분 이내로 먹을 수 있어요 */}
         {fastestMealList.length > 0 && (
-          <View className="h-[300px] gap-y-3">
+          <View className="h-[330px] gap-y-3">
             <SectionTitle title="10분 이내로 먹을 수 있어요" icon="Zap" />
             <FullBleedSection>
               <CarouselContainer
@@ -111,7 +126,7 @@ export default function MealScreen() {
 
         {/* 모든 재료가 있어요 */}
         {hasAllMealList.length > 0 && (
-          <View className="h-[300px] gap-y-3 ">
+          <View className="h-[330px] gap-y-3">
             <SectionTitle title="모든 재료가 있어요" icon="ShoppingBag" />
             <FullBleedSection>
               <CarouselContainer
@@ -134,11 +149,10 @@ export default function MealScreen() {
           </View>
         )}
 
-        <View className="gap-y-3">
+        <View className="min-h-[800px]">
           {/* 메뉴 검색바 */}
           <LabelContainer label="메뉴 검색">
             <TextInput
-              maxLength={50}
               value={searchKeyword}
               onChangeText={setSearchKeyword}
               placeholder="찾으시는 메뉴를 검색해주세요."
@@ -146,24 +160,16 @@ export default function MealScreen() {
             />
           </LabelContainer>
 
-          {/* 전체 식사 메뉴 리스트 */}
-          {/* 무한스크롤 */}
-          <View className="h-[141vh]">
-            <FilterContainer
-              columns={2}
-              filterList={mealFilterList}
-              dataList={searchKeywordMealList}
-              listTitle={`총 ${searchKeywordMealList.length}개의 메뉴`}
-            >
-              {(meal) => (
-                <MealCompactCard
-                  key={meal.id}
-                  ingredientStructure={meal.ingredientStructure}
-                  meal={meal}
-                />
-              )}
-            </FilterContainer>
-          </View>
+          <FilterContainer
+            columns={2}
+            maximum={10}
+            filterList={mealFilterList}
+            dataList={searchKeywordMealList.slice(0, 20)}
+          >
+            {data}
+          </FilterContainer>
+
+          <NavigateBtn navigateTo={'AllMealListScreen'} />
         </View>
       </ScrollViewContainer>
     </SafeAreaViewContainer>

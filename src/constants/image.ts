@@ -451,6 +451,7 @@ export const categoryImagesObj: {
   },
 
   meal: {
+    frozen_mandu: require('../../assets/images/ingredients/meal/frozen_mandu.png'),
     abalone_porridge: require('../../assets/images/ingredients/meal/abalone_porridge.png'),
     acorn_jelly: require('../../assets/images/ingredients/meal/acorn_jelly.png'),
     acorn_jelly_muchim: require('../../assets/images/ingredients/meal/acorn_jelly_muchim.png'),
@@ -508,6 +509,7 @@ export const categoryImagesObj: {
     dried_squid_strips: require('../../assets/images/ingredients/meal/dried_squid_strips.png'),
     dubugimchi: require('../../assets/images/ingredients/meal/dubugimchi.png'),
     egg_soup: require('../../assets/images/ingredients/meal/egg_soup.png'),
+    egg_fried_rice: require('../../assets/images/ingredients/meal/egg_fried_rice.png'),
     eomuk_guk: require('../../assets/images/ingredients/meal/eomuk_guk.png'),
     fish_cake_tang: require('../../assets/images/ingredients/meal/fish_cake_tang.png'),
     french_fries: require('../../assets/images/ingredients/meal/french_fries.png'),
@@ -639,6 +641,7 @@ export const categoryImagesObj: {
     stir_fried_baby_octopus: require('../../assets/images/ingredients/meal/stir_fried_baby_octopus.png'),
     stir_sausage: require('../../assets/images/ingredients/meal/stir_sausage.png'),
     stir_zucchini: require('../../assets/images/ingredients/meal/stir_zucchini.png'),
+    shrimp_fried_rice: require('../../assets/images/ingredients/meal/shrimp_fried_rice.png'),
     stuffed_cucumber_kimchi: require('../../assets/images/ingredients/meal/stuffed_cucumber_kimchi.png'),
     sundae: require('../../assets/images/ingredients/meal/sundae.png'),
     sundae_guk: require('../../assets/images/ingredients/meal/sundae_guk.png'),
@@ -654,6 +657,7 @@ export const categoryImagesObj: {
     tteok_guk: require('../../assets/images/ingredients/meal/tteok_guk.png'),
     tteokbokki: require('../../assets/images/ingredients/meal/tteokbokki.png'),
     tteokgalbi: require('../../assets/images/ingredients/meal/tteokgalbi.png'),
+    tuna_fried_rice: require('../../assets/images/ingredients/meal/tuna_fried_rice.png'),
     udon: require('../../assets/images/ingredients/meal/udon.png'),
     ugeojitang: require('../../assets/images/ingredients/meal/ugeojitang.png'),
     vegetable_porridge: require('../../assets/images/ingredients/meal/vegetable_porridge.png'),

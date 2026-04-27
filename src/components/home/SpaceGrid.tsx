@@ -8,10 +8,11 @@ import { StorageTypeId } from '@/types/storage';
 import { formatDaysSince } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
 import { useAtomValue } from 'jotai';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, View } from 'react-native';
 import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 export default function SpaceGrid() {
   const freezerItemList = useAtomValue(itemListByStorageAtom('freezer'));
@@ -107,7 +108,6 @@ const TouchableSpaceCard = ({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.7}
       className="h-[90px] flex-1"
       onPress={() => {
         if (id === 'favorites') {

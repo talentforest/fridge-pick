@@ -10,11 +10,11 @@ import {
 } from '@/types/meal';
 import { EnrichStorageItem } from '@/types/storage';
 import { findIngredient, findMeal, getExpirationStatus, getRemainingDays } from '@/utils';
-import { useAtomValue } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { useCallback, useMemo } from 'react';
 
 export const useGetMealList = () => {
-  const searchKeyword = useAtomValue(searchKeywordAtom);
+  const [searchKeyword] = useAtom(searchKeywordAtom);
 
   const mealFilterList = Object.values(filterObj['meal']);
 
@@ -109,7 +109,7 @@ export const useGetMealList = () => {
    * @param mealList - 모든 mealList || 검색 필터링된 mealList
    * 각 meal 아이템에 맞는 필터를 추가한 결과를 리턴
    */
-  const filterDataList = useCallback(
+  const addFilterInMealList = useCallback(
     (
       mealList: Meal[],
     ): (Meal & {
@@ -167,10 +167,10 @@ export const useGetMealList = () => {
 
   /** "소비기한 임박" 필터링 목록 */
   const expiredSoonMealList = useMemo(() => {
-    return filterDataList(allMealList).filter((item) =>
+    return addFilterInMealList(allMealList).filter((item) =>
       item.filterList.includes('expiredSoon'),
     );
-  }, [filterDataList]);
+  }, [addFilterInMealList]);
 
   /** "소비기한 임박한 식재료"로 사용할수 있는 메뉴 목록 */
   const getMealListByExpiredSoonIngredient = useCallback(
@@ -199,19 +199,19 @@ export const useGetMealList = () => {
 
   /** "빠르게 완성" 필터링 목록 */
   const fastestMealList = useMemo(() => {
-    return filterDataList(allMealList).filter((item) =>
+    return addFilterInMealList(allMealList).filter((item) =>
       item.filterList.includes('fastest'),
     );
-  }, [filterDataList]);
+  }, [addFilterInMealList]);
 
   /** "모든 재료가 있음" 필터링 목록 */
   const hasAllMealList = useMemo(() => {
-    return filterDataList(allMealList).filter((item) =>
+    return addFilterInMealList(allMealList).filter((item) =>
       item.filterList.includes('hasAll'),
     );
-  }, [filterDataList]);
+  }, [addFilterInMealList]);
 
-  /** "검색 결과" 필터링 목록 */
+  /** "검색어 결과" 필터링 목록 */
   const searchKeywordMealList = useMemo(() => {
     const filterSearchKeyword = allMealList.filter((meal) => {
       const includingLabel = meal.label.includes(searchKeyword);
@@ -222,14 +222,13 @@ export const useGetMealList = () => {
 
       return includingLabel || includingSynonyms;
     });
-    return filterDataList(filterSearchKeyword);
-  }, [filterDataList, searchKeyword]);
+    return addFilterInMealList(filterSearchKeyword);
+  }, [addFilterInMealList, searchKeyword]);
 
-  const allFilteredMealList = filterDataList(allMealList);
+  const allFilteredMealList = addFilterInMealList(allMealList);
 
   return {
     mealFilterList,
-    filterDataList,
     expiredSoonMealList,
     fastestMealList,
     hasAllMealList,

@@ -14,7 +14,7 @@ import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
 import { useNavigation } from '@react-navigation/native';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useMemo, useState } from 'react';
-import { FlatList, Image, ScrollView, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, ScrollView, View } from 'react-native';
 import { useErrorHandler } from '@/hooks/common/useErrorHandler';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
@@ -30,6 +30,7 @@ import IconWithText from '@/components/common/IconWithText';
 import Icon from '@/components/common/ui/Icon';
 import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
 import { searchIngredientAndMeal } from '@/utils';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 export default function ShoppingListScreen() {
   const [inputValue, setInputValue] = useState<string>('');
@@ -114,7 +115,7 @@ export default function ShoppingListScreen() {
       <SafeAreaViewContainer>
         <ScreenHeader title="장보기 목록" isDetailPage={false} />
 
-        <ViewContentContainer className="pt-5">
+        <ViewContentContainer>
           <Card className="flex-1 rounded-2xl bg-card px-3 pb-3 pt-2">
             {/* 테이블 헤더 */}
             <View className="flex-row items-center justify-between pr-2">
@@ -215,7 +216,6 @@ export default function ShoppingListScreen() {
 
               <View className="relative">
                 <TextInput
-                  maxLength={50}
                   value={inputValue}
                   className="pr-12"
                   onChangeText={onChangeText}

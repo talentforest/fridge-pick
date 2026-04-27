@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import {
   formatDateString,
   formatRemainingDays,
@@ -9,6 +9,7 @@ import { expirationStatusObj } from '@/constants';
 import { ReactNode } from 'react';
 import Text from '@/components/common/ui/Text';
 import Icon from '@/components/common/ui/Icon';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 interface DateInputProps {
   date: string; // yyyy-MM-dd
@@ -29,7 +30,6 @@ export default function DateInput({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.7}
       onPress={openDatePicker}
       className={`h-[56] flex-row items-center gap-x-1 rounded-2xl border border-border bg-card px-2.5 ${className}`}
     >

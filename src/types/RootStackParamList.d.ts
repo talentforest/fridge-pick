@@ -16,8 +16,11 @@ export type RootStackParamList = {
   /** 장보기목록 => 보관함에 추가할 식재료 */
   AddShoppingListScreen: undefined;
 
-  /** 자주먹는 식재료 */
+  /** 자주먹는 식재료 스크린 */
   FavoritesScreen: undefined;
+
+  /** 전체 식사메뉴 스크린 */
+  AllMealListScreen: undefined;
 };
 
 export type StackNavProp = NativeStackNavigationProp<RootStackParamList>;

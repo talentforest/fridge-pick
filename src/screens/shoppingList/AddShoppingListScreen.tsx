@@ -49,7 +49,7 @@ export default function AddShoppingListScreen() {
           nestedScrollEnabled
           showsVerticalScrollIndicator={false}
           className="flex-1"
-          contentContainerClassName="gap-2 pb-10 pt-4"
+          contentContainerClassName="gap-y-2 pb-10 pt-4"
           keyExtractor={(item) => `${item.id}`}
           renderItem={({ item, index }) => (
             <PurchasedItem

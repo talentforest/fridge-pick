@@ -86,7 +86,7 @@ export type BaseMeal = {
   defaultStorage: StorageTypeId;
 
   /** 소비기한 (일 단위) */
-  expirationDays?: Partial<Record<StorageTypeId, number>>;
+  expirationDays: Partial<Record<StorageTypeId, number>>;
 
   /** 기본 표시 단위 */
   defaultUnitLabel?: StockUnit;

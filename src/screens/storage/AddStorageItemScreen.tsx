@@ -95,7 +95,6 @@ export default function AddStorageItemScreen() {
                         value={currStorageItem.customLabel}
                         onChangeText={(text) => onItemChange({ customLabel: text })}
                         placeholder="식재료 이름을 작성해주세요."
-                        maxLength={50}
                         className="border pr-12"
                       />
                     ) : (

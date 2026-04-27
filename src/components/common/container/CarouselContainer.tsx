@@ -1,7 +1,8 @@
 import GridContainer from '@/components/common/container/GridContainer';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { ReactNode, useMemo, useRef, useState } from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 type RenderItemWithIndex<T> = (args: {
   item: T;
@@ -110,7 +111,6 @@ export default function CarouselContainer<T>({
           data={flatListData}
           horizontal
           showsHorizontalScrollIndicator={false}
-          nestedScrollEnabled
           initialScrollIndex={initialIndex}
           ItemSeparatorComponent={() => <View style={{ width: spacing }} />}
           contentContainerStyle={{
@@ -212,7 +212,6 @@ const HandleBtn = ({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.7}
       onPress={onPress}
       className={`${commonClassName} opacity-40 ${direction === 'prev' ? 'left-8' : 'right-8'}`}
     >

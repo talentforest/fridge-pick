@@ -1,10 +1,11 @@
 import GridContainer from '@/components/common/container/GridContainer';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import CautionStorageItem from '@/components/trackedItem/storage/CautionStorageItem';
 import { useStorageItemList } from '@/hooks';
 import { EnrichStorageItem, StorageTypeId } from '@/types/storage';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 
 interface CautionStorageItemListProps {
   storageType: StorageTypeId;
@@ -26,7 +27,6 @@ export default function CautionStorageItemList({
             return (
               <TouchableOpacity
                 key={storageItem.id}
-                activeOpacity={0.8}
                 onPress={() => openItemPress(storageItem)}
               >
                 <CautionStorageItem

@@ -2,6 +2,7 @@ import GridContainer from '@/components/common/container/GridContainer';
 import LabelContainer from '@/components/common/container/LabelContainer';
 import IconWithText from '@/components/common/IconWithText';
 import TextInput from '@/components/common/ui/TextInput';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
 import { initialCustomStorageItem } from '@/constants/initialItem';
 import { EnrichStorageItem } from '@/types/storage';
@@ -10,7 +11,7 @@ import {
   convertMealToStorageItem,
   searchIngredientAndMeal,
 } from '@/utils';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 
 interface SearchAddStorageItemProps {
   searchKeyword: string;
@@ -30,7 +31,6 @@ export default function SearchAddStorageItem({
       <View className="mt-5 gap-y-2">
         <LabelContainer label="식재료 검색">
           <TextInput
-            maxLength={50}
             value={searchKeyword}
             onChangeText={setSearchKeyword}
             placeholder="식재료를 검색해주세요."
@@ -45,9 +45,9 @@ export default function SearchAddStorageItem({
           {recommendedKeywordList.map((item) => (
             <TouchableOpacity
               key={item.id}
-              activeOpacity={0.7}
               onPress={() => {
                 if (item.type === 'custom') return;
+
                 const storageItem =
                   item.type === 'ingredient'
                     ? convertIngredientToStorageItem(item)
