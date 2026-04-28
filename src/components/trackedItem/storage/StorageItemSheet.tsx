@@ -114,7 +114,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
                 <Text className="mt-1 flex-1 text-base leading-[22px]">{memo}</Text>
               ) : (
                 <Text className="mt-2 text-base text-inactive-text">
-                  메모사항이 없습니다.
+                  메모사항이 없어요.
                 </Text>
               )}
               <Icon name="Edit" color="darkGray" size={20} className="p-1.5" />

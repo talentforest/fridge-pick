@@ -111,7 +111,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                 ) : (
                   <View className="flex-1 items-center justify-center">
                     <Text className="mx-4 mb-[40%] text-center leading-7 text-gray-400">
-                      냉장실에 &quot;{searchKeyword}&quot; 식재료가 없습니다.
+                      냉장실에 &quot;{searchKeyword}&quot; 식재료가 없어요.
                     </Text>
                   </View>
                 )}
@@ -160,9 +160,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                 source={image_empty_basket}
                 className="aspect-square size-1/4 opacity-60"
               />
-              <Text className="mb-12 text-inactive-text">
-                갖고있는 식재료가 없습니다.
-              </Text>
+              <Text className="mb-12 text-inactive-text">갖고있는 식재료가 없어요.</Text>
             </View>
           ))}
       </Card>

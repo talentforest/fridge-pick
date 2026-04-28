@@ -7,7 +7,7 @@ import {
   StorageSideId,
   StorageSpace,
 } from '@/types/storage';
-import { findIngredient, getCautionStorageItemList, findMeal } from '@/utils';
+import { findIngredient, findMeal } from '@/utils';
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 
@@ -103,14 +103,9 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
     [side],
   );
 
-  const cautionStorageItemList = useMemo(() => {
-    return getCautionStorageItemList(storageItemList);
-  }, [storageItemList]);
-
   return {
     sideList,
     storageItemCountBySide,
     storageItemListByCategory,
-    cautionStorageItemList,
   };
 };

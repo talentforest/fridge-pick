@@ -5,27 +5,21 @@ import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewCon
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import TextInput from '@/components/common/ui/TextInput';
-import CautionMealListByIngredient from '@/components/meal/CautionMealListByIngredient';
 import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
-import CautionStorageItem from '@/components/trackedItem/storage/CautionStorageItem';
 import TodayMeal from '@/components/home/TodayMeal';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
-import { cautionStorageItemListAtom, searchKeywordAtom } from '@/atom/storageItemAtom';
+import { searchKeywordAtom } from '@/atom/storageItemAtom';
 import { useGetMealList } from '@/hooks/meal/useGetMealList';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { View } from 'react-native';
 import { useCallback } from 'react';
 import { EnrichMealIngredientStructure, Meal } from '@/types/meal';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
-import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import NavigateBtn from '@/components/common/NavigateBtn';
+import CautionIngredientList from '@/components/home/CautionIngredientList';
 
 export default function MealScreen() {
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
-
-  const expiredSoonStorageItemList = useAtomValue(
-    cautionStorageItemListAtom('expiredSoon'),
-  );
 
   const { mealFilterList, fastestMealList, hasAllMealList, searchKeywordMealList } =
     useGetMealList();
@@ -49,55 +43,10 @@ export default function MealScreen() {
       <ScrollViewContainer>
         <TodayMeal />
 
-        {/* 지금 꼭 써야하는 재료 */}
-        {expiredSoonStorageItemList.length > 0 && (
-          <View className="h-[500px] gap-y-3">
-            <SectionTitle
-              title="지금 꼭 써야하는 재료가 있어요"
-              icon="TriangleAlert"
-              color="red"
-            />
-            <FullBleedSection>
-              <CarouselContainer
-                data={expiredSoonStorageItemList}
-                initialIndex={expiredSoonStorageItemList.length}
-                itemWidth={0.25}
-                hasNavigation
-                requiredMinimum={3}
-                spacing={8}
-                centerFocus
-                hasPagination
-                keyExtractor={(_, index) => `${index}`}
-                renderItem={({ item, index, isCurrIndex, onPress }) =>
-                  onPress ? (
-                    <TouchableOpacity onPress={onPress}>
-                      <CautionStorageItem
-                        index={index}
-                        storageItem={item.storageItem}
-                        isCurrIndex={isCurrIndex}
-                        remainingDays={item.remainingDays}
-                      />
-                    </TouchableOpacity>
-                  ) : (
-                    <CautionStorageItem
-                      index={index}
-                      storageItem={item.storageItem}
-                      isCurrIndex={isCurrIndex}
-                      remainingDays={item.remainingDays}
-                    />
-                  )
-                }
-              >
-                {({ storageItem: focusedItem }) => (
-                  <CautionMealListByIngredient
-                    key={focusedItem.id}
-                    focusedItem={focusedItem}
-                  />
-                )}
-              </CarouselContainer>
-            </FullBleedSection>
-          </View>
-        )}
+        <CautionIngredientList
+          title="지금 꼭 써야하는 재료가 있어요"
+          hasCautionIngredientMeal
+        />
 
         {/* 10분 이내로 먹을 수 있어요 */}
         {fastestMealList.length > 0 && (

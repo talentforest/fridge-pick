@@ -155,7 +155,7 @@ export default function ShoppingListScreen() {
                   source={image_empty_basket}
                   className="aspect-square size-36 opacity-60"
                 />
-                <Text className="text-inactive-text">장볼 식재료가 없습니다</Text>
+                <Text className="text-inactive-text">장볼 식재료가 없어요</Text>
               </View>
             )}
           </Card>

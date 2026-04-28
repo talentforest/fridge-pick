@@ -7,10 +7,12 @@ import MealImage from '@/components/selectableItem/meal/MealImage';
 import FilterTag from '@/components/common/FilterTag';
 import FavoriteBtn from '@/components/common/FavoriteBtn';
 import { EnrichMealIngredientStructure, Meal } from '@/types/meal';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { MealFilterKey } from '@/types/filter';
 import { filterObj } from '@/constants';
 import SquareBtn from '@/components/common/SquareBtn';
+import { useSetAtom } from 'jotai';
+import { addTodayMealItemAtom } from '@/atom/mealAtom';
 
 interface MealCardProps {
   meal: Meal;
@@ -27,6 +29,8 @@ export default function MealCard({
   className = '',
   maxIngredientNum = 4,
 }: MealCardProps) {
+  const addTodayMealItem = useSetAtom(addTodayMealItemAtom);
+
   const required = ingredientStructure
     ? [...ingredientStructure.essential, ...ingredientStructure.common]
     : [];
@@ -50,7 +54,12 @@ export default function MealCard({
       </View>
 
       {filterList && filterList?.length > 0 && (
-        <View className="-mt-1 mb-2 flex-row gap-x-2">
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          className="-mt-1 mb-2"
+          contentContainerClassName="gap-x-2"
+        >
           {filterList.map((filter) => (
             <FilterTag
               key={filter}
@@ -61,7 +70,7 @@ export default function MealCard({
               isActive
             />
           ))}
-        </View>
+        </ScrollView>
       )}
 
       {required.length > 0 && (
@@ -98,6 +107,7 @@ export default function MealCard({
         className="mt-4 w-full"
         name="오늘의 식사로 선택"
         iconName="UtensilsCrossed"
+        onPress={() => addTodayMealItem(meal)}
       />
     </Card>
   );

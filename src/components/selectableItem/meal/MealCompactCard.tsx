@@ -5,6 +5,8 @@ import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import { EnrichMealIngredientStructure, Meal } from '@/types/meal';
 import { View } from 'react-native';
+import { useSetAtom } from 'jotai';
+import { addTodayMealItemAtom } from '@/atom/mealAtom';
 
 interface MealCompactCardProps {
   meal: Meal;
@@ -17,11 +19,11 @@ export default function MealCompactCard({
   ingredientStructure,
   className = '',
 }: MealCompactCardProps) {
+  const addTodayMealItem = useSetAtom(addTodayMealItemAtom);
+
   const requiredLength = ingredientStructure
     ? ingredientStructure?.essential.length + ingredientStructure?.common.length
     : 0;
-
-  const onPress = () => {};
 
   return (
     <Card key={meal.id} className={`justify-center overflow-hidden !p-0 ${className}`}>
@@ -43,7 +45,7 @@ export default function MealCompactCard({
           iconName="UtensilsCrossed"
           color="blue"
           iconSize={14}
-          onPress={onPress}
+          onPress={() => addTodayMealItem(meal)}
         />
       </View>
     </Card>

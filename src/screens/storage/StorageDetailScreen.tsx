@@ -20,7 +20,7 @@ import { EnrichStorageItem } from '@/types/storage';
 import SearchItemSheet from '@/components/trackedItem/storage/SearchItemSheet';
 import StorageItemSheet from '@/components/trackedItem/storage/StorageItemSheet';
 import Storage from '@/components/trackedItem/storage/Storage';
-import CautionStorageItemList from '@/components/trackedItem/storage/CautionStorageItemList';
+import CautionIngredientList from '@/components/home/CautionIngredientList';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'StorageDetailScreen'>;
 
@@ -76,10 +76,12 @@ export default function StorageDetailScreen() {
 
       <ScrollViewContainer contentContainerClassName="gap-y-20 pt-4">
         {/* 소비기한 임박 */}
-        <View className="gap-y-3">
-          <SectionTitle title="소비기한 주의 식재료" icon="ClockAlert" />
-          <CautionStorageItemList storageType={storageType} openItemPress={onItemPress} />
-        </View>
+        <CautionIngredientList
+          title="소비기한 주의 식재료"
+          isGridType
+          storageType={storageType}
+          onItemPress={onItemPress}
+        />
 
         {/* 나의 공간 */}
         <View className="gap-y-1">

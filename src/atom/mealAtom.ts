@@ -1,4 +1,51 @@
-import { EnrichStorageItem } from '@/types/storage';
+import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
+import { Meal } from '@/types/meal';
 import { atom } from 'jotai';
 
-export const focusedCautionIngredient = atom<EnrichStorageItem | null>(null);
+export const todayMealListAtom = atom<Meal[]>([]);
+
+/**
+ * 오늘의 식사메뉴 추가.
+ * - 중복 시 duplicate 결과 반환
+ */
+export const addTodayMealItemAtom = atom(
+  null,
+  (get, set, newMeal: Meal): AppError<Meal> | AppSuccess => {
+    const todayMealList = get(todayMealListAtom);
+
+    // 목록에 있는지 검사
+    const duplicateItem = todayMealList.find((meal) => {
+      return meal.id === newMeal.id;
+    });
+
+    if (duplicateItem) {
+      return {
+        type: 'duplicate',
+        item: duplicateItem,
+        message: '이미 목록에 존재해요',
+      };
+    }
+
+    set(todayMealListAtom, [...todayMealList, newMeal]);
+
+    return {
+      type: 'success',
+      item: newMeal,
+    };
+  },
+);
+
+/**
+ * 오늘의 식사 메뉴 삭제
+ * - 만약 하나만 삭제할 경우 하나를 배열로 감싸서 파라미터로 보내면 된다.
+ */
+export const deleteTodayMealItemAtom = atom(null, (get, set, ids: string[]) => {
+  const list = get(todayMealListAtom);
+
+  const idSet = new Set(ids);
+
+  set(
+    todayMealListAtom,
+    list.filter((x) => !idSet.has(x.id)),
+  );
+});
