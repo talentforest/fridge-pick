@@ -29,7 +29,7 @@ export default function CautionMealListByIngredient({
 
       {expiredSoonMealList.length !== 0 ? (
         <CarouselContainer
-          data={expiredSoonMealList} // TODO 추천 리스트 계산필요
+          data={expiredSoonMealList}
           initialIndex={expiredSoonMealList.length}
           itemWidth={0.8}
           hasPagination

@@ -69,7 +69,7 @@ export default function MealScreen() {
             <SectionTitle title="모든 재료가 있어요" icon="ShoppingBag" />
             <FullBleedSection>
               <CarouselContainer
-                data={hasAllMealList} // TODO 추천 리스트 계산필요
+                data={hasAllMealList}
                 initialIndex={hasAllMealList.length}
                 itemWidth={0.45}
                 hasNavigation
