@@ -9,7 +9,7 @@ interface TimeIndicatorProps {
 
 export default function Indicator({ type, value }: TimeIndicatorProps) {
   return (
-    <View className="flex-row items-center gap-0.5">
+    <View className="flex-row items-center gap-x-[1px]">
       {type === 'time' && (
         <>
           <Icon name="Timer" size={16} color="blue" strokeWidth={2.6} />
@@ -19,7 +19,7 @@ export default function Indicator({ type, value }: TimeIndicatorProps) {
       {type === 'total' && (
         <>
           <Icon name="ShoppingBasket" size={16} color="green" />
-          <Text className="text-[15px] text-green-7">필수 {value}개</Text>
+          <Text className="text-[15px] text-green-7">{value}개</Text>
         </>
       )}
       {type === 'difficulty' && (

@@ -172,7 +172,7 @@ export const useGetMealList = () => {
     );
   }, [addFilterInMealList]);
 
-  /** "소비기한 임박한 식재료"로 사용할수 있는 메뉴 목록 */
+  /** "소비기한 임박한 식재료"가 있는 메뉴 목록 */
   const getMealListByExpiredSoonIngredient = useCallback(
     (focusedItem: EnrichStorageItem) => {
       if (!focusedItem) return [];
@@ -225,6 +225,31 @@ export const useGetMealList = () => {
     return addFilterInMealList(filterSearchKeyword);
   }, [addFilterInMealList, searchKeyword]);
 
+  /** 특정 식재료를 갖고 있는 메뉴 목록
+   * - ex) 계란 활용 메뉴
+   */
+  const getHasStorageItemInMealList = useCallback((storageItem: EnrichStorageItem) => {
+    return allMealList.filter((meal) => {
+      if (storageItem.type === 'custom' || meal.mealType === 'instant') return false;
+
+      const findItem = (item: MealIngredientItem, storageItem: EnrichStorageItem) => {
+        if (storageItem.type === 'ingredient') {
+          return item.id === storageItem.ingredientId;
+        }
+        if (storageItem.type === 'meal') {
+          return item.id === storageItem.mealId;
+        }
+      };
+
+      // common에 있는건 하지 말자 필수주재료인것만
+      const essential = meal.ingredientStructure.essential.find((item) => {
+        return findItem(item, storageItem);
+      });
+
+      return essential;
+    });
+  }, []);
+
   const allFilteredMealList = addFilterInMealList(allMealList);
 
   return {
@@ -235,5 +260,6 @@ export const useGetMealList = () => {
     getMealListByExpiredSoonIngredient,
     searchKeywordMealList,
     allFilteredMealList,
+    getHasStorageItemInMealList,
   };
 };

@@ -1,11 +1,11 @@
 import { changeStorageItemAtom, deleteStorageItemListAtom } from '@/atom/storageItemAtom';
-import { allMealList, storageObj } from '@/constants';
+import { image_empty_plate, storageObj } from '@/constants';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import { useSetAtom } from 'jotai';
 import { getTrackedItemLabel } from '@/utils';
 import { EnrichStorageItem, StorageItem } from '@/types/storage';
 import { useState } from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 import SquareBtn from '@/components/common/SquareBtn';
 import SectionTitle from '@/components/common/header/SectionTitle';
@@ -15,6 +15,9 @@ import StorageModal from '@/components/trackedItem/storage/StorageModal';
 import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 import FavoriteBtn from '@/components/common/FavoriteBtn';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
+import { useGetMealList } from '@/hooks/meal/useGetMealList';
+import Text from '@/components/common/ui/Text';
+import Card from '@/components/common/ui/Card';
 
 interface StorageItemSheetProps {
   storageItem: EnrichStorageItem;
@@ -28,6 +31,10 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
   const [editableCurrItem, onCurrItemChange] = useState<
     Pick<StorageItem, 'memo' | 'expiresAt'>
   >({ expiresAt, memo: storageItem.memo });
+
+  const { getHasStorageItemInMealList } = useGetMealList();
+
+  const mealListHasStorageItem = getHasStorageItemInMealList(storageItem);
 
   const deleteItems = useSetAtom(deleteStorageItemListAtom);
   const onItemChange = useSetAtom(changeStorageItemAtom);
@@ -68,6 +75,8 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
 
   if (!storageItem) return;
 
+  const label = getTrackedItemLabel(storageItem).label;
+
   return (
     <View className="my-2 w-full flex-1 gap-y-1.5">
       <View className="flex-row items-start justify-between">
@@ -79,7 +88,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
           isHorizontal
         />
 
-        <FavoriteBtn storageItem={storageItem} />
+        <FavoriteBtn storageItem={storageItem} className="p-2" />
       </View>
 
       {storageItem && (
@@ -141,26 +150,34 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
         </View>
       )}
 
-      <View className="mb-2 mt-8 flex-row items-center gap-x-2">
+      <View className="mt-8 gap-y-3">
         <SectionTitle
           icon="HandPlatter"
           color="yellow"
           className="items-center !pl-0"
-          highlight={getTrackedItemLabel(storageItem).label}
-          title={`${getTrackedItemLabel(storageItem).label} 활용 메뉴`}
+          highlight={label}
+          title={`${label} 활용 메뉴`}
         />
+        {mealListHasStorageItem.length > 0 ? (
+          <FullBleedSection>
+            <CarouselContainer
+              data={mealListHasStorageItem}
+              initialIndex={mealListHasStorageItem.length}
+              itemWidth={0.5}
+              hasNavigation
+              hasPagination
+              centerFocus
+              keyExtractor={(_, index) => `${index}`}
+              renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
+            />
+          </FullBleedSection>
+        ) : (
+          <Card className="h-56 items-center justify-center gap-y-2">
+            <Image source={image_empty_plate} className="aspect-square h-[90px]" />
+            <Text className="pb-4 text-neutral-7">활용한 메뉴가 없어요</Text>
+          </Card>
+        )}
       </View>
-
-      <FullBleedSection>
-        <CarouselContainer
-          data={allMealList.slice(0, 6)}
-          initialIndex={allMealList.slice(0, 6).length}
-          itemWidth={0.48}
-          hasNavigation
-          keyExtractor={(_, index) => `${index}`}
-          renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
-        />
-      </FullBleedSection>
     </View>
   );
 }

@@ -18,21 +18,24 @@ export default function RecommendedDish() {
 
   return (
     <View className="gap-y-3">
-      <SectionTitle title="오늘의 식사 메뉴 추천" icon="HandPlatter" />
-
-      <FullBleedSection>
-        <CarouselContainer
-          data={fastestMealList} // TODO 추천 리스트 계산필요
-          initialIndex={fastestMealList.length}
-          itemWidth={0.43}
-          hasNavigation
-          hasPagination
-          requiredMinimum={3}
-          centerFocus
-          keyExtractor={(item, index) => `${item.id}:${index}`}
-          renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
-        />
-      </FullBleedSection>
+      {fastestMealList.length && (
+        <View className="h-[300px] gap-y-3">
+          <SectionTitle title="오늘의 식사 메뉴 추천" icon="HandPlatter" />
+          <FullBleedSection>
+            <CarouselContainer
+              data={fastestMealList} // TODO 추천 리스트 계산필요
+              initialIndex={fastestMealList.length}
+              itemWidth={0.45}
+              hasNavigation
+              hasPagination
+              requiredMinimum={3}
+              centerFocus
+              keyExtractor={(item, index) => `${item.id}:${index}`}
+              renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
+            />
+          </FullBleedSection>
+        </View>
+      )}
 
       <View className="mt-12 min-h-[800px]">
         <LabelContainer label="메뉴 검색">
@@ -50,14 +53,7 @@ export default function RecommendedDish() {
           dataList={searchKeywordMealList}
           maximum={10}
         >
-          {(meal) => (
-            <MealCompactCard
-              key={meal.id}
-              meal={meal}
-              ingredientStructure={meal.ingredientStructure}
-              className="w-full"
-            />
-          )}
+          {(meal) => <MealCompactCard key={meal.id} meal={meal} className="w-full" />}
         </FilterContainer>
 
         <NavigateBtn navigateTo={'AllMealListScreen'} />

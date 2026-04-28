@@ -26,11 +26,7 @@ export default function MealScreen() {
 
   const data = useCallback(
     (meal: Meal & { ingredientStructure: EnrichMealIngredientStructure }) => (
-      <MealCompactCard
-        key={meal.id}
-        ingredientStructure={meal.ingredientStructure}
-        meal={meal}
-      />
+      <MealCompactCard key={meal.id} meal={meal} />
     ),
     [],
   );
@@ -61,13 +57,7 @@ export default function MealScreen() {
                 hasPagination
                 centerFocus
                 keyExtractor={(_, index) => `${index}`}
-                renderItem={({ item }) => (
-                  <MealCompactCard
-                    key={item.id}
-                    ingredientStructure={item.ingredientStructure}
-                    meal={item}
-                  />
-                )}
+                renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
               />
             </FullBleedSection>
           </View>
@@ -85,13 +75,7 @@ export default function MealScreen() {
                 hasNavigation
                 hasPagination
                 centerFocus
-                renderItem={({ item }) => (
-                  <MealCompactCard
-                    key={item.id}
-                    ingredientStructure={item.ingredientStructure}
-                    meal={item}
-                  />
-                )}
+                renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
                 keyExtractor={(_, index) => `${index}`}
               />
             </FullBleedSection>

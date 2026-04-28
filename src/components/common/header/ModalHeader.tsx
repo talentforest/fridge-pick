@@ -6,21 +6,28 @@ import { View } from 'react-native';
 interface ModalHeaderProps {
   title: string;
   isDatePicker?: boolean;
+  hasX?: boolean;
 }
 
-export default function ModalHeader({ title, isDatePicker }: ModalHeaderProps) {
+export default function ModalHeader({
+  title,
+  isDatePicker,
+  hasX = true,
+}: ModalHeaderProps) {
   const { closeModal, closeDatePicker } = useOverlay();
 
   return (
     <View className="flex-row items-center justify-between">
       <Text className="text-xl">{title}</Text>
 
-      <Icon
-        name="X"
-        size={26}
-        className="p-1"
-        onPress={isDatePicker ? closeDatePicker : closeModal}
-      />
+      {hasX && (
+        <Icon
+          name="X"
+          size={26}
+          className="p-1"
+          onPress={isDatePicker ? closeDatePicker : closeModal}
+        />
+      )}
     </View>
   );
 }

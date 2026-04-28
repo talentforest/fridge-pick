@@ -41,7 +41,7 @@ export default function FormDateInput({
       hasDim: true,
       render: () => (
         <View>
-          <ModalHeader title="소비기한 변경하기" isDatePicker />
+          <ModalHeader title="소비기한 변경하기" isDatePicker hasX={false} />
           <DateTimePicker
             minimumDate={new Date()}
             value={initialDate}
