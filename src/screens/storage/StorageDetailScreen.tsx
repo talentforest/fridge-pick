@@ -89,17 +89,17 @@ export default function StorageDetailScreen() {
             title={`나의 ${storageLabel} 식재료`}
             icon={storageLabel === '실온보관' ? 'ShelvingUnit' : 'Refrigerator'}
           >
-            <View className="flex-row items-center">
+            <View className="flex-row items-center gap-x-2">
               <Icon
                 name="Search"
-                className="h-12 w-12 items-center justify-center"
+                className="h-10 w-10 items-center justify-center"
                 size={22}
                 onPress={onSearchPress}
                 color={searchKeyword === '' ? 'text' : 'blue'}
               />
               <Icon
                 name="Plus"
-                className="h-12 w-12 items-center justify-center"
+                className="h-10 w-10 items-center justify-center"
                 size={27}
                 color="text"
                 onPress={() =>

@@ -116,7 +116,7 @@ export const mockStorageItemList: StorageItem[] = [
   },
   {
     type: 'ingredient',
-    id: '4',
+    id: '4-potato',
     ingredientId: 'potato',
     purchasedAt: '2026-03-01',
     expiresAt: '2026-04-26',
@@ -157,7 +157,7 @@ export const mockStorageItemList: StorageItem[] = [
   },
   {
     type: 'ingredient',
-    id: '12',
+    id: 'chicken_leg11',
     ingredientId: 'chicken_leg',
     purchasedAt: '2026-02-25',
     expiresAt: '2026-04-27',
@@ -232,7 +232,7 @@ export const mockStorageItemList: StorageItem[] = [
     type: 'ingredient',
     id: '21',
     ingredientId: 'spaghetti_noodle',
-    purchasedAt: '2026-02-20',
+    purchasedAt: '2026-04-28',
     expiresAt: '2028-05-20',
     storage: { type: 'pantry', side: 'inner', section: '1' },
   },

@@ -4,8 +4,8 @@ import {
 } from '@/atom/storageItemAtom';
 import { image_fridge } from '@/constants';
 import { StackNavProp } from '@/types/RootStackParamList';
-import { StorageTypeId } from '@/types/storage';
-import { formatDaysSince } from '@/utils';
+import { EnrichStorageItem, StorageTypeId } from '@/types/storage';
+import { formatDaysSince, getRemainingDays } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
 import { useAtomValue } from 'jotai';
 import { Image, View } from 'react-native';
@@ -21,46 +21,51 @@ export default function SpaceGrid() {
 
   const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom('caution'));
 
-  const hasExpiredItem = (storageType: StorageTypeId): boolean => {
-    return expiredStorageItemList.some(
+  const getExpiredItemList = (storageType: StorageTypeId) => {
+    return expiredStorageItemList.filter(
       ({ storageItem }) => storageItem.storage.type === storageType,
     );
+  };
+
+  const getRecentlyUpdate = (itemList: EnrichStorageItem[]) => {
+    if (itemList.length === 0) return;
+
+    const purchasedAtList = itemList.map((item) => getRemainingDays(item.purchasedAt));
+    return Math.max(...purchasedAtList);
   };
 
   const storageList = {
     fridge: [
       {
-        id: 'freezer',
+        id: 'freezer' as const,
         label: '냉동실',
         total: freezerItemList.length,
-        hasExpiredItem: hasExpiredItem('freezer'),
-        recentlyUpdate: -2, // purchasedAt 시점 기준으로 하면 되겠다.
+        expiredItemNum: getExpiredItemList('freezer').length,
+        recentlyUpdateDays: getRecentlyUpdate(freezerItemList), // purchasedAt 시점 기준으로 하면 되겠다.
       },
       {
-        id: 'fridge',
+        id: 'fridge' as const,
         label: '냉장실',
         total: fridgeItemList.length,
-        hasExpiredItem: hasExpiredItem('fridge'),
+        expiredItemNum: getExpiredItemList('fridge').length,
+        recentlyUpdateDays: getRecentlyUpdate(fridgeItemList),
       },
     ],
     other: [
       {
-        id: 'pantry',
+        id: 'pantry' as const,
         label: '실온보관',
         total: pantryItemList.length,
-        hasExpiredItem: hasExpiredItem('pantry'),
-        recentlyUpdate: 0,
+        expiredItemNum: getExpiredItemList('pantry').length,
+        recentlyUpdateDays: getRecentlyUpdate(pantryItemList),
       },
       {
-        id: 'favorites',
+        id: 'favorites' as const,
         label: '나의 픽!',
-        total: 0,
-        recentlyUpdate: -2,
-        hasNotAllFavorites: true,
-        // 자주먹는게 있는데 없는 식재료가 있는 경우
+        hasNotAllFavorites: true, // 나의 픽 식재료가 현재 보관함에 없는 경우
       },
     ],
-  } as const;
+  };
 
   return (
     <View className="gap-y-[10px]">
@@ -69,9 +74,11 @@ export default function SpaceGrid() {
         <Card className="h-[190px] w-[38%] gap-y-[10px] !py-5">
           <Text>나의 냉장고</Text>
           <View className="w-full flex-1 items-center justify-center p-3">
+            {/* 주의 식재료가 있는 경우 빨간 점으로 표시 */}
             {expiredStorageItemList.length > 0 && (
               <View className="ml-12 size-2.5 rounded-xl bg-red-500" />
             )}
+
             <Image source={image_fridge} />
           </View>
         </Card>
@@ -93,18 +100,46 @@ export default function SpaceGrid() {
 }
 
 const TouchableSpaceCard = ({
-  spaceInfo: { id, label, total, hasExpiredItem, recentlyUpdate, hasNotAllFavorites },
+  spaceInfo: { id, label, total, expiredItemNum, recentlyUpdateDays, hasNotAllFavorites },
 }: {
   spaceInfo: {
     id: 'fridge' | 'freezer' | 'pantry' | 'favorites';
     label: string;
-    total: number;
-    hasExpiredItem?: boolean;
-    recentlyUpdate?: number;
+    total?: number;
+    recentlyUpdateDays?: number;
+    expiredItemNum?: number;
     hasNotAllFavorites?: boolean;
   };
 }) => {
   const navigation = useNavigation<StackNavProp>();
+
+  const notificationObj = {
+    hasExpiredItem: {
+      label: `주의 식재료 ${expiredItemNum}개`,
+      icon: 'ClockAlert' as const,
+      condition: expiredItemNum && expiredItemNum > 0,
+      color: 'yellow' as const,
+    },
+
+    recentlyUpdate: {
+      label:
+        recentlyUpdateDays !== undefined
+          ? `${formatDaysSince(recentlyUpdateDays)} 추가`
+          : '',
+      icon: undefined,
+      condition: !expiredItemNum,
+      color: 'neutral' as const,
+    },
+  };
+
+  const favoriteNotificationObj = {
+    hasNotAllFavorites: {
+      label: '보관함에 픽이 없어요',
+    },
+    icon: undefined,
+    color: 'yellow' as const,
+    condition: hasNotAllFavorites,
+  };
 
   return (
     <TouchableOpacity
@@ -128,26 +163,25 @@ const TouchableSpaceCard = ({
           )}
         </View>
 
-        {hasExpiredItem && (
-          <View className="flex-row items-center gap-x-0.5">
-            <Icon name="ClockAlert" size={14} color="yellow" />
-            <Text className="text-[13px] text-yellow-7">주의 식재료 존재</Text>
-          </View>
-        )}
-
-        {/* TODO: 업데이트 정보 추가 */}
-        {!hasExpiredItem &&
-          id !== 'favorites' &&
-          recentlyUpdate !== undefined &&
-          recentlyUpdate <= 0 &&
-          recentlyUpdate >= -3 && (
-            <Text className="text-[13px] !text-neutral-5">
-              {formatDaysSince(recentlyUpdate)} 추가
-            </Text>
-          )}
-
-        {id === 'favorites' && hasNotAllFavorites && (
-          <Text className="text-[13px] !text-neutral-5">없는 식재료가 있어요</Text>
+        {id === 'favorites' ? (
+          <Text className="text-[13px] !text-neutral-5">
+            {favoriteNotificationObj.hasNotAllFavorites.label}
+          </Text>
+        ) : (
+          <>
+            {Object.entries(notificationObj)
+              .filter(([_, item]) => item.condition)
+              .map(([key, item]) => (
+                <View key={key} className="flex-row items-center">
+                  {item.icon && <Icon name={item.icon} size={15} color={item.color} />}
+                  <Text
+                    className={`${item.color === 'yellow' ? 'text-yellow-7' : 'text-neutral-5'}`}
+                  >
+                    {item.label}
+                  </Text>
+                </View>
+              ))}
+          </>
         )}
       </Card>
     </TouchableOpacity>

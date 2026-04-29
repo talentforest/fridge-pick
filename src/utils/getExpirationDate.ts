@@ -50,10 +50,13 @@ export function formatRemainingDays(days: number) {
 }
 
 export function formatDaysSince(days: number) {
+  if (isNaN(days)) return '없음';
+
   if (days < -2) return `${Math.abs(days)}일 전`;
   if (days === 0) return '오늘';
   if (days === -1) return '어제';
   if (days === -2) return '이틀 전';
+  if (days === 1) return '내일';
 
-  return `${days}일`;
+  return `${days}일 후`;
 }
