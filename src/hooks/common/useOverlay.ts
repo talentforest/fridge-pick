@@ -10,6 +10,7 @@ import {
   confirmAtom,
   expandSheetAtom,
   shrinkSheetAtom,
+  toastAtom,
 } from '@/atom/overlayAtom';
 
 export const useOverlay = () => {
@@ -24,6 +25,7 @@ export const useOverlay = () => {
 
   const alert = useSetAtom(alertAtom);
   const confirm = useSetAtom(confirmAtom);
+  const toast = useSetAtom(toastAtom);
 
   const expandSheet = useSetAtom(expandSheetAtom);
   const shrinkSheet = useSetAtom(shrinkSheetAtom);
@@ -43,5 +45,6 @@ export const useOverlay = () => {
 
     alert,
     confirm,
+    toast,
   };
 };

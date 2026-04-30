@@ -1,3 +1,5 @@
+import Text from '@/components/common/ui/Text';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { iosShadowStyle } from '@/constants/shadowStyle';
 import {
   BottomSheetBackdrop,
@@ -8,7 +10,6 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { Appearance, Modal, Pressable, View } from 'react-native';
 import { useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import {
   sheetAtom,
   modalAtom,
@@ -17,9 +18,7 @@ import {
   closeDatePickerAtom,
   sheetRefAtom,
 } from '@/atom/overlayAtom';
-import Text from '@/components/common/ui/Text';
 import { colorTokens } from '@/theme/color';
-import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 export function OverlayContainer({ children }: { children: React.ReactNode }) {
   const insets = useSafeAreaInsets();
@@ -50,6 +49,17 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
       sheetRef.current?.dismiss();
     }
   }, [sheetProps]);
+
+  /** ----------------------- Toast ------------------------ */
+  useEffect(() => {
+    if (modalProps?.type === 'toast') {
+      const timeout = setTimeout(() => {
+        closeModal();
+      }, modalProps.duration ?? 3000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [modalProps, closeModal]);
 
   return (
     <>
@@ -154,7 +164,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
         </Modal>
       )}
 
-      {/* Alert */}
+      {/* Alert & Confirm */}
       {(modalProps?.type === 'alert' || modalProps?.type === 'confirm') && (
         <Modal transparent visible={!!modalProps}>
           <View className="flex-1">
@@ -218,6 +228,23 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
             </View>
           </View>
         </Modal>
+      )}
+
+      {/* Toast */}
+      {modalProps?.type === 'toast' && (
+        <View className="absolute inset-0" pointerEvents="none">
+          <View
+            pointerEvents="auto"
+            className="mx-auto mb-20 mt-auto min-w-[50%] rounded-2xl bg-neutral-9 p-1"
+            style={{ ...iosShadowStyle }}
+          >
+            {modalProps.message && (
+              <Text className="px-5 py-4 text-base leading-7 !text-neutral-1">
+                {modalProps.message}
+              </Text>
+            )}
+          </View>
+        </View>
       )}
     </>
   );
