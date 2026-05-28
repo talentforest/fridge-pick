@@ -1,6 +1,6 @@
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import { useOverlay } from '@/hooks/common/useOverlay';
+import { useOverlay } from '@/hooks';
 import { View } from 'react-native';
 
 interface ModalHeaderProps {
@@ -17,7 +17,7 @@ export default function ModalHeader({
   const { closeModal, closeDatePicker } = useOverlay();
 
   return (
-    <View className="flex-row items-center justify-between">
+    <View className="flex-row items-center justify-between pl-1">
       <Text className="text-xl">{title}</Text>
 
       {hasX && (

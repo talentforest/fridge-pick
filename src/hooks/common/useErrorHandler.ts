@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export type AppSuccess<T = unknown> = {
   type: 'success';
-  item?: T;
+  item: T;
 };
 
 export type AppError<T> = {

@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
-import { Edge, SafeAreaView } from 'react-native-safe-area-context';
+import { View } from 'react-native';
+import { Edge, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface SafeAreaViewContainerProps {
   children: ReactNode;
@@ -12,9 +13,23 @@ export default function SafeAreaViewContainer({
   className = '',
   edges = ['top'],
 }: SafeAreaViewContainerProps) {
+  const insets = useSafeAreaInsets();
+
+  const insetStyleMap = {
+    top: { paddingTop: insets.top },
+    bottom: { paddingBottom: insets.bottom },
+    left: { paddingLeft: insets.left },
+    right: { paddingRight: insets.right },
+  };
+
+  const safeAreaStyle = edges.reduce(
+    (acc, edge) => ({ ...acc, ...insetStyleMap[edge] }),
+    {},
+  );
+
   return (
-    <SafeAreaView edges={edges} className={`flex-1 ${className}`}>
+    <View style={safeAreaStyle} className={`flex-1 ${className}`}>
       {children}
-    </SafeAreaView>
+    </View>
   );
 }

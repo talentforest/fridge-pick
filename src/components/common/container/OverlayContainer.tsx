@@ -235,7 +235,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
         <View className="absolute inset-0" pointerEvents="none">
           <View
             pointerEvents="auto"
-            className="mx-auto mb-20 mt-auto min-w-[50%] rounded-2xl bg-neutral-9 p-1"
+            className="mx-auto mb-32 mt-auto min-w-[50%] rounded-2xl bg-neutral-9 p-1"
             style={{ ...iosShadowStyle }}
           >
             {modalProps.message && (

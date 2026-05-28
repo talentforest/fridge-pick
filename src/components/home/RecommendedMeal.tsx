@@ -1,17 +1,13 @@
-import CarouselContainer from '@/components/common/container/CarouselContainer';
 import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
-import SectionTitle from '@/components/common/header/SectionTitle';
-import FilterContainer from '@/components/common/container/FilterContainer';
-import FullBleedSection from '@/components/common/container/FullBleedSection';
-import NavigateBtn from '@/components/common/NavigateBtn';
-import LabelContainer from '@/components/common/container/LabelContainer';
-import TextInput from '@/components/common/ui/TextInput';
 import { View } from 'react-native';
-import { useGetMealList } from '@/hooks/meal/useGetMealList';
+import { useGetMealList } from '@/hooks';
 import { useAtom } from 'jotai';
 import { searchKeywordAtom } from '@/atom/storageItemAtom';
+import SectionTitle from '@/components/common/header/SectionTitle';
+import FullBleedSection from '@/components/common/container/FullBleedSection';
+import CarouselContainer from '@/components/common/container/CarouselContainer';
 
-export default function RecommendedDish() {
+export default function RecommendedMeal() {
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
 
   const { mealFilterList, searchKeywordMealList, fastestMealList } = useGetMealList();
@@ -23,9 +19,10 @@ export default function RecommendedDish() {
           <SectionTitle title="오늘의 식사 메뉴 추천" icon="HandPlatter" />
           <FullBleedSection>
             <CarouselContainer
-              data={fastestMealList} // TODO 추천 리스트 계산필요
+              data={fastestMealList}
               initialIndex={fastestMealList.length}
-              itemWidth={0.45}
+              itemWidth={0.43}
+              spacing={14}
               hasNavigation
               hasPagination
               requiredMinimum={3}
@@ -37,7 +34,7 @@ export default function RecommendedDish() {
         </View>
       )}
 
-      <View className="mt-12 min-h-[800px]">
+      {/* <View className="mt-12 min-h-[800px]">
         <LabelContainer label="메뉴 검색">
           <TextInput
             value={searchKeyword}
@@ -51,13 +48,13 @@ export default function RecommendedDish() {
           columns={2}
           filterList={mealFilterList}
           dataList={searchKeywordMealList}
-          maximum={10}
+          maximum={20}
         >
           {(meal) => <MealCompactCard key={meal.id} meal={meal} className="w-full" />}
         </FilterContainer>
 
         <NavigateBtn navigateTo={'AllMealListScreen'} />
-      </View>
+      </View> */}
     </View>
   );
 }

@@ -4,7 +4,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
 import './global.css';
 import { useColorScheme, View } from 'react-native';
 import { theme } from '@/theme/color';
@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <View style={theme[scheme ?? 'light']} className="flex-1">
           <BottomSheetModalProvider>
             <OverlayContainer>

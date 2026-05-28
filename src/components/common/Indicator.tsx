@@ -18,7 +18,7 @@ export default function Indicator({ type, value }: TimeIndicatorProps) {
       )}
       {type === 'total' && (
         <>
-          <Icon name="ShoppingBasket" size={16} color="green" />
+          <Icon name="EggFried" size={16} color="green" />
           <Text className="text-[15px] text-green-7">{value}개</Text>
         </>
       )}

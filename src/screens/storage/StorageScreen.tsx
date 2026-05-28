@@ -3,7 +3,7 @@ import SectionTitle from '@/components/common/header/SectionTitle';
 
 export default function StorageScreen() {
   return (
-    <SafeAreaViewContainer edges={['top']}>
+    <SafeAreaViewContainer>
       <SectionTitle title="식재료 관리" />
     </SafeAreaViewContainer>
   );

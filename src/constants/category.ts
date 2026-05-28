@@ -19,7 +19,7 @@ export const categoryObj = {
   },
   grains: {
     id: 'grains',
-    label: '쌀/잡곡',
+    label: '쌀/콩/잡곡',
     icon: 'Wheat',
     color: 'red',
   },

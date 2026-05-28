@@ -93,7 +93,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '2',
-    ingredientId: 'green_onion',
+    ingredientId: 'daepa',
     purchasedAt: '2026-03-03',
     expiresAt: '2026-05-21',
     storage: { type: 'fridge', side: 'inner', section: '1' },
@@ -101,7 +101,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '3',
-    ingredientId: 'spinach',
+    ingredientId: 'sigeumchi',
     purchasedAt: '2026-03-02',
     expiresAt: '2026-08-21',
     storage: { type: 'fridge', side: 'inner', section: '1' },
@@ -125,7 +125,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '5',
-    ingredientId: 'korean_zucchini',
+    ingredientId: 'aehobak',
     purchasedAt: '2026-03-02',
     expiresAt: '2026-08-21',
     storage: { type: 'fridge', side: 'inner', section: '1' },
@@ -133,7 +133,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '6',
-    ingredientId: 'shiitake',
+    ingredientId: 'pyogo_beoseot',
     purchasedAt: '2026-03-03',
     expiresAt: '2026-08-21',
     storage: { type: 'fridge', side: 'inner', section: '1' },
@@ -142,7 +142,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '10',
-    ingredientId: 'cheongyang_chili',
+    ingredientId: 'cheongyang_gochu',
     purchasedAt: '2026-03-02',
     expiresAt: '2026-08-21',
     storage: { type: 'fridge', side: 'inner', section: '1' },
@@ -189,14 +189,6 @@ export const mockStorageItemList: StorageItem[] = [
   },
   {
     type: 'ingredient',
-    id: '16',
-    ingredientId: 'bulgogi_slice',
-    purchasedAt: '2026-02-18',
-    expiresAt: '2026-07-25',
-    storage: { type: 'freezer', side: 'inner', section: '1' },
-  },
-  {
-    type: 'ingredient',
     id: '17',
     ingredientId: 'pork_neck',
     purchasedAt: '2026-02-27',
@@ -206,7 +198,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '18',
-    ingredientId: 'shabu_slice_meat',
+    ingredientId: 'baby_leaf',
     purchasedAt: '2026-02-21',
     expiresAt: '2026-07-25',
     storage: { type: 'fridge', side: 'inner', section: '1' },
@@ -214,7 +206,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '19',
-    ingredientId: 'thin_beef_brisket',
+    ingredientId: 'beef_brisket',
     purchasedAt: '2026-02-22',
     expiresAt: '2026-07-25',
     storage: { type: 'freezer', side: 'inner', section: '1' },
@@ -231,7 +223,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '21',
-    ingredientId: 'spaghetti_noodle',
+    ingredientId: 'spaghetti_myeon',
     purchasedAt: '2026-04-28',
     expiresAt: '2028-05-20',
     storage: { type: 'pantry', side: 'inner', section: '1' },
@@ -247,7 +239,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '23',
-    ingredientId: 'buckwheat_noodle',
+    ingredientId: 'memil_garu',
     purchasedAt: '2026-02-18',
     expiresAt: '2027-05-18',
     storage: { type: 'pantry', side: 'inner', section: '1' },
@@ -255,7 +247,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '24',
-    ingredientId: 'rice_noodle',
+    ingredientId: 'ssal_guksu_myeon',
     purchasedAt: '2026-02-19',
     expiresAt: '2027-04-19',
     storage: { type: 'pantry', side: 'inner', section: '1' },
@@ -263,7 +255,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '25',
-    ingredientId: 'flat_glass_noodle',
+    ingredientId: 'dangmyeon',
     purchasedAt: '2026-02-15',
     expiresAt: '2028-06-15',
     storage: { type: 'pantry', side: 'inner', section: '1' },
@@ -287,7 +279,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '28',
-    ingredientId: 'dumpling_wrapper',
+    ingredientId: 'mandupi',
     purchasedAt: '2026-03-02',
     expiresAt: '2026-05-17',
     storage: { type: 'fridge', side: 'inner', section: '1' },
@@ -295,7 +287,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '29',
-    ingredientId: 'tteokbokki_ricecake',
+    ingredientId: 'tteokbokki_tteok',
     purchasedAt: '2026-03-03',
     expiresAt: '2026-08-10',
     storage: { type: 'fridge', side: 'inner', section: '1' },
@@ -303,7 +295,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '30',
-    ingredientId: 'kalguksu_noodle',
+    ingredientId: 'kal_guksu_myeon',
     purchasedAt: '2026-03-02',
     expiresAt: '2026-06-01',
     storage: { type: 'fridge', side: 'inner', section: '1' },

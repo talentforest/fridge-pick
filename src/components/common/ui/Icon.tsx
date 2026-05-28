@@ -1,6 +1,9 @@
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { colorTokens } from '@/theme/color';
 import {
+  Scooter,
+  BadgeQuestionMark,
+  Sparkles,
   BadgeAlert,
   Box,
   ShelvingUnit,
@@ -79,6 +82,9 @@ import {
 import { useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'Scooter'
+  | 'BadgeQuestionMark'
+  | 'Sparkles'
   | 'BadgeAlert'
   | 'EggFried'
   | 'Amphora'
@@ -205,7 +211,10 @@ export default function Icon({
   };
 
   const iconObj: { [key in IconName | CategoryIconName]: LucideIcon } = {
+    Scooter,
+    BadgeQuestionMark,
     BadgeAlert,
+    Sparkles,
     Zap,
     EggFried,
     Amphora,

@@ -1,22 +1,23 @@
 import CarouselContainer from '@/components/common/container/CarouselContainer';
-import FilterContainer from '@/components/common/container/FilterContainer';
-import LabelContainer from '@/components/common/container/LabelContainer';
-import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import SectionTitle from '@/components/common/header/SectionTitle';
-import TextInput from '@/components/common/ui/TextInput';
 import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 import TodayMeal from '@/components/home/TodayMeal';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
 import { searchKeywordAtom } from '@/atom/storageItemAtom';
-import { useGetMealList } from '@/hooks/meal/useGetMealList';
+import { useGetMealList } from '@/hooks';
 import { useAtom } from 'jotai';
 import { View } from 'react-native';
 import { useCallback } from 'react';
-import { EnrichMealIngredientStructure, Meal } from '@/types/meal';
+import { MealWithEnrichIngredient } from '@/types/meal';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
-import NavigateBtn from '@/components/common/NavigateBtn';
 import CautionIngredientList from '@/components/home/CautionIngredientList';
+import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
+import LabelContainer from '@/components/common/container/LabelContainer';
+import TextInput from '@/components/common/ui/TextInput';
+import FilterContainer from '@/components/common/container/FilterContainer';
+import NavigateBtn from '@/components/common/NavigateBtn';
+import MealCard from '@/components/selectableItem/meal/MealCard';
 
 export default function MealScreen() {
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
@@ -25,15 +26,13 @@ export default function MealScreen() {
     useGetMealList();
 
   const data = useCallback(
-    (meal: Meal & { ingredientStructure: EnrichMealIngredientStructure }) => (
-      <MealCompactCard key={meal.id} meal={meal} />
-    ),
+    (meal: MealWithEnrichIngredient) => <MealCard key={meal.id} meal={meal} />,
     [],
   );
 
   return (
-    <SafeAreaViewContainer edges={['top']}>
-      <ScreenHeader title="식사 메뉴" isDetailPage={false} />
+    <SafeAreaViewContainer>
+      <ScreenHeader title="오늘의 식사 메뉴" isDetailPage={false} />
 
       {/* 전체 식사 메뉴 리스트 */}
       <ScrollViewContainer>
@@ -82,8 +81,8 @@ export default function MealScreen() {
           </View>
         )}
 
+        {/* 메뉴 검색바 */}
         <View className="min-h-[800px]">
-          {/* 메뉴 검색바 */}
           <LabelContainer label="메뉴 검색">
             <TextInput
               value={searchKeyword}
@@ -94,7 +93,7 @@ export default function MealScreen() {
           </LabelContainer>
 
           <FilterContainer
-            columns={2}
+            columns={1}
             maximum={10}
             filterList={mealFilterList}
             dataList={searchKeywordMealList.slice(0, 20)}

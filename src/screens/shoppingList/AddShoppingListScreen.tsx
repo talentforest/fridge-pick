@@ -3,7 +3,7 @@ import {
   convertedStorageItemListAtom,
   deleteShoppingItemListAtom,
 } from '@/atom/shoppingListAtom';
-import { useOverlay } from '@/hooks/common/useOverlay';
+import { useOverlay } from '@/hooks';
 import { StackNavProp } from '@/types/RootStackParamList';
 import { useNavigation } from '@react-navigation/native';
 import { useAtomValue, useSetAtom } from 'jotai';

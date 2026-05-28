@@ -1,6 +1,6 @@
 import { searchKeywordAtom } from '@/atom/storageItemAtom';
 import { storageObj } from '@/constants';
-import { useOverlay } from '@/hooks/common/useOverlay';
+import { useOverlay } from '@/hooks';
 import { RootStackParamList, StackNavProp } from '@/types/RootStackParamList';
 import {
   RouteProp,
@@ -71,7 +71,7 @@ export default function StorageDetailScreen() {
   }, [isFocused]);
 
   return (
-    <SafeAreaViewContainer edges={['top']}>
+    <SafeAreaViewContainer>
       <ScreenHeader title={storageLabel} onLeftPress={headerLeftPress} />
 
       <ScrollViewContainer contentContainerClassName="gap-y-20 pt-4">

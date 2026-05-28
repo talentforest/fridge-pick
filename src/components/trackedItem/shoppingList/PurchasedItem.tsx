@@ -3,7 +3,7 @@ import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import EditPurchasedItemSheet from '@/components/trackedItem/shoppingList/EditPurchasedItemSheet';
 import { storageObj } from '@/constants';
-import { useOverlay } from '@/hooks/common/useOverlay';
+import { useOverlay } from '@/hooks';
 import { EditableStorageItemData, EnrichStorageItem } from '@/types/storage';
 import { formatDateString, getRemainingDays } from '@/utils';
 import { View } from 'react-native';

@@ -1,9 +1,9 @@
 import { categoryImagesObj, image_empty_plate } from '@/constants';
-import { Meal } from '@/types/meal';
+import { Meal, MealWithEnrichIngredient } from '@/types/meal';
 import { Image } from 'react-native';
 
 interface IngredientImageProps {
-  meal?: Meal;
+  meal?: Meal | MealWithEnrichIngredient;
   size: number;
 }
 

@@ -21,6 +21,13 @@ export const filterObj = {
       color: 'yellow',
       icon: 'Timer' as const,
     },
+    hasAll: {
+      id: 6,
+      name: 'hasAll',
+      label: '모든 재료 있음',
+      color: 'red',
+      icon: 'ShoppingBag' as const,
+    },
     mininum: {
       id: 4,
       name: 'mininum',
@@ -34,13 +41,6 @@ export const filterObj = {
       label: '빠르게 완성',
       color: 'green',
       icon: 'Zap' as const,
-    },
-    hasAll: {
-      id: 6,
-      name: 'hasAll',
-      label: '모든 재료 있음',
-      color: 'red',
-      icon: 'ShoppingBag' as const,
     },
   },
 } as const;

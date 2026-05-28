@@ -1,5 +1,5 @@
 import { initialCustomIngredient } from '@/constants/initialItem';
-import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
+import { AppError, AppSuccess } from '@/hooks';
 import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import { EnrichStorageItem } from '@/types/storage';
 import { findSelectableItemWithKey } from '@/utils';

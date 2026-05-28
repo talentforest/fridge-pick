@@ -1,4 +1,4 @@
-import { ingredientObj } from '@/constants';
+import { ingredientObj, ingredientVariantsObj } from '@/constants';
 import { CategoryKey } from '@/types/category';
 import { StorageTypeId } from '@/types/storage';
 import { StockUnit, VolumeUnit, WeightUnit } from '@/types/unit';
@@ -6,6 +6,9 @@ import { StockUnit, VolumeUnit, WeightUnit } from '@/types/unit';
 /* -------------------------------------------------------------------------- */
 /*                              Ingredient Type                               */
 /* -------------------------------------------------------------------------- */
+
+/** variants */
+export type IngredientVariantKey = keyof typeof ingredientVariantsObj;
 
 /** 등록 Ingredient */
 export type Ingredient = {
@@ -45,6 +48,13 @@ export type Ingredient = {
   packageWeight?: {
     amount: number;
     unit: WeightUnit | VolumeUnit;
+  };
+
+  variants?: {
+    [key in IngredientVariantKey]: {
+      label: string;
+      imageName: string;
+    };
   };
 
   /** 검색용 동의어 */

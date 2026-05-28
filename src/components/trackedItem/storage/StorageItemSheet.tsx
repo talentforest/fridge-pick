@@ -1,6 +1,6 @@
 import { changeStorageItemAtom, deleteStorageItemListAtom } from '@/atom/storageItemAtom';
 import { image_empty_plate, storageObj } from '@/constants';
-import { useOverlay } from '@/hooks/common/useOverlay';
+import { useOverlay, useGetMealList } from '@/hooks';
 import { useSetAtom } from 'jotai';
 import { getTrackedItemLabel } from '@/utils';
 import { EnrichStorageItem, StorageItem } from '@/types/storage';
@@ -15,9 +15,9 @@ import StorageModal from '@/components/trackedItem/storage/StorageModal';
 import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 import FavoriteBtn from '@/components/common/FavoriteBtn';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
-import { useGetMealList } from '@/hooks/meal/useGetMealList';
 import Text from '@/components/common/ui/Text';
 import Card from '@/components/common/ui/Card';
+import ModalHeader from '@/components/common/header/ModalHeader';
 
 interface StorageItemSheetProps {
   storageItem: EnrichStorageItem;
@@ -79,6 +79,8 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
 
   return (
     <View className="my-2 w-full flex-1 gap-y-1.5">
+      <ModalHeader hasX={false} title="식재료 정보" />
+
       <View className="flex-row items-start justify-between">
         <TrackedItemImageLabel
           item={storageItem}

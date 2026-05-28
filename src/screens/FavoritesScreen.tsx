@@ -46,7 +46,7 @@ export default function FavoritesScreen() {
     <SafeAreaViewContainer edges={['top', 'bottom']}>
       <ScreenHeader title="자주먹는 식재료와 메뉴" />
 
-      <ScrollViewContainer contentContainerClassName="pt-4">
+      <ScrollViewContainer contentContainerClassName="pt-4 flex-1">
         <View className="gap-y-3">
           <SectionTitle title="좋아하는 식재료" icon="Heart" />
 

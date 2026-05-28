@@ -4,12 +4,12 @@ import CautionMealListByIngredient from '@/components/meal/CautionMealListByIngr
 import FullBleedSection from '@/components/common/container/FullBleedSection';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import GridContainer from '@/components/common/container/GridContainer';
 import { cautionStorageItemListAtom } from '@/atom/storageItemAtom';
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 import { View } from 'react-native';
 import { EnrichStorageItem, StorageTypeId } from '@/types/storage';
-import GridContainer from '@/components/common/container/GridContainer';
 
 interface ExpiringIngredientsProps {
   hasCautionIngredientMeal?: boolean;
@@ -40,7 +40,7 @@ export default function CautionIngredientList({
   }, [expiredStorageItemList, storageType]);
 
   return cautionStorageItemList.length > 0 ? (
-    <View className="gap-y-3">
+    <View className={`${hasCautionIngredientMeal ? 'h-[540px]' : ''} gap-y-3`}>
       <SectionTitle title={title || '지금 주의해야하는 식재료'} icon="ClockAlert" />
 
       {isGridType ? (

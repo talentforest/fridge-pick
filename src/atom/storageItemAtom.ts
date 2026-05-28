@@ -1,5 +1,5 @@
 import { mockStorageItemList, storageObj } from '@/constants';
-import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
+import { AppError, AppSuccess } from '@/hooks';
 import { Ingredient } from '@/types/ingredient';
 import {
   EditableStorageItemData,

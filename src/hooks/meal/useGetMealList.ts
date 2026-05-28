@@ -1,4 +1,8 @@
-import { allStorageItemListAtom, searchKeywordAtom } from '@/atom/storageItemAtom';
+import {
+  allStorageItemListAtom,
+  cautionStorageItemListAtom,
+  searchKeywordAtom,
+} from '@/atom/storageItemAtom';
 import { allMealList, filterObj } from '@/constants';
 import { MealFilterKey } from '@/types/filter';
 import { Ingredient } from '@/types/ingredient';
@@ -7,9 +11,11 @@ import {
   IngredientStructure,
   Meal,
   EnrichMealIngredientStructure,
+  MealWithEnrichIngredient,
+  SeasoningIngredientItem,
 } from '@/types/meal';
 import { EnrichStorageItem } from '@/types/storage';
-import { findIngredient, findMeal, getExpirationStatus, getRemainingDays } from '@/utils';
+import { findIngredient, findMeal, findSeasoning } from '@/utils';
 import { useAtom, useAtomValue } from 'jotai';
 import { useCallback, useMemo } from 'react';
 
@@ -20,24 +26,26 @@ export const useGetMealList = () => {
 
   const storageItems = useAtomValue(allStorageItemListAtom);
 
+  const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom('caution'));
+
   /** 간단하게 만들수 있는 메뉴인지 검사
    * filterLabel = '간단완성'
    */
-  const isEasyMeal = (meal: Meal): boolean => {
+  const isEasyMeal = (meal: MealWithEnrichIngredient): boolean => {
     return meal.difficulty === 'easy' && meal.cookTime <= 20;
   };
 
   /** 빠르게 만들수 있는 메뉴인지 검사
    * * filterLabel = '빠르게완성'
    */
-  const isFastestMeal = (meal: Meal): boolean => {
+  const isFastestMeal = (meal: MealWithEnrichIngredient): boolean => {
     return meal.cookTime <= 15;
   };
 
   /** 최소한의 식재료 메뉴인지 검사
    * * filterLabel = '최소 식재료 사용'
    */
-  const isMinimumMeal = (ingredientStructure: IngredientStructure): boolean => {
+  const isMinimumMeal = (ingredientStructure: EnrichMealIngredientStructure): boolean => {
     if (!ingredientStructure) return false;
     const { essential, common, optional } = ingredientStructure;
     const counts = essential.length + common.length + optional.length;
@@ -48,7 +56,7 @@ export const useGetMealList = () => {
    * * filterLabel = '모든 재료 있음'
    */
   const hasAllMeal = useCallback(
-    (ingredientStructure: IngredientStructure): boolean => {
+    (ingredientStructure: EnrichMealIngredientStructure): boolean => {
       if (!ingredientStructure) return false;
 
       const { essential, common } = ingredientStructure;
@@ -74,34 +82,25 @@ export const useGetMealList = () => {
     [storageItems],
   );
 
-  /** 소비기한 임박 메뉴인지 검사
+  /** 소비기한 임박 식재료를 갖고 있는 메뉴인지 검사
    * * filterLabel = '소비기한 임박'
    */
-  const isExpiredSoonMeal = useCallback(
-    (meal: Meal): boolean => {
-      const soonIngredients = storageItems
-        .filter((i) => {
-          const remainingDays = getRemainingDays(i.expiresAt);
-          const expirationStatus = getExpirationStatus(remainingDays);
-          return i.type !== 'custom' && expirationStatus === 'expiredSoon';
-        })
-        .map((item) => {
-          if (item.type === 'meal') {
-            return { type: 'meal' as const, id: item.mealId };
+  const hasExpiredSoonIngredientMeal = useCallback(
+    (meal: MealWithEnrichIngredient): boolean => {
+      if (!meal?.ingredientStructure) return false;
+
+      const { essential, common, seasoning } = meal.ingredientStructure;
+
+      return [...essential, ...common, ...seasoning].some((i) => {
+        return expiredStorageItemList.find(({ storageItem }) => {
+          if (storageItem.type === 'meal') {
+            return storageItem.mealId === i.id;
           }
-
-          return { type: 'ingredient' as const, id: item.ingredientId };
+          return storageItem.ingredientId === i.id;
         });
-
-      if (meal.mealType === 'instant') return false;
-
-      if (!meal.ingredientStructure) return false;
-
-      return meal.ingredientStructure.essential.some((i: MealIngredientItem) => {
-        return soonIngredients.find(({ id }) => id === i.id);
       });
     },
-    [storageItems],
+    [expiredStorageItemList],
   );
 
   /** 모든 필터링 적용 가능한 결과 메뉴 리스트
@@ -112,27 +111,36 @@ export const useGetMealList = () => {
   const addFilterInMealList = useCallback(
     (
       mealList: Meal[],
-    ): (Meal & {
-      ingredientStructure: EnrichMealIngredientStructure;
-      filterList: MealFilterKey[];
-    })[] => {
-      const resolveItem = ({ type, id }: MealIngredientItem) =>
-        type === 'ingredient' ? findIngredient(id) : findMeal(id);
+    ): (MealWithEnrichIngredient & { filterList: MealFilterKey[] })[] => {
+      const resolveItem = ({
+        type,
+        id,
+      }: MealIngredientItem | SeasoningIngredientItem) => {
+        if (type === 'meal') return findMeal(id);
+        if (type === 'seasoning') return findSeasoning(id);
+        return findIngredient(id);
+      };
 
       const mapStructure = (
         structure: IngredientStructure,
       ): EnrichMealIngredientStructure => ({
-        essential: structure.essential.map(resolveItem),
-        common: structure.common.map(resolveItem),
-        optional: structure.optional.map(resolveItem),
+        essential: structure.essential ? structure.essential.map(resolveItem) : [],
+        common: structure.common ? structure.common.map(resolveItem) : [],
+        seasoning: structure.seasoning
+          ? (structure.seasoning.map(resolveItem) as Ingredient[])
+          : [],
+        optional: structure.optional ? structure.optional.map(resolveItem) : [],
       });
 
-      const list = mealList
-        .filter((meal) => meal.mealType !== 'instant')
-        .map((meal) => ({
-          ...meal,
-          ingredientStructure: mapStructure(meal.ingredientStructure),
-        }));
+      const list: MealWithEnrichIngredient[] = mealList.map((meal) => {
+        const { ingredientStructure, ...rest } = meal;
+        return ingredientStructure
+          ? {
+              ...meal,
+              ingredientStructure: mapStructure(ingredientStructure),
+            }
+          : rest;
+      });
 
       const filterResult = list.map((meal) => {
         const filterList: MealFilterKey[] = [];
@@ -141,20 +149,22 @@ export const useGetMealList = () => {
           filterList.push('easy' as const);
         }
 
-        if (isExpiredSoonMeal(meal)) {
+        if (hasExpiredSoonIngredientMeal(meal)) {
           filterList.push('expiredSoon' as const);
-        }
-
-        if (isMinimumMeal(meal.ingredientStructure)) {
-          filterList.push('mininum' as const);
         }
 
         if (isFastestMeal(meal)) {
           filterList.push('fastest' as const);
         }
 
-        if (hasAllMeal(meal.ingredientStructure)) {
-          filterList.push('hasAll' as const);
+        if (meal?.ingredientStructure) {
+          if (isMinimumMeal(meal.ingredientStructure)) {
+            filterList.push('mininum' as const);
+          }
+
+          if (hasAllMeal(meal.ingredientStructure)) {
+            filterList.push('hasAll' as const);
+          }
         }
 
         return { ...meal, filterList };
@@ -162,8 +172,10 @@ export const useGetMealList = () => {
 
       return filterResult;
     },
-    [hasAllMeal, isExpiredSoonMeal],
+    [hasAllMeal, hasExpiredSoonIngredientMeal],
   );
+
+  // --------------- Meal List -------------------
 
   /** "소비기한 임박" 필터링 목록 */
   const expiredSoonMealList = useMemo(() => {
@@ -188,20 +200,22 @@ export const useGetMealList = () => {
       };
 
       return expiredSoonMealList.filter((meal) => {
+        if (!meal.ingredientStructure) return;
+
         const essential = meal.ingredientStructure.essential.find((item) => {
           return findItem(item, focusedItem);
         });
         return essential;
       });
     },
+
     [expiredSoonMealList],
   );
 
   /** "빠르게 완성" 필터링 목록 */
   const fastestMealList = useMemo(() => {
-    return addFilterInMealList(allMealList).filter((item) =>
-      item.filterList.includes('fastest'),
-    );
+    const mealList = addFilterInMealList(allMealList);
+    return mealList.filter((meal) => meal.filterList.includes('fastest'));
   }, [addFilterInMealList]);
 
   /** "모든 재료가 있음" 필터링 목록 */
@@ -228,27 +242,31 @@ export const useGetMealList = () => {
   /** 특정 식재료를 갖고 있는 메뉴 목록
    * - ex) 계란 활용 메뉴
    */
-  const getHasStorageItemInMealList = useCallback((storageItem: EnrichStorageItem) => {
-    return allMealList.filter((meal) => {
-      if (storageItem.type === 'custom' || meal.mealType === 'instant') return false;
+  const getHasStorageItemInMealList = useCallback(
+    (storageItem: EnrichStorageItem) => {
+      return addFilterInMealList(allMealList).filter((meal) => {
+        if (storageItem.type === 'custom') return false;
 
-      const findItem = (item: MealIngredientItem, storageItem: EnrichStorageItem) => {
-        if (storageItem.type === 'ingredient') {
-          return item.id === storageItem.ingredientId;
-        }
-        if (storageItem.type === 'meal') {
-          return item.id === storageItem.mealId;
-        }
-      };
+        const hasIngredientItem = (ingredientItem: Meal | Ingredient) => {
+          const { id } = ingredientItem;
 
-      // common에 있는건 하지 말자 필수주재료인것만
-      const essential = meal.ingredientStructure.essential.find((item) => {
-        return findItem(item, storageItem);
+          if (storageItem.type === 'ingredient') {
+            return id === storageItem.ingredientId;
+          }
+          if (storageItem.type === 'meal') {
+            return id === storageItem.mealId;
+          }
+        };
+
+        if (!meal.ingredientStructure) return false;
+
+        const { essential, common, seasoning } = meal.ingredientStructure;
+
+        return [...essential, ...common, ...seasoning].find(hasIngredientItem);
       });
-
-      return essential;
-    });
-  }, []);
+    },
+    [addFilterInMealList],
+  );
 
   const allFilteredMealList = addFilterInMealList(allMealList);
 

@@ -135,10 +135,14 @@ const TouchableSpaceCard = ({
   const favoriteNotificationObj = {
     hasNotAllFavorites: {
       label: '보관함에 픽이 없어요',
+      icon: undefined,
+      color: 'yellow' as const,
+      condition: hasNotAllFavorites,
     },
-    icon: undefined,
-    color: 'yellow' as const,
-    condition: hasNotAllFavorites,
+    // TODO
+    frequently: {
+      label: '최근 많이 먹은 식재료',
+    },
   };
 
   return (

@@ -1,8 +1,8 @@
-import { AppError, AppSuccess } from '@/hooks/common/useErrorHandler';
-import { Meal } from '@/types/meal';
+import { AppError, AppSuccess } from '@/hooks';
+import { TodayMeal } from '@/types/meal';
 import { atom } from 'jotai';
 
-export const todayMealListAtom = atom<Meal[]>([]);
+export const todayMealListAtom = atom<TodayMeal[]>([]);
 
 /**
  * 오늘의 식사메뉴 추가.
@@ -10,12 +10,12 @@ export const todayMealListAtom = atom<Meal[]>([]);
  */
 export const addTodayMealItemAtom = atom(
   null,
-  (get, set, newMeal: Meal): AppError<Meal> | AppSuccess => {
+  (get, set, newMeal: TodayMeal): AppError<TodayMeal> | AppSuccess<TodayMeal> => {
     const todayMealList = get(todayMealListAtom);
 
     // 목록에 있는지 검사
-    const duplicateItem = todayMealList.find((meal) => {
-      return meal.id === newMeal.id;
+    const duplicateItem = todayMealList.find(({ meal }) => {
+      return meal.id === newMeal.meal.id;
     });
 
     if (duplicateItem) {
@@ -46,6 +46,6 @@ export const deleteTodayMealItemAtom = atom(null, (get, set, ids: string[]) => {
 
   set(
     todayMealListAtom,
-    list.filter((x) => !idSet.has(x.id)),
+    list.filter((x) => !idSet.has(x.meal.id)),
   );
 });

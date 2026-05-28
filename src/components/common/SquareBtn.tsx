@@ -8,7 +8,7 @@ interface SquareBtnProps {
   iconName?: IconName;
   iconSize?: number;
   textClassName?: string;
-  color?: 'blue' | 'green' | 'yellow' | 'ice' | 'indigo' | 'inActive';
+  color?: 'blue' | 'green' | 'yellow' | 'ice' | 'indigo' | 'inActive' | 'neutral';
 }
 
 export default function SquareBtn({
@@ -26,6 +26,7 @@ export default function SquareBtn({
     yellow: 'bg-amber-600',
     indigo: 'bg-indigo-600',
     inActive: 'bg-inactive-bg',
+    neutral: 'bg-neutral-7',
   };
 
   const textColorStyle = {
@@ -35,6 +36,7 @@ export default function SquareBtn({
     indigo: '!text-white',
     yellow: '!text-white',
     inActive: '!text-inactive-text',
+    neutral: '!text-white',
   };
 
   return (

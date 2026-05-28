@@ -18,7 +18,7 @@ export default function HomeScreen() {
 
         <CautionIngredientList />
 
-        <TodayMeal />
+        <TodayMeal hasHeader />
 
         <RecommendedMeal />
       </ScrollViewContainer>

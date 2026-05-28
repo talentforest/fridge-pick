@@ -1,7 +1,7 @@
 import LabelContainer from '@/components/common/container/LabelContainer';
 import IconWithText from '@/components/common/IconWithText';
 import TextArea from '@/components/common/ui/TextArea';
-import { useOverlay } from '@/hooks/common/useOverlay';
+import { useOverlay } from '@/hooks';
 import { EditableStorageItemData } from '@/types/storage';
 
 interface FormMemoProps {
