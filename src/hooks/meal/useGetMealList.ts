@@ -28,6 +28,15 @@ export const useGetMealList = () => {
 
   const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom('caution'));
 
+  /** 오늘의 식사 메뉴 추천
+   * - 1순위 전체 식재료가 다 있는 경우
+   * - 2순위 메인 음식일 것
+   * - 3순위 최소한의 식재료로 만들 수 있는지
+   */
+  const isRecommendedTodayMeal = (meal: MealWithEnrichIngredient) => {
+    return;
+  };
+
   /** 간단하게 만들수 있는 메뉴인지 검사
    * filterLabel = '간단완성'
    */
@@ -111,7 +120,9 @@ export const useGetMealList = () => {
   const addFilterInMealList = useCallback(
     (
       mealList: Meal[],
-    ): (MealWithEnrichIngredient & { filterList: MealFilterKey[] })[] => {
+    ): (MealWithEnrichIngredient & {
+      filterList: (MealFilterKey | 'recommendedTodayMeal')[];
+    })[] => {
       const resolveItem = ({
         type,
         id,
@@ -153,15 +164,18 @@ export const useGetMealList = () => {
           filterList.push('expiredSoon' as const);
         }
 
+        //
         if (isFastestMeal(meal)) {
           filterList.push('fastest' as const);
         }
 
+        //식재료 관련
         if (meal?.ingredientStructure) {
+          // 최소한의 식재료
           if (isMinimumMeal(meal.ingredientStructure)) {
-            filterList.push('mininum' as const);
+            filterList.push('minimum' as const);
           }
-
+          // 모든 식재료
           if (hasAllMeal(meal.ingredientStructure)) {
             filterList.push('hasAll' as const);
           }
@@ -216,6 +230,12 @@ export const useGetMealList = () => {
   const fastestMealList = useMemo(() => {
     const mealList = addFilterInMealList(allMealList);
     return mealList.filter((meal) => meal.filterList.includes('fastest'));
+  }, [addFilterInMealList]);
+
+  /** "오늘의 식사 추천" 필터링 목록 */
+  const recommendedTodayMealList = useMemo(() => {
+    const mealList = addFilterInMealList(allMealList);
+    return mealList.filter((meal) => meal.filterList.includes('recommendedTodayMeal'));
   }, [addFilterInMealList]);
 
   /** "모든 재료가 있음" 필터링 목록 */
@@ -279,5 +299,6 @@ export const useGetMealList = () => {
     searchKeywordMealList,
     allFilteredMealList,
     getHasStorageItemInMealList,
+    recommendedTodayMealList,
   };
 };

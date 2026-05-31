@@ -28,9 +28,9 @@ export const filterObj = {
       color: 'red',
       icon: 'ShoppingBag' as const,
     },
-    mininum: {
+    minimum: {
       id: 4,
-      name: 'mininum',
+      name: 'minimum',
       label: '최소 식재료 사용',
       color: 'green',
       icon: 'SquircleDashed' as const,
