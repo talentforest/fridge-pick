@@ -1,5 +1,5 @@
 import { itemListByStorageAtom } from '@/atom/storageItemAtom';
-import { categoryObj, storageObj } from '@/constants';
+import { ingredientCategoryObj, storageObj } from '@/constants';
 import { CategoryKey } from '@/types/category';
 import {
   EnrichStorageItem,
@@ -90,7 +90,7 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
       grouped[category]!.push(enrichedItem);
     });
 
-    return Object.values(categoryObj)
+    return Object.values(ingredientCategoryObj)
       .map((category) => ({
         category,
         items: grouped[category.id] ?? [],

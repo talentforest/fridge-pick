@@ -1,84 +1,8 @@
-import { StorageItem } from '@/types/storage';
-
-export const DEFAULT_EXPIRATION_DAYS = 7;
-export const DEFAULT_STORAGE = 'fridge' as const;
-
-export const storageObj = {
-  /** 냉동실 */
-  freezer: {
-    type: 'ingredient',
-    id: 'freezer',
-    label: '냉동실',
-    comfortLabel: '냉동',
-    side: {
-      inner: {
-        type: 'ingredient',
-        id: 'inner',
-        label: '안쪽',
-        sections: [{ type: 'ingredient', id: '1', label: '1번칸' }],
-      },
-      door: {
-        type: 'ingredient',
-        id: 'door',
-        label: '문쪽',
-        sections: [{ type: 'ingredient', id: '1', label: '1번칸' }],
-      },
-    },
-    order: 1,
-    color: 'ice',
-    icon: 'Snowflake',
-  },
-
-  /** 냉장실 */
-  fridge: {
-    type: 'ingredient',
-    id: 'fridge',
-    label: '냉장실',
-    comfortLabel: '냉장',
-    side: {
-      inner: {
-        type: 'ingredient',
-        id: 'inner',
-        label: '안쪽',
-        sections: [{ type: 'ingredient', id: '1', label: '1번칸' }],
-      },
-      door: {
-        type: 'ingredient',
-        id: 'door',
-        label: '문쪽',
-        sections: [{ type: 'ingredient', id: '1', label: '1번칸' }],
-      },
-    },
-    order: 2,
-    color: 'blue',
-    icon: 'Wind',
-  },
-
-  /** 실온보관 */
-  pantry: {
-    type: 'ingredient',
-    id: 'pantry',
-    label: '실온보관',
-    comfortLabel: '실온',
-    side: {
-      inner: {
-        type: 'ingredient',
-        id: 'inner',
-        label: '안쪽',
-        sections: [{ type: 'ingredient', id: '1', label: '1번칸' }],
-      },
-      door: {
-        type: 'ingredient',
-        id: 'door',
-        label: '문쪽',
-        sections: [{ type: 'ingredient', id: '1', label: '1번칸' }],
-      },
-    },
-    order: 3,
-    color: 'yellow',
-    icon: 'ShelvingUnit',
-  },
-} as const;
+import { StorageItem, CustomStorageItem } from '@/types/storage';
+import { DEFAULT_EXPIRATION_DAYS } from '@/constants/storage/storageObj';
+import { formatDateString } from '@/utils/formatDate';
+import { addDays } from 'date-fns';
+import { nanoid } from 'nanoid/non-secure';
 
 export const mockStorageItemList: StorageItem[] = [
   {
@@ -174,7 +98,7 @@ export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '14',
-    ingredientId: 'smoked_duck_slice',
+    ingredientId: 'duck_slice_smoked',
     purchasedAt: '2026-02-25',
     expiresAt: '2026-05-01',
     storage: { type: 'freezer', side: 'inner', section: '1' },
@@ -301,3 +225,15 @@ export const mockStorageItemList: StorageItem[] = [
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
 ];
+
+const now = new Date();
+
+export const initialCustomStorageItem: CustomStorageItem = {
+  type: 'custom',
+  id: nanoid(),
+  customLabel: '',
+  storage: { type: 'fridge' as const },
+  purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
+  expiresAt: formatDateString(addDays(now, DEFAULT_EXPIRATION_DAYS), 'yyyy-MM-dd'),
+  memo: '',
+};

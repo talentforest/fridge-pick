@@ -39,8 +39,6 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
 
   const needMoreNum = requiredTotal - hasStorageItemList.length;
 
-  console.log(meal.mealType);
-
   return (
     <View className="pt-3">
       <ModalHeader
@@ -83,22 +81,22 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
             <View className="my-4 flex-row items-center gap-x-6 px-2">
               <View className="">
                 <View className="mb-2.5 flex-row justify-between border-b border-dashed border-neutral-5 pb-2.5">
-                  <Text className="w-20 text-neutral-5">요리 난이도</Text>
+                  <Text className="w-24 text-neutral-5">요리 난이도</Text>
                   <Indicator type="difficulty" value={meal.difficulty} />
                 </View>
 
                 <View className="mb-2.5 flex-row justify-between border-b border-dashed border-neutral-5 pb-2.5">
-                  <Text className="w-20 text-neutral-5">요리 시간</Text>
+                  <Text className="w-24 text-neutral-5">요리 시간</Text>
                   <Indicator type="time" value={meal.cookTime} />
                 </View>
 
                 <View className="flex-row justify-between">
-                  <Text className="w-20 text-neutral-5">총 식재료</Text>
+                  <Text className="w-24 text-neutral-5">총 식재료</Text>
                   <Indicator type="total" value={requiredTotal} />
                 </View>
               </View>
 
-              <View className="flex-1 gap-y-2">
+              <View className="flex-1 gap-y-2.5">
                 {/* 진행률 */}
                 <ProgressBar label="재료보유율" percentage={percentage} />
 
@@ -151,7 +149,7 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
 
           {needMoreNum > 0 && (
             <SquareBtn
-              name={`부족한 식재료 ${needMoreNum}개 담기`}
+              name={`장바구니에 부족한 식재료 ${needMoreNum}개 담기`}
               iconName="ShoppingBasket"
               onPress={onDeletePress}
               color="indigo"

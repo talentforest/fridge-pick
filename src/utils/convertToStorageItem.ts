@@ -1,6 +1,6 @@
 import { DEFAULT_EXPIRATION_DAYS } from '@/constants';
 import { Ingredient } from '@/types/ingredient';
-import { Meal } from '@/types/meal';
+import { Meal, MealKey } from '@/types/meal';
 import { IngredientStorageItem, MealStorageItem } from '@/types/storage';
 import { formatDateString } from '@/utils/formatDate';
 import { calculateExpiresAt } from '@/utils/getExpirationDate';
@@ -34,17 +34,15 @@ export const convertMealToStorageItem = (
 ): MealStorageItem & { meal: Meal } => {
   const now = new Date();
 
-  const { id, defaultStorage, expirationDays } = meal;
-
-  const expiresAtValue = expirationDays[defaultStorage] || DEFAULT_EXPIRATION_DAYS;
+  const { id } = meal;
 
   return {
     type: 'meal',
     id: nanoid(),
-    storage: { type: defaultStorage },
-    expiresAt: calculateExpiresAt(now, expiresAtValue),
+    storage: { type: 'fridge' },
+    expiresAt: calculateExpiresAt(now, 3),
     purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
-    mealId: id,
+    mealId: id as MealKey,
     meal,
   };
 };

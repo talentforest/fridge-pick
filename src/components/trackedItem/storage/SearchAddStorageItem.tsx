@@ -4,7 +4,7 @@ import IconWithText from '@/components/common/IconWithText';
 import TextInput from '@/components/common/ui/TextInput';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
-import { initialCustomStorageItem } from '@/constants/initialItem';
+import { initialCustomStorageItem } from '@/constants';
 import { EnrichStorageItem } from '@/types/storage';
 import {
   convertIngredientToStorageItem,

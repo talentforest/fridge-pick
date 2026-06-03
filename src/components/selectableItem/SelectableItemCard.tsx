@@ -7,8 +7,7 @@ import { useAtomValue } from 'jotai';
 import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
 import Icon from '@/components/common/ui/Icon';
 import { findShoppingItem } from '@/atom/shoppingListAtom';
-import { storageObj } from '@/constants';
-import { iosShadowStyle } from '@/constants/shadowStyle';
+import { storageObj, iosShadowStyle } from '@/constants';
 
 interface SelectableItemCardProps {
   item: SelectableItem;
@@ -32,19 +31,21 @@ export default function SelectableItemCard({
   const isShoppingItem = useAtomValue(findShoppingItem(key));
 
   return (
-    <Card className={`items-center justify-center gap-y-1 rounded-xl ${className}`}>
+    <Card className={`items-center justify-center gap-y-1 rounded-xl !p-1 ${className}`}>
       {/* 이미지 */}
       <ItemImage selectableItem={item} imageSize={imageSize} />
 
       {/* 라벨 */}
-      <Text className={`text-center leading-5 ${textClassName}`}>{item.label}</Text>
+      <Text className={`line-clamp-2 text-center leading-5 ${textClassName}`}>
+        {item.label}
+      </Text>
 
       {/* 남은일수 */}
-      {!isCompact && (
+      {/* {!isCompact &&  (
         <Text className="text-red-600">
           +{item.expirationDays[item.defaultStorage]}일
         </Text>
-      )}
+      )} */}
 
       {/* 장보기 목록에 있는 경우 */}
       {isShoppingItem && (

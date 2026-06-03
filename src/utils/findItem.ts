@@ -1,5 +1,5 @@
 import { allIngredientList, allMealList } from '@/constants';
-import { IngredientKey, SeasoningIngredientKey } from '@/types/ingredient';
+import { IngredientKey } from '@/types/ingredient';
 import { MealKey } from '@/types/meal';
 import { SelectableItem, TrackedItem } from '@/types/selectableItemAndTrackedItem';
 
@@ -60,15 +60,6 @@ export function findIngredient(ingredientId: IngredientKey) {
   const result = allIngredientList.find(({ id }) => id === ingredientId);
   if (!result) {
     throw new Error(`Ingredient not found: ${ingredientId}`);
-  }
-  return result;
-}
-
-/** 키로 양념 식재료 정보 찾기 */
-export function findSeasoning(seasoningId: SeasoningIngredientKey) {
-  const result = allIngredientList.find(({ id }) => id === seasoningId);
-  if (!result) {
-    throw new Error(`Ingredient not found: ${seasoningId}`);
   }
   return result;
 }

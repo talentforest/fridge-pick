@@ -1,6 +1,6 @@
 import Text from '@/components/common/ui/Text';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
-import { iosShadowStyle } from '@/constants/shadowStyle';
+import { iosShadowStyle } from '@/constants';
 import {
   BottomSheetBackdrop,
   BottomSheetModal,

@@ -83,21 +83,16 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
             className="flex-1"
             contentContainerClassName="flex-1"
           >
-            <View className={`flex-1 rounded-2xl border border-border bg-card`}>
-              <View className="flex-row items-center justify-between">
-                <Text className="pl-4">검색결과 {searchedStorageItemList.length}개</Text>
-                <Icon
-                  name="RefreshCcw"
-                  className="px-5 py-4"
-                  size={18}
-                  onPress={onRefreshPress}
-                />
+            <View className={`flex-1 rounded-2xl bg-card px-4`}>
+              <View className="h-12 flex-row items-center justify-between">
+                <Text className="">검색결과 {searchedStorageItemList.length}개</Text>
+                <Icon name="RefreshCcw" className="" size={18} onPress={onRefreshPress} />
               </View>
 
-              <View className="flex-1 px-4 pb-4">
+              <View className="w-full flex-1 border">
                 {/* 검색 결과 식재료 리스트 */}
                 {searchedStorageItemList.length > 0 ? (
-                  <GridContainer gap={10} columns={6}>
+                  <GridContainer columns={5} gap={4}>
                     {searchedStorageItemList.map((storageItem) => (
                       <TouchableOpacity
                         key={storageItem.id}
@@ -119,6 +114,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
           </ScrollView>
         )}
 
+        {/* 내가 갖고 있는 현 상태 */}
         {!searchKeyword &&
           (storageItemListByCategory.length !== 0 ? (
             <ScrollView
@@ -126,13 +122,13 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
               className="flex-1"
               contentContainerClassName="flex-1"
             >
-              <View className="flex-1 gap-y-3">
+              <View className="flex-1">
                 {storageItemListByCategory.map(({ category, items }, index) => (
                   <View
                     key={category.id}
-                    className={`flex-1 gap-y-3 border border-border bg-card p-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === storageItemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
+                    className={`flex-1 bg-card px-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === storageItemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
                   >
-                    <View className="flex-row items-center gap-x-1">
+                    <View className="h-12 flex-row items-center gap-x-1">
                       {category.icon && <Icon name={category.icon} size={15} />}
 
                       <Text>{category.label}</Text>

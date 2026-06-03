@@ -73,13 +73,13 @@ export default function SpaceGrid() {
         {/* 나의 냉장고 */}
         <Card className="h-[190px] w-[38%] gap-y-[10px] !py-5">
           <Text>나의 냉장고</Text>
-          <View className="w-full flex-1 items-center justify-center p-3">
+          <View className="relative w-full flex-1 items-center justify-center">
             {/* 주의 식재료가 있는 경우 빨간 점으로 표시 */}
             {expiredStorageItemList.length > 0 && (
               <View className="ml-12 size-2.5 rounded-xl bg-red-500" />
             )}
 
-            <Image source={image_fridge} />
+            <Image source={image_fridge} className="w-full flex-1 object-contain" />
           </View>
         </Card>
 

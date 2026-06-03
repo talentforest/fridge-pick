@@ -1,6 +1,5 @@
 import Text from '@/components/common/ui/Text';
-import { expirationStatusObj } from '@/constants';
-import { iosShadowStyle } from '@/constants/shadowStyle';
+import { expirationStatusObj, iosShadowStyle } from '@/constants';
 import { EnrichStorageItem } from '@/types/storage';
 import { formatRemainingDays, getExpirationStatus, getTrackedItemLabel } from '@/utils';
 import { View } from 'react-native';

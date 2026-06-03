@@ -1,6 +1,5 @@
 import { allStorageItemListAtom } from '@/atom/storageItemAtom';
-import { mockShoppingList } from '@/constants';
-import { initialCustomStorageItem } from '@/constants/initialItem';
+import { mockShoppingList, initialCustomStorageItem } from '@/constants';
 import { AppError, AppSuccess } from '@/hooks';
 import { ShoppingItem } from '@/types/shoppingList';
 import { EnrichStorageItem } from '@/types/storage';

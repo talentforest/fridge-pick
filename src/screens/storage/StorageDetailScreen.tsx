@@ -109,6 +109,7 @@ export default function StorageDetailScreen() {
             </View>
           </SectionTitle>
 
+          {/* 스토리지 박스 */}
           <Storage storageType={storageType} openItemPress={onItemPress} />
         </View>
       </ScrollViewContainer>

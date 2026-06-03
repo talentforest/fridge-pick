@@ -4,7 +4,7 @@ import { EnrichStorageItem } from '@/types/storage';
 import { View } from 'react-native';
 import { getTrackedItemLabel } from '@/utils';
 import ItemImage from '@/components/common/ItemImage';
-import { categoryObj } from '@/constants';
+import { ingredientCategoryObj } from '@/constants';
 
 interface TrackedItemImageLabelProps {
   item: EnrichStorageItem | EnrichShoppingItem;
@@ -36,7 +36,7 @@ export default function TrackedItemImageLabel({
 
         {hasCategory && (
           <Text className="!text-neutral-7">
-            {categoryObj[getTrackedItemLabel(item).category].label}
+            {ingredientCategoryObj[getTrackedItemLabel(item).category].label}
           </Text>
         )}
       </View>

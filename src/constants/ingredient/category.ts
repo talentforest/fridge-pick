@@ -1,4 +1,4 @@
-export const categoryObj = {
+export const ingredientCategoryObj = {
   vegetable: {
     id: 'vegetable',
     label: '채소/버섯',
@@ -46,7 +46,7 @@ export const categoryObj = {
     label: '조미료/장/오일',
     icon: 'Amphora',
     color: 'red',
-    // NOTE: 추후 추가, type: 'basic' | 'sauce' | 'oil'
+    // NOTE 추후 추가, type: 'basic' | 'sauce' | 'oil'
   },
   powder: {
     id: 'powder',

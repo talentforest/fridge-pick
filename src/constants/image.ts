@@ -20,7 +20,7 @@ export const categoryImagesObj: {
     memil_myeon: require('../../assets/images/ingredients/noodle/memil_myeon.png'),
     naengmyeon_sari: require('../../assets/images/ingredients/noodle/naengmyeon_sari.png'),
     napjak_dangmyeon: require('../../assets/images/ingredients/noodle/napjak_dangmyeon.png'),
-    osusu_myeon: require('../../assets/images/ingredients/noodle/osusu_myeon.png'),
+    oksusu_myeon: require('../../assets/images/ingredients/noodle/oksusu_myeon.png'),
     penne: require('../../assets/images/ingredients/noodle/penne.png'),
     ramyeon_sari: require('../../assets/images/ingredients/noodle/ramyeon_sari.png'),
     rice_paper: require('../../assets/images/ingredients/noodle/rice_paper.png'),
@@ -34,9 +34,9 @@ export const categoryImagesObj: {
   },
 
   vegetable: {
-    deodeok: require('../../assets/images/ingredients/deodeok.png'),
-    gondre: require('../../assets/images/ingredients/gondre.png'),
-    ma: require('../../assets/images/ingredients/ma.png'),
+    deodeok: require('../../assets/images/ingredients/vegetable/deodeok.png'),
+    gondre: require('../../assets/images/ingredients/vegetable/gondre.png'),
+    ma: require('../../assets/images/ingredients/vegetable/ma.png'),
     aehobak: require('../../assets/images/ingredients/vegetable/aehobak.png'),
     arugula: require('../../assets/images/ingredients/vegetable/arugula.png'),
     asparagus: require('../../assets/images/ingredients/vegetable/asparagus.png'),
@@ -91,7 +91,7 @@ export const categoryImagesObj: {
     neutari_beoseot: require('../../assets/images/ingredients/vegetable/neutari_beoseot.png'),
     onion: require('../../assets/images/ingredients/vegetable/onion.png'),
     paengi_beoseot: require('../../assets/images/ingredients/vegetable/paengi_beoseot.png'),
-    peperoncino: require('../../assets/images/ingredients/vegetable/peperoncino.png'),
+
     potato: require('../../assets/images/ingredients/vegetable/potato.png'),
     pyogo_beoseot: require('../../assets/images/ingredients/vegetable/pyogo_beoseot.png'),
     red_paprika: require('../../assets/images/ingredients/vegetable/red_paprika.png'),
@@ -116,6 +116,7 @@ export const categoryImagesObj: {
 
   fruit: {
     apple_mango: require('../../assets/images/ingredients/fruit/apple_mango.png'),
+    bam: require('../../assets/images/ingredients/fruit/bam.png'),
     orange: require('../../assets/images/ingredients/fruit/orange.png'),
     dried_mango: require('../../assets/images/ingredients/fruit/dried_mango.png'),
     kiwi: require('../../assets/images/ingredients/fruit/kiwi.png'),
@@ -137,7 +138,7 @@ export const categoryImagesObj: {
     lime: require('../../assets/images/ingredients/fruit/lime.png'),
     avocado: require('../../assets/images/ingredients/fruit/avocado.png'),
     blueberry: require('../../assets/images/ingredients/fruit/blueberry.png'),
-    pear: require('../../assets/images/ingredients/fruit/pear.png'),
+    bae: require('../../assets/images/ingredients/fruit/bae.png'),
     almond: require('../../assets/images/ingredients/fruit/almond.png'),
     raisin: require('../../assets/images/ingredients/fruit/raisin.png'),
     strawberry: require('../../assets/images/ingredients/fruit/strawberry.png'),
@@ -162,8 +163,8 @@ export const categoryImagesObj: {
   },
 
   seafood: {
-    eomuk: require('../../assets/images/ingredients/eomuk.png'),
-    matsal: require('../../assets/images/ingredients/matsal.png'),
+    eomuk: require('../../assets/images/ingredients/seafood/eomuk.png'),
+    matsal: require('../../assets/images/ingredients/seafood/matsal.png'),
     agu: require('../../assets/images/ingredients/seafood/agu.png'),
     baekhap: require('../../assets/images/ingredients/seafood/baekhap.png'),
     bajirak: require('../../assets/images/ingredients/seafood/bajirak.png'),
@@ -230,13 +231,12 @@ export const categoryImagesObj: {
   },
 
   meat: {
-    frozen_mandu: require('../../assets/images/ingredients/meat/frozen_mandu.png'),
+    // frozen_mandu: require('../../assets/images/ingredients/meat/frozen_mandu.png'),
     bacon: require('../../assets/images/ingredients/meat/bacon.png'),
     beef_brisket: require('../../assets/images/ingredients/meat/beef_brisket.png'),
     beef_chuck_flap: require('../../assets/images/ingredients/meat/beef_chuck_flap.png'),
     beef_flank: require('../../assets/images/ingredients/meat/beef_flank.png'),
     beef_hongdukkae: require('../../assets/images/ingredients/meat/beef_hongdukkae.png'),
-    beef_plate: require('../../assets/images/ingredients/meat/beef_plate.png'),
     beef_rib_meat: require('../../assets/images/ingredients/meat/beef_rib_meat.png'),
     beef_ribeye: require('../../assets/images/ingredients/meat/beef_ribeye.png'),
     beef_round: require('../../assets/images/ingredients/meat/beef_round.png'),
@@ -286,9 +286,9 @@ export const categoryImagesObj: {
   },
 
   seasoning: {
+    peperoncino: require('../../assets/images/ingredients/seasoning/peperoncino.png'),
     dubanjang: require('../../assets/images/ingredients/seasoning/dubanjang.png'),
     honey: require('../../assets/images/ingredients/seasoning/honey.png'),
-    mulyeot: require('../../assets/images/ingredients/seasoning/mulyeot.png'),
     oligodang: require('../../assets/images/ingredients/seasoning/oligodang.png'),
     olive_oil: require('../../assets/images/ingredients/seasoning/olive_oil.png'),
     basil_pesto: require('../../assets/images/ingredients/seasoning/basil_pesto.png'),
@@ -314,7 +314,6 @@ export const categoryImagesObj: {
     mustard: require('../../assets/images/ingredients/seasoning/mustard.png'),
     myeolchi_aekjeot: require('../../assets/images/ingredients/seasoning/myeolchi_aekjeot.png'),
     oyster_sauce: require('../../assets/images/ingredients/seasoning/oyster_sauce.png'),
-    peperoncino: require('../../assets/images/ingredients/seasoning/peperoncino.png'),
     sagol_yuksu: require('../../assets/images/ingredients/seasoning/sagol_yuksu.png'),
     salt: require('../../assets/images/ingredients/seasoning/salt.png'),
     soy_sauce: require('../../assets/images/ingredients/seasoning/soy_sauce.png'),
@@ -326,7 +325,6 @@ export const categoryImagesObj: {
     yeon_gyeoja: require('../../assets/images/ingredients/seasoning/yeon_gyeoja.png'),
     yuksu_coin: require('../../assets/images/ingredients/seasoning/yuksu_coin.png'),
     yuksu_pack: require('../../assets/images/ingredients/seasoning/yuksu_pack.png'),
-    dasida: require('../../assets/images/ingredients/seasoning/dasida.png'),
   },
 
   dairy: {
@@ -342,7 +340,7 @@ export const categoryImagesObj: {
     fresh_cream: require('../../assets/images/ingredients/dairy/fresh_cream.png'),
     string_cheese: require('../../assets/images/ingredients/dairy/string_cheese.png'),
     slice_cheese: require('../../assets/images/ingredients/dairy/slice_cheese.png'),
-    shred_cheese: require('../../assets/images/ingredients/dairy/shred_cheese.png'),
+    shredded_cheese: require('../../assets/images/ingredients/dairy/shredded_cheese.png'),
     condensed_milk: require('../../assets/images/ingredients/dairy/condensed_milk.png'),
     yogurt: require('../../assets/images/ingredients/dairy/yogurt.png'),
     milk: require('../../assets/images/ingredients/dairy/milk.png'),
@@ -647,7 +645,7 @@ export const categoryImagesObj: {
     jogae_jjim: require('../../assets/images/meal/jogae_jjim.png'),
     jomigim: require('../../assets/images/meal/jomigim.png'),
     jumeok_bap: require('../../assets/images/meal/jumeok_bap.png'),
-    kal_guksu: require('../../assets/images/meal/kal_guksu.png'),
+    // kal_guksu: require('../../assets/images/meal/kal_guksu.png'),
     karaage_don: require('../../assets/images/meal/karaage_don.png'),
     katsu_don: require('../../assets/images/meal/katsu_don.png'),
     kimchi_bokkeum: require('../../assets/images/meal/kimchi_bokkeum.png'),

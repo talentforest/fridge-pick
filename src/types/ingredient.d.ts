@@ -5,12 +5,13 @@ import { StockUnit, VolumeUnit, WeightUnit } from '@/types/unit';
 
 /* -------------------------------------------------------------------------- */
 /*                              Ingredient Type                               */
+/*                               정보가 있는 원재료                                */
 /* -------------------------------------------------------------------------- */
 
-/** variants */
+/** ingredient variants 예) 수육용, 불고기용, 식단용... */
 export type IngredientVariantKey = keyof typeof ingredientVariantsObj;
 
-/** 등록 Ingredient */
+/** 정보가 있는 원재료 */
 export type Ingredient = {
   type: 'ingredient';
 
@@ -61,7 +62,10 @@ export type Ingredient = {
   synonyms?: readonly string[];
 };
 
-/** 커스텀 Ingredient */
+/* -------------------------------------------------------------------------- */
+/*                         Custom Ingredient Type                             */
+/*                                - 커스텀 재료                                  */
+/* -------------------------------------------------------------------------- */
 export type CustomIngredient = Pick<
   Ingredient,
   'label' | 'category' | 'defaultStorage' | 'expirationDays'

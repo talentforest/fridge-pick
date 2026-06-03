@@ -1,4 +1,4 @@
-import { categoryObj } from '@/constants';
+import { ingredientCategoryObj } from '@/constants';
 import { View } from 'react-native';
 import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import Text from '@/components/common/ui/Text';
@@ -21,7 +21,9 @@ export default function SelectableItemImageLabel({
       <View className="flex-1 gap-y-2">
         <Text className="line-clamp-1 text-lg">{item.label}</Text>
 
-        <Text className="text-neutral-5">{categoryObj[item.category].label}</Text>
+        <Text className="text-neutral-5">
+          {ingredientCategoryObj[item.category].label}
+        </Text>
       </View>
     </View>
   );

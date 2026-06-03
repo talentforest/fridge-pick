@@ -10,17 +10,18 @@ import CarouselContainer from '@/components/common/container/CarouselContainer';
 export default function RecommendedMeal() {
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
 
-  const { mealFilterList, searchKeywordMealList, fastestMealList } = useGetMealList();
+  const { mealFilterList, searchKeywordMealList, recommendedTodayMealList } =
+    useGetMealList();
 
   return (
     <View className="gap-y-3">
-      {fastestMealList.length && (
+      {recommendedTodayMealList.length && (
         <View className="h-[300px] gap-y-3">
           <SectionTitle title="오늘의 식사 메뉴 추천" icon="HandPlatter" />
           <FullBleedSection>
             <CarouselContainer
-              data={fastestMealList}
-              initialIndex={fastestMealList.length}
+              data={recommendedTodayMealList}
+              initialIndex={recommendedTodayMealList.length}
               itemWidth={0.43}
               spacing={14}
               hasNavigation

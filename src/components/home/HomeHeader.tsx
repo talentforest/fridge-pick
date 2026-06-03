@@ -11,7 +11,7 @@ export default function HomeHeader() {
 
   return (
     <View className="h-16 flex-row items-center justify-between pl-2">
-      <Text className="font-extrabold text-2xl italic !text-indigo-500">프리지픽!</Text>
+      <Text className="font-extrabold text-2xl italic !text-indigo-500">프리지픽</Text>
 
       <View className="flex-row gap-x-2.5">
         {/* 알림 버튼 */}
