@@ -118,16 +118,17 @@ function FilterList<K>({
   return (
     <>
       <View className="my-3 flex-row flex-wrap gap-2">
-        {[allFilterObj, ...filterList].map(({ name, label, color }) => (
+        {[allFilterObj, ...filterList].map(({ name, label }) => (
           <FilterTag
             key={String(name)}
             name={label}
-            color={color}
+            color="blue"
             isActive={activeFilter === name}
             onPress={() => setActiveFilter(name)}
           />
         ))}
       </View>
+
       {listTitle && (
         <Text className="mb-4 mt-2 pl-1 text-base text-neutral-7">{listTitle}</Text>
       )}

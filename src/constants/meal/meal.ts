@@ -1,69 +1,6 @@
 import { Meal } from '@/types/meal';
 
 export const mealObj = {
-  jeonbok_juk: {
-    type: 'meal',
-    isActive: true,
-    id: 'jeonbok_juk',
-    label: '전복죽',
-    mealCategory: 'light_meal',
-    suffix: '_juk',
-    cookTime: 30,
-    difficulty: 'medium',
-    servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'jeonbok' },
-        { type: 'meal', id: 'cooked_rice' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
-      optional: [
-        { type: 'ingredient', id: 'bokkeun_chamkkae' },
-        { type: 'ingredient', id: 'gim' },
-      ],
-    },
-  },
-  dotori_muk_muchim: {
-    type: 'meal',
-    isActive: true,
-    id: 'dotori_muk_muchim',
-    label: '도토리묵무침',
-    mealCategory: 'cooking_meal',
-    suffix: '_muchim',
-    cookTime: 20,
-    difficulty: 'easy',
-    servingTemperature: 'cold',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'dotori_muk' }],
-      common: [
-        { type: 'ingredient', id: 'cucumber' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'sangchu' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'bokkeun_chamkkae' },
-      ],
-      optional: [
-        { type: 'ingredient', id: 'kkaennip' },
-        { type: 'ingredient', id: 'gim' },
-      ],
-    },
-  },
   aehobak_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -71,24 +8,25 @@ export const mealObj = {
     label: '애호박볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 15,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'aehobak' }],
       common: [
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
+        { type: 'ingredient', id: 'jjokpa' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'bokkeun_chamkkae' },
+        { type: 'ingredient', id: 'deulgireum' },
+        { type: 'ingredient', id: 'olive_oil' },
+        { type: 'ingredient', id: 'chamchi_aekjeot' },
       ],
       optional: [
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'hong_gochu' },
+        { type: 'ingredient', id: 'cheongyang_gochu' },
+        { type: 'ingredient', id: 'bokkeun_chamkkae' },
       ],
     },
   },
@@ -99,22 +37,21 @@ export const mealObj = {
     label: '애호박전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'aehobak' },
         { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'milgaru' },
+        { type: 'ingredient', id: 'buchim_garu' },
       ],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'soy_sauce' },
       ],
-      optional: [{ type: 'ingredient', id: 'hong_gochu' }],
+      optional: [],
     },
   },
   aehobak_jjigae: {
@@ -124,28 +61,26 @@ export const mealObj = {
     label: '애호박찌개',
     mealCategory: 'soup_meal',
     suffix: '_jjigae',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'aehobak' },
-        { type: 'ingredient', id: 'dubu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'aehobak' }],
       common: [
-        { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'bajirak' },
+        { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'doenjang' },
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'yuksu_coin' },
+        { type: 'ingredient', id: 'salt' },
       ],
       optional: [
-        { type: 'ingredient', id: 'cheongyang_gochu' },
+        { type: 'ingredient', id: 'dubu' },
         { type: 'ingredient', id: 'potato' },
+        { type: 'ingredient', id: 'pork_shoulder' },
       ],
     },
   },
@@ -156,27 +91,23 @@ export const mealObj = {
     label: '알리오올리오파스타',
     mealCategory: 'noodle_meal',
     suffix: '_pasta',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'spaghetti_myeon' },
         { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'spaghetti_myeon' },
+        { type: 'ingredient', id: 'olive_oil' },
       ],
       common: [],
       seasoning: [
-        { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'peperoncino' },
         { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
+        { type: 'ingredient', id: 'peperoncino' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'parmesan_cheese' },
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'bacon' },
-      ],
+      optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
     },
+    synonyms: ['알리오올리오', '알리오올리오스파게티'],
   },
   agu_jjim: {
     type: 'meal',
@@ -185,9 +116,9 @@ export const mealObj = {
     label: '아구찜',
     mealCategory: 'cooking_meal',
     suffix: '_jjim',
-    cookTime: 60,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'agu' },
@@ -196,21 +127,15 @@ export const mealObj = {
       common: [
         { type: 'ingredient', id: 'minari' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'jeonbun_garu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'minced_ginger' },
-        { type: 'ingredient', id: 'matsul' },
+        { type: 'ingredient', id: 'gochujang' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-        { type: 'ingredient', id: 'ssukgat' },
-      ],
+      optional: [{ type: 'ingredient', id: 'saesongi_beoseot' }],
     },
   },
   al_tang: {
@@ -220,27 +145,23 @@ export const mealObj = {
     label: '알탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'nalchi_al' }],
+      essential: [{ type: 'ingredient', id: 'goni' }],
       common: [
-        { type: 'ingredient', id: 'mu' },
-        { type: 'ingredient', id: 'dubu' },
         { type: 'ingredient', id: 'daepa' },
         { type: 'ingredient', id: 'ssukgat' },
+        { type: 'ingredient', id: 'mu' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-        { type: 'ingredient', id: 'daegu' },
-      ],
+      optional: [{ type: 'ingredient', id: 'dubu' }],
     },
   },
   bacon_cream_pasta: {
@@ -250,30 +171,27 @@ export const mealObj = {
     label: '베이컨크림파스타',
     mealCategory: 'noodle_meal',
     suffix: '_pasta',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'spaghetti_myeon' },
         { type: 'ingredient', id: 'bacon' },
+        { type: 'ingredient', id: 'spaghetti_myeon' },
         { type: 'ingredient', id: 'fresh_cream' },
       ],
       common: [
-        { type: 'ingredient', id: 'milk' },
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'yangsongi_beoseot' },
       ],
       seasoning: [
+        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'black_pepper' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'parmesan_cheese' },
-        { type: 'ingredient', id: 'garlic' },
-        { type: 'ingredient', id: 'broccoli' },
-      ],
+      optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
     },
+    synonyms: ['크림파스타', '크림베이컨파스타', '크림베이컨스파게티'],
   },
   baechu_geotjeori: {
     type: 'meal',
@@ -282,57 +200,23 @@ export const mealObj = {
     label: '배추겉절이',
     mealCategory: 'side_meal',
     suffix: '_geotjeori',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'baechu' }],
       common: [
         { type: 'ingredient', id: 'buchu' },
-        { type: 'ingredient', id: 'jjokpa' },
+        { type: 'ingredient', id: 'onion' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
-        // { type: 'ingredient', id: '' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'minced_ginger' },
+        { type: 'ingredient', id: 'myeolchi_aekjeot' },
         { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'bokkeun_chamkkae' },
-      ],
-      optional: [
-        { type: 'ingredient', id: 'mu' },
-        { type: 'ingredient', id: 'bae' },
-      ],
-    },
-  },
-  baechu_guk: {
-    type: 'meal',
-    isActive: true,
-    id: 'baechu_guk',
-    label: '배추국',
-    mealCategory: 'soup_meal',
-    suffix: '_guk',
-    cookTime: 30,
-    difficulty: 'medium',
-    servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'doenjang' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'dubu' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'yuksu_coin' },
         { type: 'ingredient', id: 'salt' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'beef_brisket' },
-        { type: 'ingredient', id: 'gochugaru' },
-      ],
+      optional: [],
     },
   },
   baechu_jeon: {
@@ -342,21 +226,20 @@ export const mealObj = {
     label: '배추전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'milgaru' },
+        { type: 'ingredient', id: 'buchim_garu' },
       ],
-      common: [{ type: 'ingredient', id: 'egg' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'soy_sauce' },
       ],
-      optional: [{ type: 'ingredient', id: 'twigim_garu' }],
+      optional: [],
     },
   },
   baechu_kimchi: {
@@ -366,31 +249,22 @@ export const mealObj = {
     label: '배추김치',
     mealCategory: 'side_meal',
     suffix: '_kimchi',
-    cookTime: 90,
-    difficulty: 'hard',
+    difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'gochugaru' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'mu' },
-        { type: 'ingredient', id: 'jjokpa' },
-        { type: 'ingredient', id: 'buchu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'baechu' }],
+      common: [{ type: 'ingredient', id: 'mu' }],
       seasoning: [
-        { type: 'ingredient', id: 'myeolchi_aekjeot' },
         { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'minced_ginger' },
+        { type: 'ingredient', id: 'myeolchi_aekjeot' },
         { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'gochugaru' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'bae' },
-        { type: 'ingredient', id: 'apple' },
-      ],
+      optional: [],
     },
+    synonyms: ['김치'],
   },
   baek_kimchi: {
     type: 'meal',
@@ -399,29 +273,21 @@ export const mealObj = {
     label: '백김치',
     mealCategory: 'side_meal',
     suffix: '_kimchi',
-    cookTime: 60,
-    difficulty: 'hard',
+    difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'mu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'baechu' }],
       common: [
         { type: 'ingredient', id: 'jjokpa' },
-        { type: 'ingredient', id: 'buchu' },
+        { type: 'ingredient', id: 'mu' },
         { type: 'ingredient', id: 'bae' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'minced_ginger' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'apple' },
-        { type: 'ingredient', id: 'hong_gochu' },
-      ],
+      optional: [],
     },
   },
   bajirak_guk: {
@@ -431,22 +297,21 @@ export const mealObj = {
     label: '바지락국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'bajirak' }],
       common: [
         { type: 'ingredient', id: 'mu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'dubu' },
+        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [{ type: 'ingredient', id: 'ssukgat' }],
     },
   },
   bajirak_kal_guksu: {
@@ -456,9 +321,9 @@ export const mealObj = {
     label: '바지락칼국수',
     mealCategory: 'noodle_meal',
     suffix: '_guksu',
-    cookTime: 25,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'bajirak' },
@@ -466,19 +331,27 @@ export const mealObj = {
       ],
       common: [
         { type: 'ingredient', id: 'aehobak' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
+        { type: 'ingredient', id: 'potato' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-        { type: 'ingredient', id: 'gim' },
-      ],
+      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
     },
+  },
+  egg_baked: {
+    type: 'meal',
+    isActive: true,
+    id: 'egg_baked',
+    label: '훈제란',
+    mealCategory: 'light_meal',
+    suffix: null,
+    difficulty: 'easy',
+    servingTemperature: 'either',
+    convenienceVariants: ['readyToEat'],
+    synonyms: ['구운계란', '맥반석', '훈제달걀'],
   },
   basil_pesto_pasta: {
     type: 'meal',
@@ -487,53 +360,39 @@ export const mealObj = {
     label: '바질페스토파스타',
     mealCategory: 'noodle_meal',
     suffix: '_pasta',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'spaghetti_myeon' },
         { type: 'ingredient', id: 'basil_pesto' },
       ],
-      common: [{ type: 'ingredient', id: 'garlic' }],
-      seasoning: [
-        { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [
-        { type: 'ingredient', id: 'parmesan_cheese' },
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'bangwool_tomato' },
-      ],
+      common: [],
+      seasoning: [],
+      optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
     },
+    synonyms: ['바질페스토스파게티'],
   },
   beoteo_jang_jorim_gyeran_bap: {
     type: 'meal',
     isActive: true,
     id: 'beoteo_jang_jorim_gyeran_bap',
-    label: '버터장조림계란밥',
+    label: '버터장조림비빔밥',
     mealCategory: 'rice_meal',
     suffix: '_bap',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'warm',
+    convenienceVariants: ['instant'],
     ingredientStructure: {
       essential: [
         { type: 'meal', id: 'cooked_rice' },
         { type: 'meal', id: 'gyeran_jang_jorim' },
         { type: 'ingredient', id: 'butter' },
       ],
-      common: [
-        { type: 'ingredient', id: 'gim' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'bokkeun_chamkkae' },
-      ],
-      optional: [{ type: 'ingredient', id: 'egg' }],
+      common: [],
+      seasoning: [],
+      optional: [],
     },
   },
   bibim_guksu: {
@@ -543,33 +402,29 @@ export const mealObj = {
     label: '비빔국수',
     mealCategory: 'noodle_meal',
     suffix: '_guksu',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'somyeon' },
-        { type: 'ingredient', id: 'gochujang' },
-      ],
+      essential: [{ type: 'ingredient', id: 'somyeon' }],
       common: [
         { type: 'ingredient', id: 'cucumber' },
         { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'baechu' },
       ],
       seasoning: [
+        { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
         { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'vinegar' },
         { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'bokkeun_chamkkae' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
       optional: [
-        { type: 'meal', id: 'baechu_kimchi' },
         { type: 'ingredient', id: 'gim' },
+        { type: 'ingredient', id: 'carrot' },
       ],
     },
+    synonyms: ['비빔면'],
   },
   bibimbap: {
     type: 'meal',
@@ -578,32 +433,25 @@ export const mealObj = {
     label: '비빔밥',
     mealCategory: 'rice_meal',
     suffix: '_bibimbap',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'warm',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'meal', id: 'cooked_rice' },
-        { type: 'ingredient', id: 'gochujang' },
-      ],
+      essential: [{ type: 'meal', id: 'cooked_rice' }],
       common: [
-        { type: 'ingredient', id: 'kongnamul' },
-        { type: 'ingredient', id: 'sigeumchi' },
         { type: 'ingredient', id: 'gosari' },
+        { type: 'ingredient', id: 'aehobak' },
         { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'egg' },
+        { type: 'ingredient', id: 'sigeumchi' },
+        { type: 'ingredient', id: 'pyogo_beoseot' },
       ],
       seasoning: [
+        { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'bokkeun_chamkkae' },
-        { type: 'ingredient', id: 'salt' },
       ],
       optional: [
+        { type: 'ingredient', id: 'egg' },
         { type: 'ingredient', id: 'ground_beef' },
-        { type: 'ingredient', id: 'pyogo_beoseot' },
-        { type: 'ingredient', id: 'dubu' },
       ],
     },
   },
@@ -614,27 +462,22 @@ export const mealObj = {
     label: '비지찌개',
     mealCategory: 'soup_meal',
     suffix: '_jjigae',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'kongbiji' },
-        { type: 'meal', id: 'baechu_kimchi' },
-      ],
+      essential: [{ type: 'ingredient', id: 'kongbiji' }],
       common: [
-        { type: 'ingredient', id: 'pork_belly' },
-        { type: 'ingredient', id: 'dubu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'pork_belly' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'salt' },
       ],
       optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
     },
+    synonyms: ['콩비지찌개'],
   },
   boiled_egg: {
     type: 'meal',
@@ -643,15 +486,11 @@ export const mealObj = {
     label: '삶은계란',
     mealCategory: 'light_meal',
     suffix: null,
-    cookTime: 10,
     difficulty: 'easy',
-    servingTemperature: 'both',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'egg' }],
-      common: [],
-      seasoning: [{ type: 'ingredient', id: 'salt' }],
-      optional: [],
-    },
+    servingTemperature: 'either',
+    isSideMeal: false,
+    convenienceVariants: ['instant'],
+    synonyms: ['삶은달걀', '감동란'],
   },
   bokkeum_udon: {
     type: 'meal',
@@ -660,26 +499,26 @@ export const mealObj = {
     label: '볶음우동',
     mealCategory: 'noodle_meal',
     suffix: '_udon',
-    cookTime: 25,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'udon_myeon' }],
       common: [
         { type: 'ingredient', id: 'yangbaechu' },
+        { type: 'ingredient', id: 'saeu' },
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'pork_belly' },
-        { type: 'ingredient', id: 'garlic' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'oyster_sauce' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'black_pepper' },
       ],
-      optional: [{ type: 'ingredient', id: 'saeu' }],
+      optional: [
+        { type: 'ingredient', id: 'sukjunamul' },
+        { type: 'ingredient', id: 'egg' },
+      ],
     },
   },
   bolognese_pasta: {
@@ -689,29 +528,34 @@ export const mealObj = {
     label: '볼로네제파스타',
     mealCategory: 'noodle_meal',
     suffix: '_pasta',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'spaghetti_myeon' },
         { type: 'ingredient', id: 'ground_beef' },
-        { type: 'ingredient', id: 'tomato_sauce' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'celery' },
-        { type: 'ingredient', id: 'garlic' },
-        { type: 'ingredient', id: 'parmesan_cheese' },
-      ],
+      common: [{ type: 'ingredient', id: 'onion' }],
       seasoning: [
-        // { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'tomato_sauce' },
+        { type: 'ingredient', id: 'olive_oil' },
         { type: 'ingredient', id: 'black_pepper' },
       ],
-      optional: [],
+      optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
     },
+    synonyms: ['볼로네제', '볼로네제스파게티'],
+  },
+  bossam: {
+    type: 'meal',
+    isActive: true,
+    id: 'bossam',
+    label: '보쌈',
+    mealCategory: 'cooking_meal',
+    suffix: null,
+    difficulty: 'hard',
+    servingTemperature: 'warm',
+    convenienceVariants: ['readyToEat'],
   },
   broccoli_bokkeum: {
     type: 'meal',
@@ -720,21 +564,17 @@ export const mealObj = {
     label: '브로콜리볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 15,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'broccoli' }],
       common: [{ type: 'ingredient', id: 'garlic' }],
       seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
         { type: 'ingredient', id: 'cooking_oil' },
+        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'neutari_beoseot' },
-      ],
+      optional: [],
     },
   },
   broccoli_soup: {
@@ -744,9 +584,9 @@ export const mealObj = {
     label: '브로콜리스프',
     mealCategory: 'light_meal',
     suffix: '_soup',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'broccoli' },
@@ -754,17 +594,10 @@ export const mealObj = {
       ],
       common: [
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'potato' },
         { type: 'ingredient', id: 'butter' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [
-        // { type: 'ingredient', id: 'parmesan_cheese' },
-        { type: 'ingredient', id: 'fresh_cream' },
-      ],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
   },
   buchu_geotjeori: {
@@ -774,21 +607,16 @@ export const mealObj = {
     label: '부추겉절이',
     mealCategory: 'side_meal',
     suffix: '_geotjeori',
-    cookTime: 15,
     difficulty: 'easy',
-    servingTemperature: 'hot',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'buchu' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'myeolchi_aekjeot' },
+        { type: 'ingredient', id: 'minced_garlic' },
       ],
       optional: [],
     },
@@ -800,26 +628,20 @@ export const mealObj = {
     label: '부추전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'buchu' },
-        { type: 'ingredient', id: 'twigim_garu' },
+        { type: 'ingredient', id: 'buchim_garu' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-      ],
+      common: [{ type: 'ingredient', id: 'egg' }],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
+      optional: [],
     },
   },
   budae_jjigae: {
@@ -829,33 +651,24 @@ export const mealObj = {
     label: '부대찌개',
     mealCategory: 'soup_meal',
     suffix: '_jjigae',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'sausage' },
-        // { type: 'ingredient', id: 'spam' },
-        { type: 'meal', id: 'baechu_kimchi' },
-      ],
+      essential: [{ type: 'ingredient', id: 'sausage' }],
       common: [
-        { type: 'ingredient', id: 'dubu' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
         { type: 'ingredient', id: 'ramyeon_sari' },
-        // { type: 'ingredient', id: 'baked_bean' },
-        { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'dubu' },
+        { type: 'ingredient', id: 'daepa' },
+        { type: 'ingredient', id: 'yangbaechu' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'gochujang' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [
-        // { type: 'ingredient', id: 'parmesan_cheese' },
-        { type: 'ingredient', id: 'tteokbokki_tteok' },
-      ],
+      optional: [],
     },
   },
   bugeo_guk: {
@@ -865,25 +678,24 @@ export const mealObj = {
     label: '북엇국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'hwangtaechae' }],
       common: [
         { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'mu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'dubu' },
-        { type: 'ingredient', id: 'garlic' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'guk_ganjang' },
+        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
       optional: [],
     },
+    synonyms: ['황태국'],
   },
   bulgogi: {
     type: 'meal',
@@ -892,30 +704,25 @@ export const mealObj = {
     label: '불고기',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'beef_shoulder' }],
       common: [
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'neutari_beoseot' },
-        { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'bae' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'black_pepper' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'bae' },
-        { type: 'ingredient', id: 'beef_brisket' },
-        { type: 'ingredient', id: 'beef_round' },
-      ],
+      optional: [],
     },
-    imageName: 'daepa',
+    synonyms: ['소불고기'],
   },
   bulgogi_jeongol: {
     type: 'meal',
@@ -924,30 +731,22 @@ export const mealObj = {
     label: '불고기전골',
     mealCategory: 'soup_meal',
     suffix: '_jeongol',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'beef_shoulder' }],
+      essential: [{ type: 'meal', id: 'bulgogi' }],
       common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
         { type: 'ingredient', id: 'neutari_beoseot' },
+        { type: 'ingredient', id: 'paengi_beoseot' },
         { type: 'ingredient', id: 'dangmyeon' },
-        { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'onion' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'black_pepper' },
+        { type: 'ingredient', id: 'yuksu_coin' },
+        { type: 'ingredient', id: 'guk_ganjang' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'bae' },
-        { type: 'ingredient', id: 'dubu' },
-        { type: 'ingredient', id: 'beef_brisket' },
-      ],
+      optional: [],
     },
   },
   carbonara_pasta: {
@@ -957,26 +756,20 @@ export const mealObj = {
     label: '까르보나라파스타',
     mealCategory: 'noodle_meal',
     suffix: '_pasta',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'spaghetti_myeon' },
-        { type: 'ingredient', id: 'egg' },
         { type: 'ingredient', id: 'bacon' },
+        { type: 'ingredient', id: 'egg' },
       ],
-      common: [{ type: 'ingredient', id: 'parmesan_cheese' }],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [
-        { type: 'ingredient', id: 'fresh_cream' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
+      common: [],
+      seasoning: [{ type: 'ingredient', id: 'black_pepper' }],
+      optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
     },
+    synonyms: ['까르보나라', '까르보나라스파게티'],
   },
   cereal: {
     type: 'meal',
@@ -985,51 +778,10 @@ export const mealObj = {
     label: '시리얼',
     mealCategory: 'light_meal',
     suffix: null,
-    cookTime: 5,
     difficulty: 'easy',
     servingTemperature: 'cold',
-    ingredientStructure: {
-      essential: [
-        { type: 'meal', id: 'cereal' },
-        { type: 'ingredient', id: 'milk' },
-      ],
-      common: [],
-      seasoning: [],
-      optional: [
-        { type: 'ingredient', id: 'yogurt' },
-        { type: 'ingredient', id: 'banana' },
-      ],
-    },
-  },
-  chamchi_bokkeumbap: {
-    type: 'meal',
-    isActive: true,
-    id: 'chamchi_bokkeumbap',
-    label: '참치볶음밥',
-    mealCategory: 'rice_meal',
-    suffix: '_bokkeumbap',
-    cookTime: 20,
-    difficulty: 'easy',
-    servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'meal', id: 'cooked_rice' },
-        { type: 'ingredient', id: 'canned_tuna' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
-      optional: [{ type: 'ingredient', id: 'gim' }],
-    },
+    isSideMeal: true,
+    convenienceVariants: ['readyToEat'],
   },
   chamchi_jjigae: {
     type: 'meal',
@@ -1038,26 +790,21 @@ export const mealObj = {
     label: '참치찌개',
     mealCategory: 'soup_meal',
     suffix: '_jjigae',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'canned_tuna' },
-        { type: 'meal', id: 'baechu_kimchi' },
-      ],
+      essential: [{ type: 'ingredient', id: 'canned_tuna' }],
       common: [
         { type: 'ingredient', id: 'dubu' },
-        { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'onion' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
   chamchi_juk: {
@@ -1067,25 +814,20 @@ export const mealObj = {
     label: '참치죽',
     mealCategory: 'light_meal',
     suffix: '_juk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'meal', id: 'cooked_rice' },
-        { type: 'ingredient', id: 'canned_tuna' },
-      ],
+      essential: [{ type: 'ingredient', id: 'canned_tuna' }],
       common: [
-        { type: 'ingredient', id: 'carrot' },
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'aehobak' },
+        { type: 'ingredient', id: 'carrot' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'soy_sauce' },
       ],
-      optional: [{ type: 'ingredient', id: 'gim' }],
+      optional: [],
     },
   },
   cheese_ball: {
@@ -1095,24 +837,9 @@ export const mealObj = {
     label: '치즈볼',
     mealCategory: 'snack_meal',
     suffix: null,
-    cookTime: 20,
     difficulty: 'easy',
-    servingTemperature: 'both',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'mozzarella_cheese' },
-        { type: 'ingredient', id: 'milgaru' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'milk' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'sugar' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ppang_garu' }],
-    },
+    servingTemperature: 'either',
+    convenienceVariants: ['frozen'],
   },
   cheese_stick: {
     type: 'meal',
@@ -1121,24 +848,9 @@ export const mealObj = {
     label: '치즈스틱',
     mealCategory: 'snack_meal',
     suffix: null,
-    cookTime: 20,
     difficulty: 'easy',
-    servingTemperature: 'both',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'mozzarella_cheese' },
-        { type: 'ingredient', id: 'ppang_garu' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'milgaru' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ketchup' }],
-    },
+    servingTemperature: 'either',
+    convenienceVariants: ['frozen'],
   },
   cheonggukjang_jjigae: {
     type: 'meal',
@@ -1147,31 +859,24 @@ export const mealObj = {
     label: '청국장찌개',
     mealCategory: 'soup_meal',
     suffix: '_jjigae',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'cheonggukjang' },
-        { type: 'ingredient', id: 'dubu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'cheonggukjang' }],
       common: [
-        { type: 'meal', id: 'baechu_kimchi' },
-        { type: 'ingredient', id: 'pork_belly' },
-        { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'dubu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'aehobak' },
-        { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'onion' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'doenjang' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
-  // 여기까지
   cheongpo_muk_muchim: {
     type: 'meal',
     isActive: true,
@@ -1179,16 +884,14 @@ export const mealObj = {
     label: '청포묵무침',
     mealCategory: 'cooking_meal',
     suffix: '_muchim',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'cheongpo_muk' }],
       common: [
         { type: 'ingredient', id: 'cucumber' },
         { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
@@ -1197,7 +900,6 @@ export const mealObj = {
       optional: [{ type: 'ingredient', id: 'gim' }],
     },
   },
-
   chicken_nuggets: {
     type: 'meal',
     isActive: true,
@@ -1205,20 +907,10 @@ export const mealObj = {
     label: '치킨너겟',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 20,
     difficulty: 'easy',
-    servingTemperature: 'both',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'chicken_breast' }],
-      common: [{ type: 'ingredient', id: 'egg' }],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'mustard' }],
-    },
+    servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   chonggak_kimchi: {
     type: 'meal',
     isActive: true,
@@ -1226,23 +918,21 @@ export const mealObj = {
     label: '총각김치',
     mealCategory: 'side_meal',
     suffix: '_kimchi',
-    cookTime: 60,
-    difficulty: 'hard',
+    difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'mu' }],
-      common: [
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
+      essential: [{ type: 'ingredient', id: 'chonggak_mu' }],
+      common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'myeolchi_aekjeot' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'minced_ginger' },
       ],
       optional: [],
     },
   },
-
   chwi_namul: {
     type: 'meal',
     isActive: true,
@@ -1250,21 +940,19 @@ export const mealObj = {
     label: '취나물',
     mealCategory: 'cooking_meal',
     suffix: '_namul',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'chwinamul' }],
-      common: [{ type: 'ingredient', id: 'garlic' }],
+      common: [],
       seasoning: [
-        { type: 'ingredient', id: 'doenjang' },
-
         { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'neutari_beoseot' }],
+      optional: [],
     },
   },
-
   cooked_rice: {
     type: 'meal',
     isActive: true,
@@ -1272,18 +960,12 @@ export const mealObj = {
     label: '밥',
     mealCategory: 'rice_meal',
     suffix: '_rice',
-    cookTime: 5,
     difficulty: 'easy',
     servingTemperature: 'hot',
     isSideMeal: true,
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'baekmi' }],
-      common: [],
-      seasoning: [],
-      optional: [],
-    },
+    convenienceVariants: ['instant'],
+    synonyms: ['햇반'],
   },
-
   corn_cheese: {
     type: 'meal',
     isActive: true,
@@ -1291,23 +973,19 @@ export const mealObj = {
     label: '콘치즈',
     mealCategory: 'snack_meal',
     suffix: null,
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'canned_oksusu' },
         { type: 'ingredient', id: 'mozzarella_cheese' },
+        { type: 'ingredient', id: 'canned_oksusu' },
       ],
-      common: [{ type: 'ingredient', id: 'mayonnaise' }],
-      seasoning: [
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
+      common: [],
+      seasoning: [{ type: 'ingredient', id: 'mayonnaise' }],
       optional: [],
     },
   },
-
   corn_soup: {
     type: 'meal',
     isActive: true,
@@ -1315,26 +993,23 @@ export const mealObj = {
     label: '옥수수스프',
     mealCategory: 'light_meal',
     suffix: '_soup',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'canned_oksusu' },
         { type: 'ingredient', id: 'milk' },
       ],
       common: [
+        { type: 'ingredient', id: 'butter' },
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'potato' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'butter' }],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
+    synonyms: ['콘스프'],
   },
-
   cream_risotto: {
     type: 'meal',
     isActive: true,
@@ -1342,28 +1017,26 @@ export const mealObj = {
     label: '크림리조또',
     mealCategory: 'western_meal',
     suffix: '_risotto',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'meal', id: 'cooked_rice' },
+        { type: 'ingredient', id: 'milk' },
+        { type: 'ingredient', id: 'baekmi' },
         { type: 'ingredient', id: 'fresh_cream' },
       ],
       common: [
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'neutari_beoseot' },
-        { type: 'ingredient', id: 'bacon' },
-        { type: 'ingredient', id: 'parmesan_cheese' },
+        { type: 'ingredient', id: 'butter' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'black_pepper' },
       ],
-      optional: [{ type: 'ingredient', id: 'butter' }],
+      optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
     },
   },
-
   cream_soup: {
     type: 'meal',
     isActive: true,
@@ -1371,26 +1044,19 @@ export const mealObj = {
     label: '크림스프',
     mealCategory: 'light_meal',
     suffix: '_soup',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'milk' },
-        { type: 'ingredient', id: 'fresh_cream' },
-      ],
+      essential: [{ type: 'ingredient', id: 'milk' }],
       common: [
+        { type: 'ingredient', id: 'butter' },
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'potato' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'butter' }],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
   },
-
   curry_rice: {
     type: 'meal',
     isActive: true,
@@ -1398,27 +1064,26 @@ export const mealObj = {
     label: '카레라이스',
     mealCategory: 'rice_meal',
     suffix: '_rice',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'curry_block' },
         { type: 'meal', id: 'cooked_rice' },
+        { type: 'ingredient', id: 'curry_block' },
       ],
       common: [
         { type: 'ingredient', id: 'potato' },
         { type: 'ingredient', id: 'carrot' },
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'pork_shoulder' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
+      seasoning: [],
       optional: [
-        // { type: 'ingredient', id: 'parmesan_cheese' }
+        { type: 'ingredient', id: 'ground_beef' },
+        { type: 'ingredient', id: 'pork_loin' },
       ],
     },
   },
-
   curry_udon: {
     type: 'meal',
     isActive: true,
@@ -1426,23 +1091,19 @@ export const mealObj = {
     label: '카레우동',
     mealCategory: 'noodle_meal',
     suffix: '_udon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'udon_myeon' },
         { type: 'ingredient', id: 'curry_block' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'pork_shoulder' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'soy_sauce' }],
-      optional: [{ type: 'ingredient', id: 'egg' }],
+      common: [{ type: 'ingredient', id: 'onion' }],
+      seasoning: [],
+      optional: [],
     },
   },
-
   dak_hanmari: {
     type: 'meal',
     isActive: true,
@@ -1450,25 +1111,24 @@ export const mealObj = {
     label: '닭한마리',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'chicken_whole' }],
       common: [
-        { type: 'ingredient', id: 'potato' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'tteokbokki_tteok' },
-        { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'kal_guksu_myeon' },
+        { type: 'ingredient', id: 'potato' },
       ],
       seasoning: [
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
         { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
       ],
-      optional: [{ type: 'ingredient', id: 'kal_guksu_myeon' }],
+      optional: [],
     },
   },
-
   dak_juk: {
     type: 'meal',
     isActive: true,
@@ -1476,52 +1136,51 @@ export const mealObj = {
     label: '닭죽',
     mealCategory: 'light_meal',
     suffix: '_juk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'meal', id: 'cooked_rice' },
+        { type: 'ingredient', id: 'baekmi' },
         { type: 'ingredient', id: 'chicken_breast' },
       ],
       common: [
+        { type: 'ingredient', id: 'aehobak' },
         { type: 'ingredient', id: 'carrot' },
         { type: 'ingredient', id: 'onion' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'egg' }],
+      optional: [
+        { type: 'ingredient', id: 'guk_ganjang' },
+        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'bokkeun_chamkkae' },
+      ],
     },
   },
-
   dak_kkochi: {
     type: 'meal',
     isActive: true,
     id: 'dak_kkochi',
     label: '닭꼬치',
-    mealCategory: 'cooking_meal',
-    suffix: '_gui',
-    cookTime: 30,
+    mealCategory: 'snack_meal',
+    suffix: null,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'chicken_leg' }],
-      common: [
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
+      common: [],
       seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'gochujang' },
-
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
   dakbal_yangnyeom_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -1529,28 +1188,22 @@ export const mealObj = {
     label: '닭발양념볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'dakbal' }
-      ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
+      essential: [{ type: 'ingredient', id: 'dakbal' }],
+      common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
+      optional: [],
     },
+    synonyms: ['닭발양념'],
   },
-
   dakbokkeum_tang: {
     type: 'meal',
     isActive: true,
@@ -1558,30 +1211,27 @@ export const mealObj = {
     label: '닭볶음탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'chicken_stew_cut' },
-        { type: 'ingredient', id: 'potato' },
-      ],
+      essential: [{ type: 'ingredient', id: 'chicken_stew_cut' }],
       common: [
+        { type: 'ingredient', id: 'potato' },
         { type: 'ingredient', id: 'carrot' },
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'dangmyeon' }],
+      optional: [],
     },
+    synonyms: ['닭도리탕'],
   },
-
   dakdari_steak: {
     type: 'meal',
     isActive: true,
@@ -1589,20 +1239,20 @@ export const mealObj = {
     label: '닭다리 스테이크',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'chicken_leg' }],
-      common: [{ type: 'ingredient', id: 'garlic' }],
+      common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'black_pepper' },
+        { type: 'ingredient', id: 'olive_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'butter' }],
+      optional: [],
     },
   },
-
   dakgaejang: {
     type: 'meal',
     isActive: true,
@@ -1610,28 +1260,20 @@ export const mealObj = {
     label: '닭개장',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 60,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'chicken_whole' },
-        { type: 'ingredient', id: 'sukjunamul' },
-      ],
+      essential: [{ type: 'ingredient', id: 'chicken_breast' }],
       common: [
+        { type: 'ingredient', id: 'sukjunamul' },
         { type: 'ingredient', id: 'gosari' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'egg' }],
+      seasoning: [],
+      optional: [],
     },
   },
-
   dakgalbi: {
     type: 'meal',
     isActive: true,
@@ -1639,9 +1281,9 @@ export const mealObj = {
     label: '닭갈비',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 25,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'chicken_leg' },
@@ -1663,7 +1305,6 @@ export const mealObj = {
       optional: [{ type: 'ingredient', id: 'mozzarella_cheese' }],
     },
   },
-
   dakgangjeong: {
     type: 'meal',
     isActive: true,
@@ -1671,25 +1312,10 @@ export const mealObj = {
     label: '닭강정',
     mealCategory: 'snack_meal',
     suffix: null,
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'chicken_breast' },
-        { type: 'ingredient', id: 'jeonbun_garu' },
-      ],
-      common: [{ type: 'ingredient', id: 'peanut' }],
-      seasoning: [
-        { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
-      ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   dakgom_tang: {
     type: 'meal',
     isActive: true,
@@ -1697,23 +1323,19 @@ export const mealObj = {
     label: '닭곰탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 60,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'chicken_whole' }],
-      common: [
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
+      common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'somyeon' }],
+      optional: [],
     },
   },
-
   dakttongjip_twigim: {
     type: 'meal',
     isActive: true,
@@ -1721,75 +1343,64 @@ export const mealObj = {
     label: '닭똥집튀김',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 25,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        // { type: 'ingredient', id: 'dakttongjip' },
-        { type: 'ingredient', id: 'jeonbun_garu' },
+        { type: 'ingredient', id: 'chicken_gizzard' },
+        { type: 'ingredient', id: 'twigim_garu' },
       ],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'black_pepper' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
-    },
-  },
-
-  kabocha_soup: {
-    type: 'meal',
-    isActive: true,
-    id: 'kabocha_soup',
-    label: '단호박스프',
-    mealCategory: 'light_meal',
-    suffix: '_soup',
-    cookTime: 30,
-    difficulty: 'medium',
-    servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'danhobak' },
-        { type: 'ingredient', id: 'milk' },
-      ],
-      common: [{ type: 'ingredient', id: 'onion' }],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [
-        { type: 'ingredient', id: 'fresh_cream' },
-        { type: 'ingredient', id: 'butter' },
-      ],
-    },
-  },
-
-  kabocha_twigim: {
-    type: 'meal',
-    isActive: true,
-    id: 'kabocha_twigim',
-    label: '단호박튀김',
-    mealCategory: 'cooking_meal',
-    suffix: '_twigim',
-    cookTime: 30,
-    difficulty: 'medium',
-    servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'danhobak' },
-        { type: 'ingredient', id: 'jeonbun_garu' },
-      ],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'cooking_oil' },
       ],
       optional: [],
     },
+    synonyms: ['근위튀김'],
   },
-
+  danhobak_soup: {
+    type: 'meal',
+    isActive: true,
+    id: 'danhobak_soup',
+    label: '단호박스프',
+    mealCategory: 'light_meal',
+    suffix: '_soup',
+    difficulty: 'medium',
+    servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
+    ingredientStructure: {
+      essential: [{ type: 'ingredient', id: 'danhobak' }],
+      common: [
+        { type: 'ingredient', id: 'milk' },
+        { type: 'ingredient', id: 'butter' },
+      ],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
+    },
+    synonyms: ['단호박스프'],
+  },
+  danhobak_twigim: {
+    type: 'meal',
+    isActive: true,
+    id: 'danhobak_twigim',
+    label: '단호박튀김',
+    mealCategory: 'cooking_meal',
+    suffix: '_twigim',
+    difficulty: 'medium',
+    servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
+    ingredientStructure: {
+      essential: [
+        { type: 'ingredient', id: 'danhobak' },
+        { type: 'ingredient', id: 'twigim_garu' },
+      ],
+      common: [],
+      seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
+      optional: [],
+    },
+  },
   danmuji: {
     type: 'meal',
     isActive: true,
@@ -1797,22 +1408,11 @@ export const mealObj = {
     label: '단무지',
     mealCategory: 'side_meal',
     suffix: '_jangajji',
-    cookTime: 10,
     difficulty: 'easy',
     servingTemperature: 'cold',
     isSideMeal: true,
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'mu' }],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [],
-    },
+    convenienceVariants: ['readyToEat'],
   },
-
   deodeok_gui: {
     type: 'meal',
     isActive: true,
@@ -1820,25 +1420,25 @@ export const mealObj = {
     label: '고추장 더덕구이',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
-        // { type: 'ingredient', id: 'deodeok' }
-      ],
-      common: [{ type: 'ingredient', id: 'garlic' }],
-      seasoning: [
+        { type: 'ingredient', id: 'deodeok' },
         { type: 'ingredient', id: 'gochujang' },
+      ],
+      common: [],
+      seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'neutari_beoseot' }],
+      optional: [],
     },
+    synonyms: ['더덕구이'],
   },
-
   deulgireum_mak_guksu: {
     type: 'meal',
     isActive: true,
@@ -1846,21 +1446,23 @@ export const mealObj = {
     label: '들기름막국수',
     mealCategory: 'noodle_meal',
     suffix: '_guksu',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'memil_myeon' }],
-      common: [
-        { type: 'ingredient', id: 'gim' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'deulkkae_garu' },
+      essential: [
+        { type: 'ingredient', id: 'memil_myeon' },
+        { type: 'ingredient', id: 'deulgireum' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'soy_sauce' }],
-      optional: [{ type: 'ingredient', id: 'egg' }],
+      common: [],
+      seasoning: [
+        { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'oligodang' },
+      ],
+      optional: [],
     },
   },
-
   deulkkae_kal_guksu: {
     type: 'meal',
     isActive: true,
@@ -1868,24 +1470,25 @@ export const mealObj = {
     label: '들깨칼국수',
     mealCategory: 'noodle_meal',
     suffix: '_guksu',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'kal_guksu_myeon' },
         { type: 'ingredient', id: 'deulkkae_garu' },
       ],
       common: [
-        { type: 'ingredient', id: 'potato' },
         { type: 'ingredient', id: 'aehobak' },
-        { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'potato' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'salt' }],
-      optional: [{ type: 'ingredient', id: 'kkaennip' }],
+      seasoning: [
+        { type: 'ingredient', id: 'yuksu_coin' },
+        { type: 'ingredient', id: 'minced_garlic' },
+      ],
+      optional: [],
     },
   },
-
   doenjang_guk: {
     type: 'meal',
     isActive: true,
@@ -1893,22 +1496,23 @@ export const mealObj = {
     label: '된장국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'doenjang' }],
       common: [
         { type: 'ingredient', id: 'dubu' },
         { type: 'ingredient', id: 'aehobak' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'onion' },
       ],
-      seasoning: [],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      seasoning: [
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
+      ],
+      optional: [],
     },
   },
-
   doenjang_jjigae: {
     type: 'meal',
     isActive: true,
@@ -1916,49 +1520,35 @@ export const mealObj = {
     label: '된장찌개',
     mealCategory: 'soup_meal',
     suffix: '_jjigae',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'doenjang' },
-        { type: 'ingredient', id: 'dubu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'doenjang' }],
       common: [
+        { type: 'ingredient', id: 'dubu' },
         { type: 'ingredient', id: 'aehobak' },
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'potato' },
-        { type: 'ingredient', id: 'garlic' },
       ],
-      seasoning: [],
-      optional: [{ type: 'ingredient', id: 'bajirak' }],
+      seasoning: [
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
+      ],
+      optional: [],
     },
   },
-
   dogani_tang: {
     type: 'meal',
     isActive: true,
     id: 'dogani_tang',
-    label: '도가니탕',
+    label: '도가니곰탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 180,
     difficulty: 'hard',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'dogani' }
-      ],
-      common: [{ type: 'ingredient', id: 'daepa' }],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'somyeon' }],
-    },
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
   },
-
   dongchimi: {
     type: 'meal',
     isActive: true,
@@ -1966,21 +1556,16 @@ export const mealObj = {
     label: '동치미',
     mealCategory: 'side_meal',
     suffix: '_kimchi',
-    cookTime: 60,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'mu' }],
-      common: [
-        { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
+      common: [{ type: 'ingredient', id: 'jjokpa' }],
       seasoning: [{ type: 'ingredient', id: 'salt' }],
-      optional: [{ type: 'ingredient', id: 'bae' }],
+      optional: [],
     },
   },
-
   donggeurangttaeng: {
     type: 'meal',
     isActive: true,
@@ -1988,28 +1573,23 @@ export const mealObj = {
     label: '동그랑땡',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'ground_pork' },
-        { type: 'ingredient', id: 'dubu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'ground_pork' }],
       common: [
+        { type: 'ingredient', id: 'dubu' },
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'egg' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'black_pepper' },
+        { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'twigim_garu' }],
+      optional: [],
     },
   },
-
   dongtae_jeon: {
     type: 'meal',
     isActive: true,
@@ -2017,23 +1597,23 @@ export const mealObj = {
     label: '동태전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'dongtae' },
         { type: 'ingredient', id: 'egg' },
+        { type: 'ingredient', id: 'milgaru' },
       ],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'twigim_garu' }],
+      optional: [],
     },
   },
-
   dongtae_jjigae: {
     type: 'meal',
     isActive: true,
@@ -2041,83 +1621,98 @@ export const mealObj = {
     label: '동태찌개',
     mealCategory: 'soup_meal',
     suffix: '_jjigae',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'dongtae' }],
       common: [
         { type: 'ingredient', id: 'mu' },
         { type: 'ingredient', id: 'dubu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'ssukgat' },
-        { type: 'ingredient', id: 'garlic' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
-  // 여기부터
   donkkaseu: {
     type: 'meal',
     isActive: true,
     id: 'donkkaseu',
-    label: '돈까스',
+    label: '돈까스',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 60,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'pork_loin' },
         { type: 'ingredient', id: 'ppang_garu' },
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'milgaru' },
       ],
-      common: [{ type: 'ingredient', id: 'yangbaechu' }],
+      common: [
+        { type: 'ingredient', id: 'egg' },
+        { type: 'ingredient', id: 'twigim_garu' },
+      ],
       seasoning: [
+        { type: 'ingredient', id: 'cooking_oil' },
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'black_pepper' },
-        { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'mustard' }],
+      optional: [],
     },
+    synonyms: ['돈카츠', '돈가스'],
   },
-
   doraji_muchim: {
     type: 'meal',
     isActive: true,
     id: 'doraji_muchim',
-    label: '도라지무침',
+    label: '도라지무침',
     mealCategory: 'cooking_meal',
     suffix: '_muchim',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'doraji' }],
-      common: [
-        { type: 'ingredient', id: 'cucumber' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'deulgireum' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'chamgireum' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
+  dotori_muk_muchim: {
+    type: 'meal',
+    isActive: true,
+    id: 'dotori_muk_muchim',
+    label: '도토리묵무침',
+    mealCategory: 'cooking_meal',
+    suffix: '_muchim',
+    difficulty: 'easy',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
+    ingredientStructure: {
+      essential: [{ type: 'ingredient', id: 'dotori_muk' }],
+      common: [
+        { type: 'ingredient', id: 'cucumber' },
+        { type: 'ingredient', id: 'onion' },
+      ],
+      seasoning: [
+        { type: 'ingredient', id: 'gochugaru' },
+        { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'chamgireum' },
+      ],
+      optional: [],
+    },
+  },
   dubu_buchim: {
     type: 'meal',
     isActive: true,
@@ -2125,53 +1720,41 @@ export const mealObj = {
     label: '두부부침',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 15,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'dubu' }],
       common: [],
       seasoning: [
-        { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'deulgireum' },
+        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'gochugaru' },
-      ],
+      optional: [],
     },
+    synonyms: ['두부전'],
   },
-
   dubu_jorim: {
     type: 'meal',
     isActive: true,
     id: 'dubu_jorim',
-    label: '두부조림',
+    label: '두부조림',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'dubu' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
+      common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'deulgireum' },
-        { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   dubu_kimchi: {
     type: 'meal',
     isActive: true,
@@ -2179,56 +1762,39 @@ export const mealObj = {
     label: '두부김치',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'dubu' },
         { type: 'meal', id: 'baechu_kimchi' },
-        { type: 'ingredient', id: 'pork_belly' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
+      common: [],
       seasoning: [
-        { type: 'ingredient', id: 'deulgireum' },
-        { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'gochugaru' },
+        { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   dwaeji_kkeopdegi: {
     type: 'meal',
     isActive: true,
     id: 'dwaeji_kkeopdegi',
-    label: '돼지껍데기',
+    label: '돼지껍데기구이',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'pork_skin' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'deulgireum' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'garlic' }],
+      common: [],
+      seasoning: [],
+      optional: [],
     },
   },
-
   egg_in_the_hell: {
     type: 'meal',
     isActive: true,
@@ -2236,30 +1802,24 @@ export const mealObj = {
     label: '에그인더헬',
     mealCategory: 'western_meal',
     suffix: null,
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'tomato' },
+        { type: 'ingredient', id: 'tomato_sauce' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
+      common: [{ type: 'ingredient', id: 'onion' }],
       seasoning: [
-        { type: 'ingredient', id: 'cooking_oil' },
+        { type: 'ingredient', id: 'olive_oil' },
+        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'mozzarella_cheese' },
-        { type: 'ingredient', id: 'baguette' },
-      ],
+      optional: [],
     },
+    synonyms: ['샥슈카'],
   },
-
   eomuk_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -2267,54 +1827,75 @@ export const mealObj = {
     label: '어묵볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'mu' }],
+      essential: [{ type: 'ingredient', id: 'eomuk' }],
       common: [
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'carrot' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'deulgireum' },
+        { type: 'ingredient', id: 'oligodang' },
         { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
+    synonyms: ['오뎅볶음'],
   },
-
   eomuk_guk: {
     type: 'meal',
     isActive: true,
     id: 'eomuk_guk',
-    label: '어묵국',
+    label: '어묵국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'eomuk' },
-        { type: 'ingredient', id: 'mu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'eomuk' }],
       common: [
+        { type: 'ingredient', id: 'mu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'yuksu_coin' },
+        { type: 'ingredient', id: 'guk_ganjang' },
       ],
-      optional: [{ type: 'ingredient', id: 'ssukgat' }],
+      optional: [],
     },
+    synonyms: ['오뎅국'],
   },
-
+  eomuk_tang: {
+    type: 'meal',
+    isActive: true,
+    id: 'eomuk_tang',
+    label: '어묵탕',
+    mealCategory: 'soup_meal',
+    suffix: '_tang',
+    difficulty: 'medium',
+    servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
+    ingredientStructure: {
+      essential: [{ type: 'ingredient', id: 'eomuk' }],
+      common: [
+        { type: 'ingredient', id: 'mu' },
+        { type: 'ingredient', id: 'daepa' },
+        { type: 'ingredient', id: 'ssukgat' },
+        { type: 'ingredient', id: 'pyogo_beoseot' },
+      ],
+      seasoning: [
+        { type: 'ingredient', id: 'yuksu_coin' },
+        { type: 'ingredient', id: 'guk_ganjang' },
+      ],
+      optional: [],
+    },
+    synonyms: ['오뎅탕'],
+  },
   fried_chicken: {
     type: 'meal',
     isActive: true,
@@ -2322,26 +1903,11 @@ export const mealObj = {
     label: '치킨',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'chicken_whole' },
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'ppang_garu' },
-        { type: 'ingredient', id: 'milgaru' },
-      ],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
+    synonyms: ['후라이드치킨'],
   },
-
   fried_egg: {
     type: 'meal',
     isActive: true,
@@ -2349,21 +1915,17 @@ export const mealObj = {
     label: '계란프라이',
     mealCategory: 'cooking_meal',
     suffix: null,
-    cookTime: 5,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'egg' }],
       common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
+      seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
       optional: [],
     },
+    synonyms: ['계란후라이', '후라이'],
   },
-
   gaji_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -2371,25 +1933,20 @@ export const mealObj = {
     label: '가지볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'gaji' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
+      common: [{ type: 'ingredient', id: 'onion' }],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   galbi_tang: {
     type: 'meal',
     isActive: true,
@@ -2397,55 +1954,44 @@ export const mealObj = {
     label: '갈비탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 175,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'beef_short_rib' },
-        { type: 'ingredient', id: 'mu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'beef_short_rib' }],
       common: [
+        { type: 'ingredient', id: 'mu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'dangmyeon' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'egg' }],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
   },
-
   galchi_jorim: {
     type: 'meal',
     isActive: true,
     id: 'galchi_jorim',
-    label: '갈치조림',
+    label: '갈치조림',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'galchi' },
-        { type: 'ingredient', id: 'mu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'galchi' }],
       common: [
-        { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'mu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'minced_garlic' },
       ],
       optional: [],
     },
+    synonyms: ['갈치찜'],
   },
-
   gambas: {
     type: 'meal',
     isActive: true,
@@ -2453,52 +1999,44 @@ export const mealObj = {
     label: '감바스',
     mealCategory: 'western_meal',
     suffix: null,
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'saeu' },
         { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'olive_oil' },
+        { type: 'ingredient', id: 'peperoncino' },
       ],
-      common: [
-        { type: 'ingredient', id: 'pyogo_beoseot' },
-        { type: 'ingredient', id: 'baguette' },
-      ],
+      common: [],
       seasoning: [
-        // { type: 'ingredient', id: 'olive_oil' },
-        { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'black_pepper' },
+        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'peperoncino' }],
+      optional: [{ type: 'ingredient', id: 'yangsongi_beoseot' }],
     },
   },
-
   gamja_guk: {
     type: 'meal',
     isActive: true,
     id: 'gamja_guk',
-    label: '감자국',
+    label: '맑은감자국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'potato' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'hobak' },
-      ],
+      common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'guk_ganjang' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'egg' }],
+      optional: [],
     },
   },
-
   gamja_jeon: {
     type: 'meal',
     isActive: true,
@@ -2506,9 +2044,9 @@ export const mealObj = {
     label: '감자전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'potato' }],
       common: [],
@@ -2516,36 +2054,30 @@ export const mealObj = {
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
   gamja_jorim: {
     type: 'meal',
     isActive: true,
     id: 'gamja_jorim',
-    label: '감자조림',
+    label: '감자조림',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'either',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'potato' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
+    synonyms: ['알감자조림'],
   },
-
   gamja_soup: {
     type: 'meal',
     isActive: true,
@@ -2553,27 +2085,22 @@ export const mealObj = {
     label: '감자스프',
     mealCategory: 'light_meal',
     suffix: '_soup',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'potato' },
         { type: 'ingredient', id: 'milk' },
       ],
       common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'yangsongi_beoseot' },
         { type: 'ingredient', id: 'butter' },
+        { type: 'ingredient', id: 'onion' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'fresh_cream' }],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
   },
-
   gamja_tang: {
     type: 'meal',
     isActive: true,
@@ -2581,54 +2108,23 @@ export const mealObj = {
     label: '감자탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 60,
     difficulty: 'hard',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'pork_back_bone' },
-        { type: 'ingredient', id: 'potato' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'siraegi' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'kkaennip' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'deulkkae_garu' },
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'doenjang' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [],
-    },
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
   },
-
   gamja_twigim: {
     type: 'meal',
     isActive: true,
     id: 'gamja_twigim',
-    label: '감자튀김',
+    label: '감자튀김',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'potato' },
-        { type: 'ingredient', id: 'twigim_garu' },
-      ],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ketchup' }],
-    },
+    isSideMeal: true,
+    convenienceVariants: ['frozen', 'readyToEat'],
+    synonyms: ['프렌치프라이', '프렌치후라이'],
   },
-
   gamjachae_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -2636,24 +2132,19 @@ export const mealObj = {
     label: '감자채볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 15,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'potato' }],
-      common: [
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'onion' },
-      ],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'chamgireum' },
       ],
       optional: [],
     },
   },
-
   ganjang_gyeran_bap: {
     type: 'meal',
     isActive: true,
@@ -2661,24 +2152,20 @@ export const mealObj = {
     label: '간장계란밥',
     mealCategory: 'rice_meal',
     suffix: '_bap',
-    cookTime: 10,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
         { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'butter' },
       ],
       common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
-      optional: [{ type: 'ingredient', id: 'gim' }],
+      seasoning: [{ type: 'ingredient', id: 'soy_sauce' }],
+      optional: [{ type: 'ingredient', id: 'butter' }],
     },
+    synonyms: ['간장달걀밥'],
   },
-
   ganjang_hwangtaechae_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -2686,24 +2173,20 @@ export const mealObj = {
     label: '간장황태채볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'hwangtaechae' }],
-      common: [
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'oligodang' },
+        { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   gesal_juk: {
     type: 'meal',
     isActive: true,
@@ -2711,24 +2194,17 @@ export const mealObj = {
     label: '게살죽',
     mealCategory: 'light_meal',
     suffix: '_juk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        // { type: 'ingredient', id: 'gesal' },
+        { type: 'ingredient', id: 'matsal' },
         { type: 'ingredient', id: 'baekmi' },
       ],
-      common: [
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'hobak' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
-      optional: [{ type: 'ingredient', id: 'egg' }],
+      common: [],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
   },
 
@@ -2739,28 +2215,10 @@ export const mealObj = {
     label: '김말이',
     mealCategory: 'cooking_meal',
     suffix: '_mari',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'gim' },
-        { type: 'ingredient', id: 'dangmyeon' },
-        { type: 'ingredient', id: 'twigim_garu' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'onion' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   gimbap: {
     type: 'meal',
     isActive: true,
@@ -2768,29 +2226,23 @@ export const mealObj = {
     label: '김밥',
     mealCategory: 'rice_meal',
     suffix: '_bap',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'warm',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
+        { type: 'meal', id: 'cooked_rice' },
         { type: 'ingredient', id: 'gim' },
-        { type: 'ingredient', id: 'baekmi' },
       ],
       common: [
-        { type: 'meal', id: 'danmuji' },
         { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'carrot' },
         { type: 'ingredient', id: 'sigeumchi' },
-        // { type: 'ingredient', id: 'ham' },
+        { type: 'ingredient', id: 'carrot' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ueong' }],
+      seasoning: [{ type: 'ingredient', id: 'chamgireum' }],
+      optional: [],
     },
   },
-
   gimbugak: {
     type: 'meal',
     isActive: true,
@@ -2798,23 +2250,10 @@ export const mealObj = {
     label: '김부각',
     mealCategory: 'side_meal',
     suffix: null,
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'gim' },
-        { type: 'ingredient', id: 'milgaru' },
-      ],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [{ type: 'ingredient', id: 'sugar' }],
-    },
+    convenienceVariants: ['readyToEat'],
   },
-
   gimjaban: {
     type: 'meal',
     isActive: true,
@@ -2822,21 +2261,12 @@ export const mealObj = {
     label: '김자반',
     mealCategory: 'side_meal',
     suffix: null,
-    cookTime: 10,
     difficulty: 'easy',
-    servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'gim' }],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'sugar' },
-      ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
-    },
+    servingTemperature: 'cold',
+    isSideMeal: true,
+    convenienceVariants: ['readyToEat'],
+    synonyms: ['김가루'],
   },
-
   gochu_jangajji: {
     type: 'meal',
     isActive: true,
@@ -2844,45 +2274,41 @@ export const mealObj = {
     label: '고추장아찌',
     mealCategory: 'side_meal',
     suffix: '_jangajji',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'put_gochu' }],
-      common: [{ type: 'ingredient', id: 'onion' }],
+      essential: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'vinegar' },
         { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'garlic' }],
+      optional: [],
     },
+    synonyms: ['고추절임'],
   },
-
   gochu_twigim: {
     type: 'meal',
     isActive: true,
     id: 'gochu_twigim',
-    label: '고추튀김',
+    label: '고추튀김',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'put_gochu' },
+        { type: 'ingredient', id: 'cheongyang_gochu' },
         { type: 'ingredient', id: 'twigim_garu' },
       ],
       common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'soy_sauce' }],
+      seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
+      optional: [],
     },
   },
-
   gochujang_hwangtaechae_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -2890,25 +2316,22 @@ export const mealObj = {
     label: '고추장황태채볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'hwangtaechae' }],
-      common: [
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
-      seasoning: [
+      essential: [
+        { type: 'ingredient', id: 'hwangtaechae' },
         { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'chamgireum' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      common: [],
+      seasoning: [
+        { type: 'ingredient', id: 'oligodang' },
+        { type: 'ingredient', id: 'cooking_oil' },
+      ],
+      optional: [],
     },
   },
-
   gochujang_jjigae: {
     type: 'meal',
     isActive: true,
@@ -2916,29 +2339,23 @@ export const mealObj = {
     label: '고추장찌개',
     mealCategory: 'soup_meal',
     suffix: '_jjigae',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'pork_shoulder' },
-        { type: 'ingredient', id: 'potato' },
-      ],
+      essential: [{ type: 'ingredient', id: 'gochujang' }],
       common: [
-        { type: 'ingredient', id: 'hobak' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
         { type: 'ingredient', id: 'dubu' },
+        { type: 'ingredient', id: 'aehobak' },
+        { type: 'ingredient', id: 'onion' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'yuksu_coin' },
+        { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
   godeungeo_jorim: {
     type: 'meal',
     isActive: true,
@@ -2946,28 +2363,24 @@ export const mealObj = {
     label: '고등어조림',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'godeungeo' },
-        { type: 'ingredient', id: 'mu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'godeungeo' }],
       common: [
-        { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'mu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'minced_garlic' },
       ],
       optional: [],
     },
+    synonyms: ['고등어찜'],
   },
-
   goguma_soup: {
     type: 'meal',
     isActive: true,
@@ -2975,26 +2388,20 @@ export const mealObj = {
     label: '고구마스프',
     mealCategory: 'light_meal',
     suffix: '_soup',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'sweet_potato' },
         { type: 'ingredient', id: 'milk' },
+        { type: 'ingredient', id: 'fresh_cream' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'butter' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'fresh_cream' }],
+      common: [{ type: 'ingredient', id: 'butter' }],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
   },
-
   goguma_twigim: {
     type: 'meal',
     isActive: true,
@@ -3002,23 +2409,19 @@ export const mealObj = {
     label: '고구마튀김',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'sweet_potato' },
         { type: 'ingredient', id: 'twigim_garu' },
       ],
       common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
+      seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
       optional: [],
     },
   },
-
   golbaengi_muchim: {
     type: 'meal',
     isActive: true,
@@ -3026,13 +2429,12 @@ export const mealObj = {
     label: '골뱅이무침',
     mealCategory: 'cooking_meal',
     suffix: '_muchim',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'canned_golbaengi' }],
       common: [
-        { type: 'ingredient', id: 'yangbaechu' },
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'cucumber' },
       ],
@@ -3041,12 +2443,10 @@ export const mealObj = {
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'vinegar' },
         { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'chamgireum' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   gom_tang: {
     type: 'meal',
     isActive: true,
@@ -3054,23 +2454,22 @@ export const mealObj = {
     label: '곰탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 120,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'beef_brisket' }],
+      essential: [
+        { type: 'ingredient', id: 'beef_brisket' },
+        { type: 'ingredient', id: 'sagol_yuksu' },
+      ],
       common: [
         { type: 'ingredient', id: 'daepa' },
         { type: 'ingredient', id: 'somyeon' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'baekmi' }],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
   },
-
   gondre_bap: {
     type: 'meal',
     isActive: true,
@@ -3078,23 +2477,20 @@ export const mealObj = {
     label: '곤드레밥',
     mealCategory: 'rice_meal',
     suffix: '_bap',
-    cookTime: 40,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'warm',
+    convenienceVariants: ['frozen'],
     ingredientStructure: {
       essential: [
-        // { type: 'ingredient', id: 'gondre' },
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
+        { type: 'ingredient', id: 'gondre' },
       ],
       common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
+      seasoning: [],
       optional: [],
     },
+    synonyms: ['나물밥'],
   },
-
   gopchang_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -3102,29 +2498,24 @@ export const mealObj = {
     label: '곱창볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'gopchang' }
-      ],
+      essential: [{ type: 'ingredient', id: 'gopchang' }],
       common: [
-        { type: 'ingredient', id: 'yangbaechu' },
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'buchu' },
-        { type: 'ingredient', id: 'kkaennip' },
-        { type: 'ingredient', id: 'curry_garu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [{ type: 'ingredient', id: 'dangmyeon' }],
+      optional: [],
     },
   },
-
   gopchang_gui: {
     type: 'meal',
     isActive: true,
@@ -3132,49 +2523,37 @@ export const mealObj = {
     label: '곱창구이',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'gopchang' }
-      ],
-      common: [
-        { type: 'ingredient', id: 'buchu' },
-        { type: 'ingredient', id: 'garlic' },
-        { type: 'ingredient', id: 'onion' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'gochujang' }],
+      essential: [{ type: 'ingredient', id: 'gopchang' }],
+      common: [{ type: 'ingredient', id: 'onion' }],
+      seasoning: [],
+      optional: [],
     },
   },
-
   gosari_namul: {
     type: 'meal',
     isActive: true,
     id: 'gosari_namul',
-    label: '고사리나물',
+    label: '고사리나물',
     mealCategory: 'cooking_meal',
     suffix: '_namul',
-    cookTime: 20,
     difficulty: 'easy',
-    servingTemperature: 'hot',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'gosari' }],
-      common: [{ type: 'ingredient', id: 'daepa' }],
+      common: [],
       seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'chamgireum' },
         { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   gratin: {
     type: 'meal',
     isActive: true,
@@ -3182,29 +2561,28 @@ export const mealObj = {
     label: '그라탕',
     mealCategory: 'western_meal',
     suffix: '_gratin',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
+        { type: 'ingredient', id: 'potato' },
         { type: 'ingredient', id: 'mozzarella_cheese' },
         { type: 'ingredient', id: 'milk' },
       ],
       common: [
-        { type: 'ingredient', id: 'potato' },
+        { type: 'ingredient', id: 'bacon' },
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'yangsongi_beoseot' },
-        { type: 'ingredient', id: 'broccoli' },
         { type: 'ingredient', id: 'butter' },
+        { type: 'ingredient', id: 'yangsongi_beoseot' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
+      seasoning: [{ type: 'ingredient', id: 'black_pepper' }],
+      optional: [
+        { type: 'ingredient', id: 'parmesan_cheese' },
+        { type: 'ingredient', id: 'parsley' },
       ],
-      optional: [{ type: 'ingredient', id: 'bacon' }],
     },
   },
-
   gul_jeon: {
     type: 'meal',
     isActive: true,
@@ -3212,25 +2590,22 @@ export const mealObj = {
     label: '굴전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'saenggul' },
         { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'milgaru' },
       ],
-      common: [],
+      common: [{ type: 'ingredient', id: 'milgaru' }],
       seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
         { type: 'ingredient', id: 'cooking_oil' },
+        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
   gun_mandu: {
     type: 'meal',
     isActive: true,
@@ -3238,25 +2613,17 @@ export const mealObj = {
     label: '군만두',
     mealCategory: 'snack_meal',
     suffix: '_mandu',
-    cookTime: 20,
     difficulty: 'easy',
-    servingTemperature: 'both',
+    servingTemperature: 'either',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'frozen' }
-      ],
+      essential: [{ type: 'ingredient', id: 'frozen_mandu' }],
       common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'soy_sauce' },
-      ],
-      optional: [
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'gochugaru' },
-      ],
+      seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
+      optional: [],
     },
+    synonyms: ['만두튀김'],
   },
-
   gungmul_dakbal: {
     type: 'meal',
     isActive: true,
@@ -3264,26 +2631,27 @@ export const mealObj = {
     label: '국물닭발',
     mealCategory: 'snack_meal',
     suffix: null,
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [],
+      essential: [{ type: 'ingredient', id: 'dakbal' }],
       common: [
-        { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'tteokbokki_tteok' },
-        { type: 'ingredient', id: 'curry_garu' },
+        { type: 'ingredient', id: 'garlic' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'black_pepper' },
+        { type: 'ingredient', id: 'sugar' },
         { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [{ type: 'ingredient', id: 'mozzarella_cheese' }],
+      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
     },
   },
-
   gyeran_bokkeumbap: {
     type: 'meal',
     isActive: true,
@@ -3291,27 +2659,23 @@ export const mealObj = {
     label: '계란볶음밥',
     mealCategory: 'rice_meal',
     suffix: '_bokkeumbap',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
         { type: 'ingredient', id: 'egg' },
       ],
-      common: [
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'onion' },
-      ],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'cooking_oil' },
       ],
       optional: [],
     },
+    synonyms: ['달걀볶음밥'],
   },
-
   gyeran_guk: {
     type: 'meal',
     isActive: true,
@@ -3319,42 +2683,43 @@ export const mealObj = {
     label: '계란국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'egg' }],
       common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'salt' },
-        // { type: 'ingredient', id: 'dasida' },
+        { type: 'ingredient', id: 'guk_ganjang' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'gim' }],
+      optional: [],
     },
+    synonyms: ['달걀국'],
   },
-
   gyeran_jang_jorim: {
     type: 'meal',
     isActive: true,
     id: 'gyeran_jang_jorim',
-    label: '계란장조림',
+    label: '계란장조림',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'egg' }],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'oligodang' },
         { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'guk_ganjang' },
       ],
-      optional: [],
+      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
     },
+    synonyms: ['달걀장조림'],
   },
-
   gyeran_jjim: {
     type: 'meal',
     isActive: true,
@@ -3362,68 +2727,38 @@ export const mealObj = {
     label: '계란찜',
     mealCategory: 'cooking_meal',
     suffix: '_jjim',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'egg' }],
-      common: [{ type: 'ingredient', id: 'daepa' }],
+      common: [],
       seasoning: [{ type: 'ingredient', id: 'salt' }],
-      optional: [],
+      optional: [{ type: 'ingredient', id: 'daepa' }],
     },
+    synonyms: ['달걀찜'],
   },
-
   gyeran_mari: {
     type: 'meal',
     isActive: true,
     id: 'gyeran_mari',
-    label: '계란말이',
+    label: '계란말이',
     mealCategory: 'cooking_meal',
     suffix: '_mari',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'egg' }],
-      common: [
+      common: [],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [
+        { type: 'ingredient', id: 'daepa' },
         { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'daepa' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [],
     },
+    synonyms: ['달걀말이'],
   },
-
-  haejang_guk: {
-    type: 'meal',
-    isActive: true,
-    id: 'haejang_guk',
-    label: '해장국',
-    mealCategory: 'soup_meal',
-    suffix: '_guk',
-    cookTime: 30,
-    difficulty: 'medium',
-    servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'ugeoji' }
-      ],
-      common: [
-        { type: 'ingredient', id: 'kongnamul' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'mu' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'doenjang' },
-        { type: 'ingredient', id: 'gochugaru' },
-      ],
-      optional: [],
-    },
-  },
-
   haemul_jjim: {
     type: 'meal',
     isActive: true,
@@ -3431,29 +2766,29 @@ export const mealObj = {
     label: '해물찜',
     mealCategory: 'cooking_meal',
     suffix: '_jjim',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'jukkumi' },
         { type: 'ingredient', id: 'ojingeo' },
+        { type: 'ingredient', id: 'saeu' },
+        { type: 'ingredient', id: 'bajirak' },
+        { type: 'ingredient', id: 'baekhap' },
       ],
       common: [
         { type: 'ingredient', id: 'kongnamul' },
         { type: 'ingredient', id: 'minari' },
-        { type: 'ingredient', id: 'onion' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
       optional: [],
     },
   },
-
   haemul_juk: {
     type: 'meal',
     isActive: true,
@@ -3461,81 +2796,70 @@ export const mealObj = {
     label: '해물죽',
     mealCategory: 'light_meal',
     suffix: '_juk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
         { type: 'ingredient', id: 'saeu' },
+        { type: 'ingredient', id: 'honghap' },
       ],
-      common: [
-        { type: 'ingredient', id: 'ojingeo' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
+      common: [{ type: 'ingredient', id: 'ojingeo' }],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
       optional: [],
     },
   },
-
   haemulpa_jeon: {
     type: 'meal',
     isActive: true,
     id: 'haemulpa_jeon',
-    label: '해물파전',
+    label: '해물파전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'jjokpa' },
-        { type: 'ingredient', id: 'saeu' },
+        { type: 'ingredient', id: 'buchim_garu' },
         { type: 'ingredient', id: 'ojingeo' },
-        { type: 'ingredient', id: 'milgaru' },
+        { type: 'ingredient', id: 'jjokpa' },
       ],
-      common: [],
+      common: [
+        { type: 'ingredient', id: 'saeu' },
+        { type: 'ingredient', id: 'honghap' },
+      ],
       seasoning: [
-        { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'cooking_oil' },
+        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [],
+      optional: [{ type: 'ingredient', id: 'chamchi_aekjeot' }],
     },
   },
-
   hamburger_steak: {
     type: 'meal',
     isActive: true,
     id: 'hamburger_steak',
-    label: '함박스테이크',
+    label: '함박스테이크',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'ground_beef' },
         { type: 'ingredient', id: 'ground_pork' },
+      ],
+      common: [
+        { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'ppang_garu' },
         { type: 'ingredient', id: 'egg' },
       ],
-      common: [{ type: 'ingredient', id: 'onion' }],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [
-        { type: 'ingredient', id: 'butter' },
-        // { type: 'ingredient', id: 'demi_glace_sauce' }, // verify
-      ],
+      seasoning: [{ type: 'ingredient', id: 'black_pepper' }],
+      optional: [],
     },
   },
-
   heukimja_juk: {
     type: 'meal',
     isActive: true,
@@ -3543,23 +2867,19 @@ export const mealObj = {
     label: '흑임자죽',
     mealCategory: 'light_meal',
     suffix: '_juk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'heukimja' },
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'ingredient', id: 'chapssal' },
       ],
       common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'sugar' },
-      ],
-      optional: [{ type: 'ingredient', id: 'milk' }],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
   },
-
   hobak_juk: {
     type: 'meal',
     isActive: true,
@@ -3567,25 +2887,20 @@ export const mealObj = {
     label: '호박죽',
     mealCategory: 'light_meal',
     suffix: '_juk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'hobak' },
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'ingredient', id: 'chapssal' },
       ],
       common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'sugar' },
-      ],
-      optional: [
-        // { type: 'ingredient', id: 'chapssal' },
-      ],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
+    synonyms: ['단호박죽'],
   },
-
   hoe_deopbap: {
     type: 'meal',
     isActive: true,
@@ -3593,29 +2908,22 @@ export const mealObj = {
     label: '회덮밥',
     mealCategory: 'rice_meal',
     suffix: '_deopbap',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'yeoneo_hoe' },
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
+        { type: 'ingredient', id: 'hoe' },
       ],
       common: [
         { type: 'ingredient', id: 'sangchu' },
-        { type: 'ingredient', id: 'kkaennip' },
-        { type: 'ingredient', id: 'cucumber' },
-        { type: 'ingredient', id: 'yangbaechu' },
-        { type: 'ingredient', id: 'carrot' },
+        { type: 'ingredient', id: 'onion' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'chogochujang' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
-      optional: [{ type: 'ingredient', id: 'wasabi' }],
+      seasoning: [{ type: 'ingredient', id: 'chogochujang' }],
+      optional: [],
     },
   },
-
   honghap_tang: {
     type: 'meal',
     isActive: true,
@@ -3623,21 +2931,19 @@ export const mealObj = {
     label: '홍합탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'honghap' }],
-      common: [
-        { type: 'ingredient', id: 'mu' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
+      common: [{ type: 'ingredient', id: 'daepa' }],
+      seasoning: [
+        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'guk_ganjang' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'salt' }],
       optional: [],
     },
   },
-
   hunje_ori: {
     type: 'meal',
     isActive: true,
@@ -3645,21 +2951,17 @@ export const mealObj = {
     label: '훈제오리',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'duck_slice_smoked' }],
-      common: [
-        { type: 'ingredient', id: 'buchu' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'sangchu' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'mustard' }],
-      optional: [{ type: 'ingredient', id: 'kkaennip' }],
+      common: [],
+      seasoning: [],
+      optional: [],
     },
+    synonyms: ['오리훈제'],
   },
-
   hwangtae_gui: {
     type: 'meal',
     isActive: true,
@@ -3667,24 +2969,21 @@ export const mealObj = {
     label: '황태양념구이',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'hwangtaechae' }],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'mulyeot' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
+    synonyms: ['황태고추장양념구이', '고추장황태구이'],
   },
-
   jajang_bap: {
     type: 'meal',
     isActive: true,
@@ -3692,25 +2991,23 @@ export const mealObj = {
     label: '짜장밥',
     mealCategory: 'rice_meal',
     suffix: '_bap',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
+        { type: 'meal', id: 'cooked_rice' },
         { type: 'ingredient', id: 'jajang_garu' },
-        { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'pork_belly' },
       ],
       common: [
+        { type: 'ingredient', id: 'pork_belly' },
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'potato' },
-        { type: 'ingredient', id: 'cucumber' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
+      seasoning: [],
       optional: [],
     },
+    synonyms: ['자장밥'],
   },
-
   jajang_myeon: {
     type: 'meal',
     isActive: true,
@@ -3718,25 +3015,11 @@ export const mealObj = {
     label: '짜장면',
     mealCategory: 'noodle_meal',
     suffix: '_myeon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'jajang_garu' },
-        { type: 'ingredient', id: 'junghwa_myeon' },
-        { type: 'ingredient', id: 'pork_belly' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'cucumber' },
-        { type: 'ingredient', id: 'potato' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
-      optional: [],
-    },
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
+    synonyms: ['자장면'],
   },
-
   janchi_guksu: {
     type: 'meal',
     isActive: true,
@@ -3744,25 +3027,23 @@ export const mealObj = {
     label: '잔치국수',
     mealCategory: 'noodle_meal',
     suffix: '_guksu',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'somyeon' }],
       common: [
         { type: 'ingredient', id: 'egg' },
         { type: 'ingredient', id: 'gim' },
-        { type: 'ingredient', id: 'hobak' },
         { type: 'ingredient', id: 'daepa' },
       ],
       seasoning: [
+        { type: 'ingredient', id: 'yuksu_coin' },
         { type: 'ingredient', id: 'guk_ganjang' },
-        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'gochugaru' }],
+      optional: [],
     },
   },
-
   jangeo_gui: {
     type: 'meal',
     isActive: true,
@@ -3770,39 +3051,30 @@ export const mealObj = {
     label: '장어구이',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        // 장어 ingredient 없음
-      ],
+      essential: [{ type: 'ingredient', id: 'jangeo' }],
       common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'mulyeot' },
-      ],
+      seasoning: [],
       optional: [],
     },
   },
-
   japchae: {
     type: 'meal',
     isActive: true,
     id: 'japchae',
-    label: '잡채',
+    label: '잡채',
     mealCategory: 'cooking_meal',
     suffix: null,
-    cookTime: 25,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'warm',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'dangmyeon' },
-        { type: 'ingredient', id: 'pork_belly' },
-      ],
+      essential: [{ type: 'ingredient', id: 'dangmyeon' }],
       common: [
+        { type: 'ingredient', id: 'beef_hongdukkae' },
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'carrot' },
         { type: 'ingredient', id: 'sigeumchi' },
@@ -3813,10 +3085,9 @@ export const mealObj = {
         { type: 'ingredient', id: 'chamgireum' },
         { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   japchae_bap: {
     type: 'meal',
     isActive: true,
@@ -3824,59 +3095,65 @@ export const mealObj = {
     label: '잡채밥',
     mealCategory: 'rice_meal',
     suffix: '_bap',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'warm',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'dangmyeon' },
-        { type: 'ingredient', id: 'pork_belly' },
+        { type: 'meal', id: 'cooked_rice' },
+        { type: 'meal', id: 'japchae' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'sigeumchi' },
-        { type: 'ingredient', id: 'pyogo_beoseot' },
-      ],
+      common: [],
+      seasoning: [],
+      optional: [],
+    },
+  },
+  jeonbok_juk: {
+    type: 'meal',
+    isActive: true,
+    id: 'jeonbok_juk',
+    label: '전복죽',
+    mealCategory: 'light_meal',
+    suffix: '_juk',
+    difficulty: 'medium',
+    servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
+    ingredientStructure: {
+      essential: [{ type: 'ingredient', id: 'jeonbok' }],
+      common: [],
       seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'salt' },
       ],
       optional: [],
     },
   },
-
   jeyuk_bokkeum: {
     type: 'meal',
     isActive: true,
     id: 'jeyuk_bokkeum',
-    label: '제육볶음',
+    label: '제육볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'pork_shoulder' }],
+      essential: [{ type: 'ingredient', id: 'pork_belly' }],
       common: [
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'yangbaechu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'kkaennip' }],
+      optional: [],
     },
   },
-
   jeyuk_deopbap: {
     type: 'meal',
     isActive: true,
@@ -3884,54 +3161,53 @@ export const mealObj = {
     label: '제육덮밥',
     mealCategory: 'rice_meal',
     suffix: '_deopbap',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
         { type: 'ingredient', id: 'pork_shoulder' },
       ],
       common: [
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'yangbaechu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'kkaennip' }],
+      optional: [],
     },
   },
-
-  jinmichae: {
+  jinmichae_bokkeum: {
     type: 'meal',
     isActive: true,
-    id: 'jinmichae',
-    label: '진미채',
+    id: 'jinmichae_bokkeum',
+    label: '진미채볶음',
     mealCategory: 'cooking_meal',
     suffix: null,
-    cookTime: 10,
-    difficulty: 'easy',
+    difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'ojingeochae' }],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'mayonnaise' },
-        { type: 'ingredient', id: 'mulyeot' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'matsul' },
+        { type: 'ingredient', id: 'oligodang' },
+        { type: 'ingredient', id: 'gochugaru' },
+        { type: 'ingredient', id: 'soy_sauce' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
+    synonyms: ['오징어채'],
   },
-
   jjamppong: {
     type: 'meal',
     isActive: true,
@@ -3939,32 +3215,10 @@ export const mealObj = {
     label: '짬뽕',
     mealCategory: 'noodle_meal',
     suffix: '_myeon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'junghwa_myeon' },
-        { type: 'ingredient', id: 'ojingeo' },
-        { type: 'ingredient', id: 'saeu' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'honghap' },
-        { type: 'ingredient', id: 'yangbaechu' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'oyster_sauce' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'jukkumi' }],
-    },
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
   },
-
   jjolmyeon: {
     type: 'meal',
     isActive: true,
@@ -3972,56 +3226,24 @@ export const mealObj = {
     label: '쫄면',
     mealCategory: 'noodle_meal',
     suffix: '_myeon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'jjolmyeon_sari' }],
       common: [
-        { type: 'ingredient', id: 'yangbaechu' },
         { type: 'ingredient', id: 'cucumber' },
+        { type: 'ingredient', id: 'yangbaechu' },
         { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'sangchu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'vinegar' },
         { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'chamgireum' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
-  jjukkumi_bokkeum: {
-    type: 'meal',
-    isActive: true,
-    id: 'jjukkumi_bokkeum',
-    label: '주꾸미볶음',
-    mealCategory: 'cooking_meal',
-    suffix: '_bokkeum',
-    cookTime: 30,
-    difficulty: 'medium',
-    servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'jukkumi' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'yangbaechu' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
-      ],
-      optional: [{ type: 'ingredient', id: 'pork_belly' }],
-    },
-  },
-
   jogae_jjim: {
     type: 'meal',
     isActive: true,
@@ -4029,22 +3251,30 @@ export const mealObj = {
     label: '조개찜',
     mealCategory: 'cooking_meal',
     suffix: '_jjim',
-    cookTime: 30,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'bajirak' },
-        { type: 'ingredient', id: 'baekhap' },
-      ],
-      common: [
         { type: 'ingredient', id: 'honghap' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
+        { type: 'ingredient', id: 'baekhap' },
+        { type: 'ingredient', id: 'bajirak' },
       ],
+      common: [],
       seasoning: [],
-      optional: [{ type: 'ingredient', id: 'minari' }],
+      optional: [],
     },
+  },
+  jokbal: {
+    type: 'meal',
+    isActive: true,
+    id: 'jokbal',
+    label: '족발',
+    mealCategory: 'cooking_meal',
+    suffix: null,
+    difficulty: 'hard',
+    servingTemperature: 'warm',
+    convenienceVariants: ['readyToEat'],
   },
 
   jomigim: {
@@ -4054,20 +3284,37 @@ export const mealObj = {
     label: '조미김',
     mealCategory: 'side_meal',
     suffix: null,
-    cookTime: 5,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    isSideMeal: true,
+    convenienceVariants: ['readyToEat'],
+    synonyms: ['김'],
+  },
+  jukkumi_bokkeum: {
+    type: 'meal',
+    isActive: true,
+    id: 'jukkumi_bokkeum',
+    label: '주꾸미볶음',
+    mealCategory: 'cooking_meal',
+    suffix: '_bokkeum',
+    difficulty: 'medium',
+    servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'gim' }],
-      common: [],
+      essential: [{ type: 'ingredient', id: 'jukkumi' }],
+      common: [
+        { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'daepa' },
+      ],
       seasoning: [
-        { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'gochujang' },
+        { type: 'ingredient', id: 'gochugaru' },
+        { type: 'ingredient', id: 'minced_garlic' },
       ],
       optional: [],
     },
+    synonyms: ['쭈꾸미볶음'],
   },
-
   jumeok_bap: {
     type: 'meal',
     isActive: true,
@@ -4075,26 +3322,20 @@ export const mealObj = {
     label: '주먹밥',
     mealCategory: 'rice_meal',
     suffix: '_bap',
-    cookTime: 20,
     difficulty: 'easy',
-    servingTemperature: 'hot',
+    servingTemperature: 'warm',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'gim' },
+        { type: 'meal', id: 'cooked_rice' },
+        { type: 'meal', id: 'gimjaban' },
       ],
-      common: [{ type: 'ingredient', id: 'chamkkae' }],
-      seasoning: [
-        { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [
-        { type: 'ingredient', id: 'tuna' },
-        { type: 'ingredient', id: 'myeongran' },
-      ],
+      common: [],
+      seasoning: [{ type: 'ingredient', id: 'chamgireum' }],
+      optional: [],
     },
+    synonyms: ['삼각김밥'],
   },
-
   kal_guksu: {
     type: 'meal',
     isActive: true,
@@ -4102,25 +3343,22 @@ export const mealObj = {
     label: '칼국수',
     mealCategory: 'noodle_meal',
     suffix: '_guksu',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'kal_guksu_myeon' }],
       common: [
-        { type: 'ingredient', id: 'hobak' },
+        { type: 'ingredient', id: 'aehobak' },
         { type: 'ingredient', id: 'potato' },
-        { type: 'ingredient', id: 'daepa' },
       ],
       seasoning: [
+        { type: 'ingredient', id: 'yuksu_coin' },
         { type: 'ingredient', id: 'guk_ganjang' },
-        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'bajirak' }],
+      optional: [],
     },
-    imageName: 'bajirak_kal_guksu.png',
   },
-
   karaage_don: {
     type: 'meal',
     isActive: true,
@@ -4128,29 +3366,23 @@ export const mealObj = {
     label: '가라아게동',
     mealCategory: 'rice_meal',
     suffix: '_don',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'chicken_leg' },
-        { type: 'ingredient', id: 'milgaru' },
-      ],
+      essential: [{ type: 'meal', id: 'cooked_rice' }],
       common: [
-        { type: 'ingredient', id: 'egg' },
         { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'daepa' },
       ],
       seasoning: [
+        { type: 'ingredient', id: 'matsul' },
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'minced_ginger' },
-        { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'jjokpa' }],
+      optional: [{ type: 'ingredient', id: 'mayonnaise' }],
     },
+    synonyms: ['치킨덮밥', '가라아게덮밥'],
   },
-
   katsu_don: {
     type: 'meal',
     isActive: true,
@@ -4158,29 +3390,23 @@ export const mealObj = {
     label: '가츠동',
     mealCategory: 'rice_meal',
     suffix: '_don',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'pork_loin' },
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'ppang_garu' },
-      ],
+      essential: [{ type: 'meal', id: 'cooked_rice' }],
       common: [
+        { type: 'ingredient', id: 'egg' },
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'milgaru' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'jjokpa' }],
+      optional: [],
     },
+    synonyms: ['돈까스덮밥', '돈가스덮밥'],
   },
-
   kimchi_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -4188,27 +3414,20 @@ export const mealObj = {
     label: '김치볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'baechu' }],
-      common: [
-        { type: 'ingredient', id: 'pork_belly' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
+      essential: [{ type: 'meal', id: 'baechu_kimchi' }],
+      common: [{ type: 'ingredient', id: 'pork_belly' }],
       seasoning: [
         { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'gochugaru' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'dubu' }, // 없음, 사용 안할지 검토
-      ],
+      optional: [],
     },
+    synonyms: ['볶음김치'],
   },
-
   kimchi_bokkeumbap: {
     type: 'meal',
     isActive: true,
@@ -4216,28 +3435,22 @@ export const mealObj = {
     label: '김치볶음밥',
     mealCategory: 'rice_meal',
     suffix: '_bokkeumbap',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'baechu' },
+        { type: 'meal', id: 'cooked_rice' },
+        { type: 'meal', id: 'baechu_kimchi' },
       ],
-      common: [
-        { type: 'ingredient', id: 'pork_belly' },
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
-      seasoning: [
+      common: [{ type: 'ingredient', id: 'egg' }],
+      seasoning: [],
+      optional: [
         { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'deulgireum' },
       ],
-      optional: [{ type: 'ingredient', id: 'mozzarella_cheese' }],
     },
   },
-
   kimchi_guk: {
     type: 'meal',
     isActive: true,
@@ -4245,72 +3458,67 @@ export const mealObj = {
     label: '김치국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'baechu' }],
+      essential: [{ type: 'meal', id: 'baechu_kimchi' }],
       common: [
         { type: 'ingredient', id: 'dubu' },
         { type: 'ingredient', id: 'daepa' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'guk_ganjang' }],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      seasoning: [
+        { type: 'ingredient', id: 'guk_ganjang' },
+        { type: 'ingredient', id: 'yuksu_coin' },
+        { type: 'ingredient', id: 'minced_garlic' },
+      ],
+      optional: [],
     },
+    synonyms: ['김칫국'],
   },
-
   kimchi_jeon: {
     type: 'meal',
     isActive: true,
     id: 'kimchi_jeon',
-    label: '김치전',
+    label: '김치전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 20,
-    difficulty: 'easy',
+    difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baechu' },
+        { type: 'meal', id: 'baechu_kimchi' },
         { type: 'ingredient', id: 'buchim_garu' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
+      common: [],
       seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
-      optional: [{ type: 'ingredient', id: 'ojingeo' }],
+      optional: [],
     },
   },
-
   kimchi_jjigae: {
     type: 'meal',
     isActive: true,
     id: 'kimchi_jjigae',
-    label: '김치찌개',
+    label: '김치찌개',
     mealCategory: 'soup_meal',
     suffix: '_jjigae',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'pork_belly' },
-      ],
+      essential: [{ type: 'meal', id: 'baechu_kimchi' }],
       common: [
         { type: 'ingredient', id: 'dubu' },
-        { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'daepa' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'guk_ganjang' },
+        { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
   kimchi_mari_guksu: {
     type: 'meal',
     isActive: true,
@@ -4318,13 +3526,13 @@ export const mealObj = {
     label: '김치말이국수',
     mealCategory: 'noodle_meal',
     suffix: '_guksu',
-    cookTime: 20,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
+        { type: 'meal', id: 'baechu_kimchi' },
         { type: 'ingredient', id: 'somyeon' },
-        { type: 'ingredient', id: 'baechu' },
       ],
       common: [
         { type: 'ingredient', id: 'cucumber' },
@@ -4334,33 +3542,30 @@ export const mealObj = {
         { type: 'ingredient', id: 'vinegar' },
         { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamgireum' }],
+      optional: [],
     },
   },
-
   kkaennip_jangajji: {
     type: 'meal',
     isActive: true,
     id: 'kkaennip_jangajji',
-    label: '깻잎장아찌',
+    label: '깻잎장아찌',
     mealCategory: 'side_meal',
     suffix: '_jangajji',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'kkaennip' }],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'yangjo_ganjang' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'gochugaru' },
+        { type: 'ingredient', id: 'vinegar' },
+        { type: 'ingredient', id: 'sugar' },
       ],
       optional: [],
     },
   },
-
   kkaennip_jeon: {
     type: 'meal',
     isActive: true,
@@ -4368,49 +3573,47 @@ export const mealObj = {
     label: '깻잎전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'kkaennip' },
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'milgaru' },
+        { type: 'ingredient', id: 'buchim_garu' },
       ],
-      common: [{ type: 'ingredient', id: 'ground_pork' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'cooking_oil' },
         { type: 'ingredient', id: 'salt' },
       ],
-      optional: [],
+      optional: [
+        { type: 'ingredient', id: 'cooking_oil' },
+        { type: 'ingredient', id: 'salt' },
+      ],
     },
   },
-
   kkakdugi: {
     type: 'meal',
     isActive: true,
     id: 'kkakdugi',
-    label: '깍두기',
+    label: '깍두기',
     mealCategory: 'side_meal',
     suffix: '_kimchi',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'mu' }],
-      common: [{ type: 'ingredient', id: 'jjokpa' }],
+      common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'myeolchi_aekjeot' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'minced_ginger' },
       ],
-      optional: [
-        // { type: 'ingredient', id: 'saeujeot' }
-      ],
+      optional: [],
     },
   },
-
   kkanpunggi: {
     type: 'meal',
     isActive: true,
@@ -4418,29 +3621,10 @@ export const mealObj = {
     label: '깐풍기',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'chicken_leg' },
-        { type: 'ingredient', id: 'twigim_garu' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'red_paprika' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'peanut' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   kkomak_muchim: {
     type: 'meal',
     isActive: true,
@@ -4448,25 +3632,25 @@ export const mealObj = {
     label: '꼬막무침',
     mealCategory: 'cooking_meal',
     suffix: '_muchim',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'kkomak' }],
       common: [
-        { type: 'ingredient', id: 'jjokpa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
+        { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'carrot' },
+        { type: 'ingredient', id: 'buchu' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'chamgireum' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   kkotge_tang: {
     type: 'meal',
     isActive: true,
@@ -4474,26 +3658,25 @@ export const mealObj = {
     label: '꽃게탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'kkotge' }],
       common: [
         { type: 'ingredient', id: 'mu' },
-        { type: 'ingredient', id: 'hobak' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
+        { type: 'ingredient', id: 'aehobak' },
+        { type: 'ingredient', id: 'ssukgat' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'doenjang' },
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'minari' }],
+      optional: [],
     },
   },
-
   kkwobaro: {
     type: 'meal',
     isActive: true,
@@ -4501,55 +3684,36 @@ export const mealObj = {
     label: '꿔바로우',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'pork_loin' },
-        { type: 'ingredient', id: 'twigim_garu' },
-      ],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'lemon' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   kodari_jorim: {
     type: 'meal',
     isActive: true,
     id: 'kodari_jorim',
-    label: '코다리조림',
+    label: '코다리조림',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'kodari' },
-        { type: 'ingredient', id: 'mu' },
-      ],
+      essential: [{ type: 'ingredient', id: 'kodari' }],
       common: [
+        { type: 'ingredient', id: 'mu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
+        { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'mulyeot' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
+    synonyms: ['코다리찜'],
   },
-
   kong_guksu: {
     type: 'meal',
     isActive: true,
@@ -4557,42 +3721,40 @@ export const mealObj = {
     label: '콩국수',
     mealCategory: 'noodle_meal',
     suffix: '_guksu',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'somyeon' },
-        { type: 'ingredient', id: 'daedu' },
+        { type: 'ingredient', id: 'kong_mul' },
       ],
       common: [{ type: 'ingredient', id: 'cucumber' }],
       seasoning: [{ type: 'ingredient', id: 'salt' }],
       optional: [],
     },
   },
-
   kongjaban: {
     type: 'meal',
     isActive: true,
     id: 'kongjaban',
-    label: '콩자반',
+    label: '콩자반',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 20,
     difficulty: 'easy',
-    servingTemperature: 'hot',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'black_soybeans' }],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'mulyeot' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
       optional: [],
     },
+    synonyms: ['검은콩조림'],
   },
-
   kongnamul_guk: {
     type: 'meal',
     isActive: true,
@@ -4600,23 +3762,21 @@ export const mealObj = {
     label: '콩나물국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'kongnamul' }],
-      common: [
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
+      common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
         { type: 'ingredient', id: 'guk_ganjang' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
       optional: [],
     },
+    synonyms: ['콩나물해장국'],
   },
-
   kongnamul_muchim: {
     type: 'meal',
     isActive: true,
@@ -4624,77 +3784,53 @@ export const mealObj = {
     label: '콩나물무침',
     mealCategory: 'cooking_meal',
     suffix: '_muchim',
-    cookTime: 15,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'kongnamul' }],
-      common: [{ type: 'ingredient', id: 'daepa' }],
+      common: [],
       seasoning: [
+        { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'chamgireum' },
         { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'gochugaru' }],
+      optional: [],
     },
   },
-
   korean_hotdog: {
     type: 'meal',
     isActive: true,
     id: 'korean_hotdog',
-    label: '핫도그',
+    label: '핫도그',
     mealCategory: 'snack_meal',
     suffix: null,
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'sausage' },
-        { type: 'ingredient', id: 'milgaru' },
-        { type: 'ingredient', id: 'ppang_garu' },
-        { type: 'ingredient', id: 'egg' },
-      ],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'ketchup' },
-        { type: 'ingredient', id: 'mustard' },
-      ],
-      optional: [
-        { type: 'ingredient', id: 'potato' },
-        { type: 'ingredient', id: 'mozzarella_cheese' },
-      ],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   la_galbi_gui: {
     type: 'meal',
     isActive: true,
     id: 'la_galbi_gui',
-    label: 'LA갈비구이',
+    label: 'LA갈비구이',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'beef_short_rib' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'bae' },
-      ],
+      common: [{ type: 'ingredient', id: 'bae' }],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'sugar' },
         { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'chamgireum' },
       ],
-      optional: [{ type: 'ingredient', id: 'black_pepper' }],
+      optional: [],
     },
   },
-
   lasagna: {
     type: 'meal',
     isActive: true,
@@ -4702,27 +3838,25 @@ export const mealObj = {
     label: '라자냐',
     mealCategory: 'western_meal',
     suffix: null,
-    cookTime: 60,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'ground_beef' },
+        { type: 'ingredient', id: 'lasagna_myeon' },
         { type: 'ingredient', id: 'tomato_sauce' },
         { type: 'ingredient', id: 'mozzarella_cheese' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'garlic' },
-        { type: 'ingredient', id: 'cheddar_cheese' },
+      common: [{ type: 'ingredient', id: 'onion' }],
+      seasoning: [
+        { type: 'ingredient', id: 'olive_oil' },
+        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'black_pepper' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'olive_oil' }],
-      optional: [
-        // { type: 'ingredient', id: 'parsley' }
-      ],
+      optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
     },
   },
-
   mac_and_cheese: {
     type: 'meal',
     isActive: true,
@@ -4730,45 +3864,25 @@ export const mealObj = {
     label: '맥앤치즈',
     mealCategory: 'western_meal',
     suffix: null,
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        // { type: 'ingredient', id: 'macaroni' },
+        { type: 'ingredient', id: 'macaroni' },
         { type: 'ingredient', id: 'cheddar_cheese' },
-        { type: 'ingredient', id: 'milk' },
       ],
-      common: [{ type: 'ingredient', id: 'mozzarella_cheese' }],
+      common: [{ type: 'ingredient', id: 'butter' }],
       seasoning: [
-        { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [],
-    },
-  },
-
-  maesaengi_guk: {
-    type: 'meal',
-    isActive: true,
-    id: 'maesaengi_guk',
-    label: '매생이국',
-    mealCategory: 'soup_meal',
-    suffix: '_guk',
-    cookTime: 20,
-    difficulty: 'easy',
-    servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'maesaengi' }],
-      common: [{ type: 'ingredient', id: 'saenggul' }],
-      seasoning: [
-        { type: 'ingredient', id: 'guk_ganjang' },
         { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'egg' }],
+      optional: [
+        { type: 'ingredient', id: 'mozzarella_cheese' },
+        { type: 'ingredient', id: 'bacon' },
+      ],
     },
   },
-
   makchang_gui: {
     type: 'meal',
     isActive: true,
@@ -4776,26 +3890,10 @@ export const mealObj = {
     label: '막창구이',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'makchang' }
-      ],
-      common: [
-        { type: 'ingredient', id: 'garlic' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'buchu' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ssamjang' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   mandu_guk: {
     type: 'meal',
     isActive: true,
@@ -4803,24 +3901,23 @@ export const mealObj = {
     label: '만둣국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'mandupi' }],
+      essential: [{ type: 'ingredient', id: 'frozen_mandu' }],
       common: [
-        { type: 'ingredient', id: 'egg' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'gim' },
+        { type: 'ingredient', id: 'egg' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'guk_ganjang' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'baekmi' }],
+      optional: [],
     },
+    synonyms: ['만두국'],
   },
-
   mandu_jeongol: {
     type: 'meal',
     isActive: true,
@@ -4828,35 +3925,31 @@ export const mealObj = {
     label: '만두전골',
     mealCategory: 'soup_meal',
     suffix: '_jeongol',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'mandupi' }],
+      essential: [{ type: 'ingredient', id: 'frozen_mandu' }],
       common: [
         { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'moki_beoseot' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'dubu' },
+        { type: 'ingredient', id: 'paengi_beoseot' },
+        { type: 'ingredient', id: 'neutari_beoseot' },
+        { type: 'ingredient', id: 'dangmyeon' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'guk_ganjang' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [{ type: 'ingredient', id: 'kongnamul' }],
+      seasoning: [{ type: 'ingredient', id: 'guk_ganjang' }],
+      optional: [],
     },
   },
-
   maneul_jangajji: {
     type: 'meal',
     isActive: true,
     id: 'maneul_jangajji',
-    label: '마늘장아찌',
+    label: '마늘장아찌',
     mealCategory: 'side_meal',
     suffix: '_jangajji',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'garlic' }],
       common: [],
@@ -4868,7 +3961,6 @@ export const mealObj = {
       optional: [],
     },
   },
-
   maneuljjong_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -4876,21 +3968,19 @@ export const mealObj = {
     label: '마늘쫑볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'maneuljjong' }],
-      common: [{ type: 'ingredient', id: 'sausage' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   manyeo_soup: {
     type: 'meal',
     isActive: true,
@@ -4898,28 +3988,16 @@ export const mealObj = {
     label: '마녀스프',
     mealCategory: 'light_meal',
     suffix: '_soup',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'tomato' }],
-      common: [
-        { type: 'ingredient', id: 'yangbaechu' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'broccoli' },
-        { type: 'ingredient', id: 'chickpeas' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'tomato_sauce' },
-        { type: 'ingredient', id: 'olive_oil' },
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'sausage' }],
+      common: [],
+      seasoning: [],
+      optional: [],
     },
   },
-
   mapadubu_deopbap: {
     type: 'meal',
     isActive: true,
@@ -4927,29 +4005,26 @@ export const mealObj = {
     label: '마파두부덮밥',
     mealCategory: 'rice_meal',
     suffix: '_deopbap',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
+        { type: 'ingredient', id: 'dubanjang' },
         { type: 'ingredient', id: 'dubu' },
-        { type: 'ingredient', id: 'ground_pork' },
       ],
       common: [
-        { type: 'ingredient', id: 'daepa' },
+        { type: 'ingredient', id: 'ground_pork' },
         { type: 'ingredient', id: 'onion' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'dubanjang' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'oyster_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'oyster_sauce' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
   mara_tang: {
     type: 'meal',
     isActive: true,
@@ -4957,26 +4032,20 @@ export const mealObj = {
     label: '마라탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'cheonggyeongchae' },
-        { type: 'ingredient', id: 'napjak_dangmyeon' },
-      ],
+      essential: [{ type: 'ingredient', id: 'mala_sauce' }],
       common: [
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'beef_chuck' },
-        { type: 'ingredient', id: 'dubu' },
+        { type: 'ingredient', id: 'cheonggyeongchae' },
+        { type: 'ingredient', id: 'sukjunamul' },
+        { type: 'ingredient', id: 'beef_shoulder' },
       ],
-      seasoning: [
-        // { type: 'ingredient', id: 'mala_sauce' }, // 존재 확인 필요
-      ],
-      optional: [{ type: 'ingredient', id: 'jukkumi' }],
+      seasoning: [],
+      optional: [],
     },
   },
-
   mattang: {
     type: 'meal',
     isActive: true,
@@ -4984,20 +4053,19 @@ export const mealObj = {
     label: '맛탕',
     mealCategory: 'snack_meal',
     suffix: null,
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'sweet_potato' }],
-      common: [],
-      seasoning: [
+      essential: [
+        { type: 'ingredient', id: 'sweet_potato' },
         { type: 'ingredient', id: 'mulyeot' },
-        { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      common: [],
+      seasoning: [],
+      optional: [],
     },
   },
-
   mechurial_jang_jorim: {
     type: 'meal',
     isActive: true,
@@ -5005,21 +4073,19 @@ export const mealObj = {
     label: '메추리알장조림',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'quail_egg' }],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'mulyeot' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
   menbosha: {
     type: 'meal',
     isActive: true,
@@ -5027,24 +4093,10 @@ export const mealObj = {
     label: '멘보샤',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'sandwich_bread' },
-      ],
-      common: [{ type: 'ingredient', id: 'egg' }],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'mayonnaise' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   millefeuille_nabe: {
     type: 'meal',
     isActive: true,
@@ -5052,23 +4104,22 @@ export const mealObj = {
     label: '밀푀유나베',
     mealCategory: 'soup_meal',
     suffix: '_nabe',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'beef_brisket' },
+        { type: 'ingredient', id: 'beef_shoulder' },
       ],
       common: [
         { type: 'ingredient', id: 'paengi_beoseot' },
-        // { type: 'ingredient', id: 'kkongchi_beoseot' }, // 존재 확인 필요
+        { type: 'ingredient', id: 'neutari_beoseot' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'guk_ganjang' }],
-      optional: [{ type: 'ingredient', id: 'sukjunamul' }],
+      seasoning: [{ type: 'ingredient', id: 'yuksu_coin' }],
+      optional: [],
     },
   },
-
   miyeok_guk: {
     type: 'meal',
     isActive: true,
@@ -5076,9 +4127,9 @@ export const mealObj = {
     label: '미역국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'miyeok' }],
       common: [{ type: 'ingredient', id: 'beef_brisket' }],
@@ -5086,10 +4137,9 @@ export const mealObj = {
         { type: 'ingredient', id: 'guk_ganjang' },
         { type: 'ingredient', id: 'chamgireum' },
       ],
-      optional: [{ type: 'ingredient', id: 'myeolchi_aekjeot' }],
+      optional: [],
     },
   },
-
   mu_namul: {
     type: 'meal',
     isActive: true,
@@ -5097,21 +4147,20 @@ export const mealObj = {
     label: '무나물',
     mealCategory: 'cooking_meal',
     suffix: '_namul',
-    cookTime: 20,
     difficulty: 'easy',
-    servingTemperature: 'hot',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'mu' }],
-      common: [{ type: 'ingredient', id: 'daepa' }],
+      common: [],
       seasoning: [
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'deulgireum' },
         { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   muksabal: {
     type: 'meal',
     isActive: true,
@@ -5119,25 +4168,16 @@ export const mealObj = {
     label: '묵사발',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'cheongpo_muk' }],
-      common: [
-        { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'cucumber' },
-        { type: 'ingredient', id: 'gim' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'guk_ganjang' },
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
-      optional: [{ type: 'ingredient', id: 'egg' }],
+      essential: [{ type: 'ingredient', id: 'dotori_muk' }],
+      common: [{ type: 'ingredient', id: 'cucumber' }],
+      seasoning: [{ type: 'ingredient', id: 'vinegar' }],
+      optional: [],
     },
   },
-
   mul_mandu: {
     type: 'meal',
     isActive: true,
@@ -5145,20 +4185,10 @@ export const mealObj = {
     label: '물만두',
     mealCategory: 'snack_meal',
     suffix: '_mandu',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'mandupi' }],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'vinegar' },
-      ],
-      optional: [{ type: 'ingredient', id: 'gochugaru' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   mumallaengi: {
     type: 'meal',
     isActive: true,
@@ -5166,71 +4196,65 @@ export const mealObj = {
     label: '무말랭이',
     mealCategory: 'cooking_meal',
     suffix: '_muchim',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'mumallaengi' }
-      ],
-      common: [{ type: 'ingredient', id: 'daepa' }],
+      essential: [{ type: 'ingredient', id: 'mumallaengi' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'myeolchi_aekjeot' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   musaengchae: {
     type: 'meal',
     isActive: true,
     id: 'musaengchae',
-    label: '무생채',
+    label: '무생채',
     mealCategory: 'cooking_meal',
     suffix: '_muchim',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'mu' }],
-      common: [{ type: 'ingredient', id: 'jjokpa' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
         { type: 'ingredient', id: 'myeolchi_aekjeot' },
         { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   myeolchi_bokkeum: {
     type: 'meal',
     isActive: true,
     id: 'myeolchi_bokkeum',
-    label: '멸치볶음',
+    label: '멸치볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 20,
-    difficulty: 'easy',
-    servingTemperature: 'hot',
+    difficulty: 'medium',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'myeolchi' }],
-      common: [{ type: 'ingredient', id: 'almond' }],
+      common: [],
       seasoning: [
-        { type: 'ingredient', id: 'mulyeot' },
+        { type: 'ingredient', id: 'oligodang' },
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'cooking_oil' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
+    synonyms: ['잔멸치볶음'],
   },
-
   myeongran_jeotgal: {
     type: 'meal',
     isActive: true,
@@ -5238,17 +4262,11 @@ export const mealObj = {
     label: '명란젓',
     mealCategory: 'side_meal',
     suffix: '_jeotgal',
-    cookTime: 10,
     difficulty: 'easy',
     servingTemperature: 'cold',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'myeongran' }],
-      common: [],
-      seasoning: [],
-      optional: [{ type: 'ingredient', id: 'chamgireum' }],
-    },
+    convenienceVariants: ['readyToEat'],
+    synonyms: ['명란'],
   },
-
   naengmyeon: {
     type: 'meal',
     isActive: true,
@@ -5256,25 +4274,10 @@ export const mealObj = {
     label: '냉면',
     mealCategory: 'noodle_meal',
     suffix: '_myeon',
-    cookTime: 50,
-    difficulty: 'hard',
+    difficulty: 'medium',
     servingTemperature: 'cold',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'naengmyeon_sari' }],
-      common: [
-        { type: 'ingredient', id: 'cucumber' },
-        { type: 'ingredient', id: 'bae' },
-        { type: 'ingredient', id: 'egg' },
-        // { type: 'ingredient', id: 'pyeonyuk' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'yeon_gyeoja' },
-      ],
-      optional: [{ type: 'meal', id: 'dongchimi' }],
-    },
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
   },
-
   nakgopsae: {
     type: 'meal',
     isActive: true,
@@ -5282,32 +4285,27 @@ export const mealObj = {
     label: '낙곱새',
     mealCategory: 'soup_meal',
     suffix: '_jeongol',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'nakji' },
-        // { type: 'ingredient', id: 'gopchang' },
+        { type: 'ingredient', id: 'gopchang' },
         { type: 'ingredient', id: 'saeu' },
       ],
       common: [
-        { type: 'ingredient', id: 'yangbaechu' },
-        { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'dangmyeon' },
+        { type: 'ingredient', id: 'onion' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
       ],
       optional: [],
     },
   },
-
   nakji_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -5315,28 +4313,23 @@ export const mealObj = {
     label: '낙지볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'nakji' }],
       common: [
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'yangbaechu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'somyeon' }],
+      optional: [],
     },
   },
-
   nakji_deopbap: {
     type: 'meal',
     isActive: true,
@@ -5344,31 +4337,27 @@ export const mealObj = {
     label: '낙지덮밥',
     mealCategory: 'rice_meal',
     suffix: '_deopbap',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
         { type: 'ingredient', id: 'nakji' },
       ],
       common: [
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'yangbaechu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
       ],
       optional: [],
     },
   },
-
   nakji_jeotgal: {
     type: 'meal',
     isActive: true,
@@ -5376,33 +4365,11 @@ export const mealObj = {
     label: '낙지젓',
     mealCategory: 'side_meal',
     suffix: '_jeotgal',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'nakji' }],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'myeolchi_aekjeot' },
-        { type: 'ingredient', id: 'minced_garlic' },
-      ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
-    },
+    convenienceVariants: ['readyToEat'],
+    synonyms: ['낙지젓갈'],
   },
-
-  natto: {
-    type: 'meal',
-    isActive: true,
-    id: 'natto',
-    label: '낫또',
-    mealCategory: 'light_meal',
-    suffix: null,
-    cookTime: 5,
-    difficulty: 'easy',
-    servingTemperature: 'cold',
-  },
-
   neutari_beoseot_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -5410,24 +4377,20 @@ export const mealObj = {
     label: '느타리버섯볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 15,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'neutari_beoseot' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
+      common: [{ type: 'ingredient', id: 'onion' }],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'cooking_oil' },
         { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   nokdu_jeon: {
     type: 'meal',
     isActive: true,
@@ -5435,69 +4398,52 @@ export const mealObj = {
     label: '녹두전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'nokdu' },
-        { type: 'ingredient', id: 'sukjunamul' },
-      ],
-      common: [
-        { type: 'meal', id: 'baechu_kimchi' },
-        { type: 'ingredient', id: 'pork_belly' },
-        { type: 'ingredient', id: 'jjokpa' },
-      ],
+      essential: [{ type: 'ingredient', id: 'nokdu' }],
+      common: [{ type: 'ingredient', id: 'sukjunamul' }],
       seasoning: [
-        { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'cooking_oil' },
+        { type: 'ingredient', id: 'salt' },
       ],
       optional: [],
     },
   },
-
   nurungji: {
     type: 'meal',
     isActive: true,
     id: 'nurungji',
-    label: '누룽지',
+    label: '누룽지',
     mealCategory: 'rice_meal',
     suffix: '_bap',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'baekmi' }],
-      common: [],
-      seasoning: [],
-      optional: [],
-    },
+    convenienceVariants: ['readyToEat'],
   },
-
   oi_muchim: {
     type: 'meal',
     isActive: true,
     id: 'oi_muchim',
-    label: '오이무침',
+    label: '오이무침',
     mealCategory: 'cooking_meal',
     suffix: '_muchim',
-    cookTime: 15,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'cucumber' }],
-      common: [{ type: 'ingredient', id: 'onion' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   oi_naeng_guk: {
     type: 'meal',
     isActive: true,
@@ -5505,50 +4451,45 @@ export const mealObj = {
     label: '오이냉국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 15,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'cucumber' }],
-      common: [{ type: 'ingredient', id: 'miyeok' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'guk_ganjang' },
         { type: 'ingredient', id: 'sugar' },
         { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
   oi_sobagi: {
     type: 'meal',
     isActive: true,
     id: 'oi_sobagi',
-    label: '오이소박이',
+    label: '오이소박이',
     mealCategory: 'side_meal',
     suffix: '_kimchi',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'cucumber' }],
       common: [
         { type: 'ingredient', id: 'buchu' },
-        { type: 'ingredient', id: 'jjokpa' },
+        { type: 'ingredient', id: 'carrot' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'myeolchi_aekjeot' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'minced_ginger' },
       ],
-      optional: [
-        // { type: 'ingredient', id: 'saeujeot' }
-      ],
+      optional: [],
     },
   },
-
   ojingeo_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -5556,28 +4497,24 @@ export const mealObj = {
     label: '오징어볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 25,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'ojingeo' }],
       common: [
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'yangbaechu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   ojingeo_deopbap: {
     type: 'meal',
     isActive: true,
@@ -5585,31 +4522,28 @@ export const mealObj = {
     label: '오징어덮밥',
     mealCategory: 'rice_meal',
     suffix: '_deopbap',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
         { type: 'ingredient', id: 'ojingeo' },
       ],
       common: [
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'yangbaechu' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
+        { type: 'ingredient', id: 'carrot' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
       ],
       optional: [],
     },
+    synonyms: ['30'],
   },
-
   ojingeo_jeotgal: {
     type: 'meal',
     isActive: true,
@@ -5617,22 +4551,11 @@ export const mealObj = {
     label: '오징어젓갈',
     mealCategory: 'side_meal',
     suffix: '_jeotgal',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'ojingeo' }],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'myeolchi_aekjeot' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
-      ],
-      optional: [{ type: 'ingredient', id: 'chamgireum' }],
-    },
+    convenienceVariants: ['readyToEat'],
+    synonyms: ['오징어젓'],
   },
-
   ojingeo_mu_guk: {
     type: 'meal',
     isActive: true,
@@ -5640,26 +4563,22 @@ export const mealObj = {
     label: '오징어무국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'ojingeo' },
         { type: 'ingredient', id: 'mu' },
       ],
-      common: [
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'cheongyang_gochu' },
-      ],
+      common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
         { type: 'ingredient', id: 'guk_ganjang' },
-        { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
       optional: [],
     },
   },
-
   ojingeo_twigim: {
     type: 'meal',
     isActive: true,
@@ -5667,9 +4586,9 @@ export const mealObj = {
     label: '오징어튀김',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'ojingeo' },
@@ -5680,7 +4599,6 @@ export const mealObj = {
       optional: [],
     },
   },
-
   omu_rice: {
     type: 'meal',
     isActive: true,
@@ -5688,27 +4606,19 @@ export const mealObj = {
     label: '오므라이스',
     mealCategory: 'rice_meal',
     suffix: '_rice',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
         { type: 'ingredient', id: 'egg' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'sausage' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'ketchup' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ground_beef' }],
+      common: [{ type: 'ingredient', id: 'onion' }],
+      seasoning: [{ type: 'ingredient', id: 'ketchup' }],
+      optional: [],
     },
   },
-
   onion_soup: {
     type: 'meal',
     isActive: true,
@@ -5716,21 +4626,16 @@ export const mealObj = {
     label: '양파스프',
     mealCategory: 'light_meal',
     suffix: '_soup',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'onion' }],
-      common: [{ type: 'ingredient', id: 'milk' }],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-        // { type: 'ingredient', id: 'butter' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ppang_garu' }],
+      common: [],
+      seasoning: [],
+      optional: [],
     },
   },
-
   ori_jumulreok: {
     type: 'meal',
     isActive: true,
@@ -5738,28 +4643,23 @@ export const mealObj = {
     label: '오리주물럭',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'duck_slice_smoked' }],
+      essential: [{ type: 'ingredient', id: 'duck_slice' }],
       common: [
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'yangbaechu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'kkaennip' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'sugar' },
       ],
       optional: [],
     },
   },
-
   ori_roseu: {
     type: 'meal',
     isActive: true,
@@ -5767,23 +4667,19 @@ export const mealObj = {
     label: '오리로스',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'duck_slice_smoked' }],
-      common: [
-        { type: 'ingredient', id: 'buchu' },
-        { type: 'ingredient', id: 'onion' },
-      ],
+      essential: [{ type: 'ingredient', id: 'duck_slice' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'salt' },
         { type: 'ingredient', id: 'black_pepper' },
       ],
-      optional: [{ type: 'ingredient', id: 'ssamjang' }],
+      optional: [],
     },
   },
-
   pa_jeon: {
     type: 'meal',
     isActive: true,
@@ -5791,33 +4687,29 @@ export const mealObj = {
     label: '파전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'daepa' },
+        { type: 'ingredient', id: 'jjokpa' },
         { type: 'ingredient', id: 'buchim_garu' },
       ],
-      common: [{ type: 'ingredient', id: 'egg' }],
+      common: [],
       seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
-      optional: [
-        { type: 'ingredient', id: 'ojingeo' },
-        { type: 'ingredient', id: 'saeu' },
-      ],
+      optional: [],
     },
   },
-
   pa_kimchi: {
     type: 'meal',
     isActive: true,
     id: 'pa_kimchi',
-    label: '파김치',
+    label: '파김치',
     mealCategory: 'side_meal',
     suffix: '_kimchi',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'jjokpa' }],
       common: [],
@@ -5825,14 +4717,11 @@ export const mealObj = {
         { type: 'ingredient', id: 'gochugaru' },
         { type: 'ingredient', id: 'myeolchi_aekjeot' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'salt' },
+        { type: 'ingredient', id: 'minced_ginger' },
       ],
-      optional: [
-        // { type: 'ingredient', id: 'saeujeot' }
-      ],
+      optional: [],
     },
   },
-
   pad_thai: {
     type: 'meal',
     isActive: true,
@@ -5840,27 +4729,27 @@ export const mealObj = {
     label: '팟타이',
     mealCategory: 'noodle_meal',
     suffix: '_myeon',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'ssal_guksu_myeon' },
         { type: 'ingredient', id: 'saeu' },
+        { type: 'ingredient', id: 'egg' },
       ],
       common: [
         { type: 'ingredient', id: 'sukjunamul' },
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'jjokpa' },
+        { type: 'ingredient', id: 'peanut' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'myeolchi_aekjeot' }, // 실제 id 확인 필요
-        { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'oyster_sauce' },
+        { type: 'ingredient', id: 'oligodang' },
+        { type: 'ingredient', id: 'vinegar' },
       ],
-      optional: [{ type: 'ingredient', id: 'peanut' }],
+      optional: [],
     },
   },
-
   parae_gim: {
     type: 'meal',
     isActive: true,
@@ -5868,23 +4757,10 @@ export const mealObj = {
     label: '파래김',
     mealCategory: 'side_meal',
     suffix: null,
-    cookTime: 10,
     difficulty: 'easy',
     servingTemperature: 'cold',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'gim' },
-        // { type: 'ingredient', id: 'parae' },
-      ],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'chamgireum' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [],
-    },
+    convenienceVariants: ['readyToEat'],
   },
-
   pat_juk: {
     type: 'meal',
     isActive: true,
@@ -5892,48 +4768,27 @@ export const mealObj = {
     label: '팥죽',
     mealCategory: 'light_meal',
     suffix: '_juk',
-    cookTime: 50,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'pat' },
-        { type: 'ingredient', id: 'chapssal' },
-      ],
+      essential: [{ type: 'ingredient', id: 'pat' }],
       common: [],
-      seasoning: [{ type: 'ingredient', id: 'salt' }],
-      optional: [{ type: 'ingredient', id: 'sugar' }],
+      seasoning: [],
+      optional: [],
     },
   },
-
   pizza: {
     type: 'meal',
     isActive: true,
     id: 'pizza',
-    label: '피자',
+    label: '피자',
     mealCategory: 'western_meal',
     suffix: '_pizza',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'milgaru' },
-        { type: 'ingredient', id: 'tomato_sauce' },
-        { type: 'ingredient', id: 'mozzarella_cheese' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'red_paprika' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'olive_oil' }],
-      optional: [
-        // { type: 'ingredient', id: 'pepperoni' },
-        { type: 'ingredient', id: 'pickled_olives' },
-      ],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   poke: {
     type: 'meal',
     isActive: true,
@@ -5941,25 +4796,26 @@ export const mealObj = {
     label: '포케',
     mealCategory: 'fresh_meal',
     suffix: null,
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'yeoneo_hoe' }],
+      essential: [
+        { type: 'meal', id: 'cooked_rice' },
+        { type: 'ingredient', id: 'yeoneo_hoe' },
+        { type: 'ingredient', id: 'baby_leaf' },
+      ],
       common: [
-        { type: 'ingredient', id: 'baekmi' },
         { type: 'ingredient', id: 'avocado' },
         { type: 'ingredient', id: 'cucumber' },
-        { type: 'ingredient', id: 'yangbaechu' },
+        { type: 'ingredient', id: 'tomato' },
+        { type: 'ingredient', id: 'canned_oksusu' },
+        { type: 'ingredient', id: 'jeok_yangpa' },
       ],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      seasoning: [],
+      optional: [],
     },
   },
-
   rabokki: {
     type: 'meal',
     isActive: true,
@@ -5967,28 +4823,16 @@ export const mealObj = {
     label: '라볶이',
     mealCategory: 'snack_meal',
     suffix: null,
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'ramyeon_sari' },
-        { type: 'ingredient', id: 'tteokbokki_tteok' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'eomuk' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'yangbaechu' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'sugar' },
-      ],
-      optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
+      essential: [{ type: 'ingredient', id: 'ramyeon_sari' }],
+      common: [],
+      seasoning: [],
+      optional: [],
     },
   },
-
   ramen: {
     type: 'meal',
     isActive: true,
@@ -5996,25 +4840,10 @@ export const mealObj = {
     label: '라멘',
     mealCategory: 'noodle_meal',
     suffix: '_ramen',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'junghwa_myeon' }],
-      common: [
-        { type: 'ingredient', id: 'pork_belly' },
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'sukjunamul' },
-        { type: 'ingredient', id: 'jjokpa' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'minced_garlic' },
-      ],
-      optional: [{ type: 'ingredient', id: 'gim' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   ramyeon: {
     type: 'meal',
     isActive: true,
@@ -6022,23 +4851,10 @@ export const mealObj = {
     label: '라면',
     mealCategory: 'noodle_meal',
     suffix: '_ramen',
-    cookTime: 10,
     difficulty: 'easy',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'ramyeon_sari' }],
-      common: [
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
-      seasoning: [],
-      optional: [
-        { type: 'ingredient', id: 'parmesan_cheese' },
-        { type: 'ingredient', id: 'mandupi' },
-      ],
-    },
+    convenienceVariants: ['instant'],
   },
-
   rose_pasta: {
     type: 'meal',
     isActive: true,
@@ -6046,25 +4862,20 @@ export const mealObj = {
     label: '로제파스타',
     mealCategory: 'noodle_meal',
     suffix: '_pasta',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'spaghetti_myeon' },
-        { type: 'ingredient', id: 'fresh_cream' },
-        { type: 'ingredient', id: 'tomato_sauce' },
+        { type: 'ingredient', id: 'rose_sauce' },
       ],
-      common: [
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'olive_oil' }],
-      optional: [{ type: 'ingredient', id: 'bacon' }],
+      common: [],
+      seasoning: [],
+      optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
     },
+    synonyms: ['로제스파게티'],
   },
-
   rose_risotto: {
     type: 'meal',
     isActive: true,
@@ -6072,24 +4883,19 @@ export const mealObj = {
     label: '로제리조또',
     mealCategory: 'western_meal',
     suffix: '_risotto',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'fresh_cream' },
-        { type: 'ingredient', id: 'tomato_sauce' },
+        { type: 'ingredient', id: 'rose_sauce' },
       ],
-      common: [
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'onion' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'olive_oil' }],
-      optional: [{ type: 'ingredient', id: 'mozzarella_cheese' }],
+      common: [],
+      seasoning: [],
+      optional: [],
     },
   },
-
   saengseon_gui: {
     type: 'meal',
     isActive: true,
@@ -6097,17 +4903,10 @@ export const mealObj = {
     label: '생선구이',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'godeungeo' }],
-      common: [],
-      seasoning: [{ type: 'ingredient', id: 'salt' }],
-      optional: [{ type: 'ingredient', id: 'lemon' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   saengseon_kkaseu: {
     type: 'meal',
     isActive: true,
@@ -6115,21 +4914,10 @@ export const mealObj = {
     label: '생선까스',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'dongtae' },
-        { type: 'ingredient', id: 'ppang_garu' },
-        { type: 'ingredient', id: 'egg' },
-      ],
-      common: [{ type: 'ingredient', id: 'milgaru' }],
-      seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
-      optional: [{ type: 'ingredient', id: 'mayonnaise' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   saeu_bokkeumbap: {
     type: 'meal',
     isActive: true,
@@ -6137,28 +4925,26 @@ export const mealObj = {
     label: '새우볶음밥',
     mealCategory: 'rice_meal',
     suffix: '_bokkeumbap',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
         { type: 'ingredient', id: 'saeu' },
+        { type: 'ingredient', id: 'egg' },
       ],
       common: [
-        { type: 'ingredient', id: 'egg' },
         { type: 'ingredient', id: 'onion' },
         { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'daepa' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'cooking_oil' },
+        { type: 'ingredient', id: 'soy_sauce' },
       ],
       optional: [],
     },
   },
-
   saeu_twigim: {
     type: 'meal',
     isActive: true,
@@ -6166,20 +4952,19 @@ export const mealObj = {
     label: '새우튀김',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'saeu' },
         { type: 'ingredient', id: 'twigim_garu' },
       ],
-      common: [{ type: 'ingredient', id: 'egg' }],
+      common: [],
       seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
       optional: [],
     },
   },
-
   saeu_wanja: {
     type: 'meal',
     isActive: true,
@@ -6187,23 +4972,10 @@ export const mealObj = {
     label: '새우완자',
     mealCategory: 'cooking_meal',
     suffix: null,
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'egg' },
-      ],
-      common: [{ type: 'ingredient', id: 'onion' }],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ppang_garu' }],
-    },
+    convenienceVariants: ['readyToEat'],
   },
-
   salad: {
     type: 'meal',
     isActive: true,
@@ -6211,25 +4983,23 @@ export const mealObj = {
     label: '샐러드',
     mealCategory: 'fresh_meal',
     suffix: '_salad',
-    cookTime: 10,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    isSideMeal: true,
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'sangchu' }],
-      common: [
-        { type: 'ingredient', id: 'yangbaechu' },
-        { type: 'ingredient', id: 'cucumber' },
-        { type: 'ingredient', id: 'tomato' },
-        { type: 'ingredient', id: 'red_paprika' },
+      essential: [
+        { type: 'ingredient', id: 'baby_leaf' },
+        { type: 'ingredient', id: 'yangsangchu' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'olive_oil' }],
-      optional: [
-        { type: 'ingredient', id: 'chicken_breast' },
+      common: [
+        { type: 'ingredient', id: 'tomato' },
         { type: 'ingredient', id: 'egg' },
       ],
+      seasoning: [],
+      optional: [],
     },
   },
-
   samgye_juk: {
     type: 'meal',
     isActive: true,
@@ -6237,24 +5007,10 @@ export const mealObj = {
     label: '삼계죽',
     mealCategory: 'light_meal',
     suffix: '_juk',
-    cookTime: 50,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'chicken_whole' },
-        { type: 'ingredient', id: 'baekmi' },
-      ],
-      common: [
-        // { type: 'ingredient', id: 'daechu' },
-        // { type: 'ingredient', id: 'insam' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'salt' }],
-      optional: [],
-    },
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
   },
-
   samgye_tang: {
     type: 'meal',
     isActive: true,
@@ -6262,22 +5018,11 @@ export const mealObj = {
     label: '삼계탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 60,
     difficulty: 'hard',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'chicken_whole' }],
-      common: [
-        { type: 'ingredient', id: 'chapssal' },
-        // { type: 'ingredient', id: 'daechu' },
-        // { type: 'ingredient', id: 'insam' },
-        { type: 'ingredient', id: 'garlic' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'salt' }],
-      optional: [],
-    },
+    convenienceVariants: ['frozen', 'instant', 'mealkit', 'readyToEat'],
+    synonyms: ['닭백숙'],
   },
-
   sandwich: {
     type: 'meal',
     isActive: true,
@@ -6285,27 +5030,26 @@ export const mealObj = {
     label: '샌드위치',
     mealCategory: 'western_meal',
     suffix: '_sandwich',
-    cookTime: 10,
     difficulty: 'easy',
-    servingTemperature: 'hot',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'sandwich_ham' },
+        { type: 'ingredient', id: 'sandwich_bread' },
         { type: 'ingredient', id: 'egg' },
       ],
       common: [
-        { type: 'ingredient', id: 'sangchu' },
-        { type: 'ingredient', id: 'tomato' },
+        { type: 'ingredient', id: 'sandwich_ham' },
         { type: 'ingredient', id: 'cheddar_cheese' },
+        { type: 'ingredient', id: 'yangsangchu' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'mayonnaise' },
-        { type: 'ingredient', id: 'mustard' },
+        { type: 'ingredient', id: 'wholegrain_mustard' },
       ],
       optional: [],
     },
   },
-
   sausage_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -6313,15 +5057,12 @@ export const mealObj = {
     label: '소시지볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'sausage' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'red_paprika' },
-      ],
+      common: [{ type: 'ingredient', id: 'onion' }],
       seasoning: [
         { type: 'ingredient', id: 'ketchup' },
         { type: 'ingredient', id: 'cooking_oil' },
@@ -6329,7 +5070,6 @@ export const mealObj = {
       optional: [],
     },
   },
-
   seolleong_tang: {
     type: 'meal',
     isActive: true,
@@ -6337,23 +5077,17 @@ export const mealObj = {
     label: '설렁탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 90,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'beef_brisket' }],
-      common: [
-        { type: 'ingredient', id: 'somyeon' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
+      essential: [{ type: 'ingredient', id: 'sagol_yuksu' }],
+      common: [{ type: 'ingredient', id: 'daepa' }],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
       optional: [],
     },
+    synonyms: ['설농탕'],
   },
-
   shabu_shabu: {
     type: 'meal',
     isActive: true,
@@ -6361,25 +5095,10 @@ export const mealObj = {
     label: '샤브샤브',
     mealCategory: 'soup_meal',
     suffix: '_jeongol',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'beef_brisket' }, // 실제 id 확인 필요
-        { type: 'ingredient', id: 'baechu' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'cheonggyeongchae' },
-        { type: 'ingredient', id: 'sukjunamul' },
-        { type: 'ingredient', id: 'saesongi_beoseot' },
-        // { type: 'ingredient', id: 'pa' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'guk_ganjang' }],
-      optional: [{ type: 'ingredient', id: 'kal_guksu_myeon' }],
-    },
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
   },
-
   sigeumchi_namul: {
     type: 'meal',
     isActive: true,
@@ -6387,44 +5106,53 @@ export const mealObj = {
     label: '시금치나물',
     mealCategory: 'cooking_meal',
     suffix: '_namul',
-    cookTime: 15,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'sigeumchi' }],
       common: [],
       seasoning: [
-        { type: 'ingredient', id: 'guk_ganjang' },
         { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   siraegi_guk: {
     type: 'meal',
     isActive: true,
     id: 'siraegi_guk',
-    label: '시래기국',
+    label: '시래기국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'siraegi' }],
       common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
         { type: 'ingredient', id: 'doenjang' },
+        { type: 'ingredient', id: 'yuksu_coin' },
         { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [
-        // { type: 'ingredient', id: 'woogeoji' }
-      ],
+      optional: [],
     },
   },
-
+  soft_boiled_egg: {
+    type: 'meal',
+    isActive: true,
+    id: 'soft_boiled_egg',
+    label: '반숙란',
+    mealCategory: 'light_meal',
+    suffix: null,
+    difficulty: 'easy',
+    servingTemperature: 'either',
+    convenienceVariants: ['readyToEat'],
+    synonyms: ['반숙', '반숙계란', '반숙달걀'],
+  },
   sogalbi_gui: {
     type: 'meal',
     isActive: true,
@@ -6432,52 +5160,45 @@ export const mealObj = {
     label: '소갈비구이',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 60,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'beef_short_rib' }],
-      common: [],
+      common: [{ type: 'ingredient', id: 'bae' }],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'sugar' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'chamgireum' },
       ],
-      optional: [{ type: 'ingredient', id: 'bae' }],
+      optional: [],
     },
   },
-
   sogalbi_jjim: {
     type: 'meal',
     isActive: true,
     id: 'sogalbi_jjim',
-    label: '소갈비찜',
+    label: '소갈비찜',
     mealCategory: 'cooking_meal',
     suffix: '_jjim',
-    cookTime: 80,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'beef_short_rib' }],
       common: [
-        { type: 'ingredient', id: 'carrot' },
         { type: 'ingredient', id: 'mu' },
-        { type: 'ingredient', id: 'pyogo_beoseot' },
+        { type: 'ingredient', id: 'carrot' },
         { type: 'ingredient', id: 'bae' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
         { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'sugar' },
       ],
-      optional: [
-        // { type: 'ingredient', id: 'daechu' }
-      ],
+      optional: [],
     },
   },
-
   sogogi_jang_jorim: {
     type: 'meal',
     isActive: true,
@@ -6485,21 +5206,20 @@ export const mealObj = {
     label: '소고기장조림',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'beef_shank' }],
-      common: [{ type: 'ingredient', id: 'quail_egg' }],
+      essential: [{ type: 'ingredient', id: 'beef_round' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'mulyeot' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
+    synonyms: ['쇠고기장조림'],
   },
-
   sogogi_jeongol: {
     type: 'meal',
     isActive: true,
@@ -6507,37 +5227,36 @@ export const mealObj = {
     label: '소고기전골',
     mealCategory: 'soup_meal',
     suffix: '_jeongol',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'bulgogi' }
-      ],
+      essential: [{ type: 'ingredient', id: 'beef_shoulder' }],
       common: [
         { type: 'ingredient', id: 'baechu' },
-        { type: 'ingredient', id: 'sukjunamul' },
-        { type: 'ingredient', id: 'pyogo_beoseot' },
+        { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'neutari_beoseot' },
+        { type: 'ingredient', id: 'paengi_beoseot' },
         { type: 'ingredient', id: 'dangmyeon' },
       ],
       seasoning: [
-        { type: 'ingredient', id: 'guk_ganjang' },
+        { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'ssukgat' }],
+      optional: [],
     },
   },
-
   sogogi_mu_guk: {
     type: 'meal',
     isActive: true,
     id: 'sogogi_mu_guk',
-    label: '소고기무국',
+    label: '소고기무국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'beef_brisket' },
@@ -6559,24 +5278,10 @@ export const mealObj = {
     label: '소고기야채죽',
     mealCategory: 'light_meal',
     suffix: '_juk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'ground_beef' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'aehobak' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'salt' }],
-      optional: [],
-    },
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
   },
-
   ssal_guksu: {
     type: 'meal',
     isActive: true,
@@ -6584,26 +5289,10 @@ export const mealObj = {
     label: '쌀국수',
     mealCategory: 'noodle_meal',
     suffix: '_guksu',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'ssal_guksu_myeon' },
-        { type: 'ingredient', id: 'beef_brisket' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'sukjunamul' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'jjokpa' },
-      ],
-      seasoning: [
-        // { type: 'ingredient', id: 'fish_sauce' }
-      ],
-      optional: [{ type: 'ingredient', id: 'sukjunamul' }],
-    },
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
   },
-
   ssammu: {
     type: 'meal',
     isActive: true,
@@ -6611,21 +5300,11 @@ export const mealObj = {
     label: '쌈무',
     mealCategory: 'side_meal',
     suffix: '_jangajji',
-    cookTime: 10,
     difficulty: 'easy',
     servingTemperature: 'cold',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'mu' }],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [],
-    },
+    isSideMeal: true,
+    convenienceVariants: ['readyToEat'],
   },
-
   ssuk_jeon: {
     type: 'meal',
     isActive: true,
@@ -6633,20 +5312,19 @@ export const mealObj = {
     label: '쑥전',
     mealCategory: 'cooking_meal',
     suffix: '_jeon',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'ssug' },
         { type: 'ingredient', id: 'buchim_garu' },
       ],
-      common: [{ type: 'ingredient', id: 'egg' }],
+      common: [],
       seasoning: [{ type: 'ingredient', id: 'cooking_oil' }],
       optional: [],
     },
   },
-
   sujebi: {
     type: 'meal',
     isActive: true,
@@ -6654,25 +5332,23 @@ export const mealObj = {
     label: '수제비',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'milgaru' }],
+      essential: [{ type: 'ingredient', id: 'sujebi' }],
       common: [
+        { type: 'ingredient', id: 'potato' },
         { type: 'ingredient', id: 'aehobak' },
-        { type: 'ingredient', id: 'sweet_potato' },
         { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
       ],
       seasoning: [
+        { type: 'ingredient', id: 'yuksu_coin' },
         { type: 'ingredient', id: 'guk_ganjang' },
-        { type: 'ingredient', id: 'minced_garlic' },
       ],
       optional: [],
     },
   },
-
   sukjunamul_muchim: {
     type: 'meal',
     isActive: true,
@@ -6680,21 +5356,20 @@ export const mealObj = {
     label: '숙주나물무침',
     mealCategory: 'cooking_meal',
     suffix: '_muchim',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'sukjunamul' }],
       common: [],
       seasoning: [
-        { type: 'ingredient', id: 'guk_ganjang' },
         { type: 'ingredient', id: 'minced_garlic' },
         { type: 'ingredient', id: 'chamgireum' },
+        { type: 'ingredient', id: 'salt' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   sundae: {
     type: 'meal',
     isActive: true,
@@ -6702,11 +5377,11 @@ export const mealObj = {
     label: '순대',
     mealCategory: 'snack_meal',
     suffix: null,
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'readyToEat'],
+    synonyms: ['찰순대'],
   },
-
   sundae_guk: {
     type: 'meal',
     isActive: true,
@@ -6714,22 +5389,16 @@ export const mealObj = {
     label: '순대국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'sundae' }
-      ],
+      essential: [{ type: 'ingredient', id: 'sagol_yuksu' }],
       common: [{ type: 'ingredient', id: 'daepa' }],
-      seasoning: [
-        // { type: 'ingredient', id: 'saeujeot' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [{ type: 'ingredient', id: 'deulkkae_garu' }],
+      seasoning: [{ type: 'ingredient', id: 'salt' }],
+      optional: [],
     },
   },
-
   sundubu_jjigae: {
     type: 'meal',
     isActive: true,
@@ -6737,26 +5406,23 @@ export const mealObj = {
     label: '순두부찌개',
     mealCategory: 'soup_meal',
     suffix: '_jjigae',
-    cookTime: 25,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'sun_dubu' }],
       common: [
         { type: 'ingredient', id: 'egg' },
         { type: 'ingredient', id: 'bajirak' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'onion' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'guk_ganjang' },
         { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'saeu' }],
+      optional: [],
     },
   },
-
   tangsuyuk: {
     type: 'meal',
     isActive: true,
@@ -6764,28 +5430,11 @@ export const mealObj = {
     label: '탕수육',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'pork_tenderloin' },
-        { type: 'ingredient', id: 'twigim_garu' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'moki_beoseot' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'cooking_oil' },
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
-      ],
-      optional: [{ type: 'ingredient', id: 'pineapple' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
+    synonyms: ['찹쌀 탕수육'],
   },
-
   tantanmen: {
     type: 'meal',
     isActive: true,
@@ -6793,28 +5442,10 @@ export const mealObj = {
     label: '탄탄멘',
     mealCategory: 'noodle_meal',
     suffix: '_ramen',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'junghwa_myeon' },
-        { type: 'ingredient', id: 'ground_pork' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'cheonggyeongchae' },
-        { type: 'ingredient', id: 'sukjunamul' },
-        { type: 'ingredient', id: 'jjokpa' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'minced_garlic' },
-      ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   ten_don: {
     type: 'meal',
     isActive: true,
@@ -6822,28 +5453,10 @@ export const mealObj = {
     label: '텐동',
     mealCategory: 'rice_meal',
     suffix: '_don',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'saeu' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'sweet_potato' },
-        { type: 'ingredient', id: 'danhobak' },
-        { type: 'ingredient', id: 'gim' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ojingeo' }],
-    },
+    convenienceVariants: ['readyToEat'],
   },
-
   tomato_caprese: {
     type: 'meal',
     isActive: true,
@@ -6851,9 +5464,9 @@ export const mealObj = {
     label: '토마토카프레제',
     mealCategory: 'western_meal',
     suffix: null,
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'tomato' },
@@ -6861,12 +5474,9 @@ export const mealObj = {
       ],
       common: [],
       seasoning: [{ type: 'ingredient', id: 'olive_oil' }],
-      optional: [
-        // { type: 'ingredient', id: 'basil' }
-      ],
+      optional: [{ type: 'ingredient', id: 'black_pepper' }],
     },
   },
-
   tomato_gyeran_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -6874,23 +5484,23 @@ export const mealObj = {
     label: '토마토계란볶음',
     mealCategory: 'cooking_meal',
     suffix: '_bokkeum',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'tomato' },
         { type: 'ingredient', id: 'egg' },
       ],
-      common: [{ type: 'ingredient', id: 'jjokpa' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'cooking_oil' },
         { type: 'ingredient', id: 'salt' },
       ],
       optional: [],
     },
+    synonyms: ['토마토달걀볶음'],
   },
-
   tomato_pasta: {
     type: 'meal',
     isActive: true,
@@ -6898,24 +5508,20 @@ export const mealObj = {
     label: '토마토파스타',
     mealCategory: 'noodle_meal',
     suffix: '_pasta',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'spaghetti_myeon' },
         { type: 'ingredient', id: 'tomato_sauce' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'garlic' },
-        { type: 'ingredient', id: 'tomato' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'olive_oil' }],
+      common: [{ type: 'ingredient', id: 'onion' }],
+      seasoning: [],
       optional: [{ type: 'ingredient', id: 'parmesan_cheese' }],
     },
+    synonyms: ['토마토스파게티'],
   },
-
   tteok_guk: {
     type: 'meal',
     isActive: true,
@@ -6923,22 +5529,22 @@ export const mealObj = {
     label: '떡국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'garaetteok' }],
+      essential: [{ type: 'ingredient', id: 'tteokguk_tteok' }],
       common: [
         { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'gim' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'beef_brisket' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'guk_ganjang' }],
+      seasoning: [
+        { type: 'ingredient', id: 'guk_ganjang' },
+        { type: 'ingredient', id: 'yuksu_coin' },
+      ],
       optional: [],
     },
   },
-
   tteokbokki: {
     type: 'meal',
     isActive: true,
@@ -6946,54 +5552,37 @@ export const mealObj = {
     label: '떡볶이',
     mealCategory: 'snack_meal',
     suffix: null,
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'tteokbokki_tteok' }],
-      common: [
+      essential: [
+        { type: 'ingredient', id: 'tteokbokki_tteok' },
         { type: 'ingredient', id: 'eomuk' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'yangbaechu' },
       ],
+      common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'gochugaru' },
+        { type: 'ingredient', id: 'oligodang' },
         { type: 'ingredient', id: 'sugar' },
+        { type: 'ingredient', id: 'soy_sauce' },
       ],
-      optional: [
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'parmesan_cheese' },
-      ],
+      optional: [{ type: 'ingredient', id: 'egg' }],
     },
+    synonyms: ['떡볶이 밀키트'],
   },
-
   tteokgalbi: {
     type: 'meal',
     isActive: true,
     id: 'tteokgalbi',
-    label: '떡갈비',
+    label: '떡갈비',
     mealCategory: 'cooking_meal',
     suffix: '_gui',
-    cookTime: 50,
     difficulty: 'hard',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'ground_beef' }],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ppang_garu' }],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   tteokmandu_guk: {
     type: 'meal',
     isActive: true,
@@ -7001,24 +5590,26 @@ export const mealObj = {
     label: '떡만두국',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'garaetteok' },
-        { type: 'ingredient', id: 'mandupi' },
+        { type: 'ingredient', id: 'tteokguk_tteok' },
+        { type: 'ingredient', id: 'frozen_mandu' },
       ],
       common: [
         { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'gim' },
-        { type: 'ingredient', id: 'daepa' },
+        { type: 'ingredient', id: 'frozen_mandu' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'guk_ganjang' }],
+      seasoning: [
+        { type: 'ingredient', id: 'guk_ganjang' },
+        { type: 'ingredient', id: 'yuksu_coin' },
+      ],
       optional: [],
     },
+    synonyms: ['만둣떡국'],
   },
-
   udon: {
     type: 'meal',
     isActive: true,
@@ -7026,23 +5617,16 @@ export const mealObj = {
     label: '우동',
     mealCategory: 'noodle_meal',
     suffix: '_udon',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'udon_myeon' }],
-      common: [
-        { type: 'ingredient', id: 'eomuk' },
-        { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'ssukgat' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'guk_ganjang' }],
-      optional: [
-        // { type: 'ingredient', id: 'tempura' }
-      ],
+      common: [],
+      seasoning: [{ type: 'ingredient', id: 'tsuyu' }],
+      optional: [],
     },
   },
-
   ueong_jorim: {
     type: 'meal',
     isActive: true,
@@ -7050,21 +5634,43 @@ export const mealObj = {
     label: '우엉조림',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'ueong' }],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'mulyeot' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
+  ugeoji_haejang_guk: {
+    type: 'meal',
+    isActive: true,
+    id: 'ugeoji_haejang_guk',
+    label: '우거지해장국',
+    mealCategory: 'soup_meal',
+    suffix: '_guk',
+    difficulty: 'medium',
+    servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'readyToEat'],
+    ingredientStructure: {
+      essential: [{ type: 'ingredient', id: 'ugeoji' }],
+      common: [
+        { type: 'ingredient', id: 'sukjunamul' },
+        { type: 'ingredient', id: 'daepa' },
+      ],
+      seasoning: [
+        { type: 'ingredient', id: 'doenjang' },
+        { type: 'ingredient', id: 'yuksu_coin' },
+        { type: 'ingredient', id: 'minced_garlic' },
+      ],
+      optional: [],
+    },
+  },
   vongole_pasta: {
     type: 'meal',
     isActive: true,
@@ -7072,23 +5678,23 @@ export const mealObj = {
     label: '봉골레파스타',
     mealCategory: 'noodle_meal',
     suffix: '_pasta',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'ingredient', id: 'spaghetti_myeon' },
         { type: 'ingredient', id: 'bajirak' },
       ],
-      common: [
-        { type: 'ingredient', id: 'garlic' },
-        { type: 'ingredient', id: 'jjokpa' },
+      common: [{ type: 'ingredient', id: 'garlic' }],
+      seasoning: [
+        { type: 'ingredient', id: 'peperoncino' },
+        { type: 'ingredient', id: 'olive_oil' },
       ],
-      seasoning: [{ type: 'ingredient', id: 'olive_oil' }],
       optional: [],
     },
+    synonyms: ['봉골레', '봉골레스파게티'],
   },
-
   wollam_ssam: {
     type: 'meal',
     isActive: true,
@@ -7096,25 +5702,19 @@ export const mealObj = {
     label: '월남쌈',
     mealCategory: 'fresh_meal',
     suffix: null,
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'rice_paper' }],
       common: [
-        { type: 'ingredient', id: 'saeu' },
-        { type: 'ingredient', id: 'yangbaechu' },
-        { type: 'ingredient', id: 'red_paprika' },
         { type: 'ingredient', id: 'cucumber' },
-        { type: 'ingredient', id: 'carrot' },
+        { type: 'ingredient', id: 'duck_slice' },
       ],
-      seasoning: [
-        // { type: 'ingredient', id: 'sweet_chili_sauce' }
-      ],
-      optional: [{ type: 'ingredient', id: 'chicken_breast' }],
+      seasoning: [{ type: 'ingredient', id: 'peanut_sauce' }],
+      optional: [],
     },
   },
-
   yachae_juk: {
     type: 'meal',
     isActive: true,
@@ -7122,21 +5722,10 @@ export const mealObj = {
     label: '야채죽',
     mealCategory: 'light_meal',
     suffix: '_juk',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'baekmi' }],
-      common: [
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'aehobak' },
-      ],
-      seasoning: [{ type: 'ingredient', id: 'salt' }],
-      optional: [],
-    },
+    convenienceVariants: ['frozen', 'instant', 'readyToEat'],
   },
-
   yangnyeom_chicken: {
     type: 'meal',
     isActive: true,
@@ -7144,26 +5733,10 @@ export const mealObj = {
     label: '양념치킨',
     mealCategory: 'cooking_meal',
     suffix: '_twigim',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'chicken_leg' },
-        { type: 'ingredient', id: 'twigim_garu' },
-      ],
-      common: [],
-      seasoning: [
-        { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'ketchup' },
-        { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'mulyeot' },
-        { type: 'ingredient', id: 'cooking_oil' },
-      ],
-      optional: [],
-    },
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
-
   yangpa_jangajji: {
     type: 'meal',
     isActive: true,
@@ -7171,12 +5744,12 @@ export const mealObj = {
     label: '양파장아찌',
     mealCategory: 'side_meal',
     suffix: '_jangajji',
-    cookTime: 20,
     difficulty: 'easy',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'onion' }],
-      common: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'vinegar' },
@@ -7185,7 +5758,6 @@ export const mealObj = {
       optional: [],
     },
   },
-
   yangsongi_soup: {
     type: 'meal',
     isActive: true,
@@ -7193,24 +5765,10 @@ export const mealObj = {
     label: '양송이스프',
     mealCategory: 'light_meal',
     suffix: '_soup',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'yangsongi_beoseot' },
-        { type: 'ingredient', id: 'milk' },
-        { type: 'ingredient', id: 'butter' },
-      ],
-      common: [{ type: 'ingredient', id: 'onion' }],
-      seasoning: [
-        { type: 'ingredient', id: 'salt' },
-        { type: 'ingredient', id: 'black_pepper' },
-      ],
-      optional: [{ type: 'ingredient', id: 'ppang_garu' }],
-    },
+    convenienceVariants: ['instant', 'readyToEat'],
   },
-
   yeolmu_bibimbap: {
     type: 'meal',
     isActive: true,
@@ -7218,12 +5776,12 @@ export const mealObj = {
     label: '열무비빔밥',
     mealCategory: 'rice_meal',
     suffix: '_bibimbap',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'warm',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
+        { type: 'meal', id: 'cooked_rice' },
         { type: 'meal', id: 'yeolmu_kimchi' },
       ],
       common: [{ type: 'ingredient', id: 'egg' }],
@@ -7231,10 +5789,9 @@ export const mealObj = {
         { type: 'ingredient', id: 'gochujang' },
         { type: 'ingredient', id: 'chamgireum' },
       ],
-      optional: [{ type: 'ingredient', id: 'gim' }],
+      optional: [],
     },
   },
-
   yeolmu_guksu: {
     type: 'meal',
     isActive: true,
@@ -7242,24 +5799,19 @@ export const mealObj = {
     label: '열무국수',
     mealCategory: 'noodle_meal',
     suffix: '_guksu',
-    cookTime: 25,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'somyeon' },
-        { type: 'meal', id: 'yeolmu_kimchi' },
-      ],
+      essential: [{ type: 'ingredient', id: 'somyeon' }],
       common: [{ type: 'ingredient', id: 'cucumber' }],
       seasoning: [
-        { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'chamgireum' },
         { type: 'ingredient', id: 'vinegar' },
+        { type: 'ingredient', id: 'sugar' },
       ],
       optional: [{ type: 'ingredient', id: 'egg' }],
     },
   },
-
   yeolmu_kimchi: {
     type: 'meal',
     isActive: true,
@@ -7267,26 +5819,16 @@ export const mealObj = {
     label: '열무김치',
     mealCategory: 'side_meal',
     suffix: '_kimchi',
-    cookTime: 40,
     difficulty: 'medium',
     servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        // { type: 'ingredient', id: 'yeolmu' }
-      ],
-      common: [{ type: 'ingredient', id: 'jjokpa' }],
-      seasoning: [
-        { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'myeolchi_aekjeot' },
-        { type: 'ingredient', id: 'minced_garlic' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [
-        // { type: 'ingredient', id: 'saeujeot' }
-      ],
+      essential: [{ type: 'ingredient', id: 'yeolmu' }],
+      common: [{ type: 'ingredient', id: 'hong_gochu' }],
+      seasoning: [{ type: 'ingredient', id: 'gochugaru' }],
+      optional: [],
     },
   },
-
   yeoneo_deopbap: {
     type: 'meal',
     isActive: true,
@@ -7294,26 +5836,22 @@ export const mealObj = {
     label: '연어덮밥',
     mealCategory: 'rice_meal',
     suffix: '_deopbap',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'yeoneo' },
+        { type: 'meal', id: 'cooked_rice' },
+        { type: 'ingredient', id: 'yeoneo_hoe' },
       ],
-      common: [
-        { type: 'ingredient', id: 'onion' },
-        { type: 'ingredient', id: 'avocado' },
-      ],
+      common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'wasabi' },
       ],
-      optional: [{ type: 'ingredient', id: 'gim' }],
+      optional: [],
     },
   },
-
   yeongeun_jorim: {
     type: 'meal',
     isActive: true,
@@ -7321,21 +5859,19 @@ export const mealObj = {
     label: '연근조림',
     mealCategory: 'cooking_meal',
     suffix: '_jorim',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
+    servingTemperature: 'cold',
+    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'yeongeun' }],
       common: [],
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'mulyeot' },
+        { type: 'ingredient', id: 'oligodang' },
       ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      optional: [],
     },
   },
-
   yeonpo_tang: {
     type: 'meal',
     isActive: true,
@@ -7343,52 +5879,42 @@ export const mealObj = {
     label: '연포탕',
     mealCategory: 'soup_meal',
     suffix: '_tang',
-    cookTime: 30,
     difficulty: 'medium',
     servingTemperature: 'hot',
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'nakji' }],
       common: [
         { type: 'ingredient', id: 'mu' },
         { type: 'ingredient', id: 'daepa' },
-        { type: 'ingredient', id: 'minari' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'guk_ganjang' },
         { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [{ type: 'ingredient', id: 'cheongyang_gochu' }],
+      optional: [],
     },
   },
-
   yubucho_bap: {
     type: 'meal',
     isActive: true,
     id: 'yubucho_bap',
-    label: '유부초밥',
+    label: '유부초밥',
     mealCategory: 'rice_meal',
     suffix: '_bap',
-    cookTime: 20,
     difficulty: 'easy',
-    servingTemperature: 'cold',
+    servingTemperature: 'warm',
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [
-        { type: 'ingredient', id: 'baekmi' },
-        // { type: 'ingredient', id: 'yubu' },
+        { type: 'ingredient', id: 'yubu' },
+        { type: 'meal', id: 'cooked_rice' },
       ],
-      common: [
-        { type: 'ingredient', id: 'carrot' },
-        { type: 'ingredient', id: 'ueong' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'vinegar' },
-        { type: 'ingredient', id: 'sugar' },
-        { type: 'ingredient', id: 'salt' },
-      ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
+      common: [],
+      seasoning: [],
+      optional: [],
     },
   },
-
   yukgaejang: {
     type: 'meal',
     isActive: true,
@@ -7396,26 +5922,24 @@ export const mealObj = {
     label: '육개장',
     mealCategory: 'soup_meal',
     suffix: '_guk',
-    cookTime: 60,
     difficulty: 'hard',
     servingTemperature: 'hot',
+    convenienceVariants: ['instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'beef_brisket' }],
       common: [
-        { type: 'ingredient', id: 'sukjunamul' },
         { type: 'ingredient', id: 'gosari' },
+        { type: 'ingredient', id: 'sukjunamul' },
         { type: 'ingredient', id: 'daepa' },
-        // { type: 'ingredient', id: 'torandae' },
       ],
       seasoning: [
         { type: 'ingredient', id: 'gochugaru' },
-        { type: 'ingredient', id: 'guk_ganjang' },
         { type: 'ingredient', id: 'minced_garlic' },
+        { type: 'ingredient', id: 'yuksu_coin' },
       ],
-      optional: [{ type: 'ingredient', id: 'sigeumchi' }],
+      optional: [],
     },
   },
-
   yukhoe_bibimbap: {
     type: 'meal',
     isActive: true,
@@ -7423,26 +5947,10 @@ export const mealObj = {
     label: '육회비빔밥',
     mealCategory: 'rice_meal',
     suffix: '_bibimbap',
-    cookTime: 30,
     difficulty: 'medium',
-    servingTemperature: 'hot',
-    ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'baekmi' },
-        { type: 'ingredient', id: 'beef_tenderloin' },
-      ],
-      common: [
-        { type: 'ingredient', id: 'cucumber' },
-        { type: 'ingredient', id: 'bae' },
-        { type: 'ingredient', id: 'sangchu' },
-        { type: 'ingredient', id: 'egg' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'gochujang' },
-        { type: 'ingredient', id: 'chamgireum' },
-      ],
-      optional: [{ type: 'ingredient', id: 'chamkkae' }],
-    },
+    servingTemperature: 'warm',
+    convenienceVariants: ['mealkit', 'readyToEat'],
+    synonyms: ['육회덮밥'],
   },
 } as const;
 

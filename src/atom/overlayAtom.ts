@@ -59,7 +59,6 @@ export type DatePickerParams = {
 export const sheetAtom = atom<SheetParams | null>(null);
 export const modalAtom = atom<ModalState | null>(null);
 export const datePickerAtom = atom<DatePickerParams | null>(null);
-
 export const sheetRefAtom = atom<React.RefObject<BottomSheetModal | null> | null>(null);
 
 /** Actions */

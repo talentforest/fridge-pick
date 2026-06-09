@@ -13,6 +13,7 @@ import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import StorageItem from '@/components/trackedItem/storage/StorageItem';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import { useDebounce } from '@/hooks/common/useDebounce';
 
 interface StorageProps {
   storageType: StorageTypeId;
@@ -27,6 +28,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
   const [currSide, setCurrSide] = useState<StorageSideId>('inner');
 
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
+  const debouncedSearchKeyword = useDebounce(searchKeyword, 300);
 
   const storageItemList = useAtomValue(itemListByStorageAtom(storageType));
 
@@ -47,9 +49,9 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
   const { closeSheet } = useOverlay();
 
   const searchedStorageItemList = useMemo(() => {
-    if (!searchKeyword) return storageItemList;
-    return searchStorageItem(searchKeyword, storageItemList);
-  }, [searchKeyword, storageItemList]);
+    if (!debouncedSearchKeyword) return storageItemList;
+    return searchStorageItem(debouncedSearchKeyword, storageItemList);
+  }, [debouncedSearchKeyword, storageItemList]);
 
   const onRefreshPress = () => {
     setSearchKeyword('');
@@ -77,7 +79,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
         )}
 
         {/* 검색결과 내부 */}
-        {searchKeyword && (
+        {debouncedSearchKeyword && (
           <ScrollView
             nestedScrollEnabled
             className="flex-1"
@@ -89,7 +91,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                 <Icon name="RefreshCcw" className="" size={18} onPress={onRefreshPress} />
               </View>
 
-              <View className="w-full flex-1 border">
+              <View className="w-full flex-1">
                 {/* 검색 결과 식재료 리스트 */}
                 {searchedStorageItemList.length > 0 ? (
                   <GridContainer columns={5} gap={4}>
@@ -105,7 +107,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                 ) : (
                   <View className="flex-1 items-center justify-center">
                     <Text className="mx-4 mb-[40%] text-center leading-7 text-gray-400">
-                      냉장실에 &quot;{searchKeyword}&quot; 식재료가 없어요.
+                      냉장실에 &quot;{debouncedSearchKeyword}&quot; 식재료가 없어요.
                     </Text>
                   </View>
                 )}
@@ -115,18 +117,19 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
         )}
 
         {/* 내가 갖고 있는 현 상태 */}
-        {!searchKeyword &&
+        {!debouncedSearchKeyword &&
           (storageItemListByCategory.length !== 0 ? (
             <ScrollView
               nestedScrollEnabled
               className="flex-1"
               contentContainerClassName="flex-1"
             >
-              <View className="flex-1">
+              <View className="flex-1 gap-y-4">
                 {storageItemListByCategory.map(({ category, items }, index) => (
+                  // 실제 카테고리별 박스
                   <View
                     key={category.id}
-                    className={`flex-1 bg-card px-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === storageItemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
+                    className={`flex-1 bg-card px-4 pb-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === storageItemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
                   >
                     <View className="h-12 flex-row items-center gap-x-1">
                       {category.icon && <Icon name={category.icon} size={15} />}

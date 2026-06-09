@@ -5,9 +5,9 @@ import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
-import './global.css';
 import { useColorScheme, View } from 'react-native';
 import { theme } from '@/theme/color';
+import './global.css';
 
 export default function App() {
   const scheme = useColorScheme();

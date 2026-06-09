@@ -1,7 +1,5 @@
 import Card from '@/components/common/ui/Card';
-import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { image_empty_plate } from '@/constants';
 import { Image, View } from 'react-native';
 
@@ -24,18 +22,6 @@ export default function TodayMealEmptyCard({ type, className }: TodayMealEmptyCa
             <Text className="leading-6 text-neutral-5">아직 없어요</Text>
           </View>
         </>
-      )}
-
-      {type === 'sideMenu' && (
-        <TouchableOpacity
-          onPress={() => console.log('??')}
-          className="h-full items-center justify-center gap-y-2"
-        >
-          <Icon name="PlusCircle" color="inactive" />
-          <Text className="w-16 text-center !text-sm leading-4 text-inactive-text">
-            사이드메뉴 추가
-          </Text>
-        </TouchableOpacity>
       )}
     </Card>
   );

@@ -22,8 +22,7 @@ import MealCard from '@/components/selectableItem/meal/MealCard';
 export default function MealScreen() {
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
 
-  const { mealFilterList, fastestMealList, hasAllMealList, searchKeywordMealList } =
-    useGetMealList();
+  const { mealFilterList, hasAllMealList, searchKeywordMealList } = useGetMealList();
 
   const data = useCallback(
     (meal: MealWithEnrichIngredient) => <MealCard key={meal.id} meal={meal} />,
@@ -32,7 +31,7 @@ export default function MealScreen() {
 
   return (
     <SafeAreaViewContainer>
-      <ScreenHeader title="오늘의 식사 메뉴" isDetailPage={false} />
+      <ScreenHeader title="오늘의 식사" isDetailPage={false} />
 
       {/* 전체 식사 메뉴 리스트 */}
       <ScrollViewContainer>
@@ -42,25 +41,6 @@ export default function MealScreen() {
           title="지금 꼭 써야하는 재료가 있어요"
           hasCautionIngredientMeal
         />
-
-        {/* 10분 이내로 먹을 수 있어요 */}
-        {fastestMealList.length > 0 && (
-          <View className="h-[330px] gap-y-3">
-            <SectionTitle title="10분 이내로 먹을 수 있어요" icon="Zap" />
-            <FullBleedSection>
-              <CarouselContainer
-                data={fastestMealList}
-                initialIndex={fastestMealList.length}
-                itemWidth={0.45}
-                hasNavigation
-                hasPagination
-                centerFocus
-                keyExtractor={(_, index) => `${index}`}
-                renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
-              />
-            </FullBleedSection>
-          </View>
-        )}
 
         {/* 모든 재료가 있어요 */}
         {hasAllMealList.length > 0 && (

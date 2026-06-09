@@ -39,7 +39,7 @@ export default function SectionTitle({
         </Text>
       )}
 
-      {children}
+      {children ? children : <></>}
     </View>
   );
 }

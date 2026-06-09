@@ -87,7 +87,8 @@ export type IngredientKey =
   | PowderIngredientKey
   | SeafoodIngredientKey
   | SeasoningIngredientKey
-  | DrinkIngredientKey;
+  | DrinkIngredientKey
+  | ConvenienceIngredientKey;
 
 export type NoodleIngredientKey = keyof (typeof ingredientObj)['noodle'];
 export type VegetableIngredientKey = keyof (typeof ingredientObj)['vegetable'];
@@ -101,3 +102,4 @@ export type PowderIngredientKey = keyof (typeof ingredientObj)['powder'];
 export type SeafoodIngredientKey = keyof (typeof ingredientObj)['seafood'];
 export type SeasoningIngredientKey = keyof (typeof ingredientObj)['seasoning'];
 export type DrinkIngredientKey = keyof (typeof ingredientObj)['drink'];
+export type ConvenienceIngredientKey = keyof (typeof ingredientObj)['convenience'];

@@ -1,11 +1,8 @@
-import GridContainer from '@/components/common/container/GridContainer';
-import LabelContainer from '@/components/common/container/LabelContainer';
 import SquareBtn from '@/components/common/SquareBtn';
 import Text from '@/components/common/ui/Text';
 import MealImage from '@/components/selectableItem/meal/MealImage';
-import Card from '@/components/common/ui/Card';
 import ModalHeader from '@/components/common/header/ModalHeader';
-import { deleteTodayMealItemAtom } from '@/atom/mealAtom';
+import { changeMainMenuAtom, deleteTodayMealItemAtom } from '@/atom/mealAtom';
 import { useOverlay, useGetMealInfo } from '@/hooks';
 import { MealWithEnrichIngredient } from '@/types/meal';
 import { useSetAtom } from 'jotai';
@@ -13,7 +10,10 @@ import { View } from 'react-native';
 import MealIngredientItemCard from '@/components/selectableItem/meal/MealIngredientItemCard';
 import IconWithText from '@/components/common/IconWithText';
 import ProgressBar from '@/components/common/ProgressBar';
-import Indicator from '@/components/common/Indicator';
+import Icon from '@/components/common/ui/Icon';
+import GridContainer from '@/components/common/container/GridContainer';
+import { addShoppingItemAtom } from '@/atom/shoppingListAtom';
+import { useMemo } from 'react';
 
 interface TodayMealItemSheetProps {
   meal: MealWithEnrichIngredient;
@@ -24,122 +24,118 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
   const { closeSheet } = useOverlay();
 
   const deleteTodayMealItem = useSetAtom(deleteTodayMealItemAtom);
-
-  const onDeletePress = () => {
-    deleteTodayMealItem([meal.id]);
-    closeSheet();
-  };
+  const changeMainMenu = useSetAtom(changeMainMenuAtom);
+  const addShoppingItem = useSetAtom(addShoppingItemAtom);
 
   const {
-    allIngredientList,
+    allIngredientStructureList,
     percentage,
     requiredTotal,
     hasStorageItemList, //
   } = useGetMealInfo(meal);
 
-  const needMoreNum = requiredTotal - hasStorageItemList.length;
+  const hasStorageItemListTotal = hasStorageItemList.length;
+  const needMoreNum = requiredTotal - hasStorageItemListTotal;
+
+  // 오늘의 메뉴 삭제하기
+  const onDeletePress = () => {
+    deleteTodayMealItem([meal.id]);
+    closeSheet();
+  };
+
+  // 메인메뉴로 변경하기
+  const onChangeMainMenuPress = () => {
+    changeMainMenu(meal.id);
+    closeSheet();
+  };
+
+  // 보유한 식재료인지 검증
+  const storageItemIdSet = useMemo(() => {
+    return new Set(hasStorageItemList.map(({ id }) => id));
+  }, [hasStorageItemList]);
 
   return (
-    <View className="pt-3">
+    <View className="py-3">
       <ModalHeader
         title={type === 'mainMenu' ? '오늘의 메인 메뉴' : '같이 먹을 메뉴'}
         hasX={false}
       />
 
       <View className="pt-4">
-        <View className="w-[40%] items-center gap-x-3 self-center pb-4">
-          <MealImage meal={meal} size={110} />
+        <View className="items-center pb-4">
+          <MealImage meal={meal} size={140} />
           <Text className="line-clamp-2 text-base">{meal?.label}</Text>
         </View>
 
-        <View className="my-4 flex-row items-center rounded-full border border-neutral-3 bg-neutral-3 p-2">
-          <SquareBtn
-            name="직접 요리"
-            color="neutral"
-            iconName="ChefHat"
-            className="w-[32%] !rounded-full py-3"
-            textClassName="!text-[13px]"
-          />
-          <SquareBtn
-            name="간편식/밀키트"
-            color="inActive"
-            iconName="HandPlatter"
-            className="w-[35%] !rounded-full !bg-transparent py-3"
-            textClassName="!text-[13px]"
-          />
-          <SquareBtn
-            name="배달/포장"
-            color="inActive"
-            iconName="Scooter"
-            className="w-[32%] !rounded-full !bg-transparent py-3"
-            textClassName="!text-[13px]"
-          />
-        </View>
+        {allIngredientStructureList.length > 0 && (
+          <View className="mt-6 gap-y-8">
+            {/* 진행률 */}
+            <View className="gap-y-2 px-1">
+              <ProgressBar
+                label={`재료보유율  ${hasStorageItemListTotal}/${requiredTotal}`}
+                percentage={percentage}
+              />
 
-        {allIngredientList.length > 0 && (
-          <View className="gap-y-7">
-            <View className="my-4 flex-row items-center gap-x-6 px-2">
-              <View className="">
-                <View className="mb-2.5 flex-row justify-between border-b border-dashed border-neutral-5 pb-2.5">
-                  <Text className="w-24 text-neutral-5">요리 난이도</Text>
-                  <Indicator type="difficulty" value={meal.difficulty} />
+              {requiredTotal > 0 && (
+                <View className="!h-6">
+                  <IconWithText
+                    text={
+                      hasStorageItemListTotal === 0
+                        ? '식재료가 하나도 없어요'
+                        : percentage === 100
+                          ? '모든 식재료를 갖고 있어요'
+                          : `식재료 ${needMoreNum}개가 부족해요`
+                    }
+                    icon={percentage === 100 ? 'HandPlatter' : 'TriangleAlert'}
+                    iconSize={14}
+                    iconColor={percentage === 100 ? 'green' : 'red'}
+                    textClassName={percentage === 100 ? 'text-green-7' : 'text-red-7'}
+                  />
                 </View>
-
-                <View className="mb-2.5 flex-row justify-between border-b border-dashed border-neutral-5 pb-2.5">
-                  <Text className="w-24 text-neutral-5">요리 시간</Text>
-                  <Indicator type="time" value={meal.cookTime} />
-                </View>
-
-                <View className="flex-row justify-between">
-                  <Text className="w-24 text-neutral-5">총 식재료</Text>
-                  <Indicator type="total" value={requiredTotal} />
-                </View>
-              </View>
-
-              <View className="flex-1 gap-y-2.5">
-                {/* 진행률 */}
-                <ProgressBar label="재료보유율" percentage={percentage} />
-
-                <View className="flex-1 justify-between">
-                  {requiredTotal > 0 && (
-                    <Card className="mt-auto !p-3">
-                      <IconWithText
-                        text={
-                          percentage === 100
-                            ? '모든 식재료가 있어요.'
-                            : `식재료가 ${needMoreNum}개 부족해요.`
-                        }
-                        icon={percentage === 100 ? 'HandPlatter' : 'TriangleAlert'}
-                        iconSize={14}
-                        className="pl-1.5"
-                        iconColor={percentage === 100 ? 'green' : 'red'}
-                        textClassName={percentage === 100 ? 'text-green-7' : 'text-red-7'}
-                      />
-                    </Card>
-                  )}
-                </View>
-              </View>
+              )}
             </View>
 
-            {allIngredientList.map(({ label, itemList }) => (
-              <LabelContainer key={label} label={`${label} ${itemList.length}개`}>
-                <GridContainer columns={5} gap={4} className="min-h-16">
-                  {itemList.map((item) => (
-                    <MealIngredientItemCard
-                      key={item.id}
-                      item={item}
-                      imageSize={30}
-                      className="min-h-16 flex-1 !px-1 !py-2"
-                      textClassName="!text-[13px]"
-                    />
-                  ))}
-                </GridContainer>
-              </LabelContainer>
+            {/* 재료 */}
+            {allIngredientStructureList.map(({ label, itemList, color }) => (
+              <View key={label} className="gap-y-1">
+                {itemList.length ? (
+                  <>
+                    <View
+                      className={`flex-row items-center gap-x-1 self-start rounded-xl p-2`}
+                    >
+                      <Icon
+                        name={label === '양념 재료' ? 'Amphora' : 'ToolCase'}
+                        size={14}
+                        color={color}
+                      />
+                      <Text
+                        className={`!text-[13px] ${color === 'blue' ? 'text-blue-7' : color === 'yellow' ? 'text-yellow-7' : 'text-neutral-7'}`}
+                      >
+                        {label}
+                      </Text>
+                    </View>
+
+                    <GridContainer columns={2} gap={8}>
+                      {itemList.map((item) => (
+                        <MealIngredientItemCard
+                          key={item.id}
+                          item={item}
+                          imageSize={25}
+                          className="min-h-14 !py-2.5 !pl-2.5 !pr-2"
+                          isStorageItem={storageItemIdSet.has(item.id)}
+                        />
+                      ))}
+                    </GridContainer>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </View>
             ))}
           </View>
         )}
 
-        <View className="mb-5 mt-8 justify-between gap-y-2">
+        <View className="mb-5 mt-12 justify-between gap-y-2">
           <SquareBtn
             name="오늘의 식사에서 삭제"
             iconName="Trash2"
@@ -147,12 +143,12 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
             color="yellow"
           />
 
-          {needMoreNum > 0 && (
+          {type === 'sideMenu' && (
             <SquareBtn
-              name={`장바구니에 부족한 식재료 ${needMoreNum}개 담기`}
-              iconName="ShoppingBasket"
-              onPress={onDeletePress}
-              color="indigo"
+              name="오늘의 메인메뉴로 변경"
+              iconName="HandPlatter"
+              onPress={onChangeMainMenuPress}
+              color="green"
             />
           )}
         </View>

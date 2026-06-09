@@ -65,6 +65,28 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
     <>
       {children}
 
+      {/* Toast */}
+      {modalProps?.type === 'toast' && (
+        <Modal transparent visible={!!modalProps} animationType="fade">
+          <View
+            pointerEvents="auto"
+            className="absolute inset-x-0 bottom-20 mx-auto items-center justify-center"
+          >
+            <View
+              pointerEvents="auto"
+              className="w-fit rounded-2xl bg-neutral-9 p-1"
+              style={{ ...iosShadowStyle }}
+            >
+              {modalProps.message && (
+                <Text className="px-5 py-4 text-base leading-7 !text-neutral-1">
+                  {modalProps.message}
+                </Text>
+              )}
+            </View>
+          </View>
+        </Modal>
+      )}
+
       {/* BottomSheet */}
       <BottomSheetModal
         ref={sheetRef}
@@ -228,23 +250,6 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
             </View>
           </View>
         </Modal>
-      )}
-
-      {/* Toast */}
-      {modalProps?.type === 'toast' && (
-        <View className="absolute inset-0" pointerEvents="none">
-          <View
-            pointerEvents="auto"
-            className="mx-auto mb-32 mt-auto min-w-[50%] rounded-2xl bg-neutral-9 p-1"
-            style={{ ...iosShadowStyle }}
-          >
-            {modalProps.message && (
-              <Text className="px-5 py-4 text-base leading-7 !text-neutral-1">
-                {modalProps.message}
-              </Text>
-            )}
-          </View>
-        </View>
       )}
     </>
   );

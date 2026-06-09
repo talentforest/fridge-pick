@@ -18,13 +18,13 @@ export default function Indicator({ type, value }: TimeIndicatorProps) {
       )}
       {type === 'total' && (
         <>
-          <Icon name="EggFried" size={16} color="green" />
+          <Icon name="ToolCase" size={16} color="green" />
           <Text className="text-[15px] text-green-7">{value}개</Text>
         </>
       )}
       {type === 'difficulty' && (
         <>
-          <Icon name="ChefHat" size={16} color="indigo" />
+          <Icon name="Sparkles" size={15} color="indigo" />
           <Text className="text-[15px] text-indigo-5">
             {value === 'hard' ? '어려움' : '쉬움'}
           </Text>

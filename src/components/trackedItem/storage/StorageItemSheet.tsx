@@ -32,9 +32,9 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
     Pick<StorageItem, 'memo' | 'expiresAt'>
   >({ expiresAt, memo: storageItem.memo });
 
-  const { getHasStorageItemInMealList } = useGetMealList();
+  const { getHasStorageItemMealList } = useGetMealList();
 
-  const mealListHasStorageItem = getHasStorageItemInMealList(storageItem);
+  const mealListHasStorageItem = getHasStorageItemMealList(storageItem);
 
   const deleteItems = useSetAtom(deleteStorageItemListAtom);
   const onItemChange = useSetAtom(changeStorageItemAtom);
@@ -81,7 +81,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
     <View className="my-2 w-full flex-1 gap-y-1.5">
       <ModalHeader hasX={false} title="식재료 정보" />
 
-      <View className="flex-row items-start justify-between">
+      <View className="flex-row items-start justify-between rounded-2xl  border-gray-300 py-1">
         <TrackedItemImageLabel
           item={storageItem}
           imageSize={85}
@@ -90,7 +90,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
           isHorizontal
         />
 
-        <FavoriteBtn storageItem={storageItem} className="p-2" />
+        <FavoriteBtn storageItem={storageItem} className="mr-3 mt-2 p-1" />
       </View>
 
       {storageItem && (
@@ -104,47 +104,19 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
             }}
           />
 
-          {/* 메모사항 */}
-          {/* {isMemoEditing ? (
-            <FormMemo
-              autoFocus={true}
-              currMemo={currItem?.memo || ''}
-              onItemChange={(newData) => onItemChange({ id, newData })}
-              onSubmit={() => {
-                setIsMemoEditing((prev) => !prev);
-                shrinkSheet();
-              }}
-              isSheetInput={true}
-            />
-          ) : (
-            <Pressable
-              onPress={() => setIsMemoEditing((prev) => !prev)}
-              className="flex-row items-start justify-between rounded-2xl border border-border bg-card px-4 py-3"
-            >
-              {memo && memo !== '' ? (
-                <Text className="mt-1 flex-1 text-base leading-[22px]">{memo}</Text>
-              ) : (
-                <Text className="mt-2 text-base text-inactive-text">
-                  메모사항이 없어요.
-                </Text>
-              )}
-              <Icon name="Edit" color="darkGray" size={20} className="p-1.5" />
-            </Pressable>
-          )} */}
-
           <View className="mt-3 flex-row gap-x-3">
             {/* 보관위치 */}
             <SquareBtn
               iconName="Edit"
               name="보관위치 변경"
-              className="flex-1 !py-4"
+              className="flex-1"
               color="indigo"
               onPress={onEditStoragePress}
             />
             <SquareBtn
               iconName="Trash2"
               name="냉장고에서 제거"
-              className="flex-1 !py-4"
+              className="flex-1"
               color="yellow"
               onPress={onDeletePress}
             />
@@ -152,7 +124,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
         </View>
       )}
 
-      <View className="mt-8 gap-y-3">
+      <View className="my-16 gap-y-3">
         <SectionTitle
           icon="HandPlatter"
           color="yellow"
@@ -168,6 +140,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
               itemWidth={0.5}
               hasNavigation
               hasPagination
+              spacing={20}
               centerFocus
               keyExtractor={(_, index) => `${index}`}
               renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}

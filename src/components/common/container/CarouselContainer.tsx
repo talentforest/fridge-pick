@@ -166,7 +166,7 @@ export default function CarouselContainer<T>({
       )}
 
       {children && focusedItem ? (
-        <View className="pt-5">{children(focusedItem)}</View>
+        <View className="pt-3">{children(focusedItem)}</View>
       ) : (
         <></>
       )}
@@ -187,7 +187,7 @@ export default function CarouselContainer<T>({
       </View>
 
       {children && focusedItem ? (
-        <View className="w-full pt-5">{children(focusedItem)}</View>
+        <View className="w-full pt-3">{children(focusedItem)}</View>
       ) : (
         <></>
       )}

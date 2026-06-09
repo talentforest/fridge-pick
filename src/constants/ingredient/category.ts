@@ -74,6 +74,13 @@ export const ingredientCategoryObj = {
     color: 'blue',
   },
 
+  convenience: {
+    id: 'convenience',
+    label: '간편식',
+    icon: 'Database',
+    color: 'blue',
+  },
+
   /** ⭐ 바로 먹을수 있는것 - 요리에 이용되는 식재료가 아님 */
   meal: {
     id: 'meal',

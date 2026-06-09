@@ -70,7 +70,6 @@ export default function CautionIngredientList({
             spacing={8}
             centerFocus
             requiredMinimum={3}
-            hasPagination
             keyExtractor={(_, index) => `${index}`}
             renderItem={({ item, isCurrIndex, onPress }) =>
               onItemPress || onPress ? (

@@ -16,9 +16,8 @@ export default function TodayMeal({ hasHeader = false }: TodayMealProps) {
 
   const deleteTodayMealItem = useSetAtom(deleteTodayMealItemAtom);
 
-  const [mainMenu, ...restMainMenuList] = todayMealList.filter(
-    ({ meal }) => !meal.isSideMeal,
-  );
+  const mainMenu = todayMealList.find(({ role }) => role === 'main');
+  const sideMenuList = todayMealList.filter(({ role }) => role === 'side');
 
   return (
     <View className="gap-y-3">
@@ -51,18 +50,18 @@ export default function TodayMeal({ hasHeader = false }: TodayMealProps) {
           </View>
 
           {/* 사이드 메뉴 */}
-          {restMainMenuList.length > 0 && (
+          {sideMenuList.length > 0 && (
             <View className="w-[31%] gap-y-3">
-              {restMainMenuList.slice(0, 2).map((item) => (
+              {sideMenuList.slice(0, 2).map((item) => (
                 <TodayMealCard type="sideMenu" key={item.meal.id} todayMeal={item} />
               ))}
             </View>
           )}
         </View>
 
-        {restMainMenuList.length > 2 && (
+        {sideMenuList.length > 2 && (
           <GridContainer columns={3} gap={12}>
-            {restMainMenuList.slice(2).map((item) => (
+            {sideMenuList.slice(2).map((item) => (
               <TodayMealCard type="sideMenu" key={item.meal.id} todayMeal={item} />
             ))}
           </GridContainer>

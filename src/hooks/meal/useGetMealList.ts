@@ -29,14 +29,7 @@ export const useGetMealList = () => {
    * filterLabel = '간단완성'
    */
   const isEasyMeal = (meal: MealWithEnrichIngredient): boolean => {
-    return meal.difficulty === 'easy' && meal.cookTime <= 20;
-  };
-
-  /** 빠르게 만들수 있는 메뉴인지 검사
-   * * filterLabel = '빠르게완성'
-   */
-  const isFastestMeal = (meal: MealWithEnrichIngredient): boolean => {
-    return meal.cookTime <= 15;
+    return meal.difficulty === 'easy';
   };
 
   /** 최소한의 식재료 메뉴인지 검사
@@ -51,14 +44,23 @@ export const useGetMealList = () => {
 
   /** 모든 식재료를 갖고 있는 메뉴인지 검사
    * * filterLabel = '모든 재료 있음'
+   * * optional을 제외한 모든 식재료를 갖고 있는지 검사
    */
   const hasAllMeal = useCallback(
-    (ingredientStructure: EnrichMealIngredientStructure): boolean => {
+    (mealId: string, ingredientStructure?: EnrichMealIngredientStructure): boolean => {
+      // NOTE: 완성요리 자체에 만약 식재료구조정보는 없는데 냉장고에 갖고 있는 경우는 추천
+      const hasMealInStorage = storageItems.find((item) => {
+        if (item.type !== 'meal') return;
+        return item.mealId === mealId;
+      });
+
+      if (!ingredientStructure && hasMealInStorage) return true;
+
+      // NOTE: 완성요리가 냉장고에도 없는데 식재료 구조도 없는 경우는 바로 제거
       if (!ingredientStructure) return false;
 
-      const { essential, common } = ingredientStructure;
-      // essential + common 기준으로 검사
-      const requiredItems = [...essential, ...common];
+      const { essential, common, seasoning } = ingredientStructure;
+      const requiredItems = [...essential, ...common, ...seasoning];
 
       return requiredItems.every(({ type, id }) => {
         return storageItems.some((storageItem) => {
@@ -109,7 +111,7 @@ export const useGetMealList = () => {
     (
       mealList: Meal[],
     ): (MealWithEnrichIngredient & {
-      filterList: (MealFilterKey | 'recommendedTodayMeal')[];
+      filterList: MealFilterKey[];
     })[] => {
       const list: MealWithEnrichIngredient[] = mealList.map((meal) => {
         const { ingredientStructure, ...rest } = meal;
@@ -132,10 +134,6 @@ export const useGetMealList = () => {
           filterList.push('expiredSoon' as const);
         }
 
-        if (isFastestMeal(meal)) {
-          filterList.push('fastest' as const);
-        }
-
         //식재료 관련
         if (meal?.ingredientStructure) {
           // 최소한의 식재료
@@ -143,7 +141,7 @@ export const useGetMealList = () => {
             filterList.push('minimum' as const);
           }
           // 모든 식재료
-          if (hasAllMeal(meal.ingredientStructure)) {
+          if (hasAllMeal(meal.id, meal.ingredientStructure)) {
             filterList.push('hasAll' as const);
           }
         }
@@ -162,20 +160,17 @@ export const useGetMealList = () => {
   const recommendedTodayMealList = useMemo(() => {
     const mealList = addFilterInMealList(allMealList);
     /** 오늘의 식사 메뉴 추천 로직
+     * - 0순위 isSideMeal(밥, 단무지, ...)이 아닌 경우
      * - 1순위 전체 식재료가 다 있는 경우
-     * - 2순위 메인 음식일 것
-     * - 3순위 최소한의 식재료로 만들 수 있는지
+     * - 2순위 최소한의 식재료(4개 이하)로 만들 수 있는지
      */
     const isRecommendedTodayMeal = (meal: MealWithEnrichIngredient) => {
-      if (!meal.ingredientStructure) return;
-      if (meal.ingredientStructure.essential.length === 0) return; // 필수 재료가 없는 메뉴는 제외 (ex. 밥, 김치...)
-      return (
-        hasAllMeal(meal.ingredientStructure) &&
-        !meal.isSideMeal &&
-        isMinimumMeal(meal.ingredientStructure)
-      );
+      return hasAllMeal(meal.id, meal.ingredientStructure);
     };
-    return mealList.filter((meal) => isRecommendedTodayMeal(meal));
+
+    return mealList.filter((meal) => {
+      return !meal.isSideMeal && isRecommendedTodayMeal(meal);
+    });
   }, [addFilterInMealList, hasAllMeal]);
 
   /** "소비기한 임박" 필터링 목록 */
@@ -213,12 +208,6 @@ export const useGetMealList = () => {
     [expiredSoonMealList],
   );
 
-  /** "빠르게 완성" 필터링 목록 */
-  const fastestMealList = useMemo(() => {
-    const mealList = addFilterInMealList(allMealList);
-    return mealList.filter((meal) => meal.filterList.includes('fastest'));
-  }, [addFilterInMealList]);
-
   /** "모든 재료가 있음" 필터링 목록 */
   const hasAllMealList = useMemo(() => {
     return addFilterInMealList(allMealList).filter((item) =>
@@ -243,9 +232,10 @@ export const useGetMealList = () => {
   /** 특정 식재료를 갖고 있는 메뉴 목록
    * - ex) 계란 활용 메뉴
    */
-  const getHasStorageItemInMealList = useCallback(
+  const getHasStorageItemMealList = useCallback(
     (storageItem: EnrichStorageItem) => {
-      return addFilterInMealList(allMealList).filter((meal) => {
+      const mealList = addFilterInMealList(allMealList);
+      return mealList.filter((meal) => {
         if (storageItem.type === 'custom') return false;
 
         const hasIngredientItem = (ingredientItem: Meal | Ingredient) => {
@@ -254,6 +244,7 @@ export const useGetMealList = () => {
           if (storageItem.type === 'ingredient') {
             return id === storageItem.ingredientId;
           }
+
           if (storageItem.type === 'meal') {
             return id === storageItem.mealId;
           }
@@ -261,9 +252,9 @@ export const useGetMealList = () => {
 
         if (!meal.ingredientStructure) return false;
 
-        const { essential, common, seasoning } = meal.ingredientStructure;
+        const { essential } = meal.ingredientStructure;
 
-        return [...essential, ...common, ...seasoning].find(hasIngredientItem);
+        return essential.find(hasIngredientItem);
       });
     },
     [addFilterInMealList],
@@ -274,12 +265,11 @@ export const useGetMealList = () => {
   return {
     mealFilterList,
     expiredSoonMealList,
-    fastestMealList,
     hasAllMealList,
     getMealListByExpiredSoonIngredient,
     searchKeywordMealList,
     allFilteredMealList,
-    getHasStorageItemInMealList,
+    getHasStorageItemMealList,
     recommendedTodayMealList,
   };
 };

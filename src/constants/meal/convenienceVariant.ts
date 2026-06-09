@@ -1,4 +1,10 @@
 export const convenienceVariantObj = {
+  ready_to_eat: {
+    id: 'ready_to_eat',
+    label: '바로 먹기',
+    description: '구매 후 바로 먹을 수 있는 완제품',
+  },
+
   instant: {
     id: 'instant',
     label: '인스턴트',
@@ -26,16 +32,6 @@ export const convenienceVariantObj = {
     defaultStorage: ['freezer'],
     expirationDays: {
       freezer: 365,
-    },
-  },
-
-  prepared: {
-    id: 'prepared',
-    label: '배달·포장',
-    description: '완성된 상태로 구매한 음식',
-    defaultStorage: ['fridge'],
-    expirationDays: {
-      fridge: 2,
     },
   },
 } as const;

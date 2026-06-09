@@ -39,15 +39,14 @@ export default function MealCard({
 
   return (
     <Card className={`items-start !py-2 px-5 ${className}`}>
-      <View className="-ml-2 -mt-1.5 w-full flex-row items-center gap-x-1">
-        <MealImage meal={meal} size={85} />
+      <View className="-ml-2 w-full flex-row items-center gap-x-1">
+        <MealImage meal={meal} size={80} />
 
-        <View className={`flex-1 gap-y-2.5`}>
+        <View className={`flex-1 gap-y-3`}>
           <Text className="line-clamp-2 text-base">{meal?.label}</Text>
 
           <View className="flex-row gap-x-2">
             <Indicator type="difficulty" value={meal.difficulty} />
-            <Indicator type="time" value={meal.cookTime} />
             <Indicator type="total" value={requiredIngredientList.length} />
           </View>
         </View>
@@ -59,7 +58,7 @@ export default function MealCard({
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          className="-mt-1 mb-2"
+          className="mb-3"
           contentContainerClassName="gap-x-2"
         >
           {filterList.map((filter) => (
@@ -67,7 +66,7 @@ export default function MealCard({
               key={filter}
               name={filterObj['meal'][filter].label}
               color={filterObj['meal'][filter].color}
-              textClassName="!text-[12px]"
+              textClassName="!text-sm"
               className="-ml-0.5 self-start !py-2.5"
               isActive
             />
@@ -76,20 +75,20 @@ export default function MealCard({
       )}
 
       {hasIngredient && requiredIngredientList.length > 0 && (
-        <GridContainer columns={5} gap={6} className="pb-3">
+        <GridContainer columns={5} gap={6}>
           {requiredIngredientList
             .slice(0, requiredIngredientList.length === 5 ? undefined : maxIngredientNum)
             .map((item) => (
               <View
                 key={item?.id}
-                className="items-center justify-between gap-0.5 rounded-xl bg-neutral-1"
+                className="items-center justify-between gap-0.5 rounded-xl bg-neutral-1 pb-2 pt-1"
               >
                 {item.type === 'ingredient' ? (
                   <IngredientImage ingredient={item} size={40} />
                 ) : (
                   <MealImage meal={item} size={40} />
                 )}
-                <Text className="text-center text-sm leading-4 text-neutral-5">
+                <Text className="line-clamp-1 text-center text-sm leading-4 text-neutral-5">
                   {item.label}
                 </Text>
               </View>
@@ -108,7 +107,7 @@ export default function MealCard({
 
       {hasTodayMealBtn && (
         <SquareBtn
-          className="my-3 w-full"
+          className="my-3 w-full !py-[16px]"
           name="오늘 먹을 메뉴"
           iconName="UtensilsCrossed"
           onPress={onAddTodayMealPress}

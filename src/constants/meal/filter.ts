@@ -8,39 +8,31 @@ export const allFilterObj = {
 export const filterObj = {
   meal: {
     expiredSoon: {
-      id: 2,
       name: 'expiredSoon',
       label: '소비기한 임박',
       color: 'red',
       icon: 'TriangleAlert' as const,
     },
-    easy: {
-      id: 3,
-      name: 'easy',
-      label: '간단 완성',
-      color: 'yellow',
-      icon: 'Timer' as const,
-    },
+
     hasAll: {
-      id: 6,
       name: 'hasAll',
       label: '모든 재료 있음',
       color: 'red',
       icon: 'ShoppingBag' as const,
     },
+
     minimum: {
-      id: 4,
       name: 'minimum',
       label: '최소 식재료 사용',
       color: 'green',
       icon: 'SquircleDashed' as const,
     },
-    fastest: {
-      id: 5,
-      name: 'fastest',
-      label: '빠르게 완성',
-      color: 'green',
-      icon: 'Zap' as const,
+
+    easy: {
+      name: 'easy',
+      label: '간단 완성',
+      color: 'yellow',
+      icon: 'Timer' as const,
     },
   },
 } as const;

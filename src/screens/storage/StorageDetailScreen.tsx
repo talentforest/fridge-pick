@@ -49,7 +49,7 @@ export default function StorageDetailScreen() {
     openSheet({
       enableDynamicSizing: false,
       keyboardBehavior: 'extend',
-      snapPoints: [450, 670],
+      snapPoints: [450, 700],
       hasDim: true,
       render: () => <StorageItemSheet storageItem={item} />,
     });
@@ -90,13 +90,13 @@ export default function StorageDetailScreen() {
             icon={storageLabel === '실온보관' ? 'ShelvingUnit' : 'Refrigerator'}
           >
             <View className="flex-row items-center gap-x-2">
-              <Icon
+              {/* <Icon
                 name="Search"
                 className="h-10 w-10 items-center justify-center"
                 size={22}
                 onPress={onSearchPress}
                 color={searchKeyword === '' ? 'text' : 'blue'}
-              />
+              /> */}
               <Icon
                 name="Plus"
                 className="h-10 w-10 items-center justify-center"

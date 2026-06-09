@@ -77,11 +77,10 @@ type ConvenienceVariant =
   /** 이미 완성된 상태로 구매
    * 추가 조리 거의 없음
    * 구매 후 바로 섭취 가능
-   * 냉장 보관이 많음
    * 배달 / 포장 / 편의점 / 마트 / 완제품
    * 김밥/초밥/샌드위치/순대/치킨/족발/샐러드/낫또/요거트...
    */
-  | 'prepared';
+  | 'readyToEat';
 
 /* -------------------------------------------------------------------------- */
 /*                               Meal Type                                    */
@@ -105,28 +104,25 @@ export type Meal = {
 
   suffix: MealSuffix | null;
 
-  /** 조리시간 */
-  cookTime: number; // minutes
-
-  /** 난이도 */
   difficulty: Difficulty;
 
-  servingTemperature: 'hot' | 'cold' | 'both';
+  servingTemperature: 'hot' | 'warm' | 'cold' | 'either';
 
-  /** optional, 추천할만한 식사메뉴는 아닌 곁들어 먹는 메뉴인 경우, ex) 밥, 단무지... */
+  /** 추천할만한 식사메뉴는 아닌 곁들어 먹는 메뉴인 경우, ex) 밥, 단무지... */
   isSideMeal?: boolean;
 
-  /** optional, Image Route Name: 만약 타요리 동일 이미지인 경우 */
-  imageName?: string;
+  /** optional, 간편식 종류
+   * 만약 없으면 직접 요리로 밖에 먹을 수 있는 것임.
+   */
+  convenienceVariants?: readonly ConvenienceVariant[];
 
   /** optional, 구성 재료
    * ingredientStructure 있어야 '직접 요리'로 추천 가능.
-   * ingredientStructure 없으면 '간편식/밀키트', '배달/포장'으로는 추천 가능
    */
   ingredientStructure?: IngredientStructure;
 
-  /** optional, 간편식 종류 */
-  convenienceVariants?: readonly ConvenienceVariant[];
+  /** optional, Image Route Name: 만약 타요리 동일 이미지인 경우 */
+  imageName?: string;
 
   /** optional, 검색용 동의어 */
   synonyms?: readonly string[];
@@ -138,32 +134,14 @@ export type Meal = {
   }[];
 } & Unit;
 
-export type MealWithEnrichIngredient = Omit<Meal, 'ingredientStructure'> & {
-  ingredientStructure?: EnrichMealIngredientStructure;
-};
-
-/* -------------------------------------------------------------------------- */
-/*                             Today Meal Item                                */
-/*                             = 이번엔 어떻게 먹는가                              */
-/* -------------------------------------------------------------------------- */
-
-type MealConsumeMethod = 'cook' | 'instant' | 'delivery';
-
-/** [메인요리 | 반찬] 타입구분
- * “이 음식이 식사의 중심이면 main, 아니면 side”
- */
-
-type TodayMeal = {
-  meal: MealWithEnrichIngredient;
-  role: 'main' | 'side'; // 여기서 main과 side를 한번더 구분하는 이유는 오늘의 식사에서 메인 메뉴는 무조건 하나여야함. 만약 메인 메뉴를 두개 골랐는데 메인으로 선정된 메뉴 말고 다른 메뉴를 메인으로 올리고 싶을 때 수정 가능하도록
-  consumeMethod: MealConsumeMethod;
-  selectedAt: string;
-};
-
 /* -------------------------------------------------------------------------- */
 /*                              Meal의 속성들                                   */
 /* -------------------------------------------------------------------------- */
-
+/** 난이도
+ * easy - 0 ~ 15min
+ * medium - 15min ~ 40min
+ * hard - 40min ~
+ */
 type Difficulty = 'easy' | 'medium' | 'hard';
 
 export type MealCategory =
@@ -255,3 +233,22 @@ export type MealSuffix =
   | '_salad'
   | '_steak'
   | '_gratin';
+
+export type MealWithEnrichIngredient = Omit<Meal, 'ingredientStructure'> & {
+  ingredientStructure?: EnrichMealIngredientStructure;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                             Today Meal Item                                */
+/*                             = 이번엔 어떻게 먹는가                              */
+/* -------------------------------------------------------------------------- */
+
+/** [메인요리 | 반찬] 타입구분
+ * “이 음식이 식사의 중심이면 main, 아니면 side”
+ */
+type TodayMeal = {
+  meal: MealWithEnrichIngredient;
+  role: 'main' | 'side'; // 여기서 main과 side를 한번더 구분하는 이유는 오늘의 식사에서 메인 메뉴는 무조건 하나여야함. 만약 메인 메뉴를 두개 골랐는데 메인으로 선정된 메뉴 말고 다른 메뉴를 메인으로 올리고 싶을 때 수정 가능하도록
+  consumeMethod: 'cook' | ConvenienceVariant;
+  selectedAt: string;
+};

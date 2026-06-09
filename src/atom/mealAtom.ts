@@ -49,3 +49,15 @@ export const deleteTodayMealItemAtom = atom(null, (get, set, ids: string[]) => {
     list.filter((x) => !idSet.has(x.meal.id)),
   );
 });
+
+/** 메인메뉴로 변경 */
+export const changeMainMenuAtom = atom(null, (get, set, mealId: string) => {
+  const list = get(todayMealListAtom);
+
+  const changedList = list.map((item) => {
+    const role = item.meal.id === mealId ? ('main' as const) : ('side' as const);
+    return { ...item, role };
+  });
+
+  set(todayMealListAtom, changedList);
+});

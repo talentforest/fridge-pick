@@ -3,6 +3,66 @@ import { DEFAULT_EXPIRATION_DAYS } from '@/constants/storage/storageObj';
 import { nanoid } from 'nanoid/non-secure';
 
 export const vegetableObj = {
+  chonggak_mu: {
+    id: 'chonggak_mu',
+    label: '총각무',
+    isActive: true,
+    type: 'ingredient',
+    category: 'vegetable',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 7 },
+    defaultUnitLabel: '단',
+    unitOptions: ['단', '개', 'g'],
+    synonyms: ['알타리무', '알타리'],
+  },
+  mumallaengi: {
+    id: 'mumallaengi',
+    label: '무말랭이',
+    isActive: true,
+    type: 'ingredient',
+    category: 'vegetable',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 180, fridge: 365 },
+    defaultUnitLabel: '봉',
+    unitOptions: ['봉', 'g'],
+    synonyms: ['말린무', '무말랭이용무'],
+  },
+  parsley: {
+    id: 'parsley',
+    label: '파슬리',
+    isActive: true,
+    type: 'ingredient',
+    category: 'vegetable',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 7, freezer: 30 },
+    defaultUnitLabel: '봉',
+    unitOptions: ['봉', 'g'],
+    synonyms: ['파슬리잎', '생파슬리'],
+  },
+  ugeoji: {
+    id: 'ugeoji',
+    label: '우거지',
+    isActive: true,
+    type: 'ingredient',
+    category: 'vegetable',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 3, freezer: 90 },
+    defaultUnitLabel: '팩',
+    unitOptions: ['팩', '봉', 'g'],
+    synonyms: ['삶은우거지', '배추우거지'],
+  },
+  yeolmu: {
+    id: 'yeolmu',
+    label: '열무',
+    isActive: true,
+    type: 'ingredient',
+    category: 'vegetable',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 5 },
+    defaultUnitLabel: '단',
+    unitOptions: ['단', '봉', 'g'],
+    synonyms: ['어린무', '열무잎'],
+  },
   gondre: {
     type: 'ingredient',
     isActive: true,
@@ -898,6 +958,43 @@ export const vegetableObj = {
 } as const;
 
 export const meatObj = {
+  chicken_gizzard: {
+    id: 'chicken_gizzard',
+    label: '닭근위',
+    isActive: true,
+    type: 'ingredient',
+    category: 'meat',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 2, freezer: 30 },
+    defaultUnitLabel: '팩',
+    unitOptions: ['팩', 'g'],
+    synonyms: ['닭똥집', '근위'],
+  },
+  dakbal: {
+    id: 'dakbal',
+    label: '닭발',
+    isActive: true,
+    type: 'ingredient',
+    category: 'meat',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 2, freezer: 30 },
+    defaultUnitLabel: '팩',
+    unitOptions: ['팩', 'g'],
+    synonyms: ['무뼈닭발', '통닭발'],
+  },
+  gopchang: {
+    id: 'gopchang',
+    label: '돼지곱창',
+    isActive: true,
+    type: 'ingredient',
+    category: 'meat',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 2, freezer: 30 },
+    defaultUnitLabel: '팩',
+    unitOptions: ['팩', 'g'],
+    synonyms: ['곱창', '돼지소창'],
+  },
+
   frozen_mandu: {
     id: 'frozen_mandu',
     label: '냉동만두',
@@ -1365,17 +1462,8 @@ export const meatObj = {
     defaultUnitLabel: '개',
     unitOptions: ['개', '판'],
     synonyms: ['달걀'],
-    variants: {
-      baked: {
-        label: '훈제란',
-        imageName: 'egg_baked',
-      },
-      soft_boiled: {
-        label: '반숙란',
-        imageName: 'egg_soft_boiled',
-      },
-    },
   },
+
   ground_beef: {
     id: 'ground_beef',
     label: '소고기다짐육',
@@ -1389,6 +1477,7 @@ export const meatObj = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
+    imageName: 'ground_meat',
   },
 
   ground_pork: {
@@ -1404,6 +1493,7 @@ export const meatObj = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
+    imageName: 'ground_meat',
   },
 
   jamon: {
@@ -1547,7 +1637,7 @@ export const meatObj = {
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
-    imageName: 'cube_rib',
+    imageName: 'beef_rib_meat',
   },
 
   pork_shank: {
@@ -1563,6 +1653,7 @@ export const meatObj = {
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
+    imageName: 'beef_round',
   },
 
   pork_shoulder: {
@@ -1618,6 +1709,7 @@ export const meatObj = {
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
+    imageName: 'beef_skirt',
   },
 
   pork_tenderloin: {
@@ -1697,6 +1789,43 @@ export const meatObj = {
 } as const;
 
 export const seafoodObj = {
+  goni: {
+    id: 'goni',
+    label: '곤이',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seafood',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 1, freezer: 30 },
+    defaultUnitLabel: '팩',
+    unitOptions: ['팩', 'g'],
+    synonyms: ['생선곤이', '알탕곤이'],
+  },
+  hoe: {
+    id: 'hoe',
+    label: '회',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seafood',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 1 },
+    defaultUnitLabel: '팩',
+    unitOptions: ['팩', '점', 'g'],
+    synonyms: ['생선회', '광어회', '모둠회'],
+  },
+  jangeo: {
+    id: 'jangeo',
+    label: '장어',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seafood',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 2, freezer: 30 },
+    defaultUnitLabel: '팩',
+    unitOptions: ['팩', '마리', 'g'],
+    synonyms: ['민물장어', '손질장어'],
+  },
+
   eomuk: {
     type: 'ingredient',
     isActive: true,
@@ -2929,6 +3058,30 @@ export const grainsObj = {
 } as const;
 
 export const noodleObj = {
+  lasagna_myeon: {
+    id: 'lasagna_myeon',
+    label: '라자냐면',
+    isActive: true,
+    type: 'ingredient',
+    category: 'noodle',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 365 },
+    defaultUnitLabel: '봉',
+    unitOptions: ['봉', '개', '장', 'g'],
+    synonyms: ['라자냐', '라자냐시트'],
+  },
+  macaroni: {
+    id: 'macaroni',
+    label: '마카로니',
+    isActive: true,
+    type: 'ingredient',
+    category: 'noodle',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 365 },
+    defaultUnitLabel: '봉',
+    unitOptions: ['봉', 'g'],
+    synonyms: ['마카로니면', '파스타면'],
+  },
   mandupi: {
     id: 'mandupi',
     label: '만두피',
@@ -3186,6 +3339,19 @@ export const noodleObj = {
 } as const;
 
 export const fruitObj = {
+  bam: {
+    id: 'bam',
+    label: '밤',
+    isActive: true,
+    type: 'ingredient',
+    category: 'fruit',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 14, fridge: 30, freezer: 180 },
+    defaultUnitLabel: '개',
+    unitOptions: ['개', '봉', 'g'],
+    synonyms: ['생밤', '깐밤'],
+  },
+
   almond: {
     id: 'almond',
     label: '아몬드',
@@ -3930,6 +4096,18 @@ export const dairyObj = {
 } as const;
 
 export const dessertObj = {
+  chocolate_jam: {
+    id: 'chocolate_jam',
+    label: '초코잼',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seasoning',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 180, fridge: 180 },
+    defaultUnitLabel: '통',
+    unitOptions: ['통', '병', '개'],
+    synonyms: ['초콜릿잼', '초코스프레드'],
+  },
   bagel: {
     id: 'bagel',
     label: '베이글',
@@ -4509,6 +4687,19 @@ export const dessertObj = {
 } as const;
 
 export const drinkObj = {
+  kong_mul: {
+    id: 'kong_mul',
+    label: '콩물',
+    isActive: true,
+    type: 'ingredient',
+    category: 'drink',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 5, freezer: 30 },
+    defaultUnitLabel: '병',
+    unitOptions: ['병', '팩', '개'],
+    packageWeight: { amount: 500, unit: 'ml' },
+    synonyms: ['콩국물', '콩국수콩물'],
+  },
   banana_milk: {
     id: 'banana_milk',
     label: '바나나우유',
@@ -4878,6 +5069,78 @@ export const canObj = {
 } as const;
 
 export const seasoningObj = {
+  mala_sauce: {
+    id: 'mala_sauce',
+    label: '마라소스',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seasoning',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 365, fridge: 180 },
+    defaultUnitLabel: '팩',
+    unitOptions: ['팩', '병', '통', '개'],
+    synonyms: ['마라양념', '마라탕소스'],
+  },
+  myeolchi_aekjeot: {
+    id: 'myeolchi_aekjeot',
+    label: '멸치액젓',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seasoning',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 365, fridge: 365 },
+    defaultUnitLabel: '병',
+    unitOptions: ['병', '개'],
+    synonyms: ['멸치액', '액젓'],
+  },
+  peanut_butter: {
+    id: 'peanut_butter',
+    label: '땅콩잼',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seasoning',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 180, fridge: 180 },
+    defaultUnitLabel: '통',
+    unitOptions: ['통', '병', '개'],
+    synonyms: ['피넛버터', '땅콩버터'],
+  },
+  chamchi_aekjeot: {
+    id: 'chamchi_aekjeot',
+    label: '참치액젓',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seasoning',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 365, fridge: 365 },
+    defaultUnitLabel: '병',
+    unitOptions: ['병', '개'],
+    synonyms: ['참치액', '참치액상조미료'],
+  },
+  chili_sauce: {
+    id: 'chili_sauce',
+    label: '칠리소스',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seasoning',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 365, fridge: 180 },
+    defaultUnitLabel: '병',
+    unitOptions: ['병', '통', '개'],
+    synonyms: ['스위트칠리소스', '칠리'],
+  },
+  cream_pasta_sauce: {
+    id: 'cream_pasta_sauce',
+    label: '크림파스타소스',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seasoning',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 365, fridge: 5 },
+    defaultUnitLabel: '병',
+    unitOptions: ['병', '팩', '개'],
+    synonyms: ['크림소스', '크림스파게티소스'],
+  },
   avocado_oil: {
     type: 'ingredient',
     isActive: true,
@@ -4889,6 +5152,7 @@ export const seasoningObj = {
     defaultUnitLabel: 'ml',
     unitOptions: ['ml', 'L'],
     packageWeight: { amount: 500, unit: 'ml' },
+    imageName: 'olive_oil',
   },
 
   olive_oil: {
@@ -5058,18 +5322,6 @@ export const seasoningObj = {
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
     synonyms: ['통깨', '볶음참깨'],
-  },
-
-  chamchi_aekjeot: {
-    id: 'chamchi_aekjeot',
-    label: '참치액',
-    isActive: true,
-    type: 'ingredient',
-    category: 'seasoning',
-    defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
-    defaultUnitLabel: '병',
-    unitOptions: ['병', '통'],
   },
 
   chamgireum: {
@@ -5278,16 +5530,53 @@ export const seasoningObj = {
     unitOptions: ['봉', '병'],
   },
 
-  myeolchi_aekjeot: {
-    id: 'myeolchi_aekjeot',
-    label: '멸치액젓',
+  peanut_sauce: {
+    id: 'peanut_sauce',
+    label: '땅콩소스',
     isActive: true,
     type: 'ingredient',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expirationDays: { pantry: 180, fridge: 180 },
     defaultUnitLabel: '병',
-    unitOptions: ['병', '통'],
+    unitOptions: ['병', '통', '팩', '개'],
+    synonyms: ['피넛소스', '월남쌈소스'],
+  },
+  rose_sauce: {
+    id: 'rose_sauce',
+    label: '로제소스',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seasoning',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 365, fridge: 5 },
+    defaultUnitLabel: '병',
+    unitOptions: ['병', '팩', '개'],
+    synonyms: ['로제파스타소스', '로제떡볶이소스'],
+  },
+  tsuyu: {
+    id: 'tsuyu',
+    label: '쯔유',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seasoning',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 365, fridge: 180 },
+    defaultUnitLabel: '병',
+    unitOptions: ['병', '개'],
+    synonyms: ['쯔유소스', '일본간장'],
+  },
+  wholegrain_mustard: {
+    id: 'wholegrain_mustard',
+    label: '홀그레인머스타드',
+    isActive: true,
+    type: 'ingredient',
+    category: 'seasoning',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 365, fridge: 180 },
+    defaultUnitLabel: '병',
+    unitOptions: ['병', '통', '개'],
+    synonyms: ['홀그레인 머스타드', '머스타드'],
   },
 
   oyster_sauce: {
@@ -5637,6 +5926,57 @@ export const powderObj = {
   },
 } as const;
 
+export const convenienceObj = {
+  cereal: {
+    id: 'cereal',
+    label: '시리얼',
+    isActive: true,
+    type: 'ingredient',
+    category: 'convenience',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 180 },
+    defaultUnitLabel: '봉',
+    unitOptions: ['봉', '상자', 'g'],
+    synonyms: ['콘푸로스트', '아침시리얼'],
+  },
+  granola: {
+    id: 'granola',
+    label: '그래놀라',
+    isActive: true,
+    type: 'ingredient',
+    category: 'convenience',
+    defaultStorage: 'pantry',
+    expirationDays: { pantry: 180 },
+    defaultUnitLabel: '봉',
+    unitOptions: ['봉', '상자', 'g'],
+    synonyms: ['그라놀라', '오트그래놀라'],
+  },
+  yubu: {
+    id: 'yubu',
+    label: '유부',
+    isActive: true,
+    type: 'ingredient',
+    category: 'convenience',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 7, freezer: 30 },
+    defaultUnitLabel: '팩',
+    unitOptions: ['팩', '장', '개', 'g'],
+    synonyms: ['유부초밥유부', '조미유부'],
+  },
+  natto: {
+    id: 'natto',
+    label: '낫또',
+    isActive: true,
+    type: 'ingredient',
+    category: 'convenience',
+    defaultStorage: 'fridge',
+    expirationDays: { fridge: 7, freezer: 30 },
+    defaultUnitLabel: '팩',
+    unitOptions: ['팩', '장', '개', 'g'],
+    synonyms: ['유부초밥유부', '조미유부'],
+  },
+};
+
 export const ingredientObj = {
   vegetable: vegetableObj,
   fruit: fruitObj,
@@ -5650,6 +5990,7 @@ export const ingredientObj = {
   dessert: dessertObj,
   drink: drinkObj,
   can: canObj,
+  convenience: convenienceObj,
 } as const;
 
 export const allIngredientList: Ingredient[] = Object.values(ingredientObj).flatMap(

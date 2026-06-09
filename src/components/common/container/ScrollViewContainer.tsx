@@ -7,7 +7,7 @@ export default function ScrollViewContainer({ ...props }: ScrollViewProps) {
       showsVerticalScrollIndicator={false}
       automaticallyAdjustContentInsets={false}
       automaticallyAdjustKeyboardInsets={false}
-      contentContainerClassName={`px-6 pb-32 gap-y-20 ${props.contentContainerClassName}`}
+      contentContainerClassName={`px-6 pb-32 gap-y-24 ${props.contentContainerClassName}`}
     >
       {props.children}
     </ScrollView>

@@ -14,18 +14,18 @@ interface CautionMealListByIngredientProps {
 export default function CautionMealListByIngredient({
   focusedItem,
 }: CautionMealListByIngredientProps) {
-  const { getHasStorageItemInMealList } = useGetMealList();
+  const { getHasStorageItemMealList } = useGetMealList();
 
-  const expiredSoonMealList = getHasStorageItemInMealList(focusedItem);
+  const expiredSoonMealList = getHasStorageItemMealList(focusedItem);
 
   return (
     <View className="h-[350px]">
-      <Text className={`mt-1 pb-3 pl-8`}>
-        <Text className="font-extrabold text-base text-yellow-7">
-          [{getTrackedItemLabel(focusedItem).label}]
-        </Text>{' '}
-        식재료를 이용한 메뉴
-      </Text>
+      <View className={`mt-1 flex-row items-center gap-x-2 pb-3 pl-8`}>
+        <Text>식재료를 이용한 메뉴</Text>
+        <View className="rounded-xl bg-inactive-bg px-3 py-2.5">
+          <Text className="font-extrabold">{getTrackedItemLabel(focusedItem).label}</Text>
+        </View>
+      </View>
 
       {expiredSoonMealList.length !== 0 ? (
         <CarouselContainer
