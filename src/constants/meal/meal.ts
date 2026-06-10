@@ -546,6 +546,7 @@ export const mealObj = {
     },
     synonyms: ['볼로네제', '볼로네제스파게티'],
   },
+
   bossam: {
     type: 'meal',
     isActive: true,
@@ -556,7 +557,24 @@ export const mealObj = {
     difficulty: 'hard',
     servingTemperature: 'warm',
     convenienceVariants: ['readyToEat'],
+    ingredientStructure: {
+      essential: [
+        { type: 'ingredient', id: 'pork_belly' },
+        { type: 'ingredient', id: 'ground_beef' },
+      ],
+      common: [
+        { type: 'ingredient', id: 'garlic' },
+        { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'daepa' },
+      ],
+      seasoning: [
+        { type: 'ingredient', id: 'doenjang' },
+        { type: 'ingredient', id: 'black_pepper' },
+      ],
+      optional: [{ type: 'ingredient', id: 'ginger' }],
+    },
   },
+
   broccoli_bokkeum: {
     type: 'meal',
     isActive: true,
@@ -5141,10 +5159,10 @@ export const mealObj = {
       optional: [],
     },
   },
-  soft_boiled_egg: {
+  egg_soft_boiled: {
     type: 'meal',
     isActive: true,
-    id: 'soft_boiled_egg',
+    id: 'egg_soft_boiled',
     label: '반숙란',
     mealCategory: 'light_meal',
     suffix: null,

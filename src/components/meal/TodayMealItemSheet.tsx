@@ -1,19 +1,17 @@
-import SquareBtn from '@/components/common/SquareBtn';
-import Text from '@/components/common/ui/Text';
-import MealImage from '@/components/selectableItem/meal/MealImage';
-import ModalHeader from '@/components/common/header/ModalHeader';
 import { changeMainMenuAtom, deleteTodayMealItemAtom } from '@/atom/mealAtom';
 import { useOverlay, useGetMealInfo } from '@/hooks';
 import { MealWithEnrichIngredient } from '@/types/meal';
 import { useSetAtom } from 'jotai';
 import { View } from 'react-native';
+import SquareBtn from '@/components/common/SquareBtn';
+import Text from '@/components/common/ui/Text';
+import MealImage from '@/components/selectableItem/meal/MealImage';
+import ModalHeader from '@/components/common/header/ModalHeader';
 import MealIngredientItemCard from '@/components/selectableItem/meal/MealIngredientItemCard';
 import IconWithText from '@/components/common/IconWithText';
 import ProgressBar from '@/components/common/ProgressBar';
 import Icon from '@/components/common/ui/Icon';
 import GridContainer from '@/components/common/container/GridContainer';
-import { addShoppingItemAtom } from '@/atom/shoppingListAtom';
-import { useMemo } from 'react';
 
 interface TodayMealItemSheetProps {
   meal: MealWithEnrichIngredient;
@@ -25,17 +23,17 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
 
   const deleteTodayMealItem = useSetAtom(deleteTodayMealItemAtom);
   const changeMainMenu = useSetAtom(changeMainMenuAtom);
-  const addShoppingItem = useSetAtom(addShoppingItemAtom);
 
   const {
-    allIngredientStructureList,
+    getIngredientStructureList,
+    getStorageItemListInIngredientStructure,
     percentage,
     requiredTotal,
-    hasStorageItemList, //
+    storageItemIdSet,
+    percentStatus,
   } = useGetMealInfo(meal);
 
-  const hasStorageItemListTotal = hasStorageItemList.length;
-  const needMoreNum = requiredTotal - hasStorageItemListTotal;
+  const allIngredientStructureList = getIngredientStructureList();
 
   // 오늘의 메뉴 삭제하기
   const onDeletePress = () => {
@@ -48,11 +46,6 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
     changeMainMenu(meal.id);
     closeSheet();
   };
-
-  // 보유한 식재료인지 검증
-  const storageItemIdSet = useMemo(() => {
-    return new Set(hasStorageItemList.map(({ id }) => id));
-  }, [hasStorageItemList]);
 
   return (
     <View className="py-3">
@@ -72,24 +65,18 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
             {/* 진행률 */}
             <View className="gap-y-2 px-1">
               <ProgressBar
-                label={`재료보유율  ${hasStorageItemListTotal}/${requiredTotal}`}
+                label={`재료보유율  ${getStorageItemListInIngredientStructure('required').length}/${requiredTotal}`}
                 percentage={percentage}
               />
 
               {requiredTotal > 0 && (
                 <View className="!h-6">
                   <IconWithText
-                    text={
-                      hasStorageItemListTotal === 0
-                        ? '식재료가 하나도 없어요'
-                        : percentage === 100
-                          ? '모든 식재료를 갖고 있어요'
-                          : `식재료 ${needMoreNum}개가 부족해요`
-                    }
-                    icon={percentage === 100 ? 'HandPlatter' : 'TriangleAlert'}
+                    text={percentStatus.label}
+                    icon={percentStatus.icon}
                     iconSize={14}
-                    iconColor={percentage === 100 ? 'green' : 'red'}
-                    textClassName={percentage === 100 ? 'text-green-7' : 'text-red-7'}
+                    iconColor={percentStatus.iconColor}
+                    textClassName={percentStatus.textClassName}
                   />
                 </View>
               )}

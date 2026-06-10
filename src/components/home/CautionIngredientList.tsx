@@ -17,6 +17,7 @@ interface ExpiringIngredientsProps {
   storageType?: StorageTypeId;
   onItemPress?: (item: EnrichStorageItem) => void;
   isGridType?: boolean;
+  type?: 'expiredSoon' | 'expired' | 'caution';
 }
 
 export default function CautionIngredientList({
@@ -25,8 +26,9 @@ export default function CautionIngredientList({
   storageType,
   onItemPress,
   isGridType,
+  type = 'caution',
 }: ExpiringIngredientsProps) {
-  const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom('caution'));
+  const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom(type));
 
   // TODO: 일단 최대 5개까지
   const MAX_LENGTH = 5;
@@ -69,6 +71,7 @@ export default function CautionIngredientList({
             hasNavigation
             spacing={8}
             centerFocus
+            hasPagination
             requiredMinimum={3}
             keyExtractor={(_, index) => `${index}`}
             renderItem={({ item, isCurrIndex, onPress }) =>

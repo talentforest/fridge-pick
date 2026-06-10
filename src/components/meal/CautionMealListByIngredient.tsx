@@ -41,7 +41,7 @@ export default function CautionMealListByIngredient({
           )}
         />
       ) : (
-        <Card className="mx-6 h-60 items-center justify-center">
+        <Card className="mx-6 h-72 items-center justify-center">
           <Text className="text-inactive-text">식재료를 이용한 메뉴가 없어요</Text>
         </Card>
       )}

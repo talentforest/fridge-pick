@@ -38,14 +38,14 @@ export default function MealIngredientItemCard({
     if (result.type === 'duplicate') {
       toast({
         message: `⚠️ 이미 장보기 목록에 있어요.`,
-        duration: 1000,
+        duration: 300,
       });
     }
 
     if (result.type === 'success') {
       toast({
         message: `✅ 장보기 목록에 추가했어요.`,
-        duration: 1000,
+        duration: 300,
       });
     }
   };

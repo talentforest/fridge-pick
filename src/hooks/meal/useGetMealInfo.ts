@@ -40,38 +40,79 @@ export const useGetMealInfo = (meal: MealWithEnrichIngredient) => {
     [meal.ingredientStructure],
   );
 
-  const allIngredientStructureList = getIngredientStructureList();
-  const requiredIngredientStructureList = getIngredientStructureList('required');
-  const allIngredientItemList = allIngredientStructureList
-    .map((item) => item.itemList)
-    .flat();
-
   // 식재료 구조 중에 내가 가진 식재료 목록
-  const hasStorageItemList = allIngredientStructureList
-    .map((item) => {
-      return item.itemList.filter((item) => {
-        const key = createSelectableItemKey(item);
+  const getStorageItemListInIngredientStructure = useCallback(
+    (type?: 'required') => {
+      const list = getIngredientStructureList(type);
 
-        return storageItemList.find((storageItem) =>
-          findTrackedItemWithKey(storageItem, key),
-        );
-      });
-    })
-    .flat();
+      return list
+        .map((item) => {
+          return item.itemList.filter((item) => {
+            const key = createSelectableItemKey(item);
 
-  const requiredTotal = requiredIngredientStructureList
-    .map((item) => item.itemList.length)
-    .reduce((curr, acc) => curr + acc, 0);
+            return storageItemList.find((storageItem) =>
+              findTrackedItemWithKey(storageItem, key),
+            );
+          });
+        })
+        .flat();
+    },
+    [getIngredientStructureList, storageItemList],
+  );
+
+  const requiredTotal = getIngredientStructureList('required').reduce(
+    (sum, { itemList }) => sum + itemList.length,
+    0,
+  );
 
   const percentage =
     requiredTotal === 0
       ? 0
-      : Math.round((hasStorageItemList.length / requiredTotal) * 100);
+      : Math.round(
+          (getStorageItemListInIngredientStructure('required').length / requiredTotal) *
+            100,
+        );
+
+  // 보유한 식재료인지 검증
+  const storageItemIdSet = new Set(
+    getStorageItemListInIngredientStructure().map(({ id }) => id),
+  );
+
+  const needMoreIngredientNum =
+    requiredTotal - getStorageItemListInIngredientStructure('required').length;
+
+  const status =
+    percentage === 100 ? 'complete' : percentage === 0 ? 'empty' : 'shortage';
+
+  const possessionPercentStatus = {
+    complete: {
+      label: '모든 식재료를 갖고 있어요',
+      icon: 'HandPlatter',
+      iconColor: 'green',
+      textClassName: 'text-green-7',
+    },
+    shortage: {
+      label: `식재료 ${needMoreIngredientNum}개가 부족해요`,
+      icon: 'TriangleAlert',
+      iconColor: 'red',
+      textClassName: 'text-red-7',
+    },
+    empty: {
+      label: '갖고 있는 식재료가 없어요',
+      icon: 'TriangleAlert',
+      iconColor: 'red',
+      textClassName: 'text-red-7',
+    },
+  } as const;
+
+  const percentStatus = possessionPercentStatus[status];
 
   return {
-    allIngredientStructureList,
+    getIngredientStructureList,
+    getStorageItemListInIngredientStructure,
     percentage,
     requiredTotal,
-    hasStorageItemList,
+    storageItemIdSet,
+    percentStatus,
   };
 };

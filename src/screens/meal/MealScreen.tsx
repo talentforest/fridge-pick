@@ -38,8 +38,9 @@ export default function MealScreen() {
         <TodayMeal />
 
         <CautionIngredientList
-          title="지금 꼭 써야하는 재료가 있어요"
+          title="지금 꼭 써야하는 식재료가 있어요"
           hasCautionIngredientMeal
+          type="expiredSoon"
         />
 
         {/* 모든 재료가 있어요 */}

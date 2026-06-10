@@ -8,16 +8,15 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import { useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { View } from 'react-native';
 import { useEffect } from 'react';
+import { EnrichStorageItem } from '@/types/storage';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import Icon from '@/components/common/ui/Icon';
-import { EnrichStorageItem } from '@/types/storage';
-import SearchItemSheet from '@/components/trackedItem/storage/SearchItemSheet';
 import StorageItemSheet from '@/components/trackedItem/storage/StorageItemSheet';
 import Storage from '@/components/trackedItem/storage/Storage';
 import CautionIngredientList from '@/components/home/CautionIngredientList';
@@ -31,19 +30,13 @@ export default function StorageDetailScreen() {
 
   const { label: storageLabel } = storageObj[storageType];
 
-  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
+  const setSearchKeyword = useSetAtom(searchKeywordAtom);
 
   const { openSheet, closeSheet } = useOverlay();
 
   const navigation = useNavigation<StackNavProp>();
 
   const isFocused = useIsFocused();
-
-  const onSearchPress = () => {
-    openSheet({
-      render: () => <SearchItemSheet storageLabel={storageLabel} />,
-    });
-  };
 
   const onItemPress = (item: EnrichStorageItem) => {
     openSheet({
@@ -90,17 +83,10 @@ export default function StorageDetailScreen() {
             icon={storageLabel === '실온보관' ? 'ShelvingUnit' : 'Refrigerator'}
           >
             <View className="flex-row items-center gap-x-2">
-              {/* <Icon
-                name="Search"
-                className="h-10 w-10 items-center justify-center"
-                size={22}
-                onPress={onSearchPress}
-                color={searchKeyword === '' ? 'text' : 'blue'}
-              /> */}
               <Icon
                 name="Plus"
                 className="h-10 w-10 items-center justify-center"
-                size={27}
+                size={24}
                 color="text"
                 onPress={() =>
                   navigation.navigate('AddStorageItemScreen', { id: storageType })

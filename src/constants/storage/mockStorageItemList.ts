@@ -51,7 +51,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '5',
     ingredientId: 'aehobak',
     purchasedAt: '2026-03-02',
-    expiresAt: '2026-08-21',
+    expiresAt: '2026-06-11',
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {
@@ -81,7 +81,7 @@ export const mockStorageItemList: StorageItem[] = [
   },
   {
     type: 'ingredient',
-    id: 'chicken_leg11',
+    id: 'chicken_leg',
     ingredientId: 'chicken_leg',
     purchasedAt: '2026-02-25',
     expiresAt: '2026-04-27',
@@ -107,8 +107,8 @@ export const mockStorageItemList: StorageItem[] = [
     type: 'ingredient',
     id: '15',
     ingredientId: 'beef_brisket',
-    purchasedAt: '2026-02-20',
-    expiresAt: '2026-08-25',
+    purchasedAt: '2026-06-11',
+    expiresAt: '2026-06-12',
     storage: { type: 'freezer', side: 'inner', section: '1' },
   },
   {

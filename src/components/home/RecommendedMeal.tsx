@@ -19,7 +19,7 @@ export default function RecommendedMeal() {
     useGetMealList();
 
   return (
-    <View className="gap-y-3">
+    <>
       {recommendedTodayMealList.length && (
         <View className="h-[300px] gap-y-3">
           <SectionTitle title="오늘의 식사 메뉴 추천" icon="HandPlatter" />
@@ -41,7 +41,7 @@ export default function RecommendedMeal() {
         </View>
       )}
 
-      <View className="mt-16 min-h-[800px]">
+      <View className="min-h-[800px]">
         <LabelContainer label="메뉴 검색">
           <TextInput
             value={searchKeyword}
@@ -62,6 +62,6 @@ export default function RecommendedMeal() {
 
         <NavigateBtn navigateTo={'AllMealListScreen'} />
       </View>
-    </View>
+    </>
   );
 }

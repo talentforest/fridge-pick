@@ -1000,14 +1000,14 @@ export const meatObj = {
     label: '냉동만두',
     isActive: true,
     type: 'ingredient',
-    category: 'meat',
+    category: 'convenience',
     defaultStorage: 'fridge',
     expirationDays: {
       fridge: 7,
-      freezer: 30,
+      freezer: 365,
     },
-    defaultUnitLabel: '팩',
-    unitOptions: ['팩', 'g'],
+    defaultUnitLabel: '봉',
+    unitOptions: ['봉', 'g'],
   },
 
   bacon: {
@@ -1770,6 +1770,21 @@ export const meatObj = {
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '개', 'g'],
     synonyms: ['비엔나소시지', '후랑크소시지'],
+  },
+
+  ham: {
+    id: 'ham',
+    label: '햄',
+    isActive: true,
+    type: 'ingredient',
+    category: 'meat',
+    defaultStorage: 'pantry',
+    expirationDays: {
+      pantry: 365,
+    },
+    defaultUnitLabel: '캔',
+    unitOptions: ['캔'],
+    synonyms: ['스팸'],
   },
 
   duck_slice_smoked: {

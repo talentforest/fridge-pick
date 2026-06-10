@@ -4,6 +4,7 @@ import {
   searchKeywordAtom,
 } from '@/atom/storageItemAtom';
 import { allMealList, filterObj } from '@/constants';
+import { useDebounce } from '@/hooks/common/useDebounce';
 import { MealFilterKey } from '@/types/filter';
 import { Ingredient } from '@/types/ingredient';
 import {
@@ -215,19 +216,21 @@ export const useGetMealList = () => {
     );
   }, [addFilterInMealList]);
 
+  const debouncedSearchKeyword = useDebounce(searchKeyword, 300);
+
   /** "검색어 결과" 필터링 목록 */
   const searchKeywordMealList = useMemo(() => {
     const filterSearchKeyword = allMealList.filter((meal) => {
-      const includingLabel = meal.label.includes(searchKeyword);
+      const includingLabel = meal.label.includes(debouncedSearchKeyword);
 
       const includingSynonyms = meal.synonyms?.some((synonym) =>
-        synonym.includes(searchKeyword),
+        synonym.includes(debouncedSearchKeyword),
       );
 
       return includingLabel || includingSynonyms;
     });
     return addFilterInMealList(filterSearchKeyword);
-  }, [addFilterInMealList, searchKeyword]);
+  }, [addFilterInMealList, debouncedSearchKeyword]);
 
   /** 특정 식재료를 갖고 있는 메뉴 목록
    * - ex) 계란 활용 메뉴
