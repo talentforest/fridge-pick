@@ -74,6 +74,7 @@ export default function StorageDetailScreen() {
           isGridType
           storageType={storageType}
           onItemPress={onItemPress}
+          type="caution"
         />
 
         {/* 나의 공간 */}

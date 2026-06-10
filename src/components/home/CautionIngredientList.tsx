@@ -22,23 +22,20 @@ interface ExpiringIngredientsProps {
 
 export default function CautionIngredientList({
   title,
-  hasCautionIngredientMeal = false,
+  hasCautionIngredientMeal,
   storageType,
   onItemPress,
   isGridType,
   type = 'caution',
 }: ExpiringIngredientsProps) {
-  const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom(type));
-
-  // TODO: 일단 최대 5개까지
-  const MAX_LENGTH = 5;
+  const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom('caution'));
 
   const cautionStorageItemList = useMemo(() => {
     if (!storageType) return expiredStorageItemList;
 
-    return expiredStorageItemList
-      .filter((item) => item.storageItem.storage.type === storageType)
-      .slice(0, MAX_LENGTH);
+    return expiredStorageItemList.filter(
+      (item) => item.storageItem.storage.type === storageType,
+    );
   }, [expiredStorageItemList, storageType]);
 
   return cautionStorageItemList.length > 0 ? (
@@ -46,7 +43,7 @@ export default function CautionIngredientList({
       <SectionTitle title={title || '지금 주의해야하는 식재료'} icon="ClockAlert" />
 
       {isGridType ? (
-        <GridContainer columns={4} gap={8}>
+        <GridContainer columns={4}>
           {cautionStorageItemList.map((item, index) => (
             <TouchableOpacity
               key={item.storageItem.id}
@@ -97,6 +94,7 @@ export default function CautionIngredientList({
               )
             }
           >
+            {/* 식재료를 이용한 메뉴 */}
             {hasCautionIngredientMeal
               ? ({ storageItem: focusedItem }) => (
                   <CautionMealListByIngredient

@@ -17,6 +17,6 @@ export * from '@/constants/shoppingList/mockShoppingList';
 export * from '@/constants/storage/mockStorageItemList';
 export * from '@/constants/storage/storageObj';
 
-export * from '@/constants/shadowStyle';
+export * from '@/constants/style';
 
 export * from '@/constants/image';

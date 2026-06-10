@@ -102,7 +102,7 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
                       </Text>
                     </View>
 
-                    <GridContainer columns={2} gap={8}>
+                    <GridContainer columns={2}>
                       {itemList.map((item) => (
                         <MealIngredientItemCard
                           key={item.id}

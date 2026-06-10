@@ -5,7 +5,6 @@ import MealImage from '@/components/selectableItem/meal/MealImage';
 import FilterTag from '@/components/common/FilterTag';
 import SquareBtn from '@/components/common/SquareBtn';
 import FavoriteBtn from '@/components/common/FavoriteBtn';
-import GridContainer from '@/components/common/container/GridContainer';
 import { MealWithEnrichIngredient } from '@/types/meal';
 import { ScrollView, View } from 'react-native';
 import { MealFilterKey } from '@/types/filter';
@@ -75,13 +74,13 @@ export default function MealCard({
       )}
 
       {hasIngredient && requiredIngredientList.length > 0 && (
-        <GridContainer columns={5} gap={6}>
+        <View className="w-full flex-row justify-between gap-x-1.5">
           {requiredIngredientList
             .slice(0, requiredIngredientList.length === 5 ? undefined : maxIngredientNum)
             .map((item) => (
               <View
                 key={item?.id}
-                className="items-center justify-between gap-0.5 rounded-xl bg-neutral-1 pb-2 pt-1"
+                className="w-[18%] items-center justify-between gap-0.5 rounded-xl bg-neutral-1 pb-2 pt-1"
               >
                 {item.type === 'ingredient' ? (
                   <IngredientImage ingredient={item} size={40} />
@@ -96,13 +95,13 @@ export default function MealCard({
 
           {requiredIngredientList.length > 5 &&
             requiredIngredientList.length > maxIngredientNum && (
-              <View className="flex-1 items-center justify-center gap-0.5 rounded-xl bg-blue-1 opacity-80">
+              <View className="w-[18%] items-center justify-center gap-0.5 rounded-xl bg-blue-1">
                 <Text className="!text-[13px] text-blue-5">
                   +{requiredIngredientList.length - maxIngredientNum}개
                 </Text>
               </View>
             )}
-        </GridContainer>
+        </View>
       )}
 
       {hasTodayMealBtn && (

@@ -4648,9 +4648,13 @@ export const mealObj = {
     servingTemperature: 'hot',
     convenienceVariants: ['instant', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'onion' }],
-      common: [],
-      seasoning: [],
+      essential: [
+        { type: 'ingredient', id: 'onion' },
+        { type: 'ingredient', id: 'chicken_stock' },
+        { type: 'ingredient', id: 'butter' },
+      ],
+      common: [{ type: 'ingredient', id: 'mozzarella_cheese' }],
+      seasoning: [{ type: 'ingredient', id: 'black_pepper' }],
       optional: [],
     },
   },

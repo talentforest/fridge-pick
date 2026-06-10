@@ -2,7 +2,7 @@ import GridContainer from '@/components/common/container/GridContainer';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { ReactNode, useMemo, useRef, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, useWindowDimensions, View } from 'react-native';
 
 type RenderItemWithIndex<T> = (args: {
   item: T;
@@ -42,7 +42,8 @@ export default function CarouselContainer<T>({
 
   const [isScrolling, setIsScrolling] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(initialIndex); // 무제한 데이터라서 앞뒤로 배열을 복제해놔서
-  const [containerWidth, setContainerWidth] = useState(0);
+
+  const { width: containerWidth } = useWindowDimensions();
 
   /** 실제 carousel width 기준으로 카드 계산 */
   const CARD_WIDTH = containerWidth * itemWidth + spacing;
@@ -98,13 +99,8 @@ export default function CarouselContainer<T>({
 
   const flatListData = useMemo(() => [...data, ...data, ...data], [data]);
 
-  /** container width 아직 없으면 렌더 안함 */
-  if (!containerWidth) {
-    return <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)} />;
-  }
-
   return data.length > requiredMinimum ? (
-    <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}>
+    <View>
       <View>
         <FlatList
           ref={listRef}
@@ -132,9 +128,7 @@ export default function CarouselContainer<T>({
 
             return (
               <View style={{ width: CARD_WIDTH }}>
-                <View className={`rounded-2xl`}>
-                  {renderItem({ item, isCurrIndex: isActive, index })}
-                </View>
+                {renderItem({ item, isCurrIndex: isActive, index })}
               </View>
             );
           }}
@@ -173,7 +167,7 @@ export default function CarouselContainer<T>({
     </View>
   ) : (
     <View>
-      <View className="px-6">
+      <View className="mx-[24px]">
         <GridContainer columns={requiredMinimum}>
           {data.map((item, index) => {
             const isCurrIndex = currentIndex - data.length === index;

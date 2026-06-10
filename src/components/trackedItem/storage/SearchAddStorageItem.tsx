@@ -41,7 +41,7 @@ export default function SearchAddStorageItem({
 
       {/* 추천 식재료 */}
       {recommendedKeywordList.length ? (
-        <GridContainer columns={4} gap={8} className="mt-2">
+        <GridContainer columns={4} className="mt-2">
           {recommendedKeywordList.map((item) => (
             <TouchableOpacity
               key={item.id}

@@ -1,5 +1,5 @@
 import { itemListByStorageAtom, searchKeywordAtom } from '@/atom/storageItemAtom';
-import { image_empty_basket, storageObj } from '@/constants';
+import { horizontalInset, image_empty_basket, storageObj } from '@/constants';
 import { useStorageItemList, useOverlay } from '@/hooks';
 import { EnrichStorageItem, StorageSideId, StorageTypeId } from '@/types/storage';
 import { searchStorageItem } from '@/utils';
@@ -85,16 +85,20 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
             className="flex-1"
             contentContainerClassName="flex-1"
           >
-            <View className={`flex-1 rounded-2xl bg-card px-4`}>
+            <View className={`flex-1 rounded-2xl bg-card px-[16px]`}>
               <View className="h-12 flex-row items-center justify-between">
                 <Text className="">검색결과 {searchedStorageItemList.length}개</Text>
                 <Icon name="RefreshCcw" className="" size={18} onPress={onRefreshPress} />
               </View>
 
-              <View className="w-full flex-1">
+              <View className="w-full flex-1 border">
                 {/* 검색 결과 식재료 리스트 */}
                 {searchedStorageItemList.length > 0 ? (
-                  <GridContainer columns={5} gap={4}>
+                  <GridContainer
+                    columns={5}
+                    gap={4}
+                    horizontalInset={horizontalInset + 16}
+                  >
                     {searchedStorageItemList.map((storageItem) => (
                       <TouchableOpacity
                         key={storageItem.id}
@@ -129,7 +133,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                   // 실제 카테고리별 박스
                   <View
                     key={category.id}
-                    className={`flex-1 bg-card px-4 pb-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === storageItemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
+                    className={`flex-1 bg-card px-[16px] pb-4 ${index === 0 ? 'rounded-t-2xl' : ''} ${index === storageItemListByCategory.length - 1 ? 'rounded-b-2xl' : ''}`}
                   >
                     <View className="h-12 flex-row items-center gap-x-1">
                       {category.icon && <Icon name={category.icon} size={15} />}
@@ -137,7 +141,11 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
                       <Text>{category.label}</Text>
                     </View>
 
-                    <GridContainer columns={5} gap={4}>
+                    <GridContainer
+                      columns={5}
+                      gap={4}
+                      horizontalInset={horizontalInset + 16}
+                    >
                       {/* 식재료 리스트 */}
                       {items.map((storageItem) => (
                         <TouchableOpacity

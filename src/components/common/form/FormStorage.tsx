@@ -1,4 +1,3 @@
-import GridContainer from '@/components/common/container/GridContainer';
 import LabelContainer from '@/components/common/container/LabelContainer';
 import FormDateInput from '@/components/common/form/FormDateInput';
 import SquareBtn from '@/components/common/SquareBtn';
@@ -32,12 +31,12 @@ export default function FormStorage({
 
   return (
     <LabelContainer label={label}>
-      <GridContainer columns={3} gap={8} className="mb-2">
+      <View className="flex-row justify-between gap-x-3">
         {Object.values(storageObj).map(({ id: storageType, label, icon, color }) => (
           <SquareBtn
             key={storageType}
             name={label}
-            className="flex h-[75px] !flex-col gap-y-2 !rounded-xl !px-2"
+            className="flex h-[75px] flex-1 !flex-col gap-y-2 !rounded-xl !px-2"
             textClassName="text-center !text-md"
             iconName={icon}
             iconSize={25}
@@ -52,7 +51,7 @@ export default function FormStorage({
             }}
           />
         ))}
-      </GridContainer>
+      </View>
 
       {ingredientExpirationDays?.[currStorageType] && (
         <View className="mb-4 mt-2 flex-row items-center rounded-xl pl-1">

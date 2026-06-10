@@ -1,8 +1,9 @@
-import React, { ReactNode, useState } from 'react';
-import { LayoutChangeEvent, View } from 'react-native';
+import React, { ReactNode } from 'react';
+import { useWindowDimensions, View } from 'react-native';
 
 interface GridContainerProps {
   children: ReactNode;
+  horizontalInset?: number;
   columns?: number;
   gap?: number;
   className?: string;
@@ -10,26 +11,23 @@ interface GridContainerProps {
 
 export default function GridContainer({
   children,
+  horizontalInset = 24,
   columns = 2,
-  gap = 10,
+  gap = 8,
   className = '',
 }: GridContainerProps) {
-  const [containerWidth, setContainerWidth] = useState<number>(0);
-
-  const handleLayout = (e: LayoutChangeEvent) => {
-    const width = e.nativeEvent.layout.width;
-    setContainerWidth(width);
-  };
-
   const childrenArray = React.Children.toArray(children);
 
-  const itemWidth =
-    containerWidth > 0 ? Math.floor((containerWidth - gap * (columns - 1)) / columns) : 0;
+  const { width } = useWindowDimensions();
+
+  const containerWidth = width - horizontalInset * 2;
+
+  const itemWidth = Math.floor((containerWidth - gap * (columns - 1)) / columns);
 
   const totalRows = Math.ceil(childrenArray.length / columns);
 
   return (
-    <View onLayout={handleLayout} className={`w-full flex-row flex-wrap ${className}`}>
+    <View className={`w-full flex-row flex-wrap ${className}`}>
       {childrenArray.map((child, index) => {
         const currentRow = Math.floor(index / columns);
         const isLastRow = currentRow === totalRows - 1;

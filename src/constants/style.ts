@@ -10,3 +10,5 @@ export const iosShadowStyle: ShadowStyleIOS = {
 export const shadowStyle: { elevation: number } = {
   elevation: 10,
 };
+
+export const horizontalInset = 24;

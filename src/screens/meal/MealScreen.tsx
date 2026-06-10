@@ -1,23 +1,23 @@
-import CarouselContainer from '@/components/common/container/CarouselContainer';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
-import SectionTitle from '@/components/common/header/SectionTitle';
-import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 import TodayMeal from '@/components/home/TodayMeal';
-import FullBleedSection from '@/components/common/container/FullBleedSection';
 import { searchKeywordAtom } from '@/atom/storageItemAtom';
 import { useGetMealList } from '@/hooks';
 import { useAtom } from 'jotai';
-import { View } from 'react-native';
 import { useCallback } from 'react';
 import { MealWithEnrichIngredient } from '@/types/meal';
+import { View } from 'react-native';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
 import CautionIngredientList from '@/components/home/CautionIngredientList';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
-import LabelContainer from '@/components/common/container/LabelContainer';
-import TextInput from '@/components/common/ui/TextInput';
-import FilterContainer from '@/components/common/container/FilterContainer';
-import NavigateBtn from '@/components/common/NavigateBtn';
 import MealCard from '@/components/selectableItem/meal/MealCard';
+import LabelContainer from '@/components/common/container/LabelContainer';
+import FilterContainer from '@/components/common/container/FilterContainer';
+import TextInput from '@/components/common/ui/TextInput';
+import NavigateBtn from '@/components/common/NavigateBtn';
+import SectionTitle from '@/components/common/header/SectionTitle';
+import FullBleedSection from '@/components/common/container/FullBleedSection';
+import CarouselContainer from '@/components/common/container/CarouselContainer';
+import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 
 export default function MealScreen() {
   const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
