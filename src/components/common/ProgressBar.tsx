@@ -1,4 +1,5 @@
 import Text from '@/components/common/ui/Text';
+import { getPossessionStatus, styleByPercentageObj } from '@/utils';
 import { ReactNode } from 'react';
 import { View } from 'react-native';
 
@@ -9,31 +10,9 @@ interface ProgressBarProps {
 }
 
 export default function ProgressBar({ label, percentage, children }: ProgressBarProps) {
-  const getColorByPercentage = (percentage: number) => {
-    if (percentage >= 80) {
-      return {
-        bg: 'bg-green-5',
-        border: 'border-green-3',
-        text: 'text-green-7',
-      };
-    }
+  const status = getPossessionStatus(percentage);
 
-    if (percentage >= 50) {
-      return {
-        bg: 'bg-yellow-5',
-        border: 'border-yellow-3',
-        text: 'text-yellow-7',
-      };
-    }
-
-    return {
-      bg: 'bg-red-5',
-      border: 'border-red-3',
-      text: 'text-red-7',
-    };
-  };
-
-  const colorObj = getColorByPercentage(percentage);
+  const colorObj = styleByPercentageObj[status];
 
   return (
     <View>

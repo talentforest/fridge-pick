@@ -28,7 +28,7 @@ export default function CautionIngredientList({
   isGridType,
   type = 'caution',
 }: ExpiringIngredientsProps) {
-  const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom('caution'));
+  const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom(type));
 
   const cautionStorageItemList = useMemo(() => {
     if (!storageType) return expiredStorageItemList;

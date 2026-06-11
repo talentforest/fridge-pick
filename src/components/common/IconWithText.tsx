@@ -31,7 +31,6 @@ export default function IconWithText({
   ) : (
     <View className={`flex-row items-center gap-x-1 ${props.className}`}>
       <Icon name={icon} size={iconSize} color={iconColor} />
-
       {text ? <Text className={textClassName}>{text}</Text> : <></>}
     </View>
   );

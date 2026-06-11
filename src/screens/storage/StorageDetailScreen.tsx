@@ -1,4 +1,3 @@
-import { searchKeywordAtom } from '@/atom/storageItemAtom';
 import { storageObj } from '@/constants';
 import { useOverlay } from '@/hooks';
 import { RootStackParamList, StackNavProp } from '@/types/RootStackParamList';
@@ -8,7 +7,6 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import { useSetAtom } from 'jotai';
 import { View } from 'react-native';
 import { useEffect } from 'react';
 import { EnrichStorageItem } from '@/types/storage';
@@ -30,8 +28,6 @@ export default function StorageDetailScreen() {
 
   const { label: storageLabel } = storageObj[storageType];
 
-  const setSearchKeyword = useSetAtom(searchKeywordAtom);
-
   const { openSheet, closeSheet } = useOverlay();
 
   const navigation = useNavigation<StackNavProp>();
@@ -49,7 +45,6 @@ export default function StorageDetailScreen() {
   };
 
   const headerLeftPress = () => {
-    setSearchKeyword('');
     navigation.goBack();
   };
 

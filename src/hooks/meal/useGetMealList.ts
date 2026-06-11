@@ -1,7 +1,6 @@
 import {
   allStorageItemListAtom,
   cautionStorageItemListAtom,
-  searchKeywordAtom,
 } from '@/atom/storageItemAtom';
 import { allMealList, filterObj } from '@/constants';
 import { useDebounce } from '@/hooks/common/useDebounce';
@@ -14,11 +13,15 @@ import {
 } from '@/types/meal';
 import { EnrichStorageItem } from '@/types/storage';
 import { enrichMealIngredientStructure } from '@/utils';
-import { useAtom, useAtomValue } from 'jotai';
-import { useCallback, useMemo } from 'react';
+import { useAtomValue } from 'jotai';
+import { useCallback, useMemo, useState } from 'react';
 
-export const useGetMealList = () => {
-  const [searchKeyword] = useAtom(searchKeywordAtom);
+interface UseGetMealListProps {
+  maxLength?: number;
+}
+
+export const useGetMealList = ({ maxLength }: UseGetMealListProps = {}) => {
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const mealFilterList = Object.values(filterObj['meal']);
 
@@ -160,7 +163,7 @@ export const useGetMealList = () => {
   /** "오늘의 식사 추천" 필터링 목록 */
   const recommendedTodayMealList = useMemo(() => {
     const mealList = addFilterInMealList(allMealList);
-    /** 오늘의 식사 메뉴 추천 로직
+    /** 오늘의 식사 추천 로직
      * - 0순위 isSideMeal(밥, 단무지, ...)이 아닌 경우
      * - 1순위 전체 식재료가 다 있는 경우
      * - 2순위 최소한의 식재료(4개 이하)로 만들 수 있는지
@@ -169,17 +172,19 @@ export const useGetMealList = () => {
       return hasAllMeal(meal.id, meal.ingredientStructure);
     };
 
-    return mealList.filter((meal) => {
-      return !meal.isSideMeal && isRecommendedTodayMeal(meal);
-    });
-  }, [addFilterInMealList, hasAllMeal]);
+    return mealList
+      .filter((meal) => {
+        return !meal.isSideMeal && isRecommendedTodayMeal(meal);
+      })
+      .slice(0, maxLength);
+  }, [addFilterInMealList, hasAllMeal, maxLength]);
 
   /** "소비기한 임박" 필터링 목록 */
   const expiredSoonMealList = useMemo(() => {
-    return addFilterInMealList(allMealList).filter((item) =>
-      item.filterList.includes('expiredSoon'),
-    );
-  }, [addFilterInMealList]);
+    return addFilterInMealList(allMealList)
+      .filter((item) => item.filterList.includes('expiredSoon'))
+      .slice(0, maxLength);
+  }, [addFilterInMealList, maxLength]);
 
   /** "소비기한 임박한 식재료"가 있는 메뉴 목록 */
   const getMealListByExpiredSoonIngredient = useCallback(
@@ -196,25 +201,27 @@ export const useGetMealList = () => {
         return item.label === storageItem.customLabel;
       };
 
-      return expiredSoonMealList.filter((meal) => {
-        if (!meal.ingredientStructure) return;
+      return expiredSoonMealList
+        .filter((meal) => {
+          if (!meal.ingredientStructure) return;
 
-        const essential = meal.ingredientStructure.essential.find((item) => {
-          return findItem(item, focusedItem);
-        });
-        return essential;
-      });
+          const essential = meal.ingredientStructure.essential.find((item) => {
+            return findItem(item, focusedItem);
+          });
+          return essential;
+        })
+        .slice(0, maxLength);
     },
 
-    [expiredSoonMealList],
+    [expiredSoonMealList, maxLength],
   );
 
   /** "모든 재료가 있음" 필터링 목록 */
   const hasAllMealList = useMemo(() => {
-    return addFilterInMealList(allMealList).filter((item) =>
-      item.filterList.includes('hasAll'),
-    );
-  }, [addFilterInMealList]);
+    return addFilterInMealList(allMealList)
+      .filter((item) => item.filterList.includes('hasAll'))
+      .slice(0, maxLength);
+  }, [addFilterInMealList, maxLength]);
 
   const debouncedSearchKeyword = useDebounce(searchKeyword, 300);
 
@@ -229,8 +236,8 @@ export const useGetMealList = () => {
 
       return includingLabel || includingSynonyms;
     });
-    return addFilterInMealList(filterSearchKeyword);
-  }, [addFilterInMealList, debouncedSearchKeyword]);
+    return addFilterInMealList(filterSearchKeyword).slice(0, maxLength);
+  }, [addFilterInMealList, debouncedSearchKeyword, maxLength]);
 
   /** 특정 식재료를 갖고 있는 메뉴 목록
    * - ex) 계란 활용 메뉴
@@ -238,29 +245,31 @@ export const useGetMealList = () => {
   const getHasStorageItemMealList = useCallback(
     (storageItem: EnrichStorageItem) => {
       const mealList = addFilterInMealList(allMealList);
-      return mealList.filter((meal) => {
-        if (storageItem.type === 'custom') return false;
+      return mealList
+        .filter((meal) => {
+          if (storageItem.type === 'custom') return false;
 
-        const hasIngredientItem = (ingredientItem: Meal | Ingredient) => {
-          const { id } = ingredientItem;
+          const hasIngredientItem = (ingredientItem: Meal | Ingredient) => {
+            const { id } = ingredientItem;
 
-          if (storageItem.type === 'ingredient') {
-            return id === storageItem.ingredientId;
-          }
+            if (storageItem.type === 'ingredient') {
+              return id === storageItem.ingredientId;
+            }
 
-          if (storageItem.type === 'meal') {
-            return id === storageItem.mealId;
-          }
-        };
+            if (storageItem.type === 'meal') {
+              return id === storageItem.mealId;
+            }
+          };
 
-        if (!meal.ingredientStructure) return false;
+          if (!meal.ingredientStructure) return false;
 
-        const { essential } = meal.ingredientStructure;
+          const { essential } = meal.ingredientStructure;
 
-        return essential.find(hasIngredientItem);
-      });
+          return essential.find(hasIngredientItem);
+        })
+        .slice(0, maxLength);
     },
-    [addFilterInMealList],
+    [addFilterInMealList, maxLength],
   );
 
   const allFilteredMealList = addFilterInMealList(allMealList);
@@ -274,5 +283,7 @@ export const useGetMealList = () => {
     allFilteredMealList,
     getHasStorageItemMealList,
     recommendedTodayMealList,
+    searchKeyword,
+    setSearchKeyword,
   };
 };

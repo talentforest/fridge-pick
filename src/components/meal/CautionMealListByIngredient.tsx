@@ -14,7 +14,7 @@ interface CautionMealListByIngredientProps {
 export default function CautionMealListByIngredient({
   focusedItem,
 }: CautionMealListByIngredientProps) {
-  const { getHasStorageItemMealList } = useGetMealList();
+  const { getHasStorageItemMealList } = useGetMealList({ maxLength: 8 });
 
   const expiredSoonMealList = getHasStorageItemMealList(focusedItem);
 

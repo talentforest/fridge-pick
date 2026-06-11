@@ -37,6 +37,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
   const mealListHasStorageItem = getHasStorageItemMealList(storageItem);
 
   const deleteItems = useSetAtom(deleteStorageItemListAtom);
+
   const onItemChange = useSetAtom(changeStorageItemAtom);
 
   const onEditStoragePress = () => {

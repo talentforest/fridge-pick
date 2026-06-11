@@ -9,3 +9,5 @@ export * from '@/utils/getCautionStorageItemList';
 export * from '@/utils/searchItem';
 export * from '@/utils/findItem';
 export * from '@/utils/getTrackedItemLabel';
+
+export * from '@/utils/getStyleByPercentage';

@@ -23,7 +23,7 @@ export const useHandleTodayMeal = (currMeal: MealWithEnrichIngredient) => {
     const result = addTodayMealItem(todayMeal);
 
     if (result.type === 'success') {
-      // closeSheet();
+      closeSheet();
 
       toast({
         message: `✅ 오늘 먹을 메뉴로 정했어요`,

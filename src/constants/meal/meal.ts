@@ -3376,6 +3376,7 @@ export const mealObj = {
       ],
       optional: [],
     },
+    imageName: 'bajirak_kal_guksu',
   },
   karaage_don: {
     type: 'meal',
@@ -5620,10 +5621,7 @@ export const mealObj = {
         { type: 'ingredient', id: 'tteokguk_tteok' },
         { type: 'ingredient', id: 'frozen_mandu' },
       ],
-      common: [
-        { type: 'ingredient', id: 'egg' },
-        { type: 'ingredient', id: 'frozen_mandu' },
-      ],
+      common: [{ type: 'ingredient', id: 'egg' }],
       seasoning: [
         { type: 'ingredient', id: 'guk_ganjang' },
         { type: 'ingredient', id: 'yuksu_coin' },
@@ -5665,30 +5663,6 @@ export const mealObj = {
       seasoning: [
         { type: 'ingredient', id: 'soy_sauce' },
         { type: 'ingredient', id: 'oligodang' },
-      ],
-      optional: [],
-    },
-  },
-  ugeoji_haejang_guk: {
-    type: 'meal',
-    isActive: true,
-    id: 'ugeoji_haejang_guk',
-    label: '우거지해장국',
-    mealCategory: 'soup_meal',
-    suffix: '_guk',
-    difficulty: 'medium',
-    servingTemperature: 'hot',
-    convenienceVariants: ['instant', 'readyToEat'],
-    ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'ugeoji' }],
-      common: [
-        { type: 'ingredient', id: 'sukjunamul' },
-        { type: 'ingredient', id: 'daepa' },
-      ],
-      seasoning: [
-        { type: 'ingredient', id: 'doenjang' },
-        { type: 'ingredient', id: 'yuksu_coin' },
-        { type: 'ingredient', id: 'minced_garlic' },
       ],
       optional: [],
     },

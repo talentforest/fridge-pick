@@ -7,6 +7,7 @@ import { ReactElement, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import GridContainer from '@/components/common/container/GridContainer';
 import Card from '@/components/common/ui/Card';
+import IconWithText from '@/components/common/IconWithText';
 
 type HasFilter<K> = {
   id: string;
@@ -69,7 +70,6 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
                 filterList={filterList}
                 activeFilter={activeFilter}
                 setActiveFilter={setActiveFilter}
-                listTitle={`총 ${finalDataList.length}개의 메뉴`} // TODO: '메뉴' 글자는 type으로 props 변경하든지 할것.
               />
             </>
           }
@@ -81,22 +81,38 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
           }
         />
       ) : (
-        <>
+        <View>
           <FilterList
             filterList={filterList}
             activeFilter={activeFilter}
             setActiveFilter={setActiveFilter}
-            listTitle={`총 ${finalDataList.length}개의 메뉴`}
           />
 
+          <View className="mb-4 mt-3 flex-row items-center justify-between px-2">
+            <Text className="text-base text-neutral-7">
+              총 {dataList.length}개의 메뉴
+            </Text>
+
+            {/* NOTE: 추천순 / 재료 많이 보유한 순 / 부족 재료 적은 순 / 가나다순  */}
+            <IconWithText
+              text="추천순"
+              textClassName="text-base text-neutral-7"
+              icon="ArrowDown"
+              iconSize={16}
+              iconColor="neutral"
+            />
+          </View>
+
           {finalDataList.length > 0 ? (
-            <GridContainer columns={columns}>{finalDataList.map(children)}</GridContainer>
+            <GridContainer columns={columns} gap={12}>
+              {finalDataList.map(children)}
+            </GridContainer>
           ) : (
             <Card className="h-[420px] items-center justify-center border">
               <Text className="text-inactive-text">식사메뉴가 없어요</Text>
             </Card>
           )}
-        </>
+        </View>
       )}
     </>
   );
@@ -106,32 +122,24 @@ interface FilterListProps<K> {
   filterList: FilterItem<K>[];
   activeFilter: any;
   setActiveFilter: any;
-  listTitle?: string;
 }
 
 function FilterList<K>({
   filterList,
   activeFilter,
   setActiveFilter,
-  listTitle,
 }: FilterListProps<K>) {
   return (
-    <>
-      <View className="my-3 flex-row flex-wrap gap-2">
-        {[allFilterObj, ...filterList].map(({ name, label }) => (
-          <FilterTag
-            key={String(name)}
-            name={label}
-            color="blue"
-            isActive={activeFilter === name}
-            onPress={() => setActiveFilter(name)}
-          />
-        ))}
-      </View>
-
-      {listTitle && (
-        <Text className="mb-4 mt-2 pl-1 text-base text-neutral-7">{listTitle}</Text>
-      )}
-    </>
+    <View className="my-3 flex-row flex-wrap gap-2">
+      {[allFilterObj, ...filterList].map(({ name, label }) => (
+        <FilterTag
+          key={String(name)}
+          name={label}
+          color="blue"
+          isActive={activeFilter === name}
+          onPress={() => setActiveFilter(name)}
+        />
+      ))}
+    </View>
   );
 }

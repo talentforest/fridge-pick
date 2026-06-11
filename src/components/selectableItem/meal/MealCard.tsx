@@ -74,7 +74,7 @@ export default function MealCard({
       )}
 
       {hasIngredient && requiredIngredientList.length > 0 && (
-        <View className="w-full flex-row justify-between gap-x-1.5">
+        <View className="w-full flex-row gap-x-1.5">
           {requiredIngredientList
             .slice(0, requiredIngredientList.length === 5 ? undefined : maxIngredientNum)
             .map((item) => (

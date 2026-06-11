@@ -9,7 +9,7 @@ export const filterObj = {
   meal: {
     expiredSoon: {
       name: 'expiredSoon',
-      label: '소비기한 임박',
+      label: '소비기한 임박 식재료 포함',
       color: 'red',
       icon: 'TriangleAlert' as const,
     },
@@ -23,14 +23,21 @@ export const filterObj = {
 
     minimum: {
       name: 'minimum',
-      label: '최소 식재료 사용',
+      label: '최소한의 식재료 사용',
       color: 'green',
       icon: 'SquircleDashed' as const,
     },
 
     easy: {
       name: 'easy',
-      label: '간단 완성',
+      label: '쉬운 난이도',
+      color: 'yellow',
+      icon: 'Timer' as const,
+    },
+
+    favorite: {
+      name: 'favorite',
+      label: '즐겨찾기',
       color: 'yellow',
       icon: 'Timer' as const,
     },

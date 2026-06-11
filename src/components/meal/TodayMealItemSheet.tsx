@@ -1,5 +1,5 @@
 import { changeMainMenuAtom, deleteTodayMealItemAtom } from '@/atom/mealAtom';
-import { useOverlay, useGetMealInfo } from '@/hooks';
+import { useOverlay, useGetMealInfo, useHandleTodayMeal } from '@/hooks';
 import { MealWithEnrichIngredient } from '@/types/meal';
 import { useSetAtom } from 'jotai';
 import { View } from 'react-native';
@@ -24,13 +24,16 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
   const deleteTodayMealItem = useSetAtom(deleteTodayMealItemAtom);
   const changeMainMenu = useSetAtom(changeMainMenuAtom);
 
+  const { hasItem, onAddTodayMealPress } = useHandleTodayMeal(meal);
+
   const {
     getIngredientStructureList,
     getStorageItemListInIngredientStructure,
     percentage,
     requiredTotal,
     storageItemIdSet,
-    percentStatus,
+    possesionStatus,
+    styleByStatus,
   } = useGetMealInfo(meal);
 
   const allIngredientStructureList = getIngredientStructureList();
@@ -47,17 +50,27 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
     closeSheet();
   };
 
+  const titleObj = {
+    mainMenu: '오늘의 메인 메뉴',
+    sideMenu: '같이 먹을 메뉴',
+  };
+
   return (
     <View className="py-3">
-      <ModalHeader
-        title={type === 'mainMenu' ? '오늘의 메인 메뉴' : '같이 먹을 메뉴'}
-        hasX={false}
-      />
+      <ModalHeader title={!hasItem ? '메뉴 상세 정보' : titleObj[type]} hasX={false} />
 
-      <View className="pt-4">
+      <View className="pb-5 pt-4">
         <View className="items-center pb-4">
           <MealImage meal={meal} size={140} />
           <Text className="line-clamp-2 text-base">{meal?.label}</Text>
+
+          <SquareBtn
+            name="오늘의 식사에 추가"
+            iconName="HandPlatter"
+            onPress={onAddTodayMealPress}
+            color={hasItem ? 'inActive' : 'blue'}
+            className="mt-5"
+          />
         </View>
 
         {allIngredientStructureList.length > 0 && (
@@ -72,11 +85,11 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
               {requiredTotal > 0 && (
                 <View className="!h-6">
                   <IconWithText
-                    text={percentStatus.label}
-                    icon={percentStatus.icon}
+                    text={possesionStatus.label}
+                    icon={possesionStatus.icon}
                     iconSize={14}
-                    iconColor={percentStatus.iconColor}
-                    textClassName={percentStatus.textClassName}
+                    iconColor={possesionStatus.iconColor}
+                    textClassName={styleByStatus.text}
                   />
                 </View>
               )}
@@ -122,23 +135,25 @@ export default function TodayMealItemSheet({ meal, type }: TodayMealItemSheetPro
           </View>
         )}
 
-        <View className="mb-5 mt-12 justify-between gap-y-2">
-          <SquareBtn
-            name="오늘의 식사에서 삭제"
-            iconName="Trash2"
-            onPress={onDeletePress}
-            color="yellow"
-          />
-
-          {type === 'sideMenu' && (
+        {hasItem && (
+          <View className="mt-12 justify-between gap-y-2">
             <SquareBtn
-              name="오늘의 메인메뉴로 변경"
-              iconName="HandPlatter"
-              onPress={onChangeMainMenuPress}
-              color="green"
+              name="오늘의 식사에서 삭제"
+              iconName="Trash2"
+              onPress={onDeletePress}
+              color="yellow"
             />
-          )}
-        </View>
+
+            {type === 'sideMenu' && (
+              <SquareBtn
+                name="오늘의 메인메뉴로 변경"
+                iconName="HandPlatter"
+                onPress={onChangeMainMenuPress}
+                color="green"
+              />
+            )}
+          </View>
+        )}
       </View>
     </View>
   );

@@ -5,7 +5,7 @@ import { atom } from 'jotai';
 export const todayMealListAtom = atom<TodayMeal[]>([]);
 
 /**
- * 오늘의 식사메뉴 추가.
+ * 오늘의 식사 추가.
  * - 중복 시 duplicate 결과 반환
  */
 export const addTodayMealItemAtom = atom(
@@ -36,7 +36,7 @@ export const addTodayMealItemAtom = atom(
 );
 
 /**
- * 오늘의 식사 메뉴 삭제
+ * 오늘의 식사 삭제
  * - 만약 하나만 삭제할 경우 하나를 배열로 감싸서 파라미터로 보내면 된다.
  */
 export const deleteTodayMealItemAtom = atom(null, (get, set, ids: string[]) => {

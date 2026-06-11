@@ -1,6 +1,11 @@
 import { allStorageItemListAtom } from '@/atom/storageItemAtom';
 import { MealWithEnrichIngredient } from '@/types/meal';
-import { createSelectableItemKey, findTrackedItemWithKey } from '@/utils';
+import {
+  createSelectableItemKey,
+  findTrackedItemWithKey,
+  getPossessionStatus,
+  styleByPercentageObj,
+} from '@/utils';
 import { useAtomValue } from 'jotai';
 import { useCallback } from 'react';
 
@@ -81,31 +86,43 @@ export const useGetMealInfo = (meal: MealWithEnrichIngredient) => {
   const needMoreIngredientNum =
     requiredTotal - getStorageItemListInIngredientStructure('required').length;
 
-  const status =
-    percentage === 100 ? 'complete' : percentage === 0 ? 'empty' : 'shortage';
+  const status = getPossessionStatus(percentage);
 
-  const possessionPercentStatus = {
+  const possessionPercentStatusObj = {
     complete: {
       label: '모든 식재료를 갖고 있어요',
       icon: 'HandPlatter',
       iconColor: 'green',
-      textClassName: 'text-green-7',
     },
-    shortage: {
+
+    good: {
+      label: `식재료 ${needMoreIngredientNum}개만 더 있으면 돼요`,
+      icon: 'Info',
+      iconColor: 'yellow',
+    },
+
+    partial: {
       label: `식재료 ${needMoreIngredientNum}개가 부족해요`,
+      icon: 'Info',
+      iconColor: 'yellow',
+    },
+
+    poor: {
+      label: `식재료 ${needMoreIngredientNum}개가 많이 부족해요`,
       icon: 'TriangleAlert',
       iconColor: 'red',
-      textClassName: 'text-red-7',
     },
+
     empty: {
       label: '갖고 있는 식재료가 없어요',
       icon: 'TriangleAlert',
       iconColor: 'red',
-      textClassName: 'text-red-7',
     },
   } as const;
 
-  const percentStatus = possessionPercentStatus[status];
+  const possesionStatus = possessionPercentStatusObj[status];
+
+  const styleByStatus = styleByPercentageObj[status];
 
   return {
     getIngredientStructureList,
@@ -113,6 +130,7 @@ export const useGetMealInfo = (meal: MealWithEnrichIngredient) => {
     percentage,
     requiredTotal,
     storageItemIdSet,
-    percentStatus,
+    possesionStatus,
+    styleByStatus,
   };
 };

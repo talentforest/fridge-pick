@@ -1,8 +1,6 @@
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import TodayMeal from '@/components/home/TodayMeal';
-import { searchKeywordAtom } from '@/atom/storageItemAtom';
 import { useGetMealList } from '@/hooks';
-import { useAtom } from 'jotai';
 import { useCallback } from 'react';
 import { MealWithEnrichIngredient } from '@/types/meal';
 import { View } from 'react-native';
@@ -18,15 +16,31 @@ import SectionTitle from '@/components/common/header/SectionTitle';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function MealScreen() {
-  const [searchKeyword, setSearchKeyword] = useAtom(searchKeywordAtom);
-
-  const { mealFilterList, hasAllMealList, searchKeywordMealList } = useGetMealList();
+  const {
+    mealFilterList,
+    hasAllMealList,
+    searchKeywordMealList,
+    searchKeyword,
+    setSearchKeyword,
+  } = useGetMealList();
 
   const data = useCallback(
     (meal: MealWithEnrichIngredient) => <MealCard key={meal.id} meal={meal} />,
     [],
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      setSearchKeyword('');
+
+      return () => {
+        // 화면을 벗어날 때 초기화하고 싶으면 여기에
+        setSearchKeyword('');
+      };
+    }, []),
   );
 
   return (
@@ -39,7 +53,7 @@ export default function MealScreen() {
 
         <CautionIngredientList
           title="지금 꼭 써야하는 식재료가 있어요"
-          hasCautionIngredientMeal
+          hasCautionIngredientMeal={true}
           type="expiredSoon"
         />
 
@@ -75,9 +89,8 @@ export default function MealScreen() {
 
           <FilterContainer
             columns={1}
-            maximum={10}
             filterList={mealFilterList}
-            dataList={searchKeywordMealList.slice(0, 20)}
+            dataList={searchKeywordMealList}
           >
             {data}
           </FilterContainer>
