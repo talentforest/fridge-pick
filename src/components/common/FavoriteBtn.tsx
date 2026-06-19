@@ -52,6 +52,7 @@ export default function FavoriteBtn({
       color={!!favoriteItem ? 'red' : 'inactive'}
       className={`${className}`}
       onPress={onPress}
+      hasShadow
     />
   );
 }

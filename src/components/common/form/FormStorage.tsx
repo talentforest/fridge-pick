@@ -40,7 +40,7 @@ export default function FormStorage({
             textClassName="text-center !text-md"
             iconName={icon}
             iconSize={25}
-            color={currStorageType === storageType ? color : 'inActive'}
+            bgColor={currStorageType === storageType ? color : 'inActive'}
             onPress={() => {
               const date = addDays(
                 new Date(),

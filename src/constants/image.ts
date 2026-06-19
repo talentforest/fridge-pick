@@ -3,7 +3,13 @@ import { ImageSourcePropType } from 'react-native';
 
 export const image_empty_basket = require('../../assets/images/empty_basket.png');
 export const image_fridge = require('../../assets/images/fridge.png');
+
 export const image_empty_plate = require('../../assets/images/empty_plate.png');
+
+export const image_mealkit = require('../../assets/images/mealkit.png');
+export const image_frozen = require('../../assets/images/frozen.png');
+export const image_instant = require('../../assets/images/instant.png');
+export const image_ready_to_eat = require('../../assets/images/ready_to_eat.png');
 
 export const categoryImagesObj: {
   [key in ValidCategoryKey]: { [key in string]: ImageSourcePropType };

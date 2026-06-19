@@ -74,3 +74,18 @@ export const suffixGroupMap = {
     '_mandu', //
   ],
 } as const;
+
+export const difficultyObj = {
+  hard: {
+    label: '어려운 난이도',
+    color: 'red',
+  },
+  medium: {
+    label: '중간 난이도',
+    color: 'yellow',
+  },
+  easy: {
+    label: '쉬운 난이도',
+    color: 'green',
+  },
+} as const;

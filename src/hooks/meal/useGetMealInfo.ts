@@ -1,36 +1,46 @@
-import { allStorageItemListAtom } from '@/atom/storageItemAtom';
-import { MealWithEnrichIngredient } from '@/types/meal';
-import {
-  createSelectableItemKey,
-  findTrackedItemWithKey,
-  getPossessionStatus,
-  styleByPercentageObj,
-} from '@/utils';
-import { useAtomValue } from 'jotai';
+import { EnrichedMealWithFilterList } from '@/hooks/meal/useGetMealList';
+import { getPossessionStatus, styleByPercentageObj } from '@/utils';
 import { useCallback } from 'react';
 
-export const useGetMealInfo = (meal: MealWithEnrichIngredient) => {
-  const storageItemList = useAtomValue(allStorageItemListAtom);
+export const useGetMealInfo = (meal: EnrichedMealWithFilterList) => {
+  const {
+    ingredientStructure,
+    requiredIngredientCount,
+    possessedList,
+    possessionPercent,
+  } = meal;
 
   const getIngredientStructureList = useCallback(
     (type?: 'required' | 'optional') => {
-      if (!meal?.ingredientStructure) return [];
+      if (!ingredientStructure) return [];
 
-      const { essential, common, seasoning, optional } = meal.ingredientStructure;
+      const { essential, common, seasoning, optional } = ingredientStructure;
 
-      const requiredIngredientList = [
-        {
+      const structureObj = {
+        required: {
           label: '필요한 식재료',
           itemList: [...essential, ...common],
           color: 'blue' as const,
         },
-        { label: '양념 재료', itemList: seasoning, color: 'yellow' as const },
+        seasoning: {
+          label: '양념 재료',
+          itemList: seasoning,
+          color: 'yellow' as const,
+        },
+        optional: {
+          label: '있으면 좋은 재료',
+          itemList: optional,
+          color: 'neutral' as const,
+        },
+      };
+
+      const requiredIngredientList = [
+        structureObj['required'],
+        structureObj['seasoning'],
       ];
 
       const optionalIngredientList =
-        optional.length > 0
-          ? [{ label: '있으면 좋은 재료', itemList: optional, color: 'neutral' as const }]
-          : [];
+        optional.length > 0 ? [structureObj['optional']] : [];
 
       if (type === 'required') {
         return requiredIngredientList;
@@ -42,51 +52,10 @@ export const useGetMealInfo = (meal: MealWithEnrichIngredient) => {
 
       return [...requiredIngredientList, ...optionalIngredientList];
     },
-    [meal.ingredientStructure],
+    [ingredientStructure],
   );
 
-  // 식재료 구조 중에 내가 가진 식재료 목록
-  const getStorageItemListInIngredientStructure = useCallback(
-    (type?: 'required') => {
-      const list = getIngredientStructureList(type);
-
-      return list
-        .map((item) => {
-          return item.itemList.filter((item) => {
-            const key = createSelectableItemKey(item);
-
-            return storageItemList.find((storageItem) =>
-              findTrackedItemWithKey(storageItem, key),
-            );
-          });
-        })
-        .flat();
-    },
-    [getIngredientStructureList, storageItemList],
-  );
-
-  const requiredTotal = getIngredientStructureList('required').reduce(
-    (sum, { itemList }) => sum + itemList.length,
-    0,
-  );
-
-  const percentage =
-    requiredTotal === 0
-      ? 0
-      : Math.round(
-          (getStorageItemListInIngredientStructure('required').length / requiredTotal) *
-            100,
-        );
-
-  // 보유한 식재료인지 검증
-  const storageItemIdSet = new Set(
-    getStorageItemListInIngredientStructure().map(({ id }) => id),
-  );
-
-  const needMoreIngredientNum =
-    requiredTotal - getStorageItemListInIngredientStructure('required').length;
-
-  const status = getPossessionStatus(percentage);
+  const needMoreIngredientNum = requiredIngredientCount - possessedList.length;
 
   const possessionPercentStatusObj = {
     complete: {
@@ -120,17 +89,15 @@ export const useGetMealInfo = (meal: MealWithEnrichIngredient) => {
     },
   } as const;
 
+  const status = getPossessionStatus(possessionPercent);
+
   const possesionStatus = possessionPercentStatusObj[status];
 
-  const styleByStatus = styleByPercentageObj[status];
+  const styleByPossesionStatus = styleByPercentageObj[status];
 
   return {
     getIngredientStructureList,
-    getStorageItemListInIngredientStructure,
-    percentage,
-    requiredTotal,
-    storageItemIdSet,
     possesionStatus,
-    styleByStatus,
+    styleByPossesionStatus,
   };
 };

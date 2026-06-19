@@ -8,14 +8,14 @@ import { atomFamily } from 'jotai-family';
 
 export const favoriteItemListAtom = atom<SelectableItem[]>([]);
 
-export const favoriteIngredientAtom = atom((get) => {
+export const favoriteIngredientListAtom = atom((get) => {
   const favoriteList = get(favoriteItemListAtom);
-  return favoriteList.filter((selectableItem) => selectableItem.type !== 'meal');
+  return favoriteList.filter(({ type }) => type !== 'meal');
 });
 
-export const favoriteMealAtom = atom((get) => {
+export const favoriteMealListAtom = atom((get) => {
   const favoriteList = get(favoriteItemListAtom);
-  return favoriteList.filter((selectableItem) => selectableItem.type === 'meal');
+  return favoriteList.filter(({ type }) => type === 'meal');
 });
 
 /* -------------------------------------------------------------------------- */

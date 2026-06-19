@@ -5752,6 +5752,7 @@ export const seasoningObj = {
     expirationDays: { pantry: 180 },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
+    synonyms: ['코인육수'],
   },
 
   yuksu_pack: {

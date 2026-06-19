@@ -2,8 +2,8 @@ import { ShadowStyleIOS } from 'react-native';
 
 export const iosShadowStyle: ShadowStyleIOS = {
   shadowColor: '#000',
-  shadowOffset: { width: 0, height: -10 },
   shadowOpacity: 0.15,
+  shadowOffset: { width: 0, height: -10 },
   shadowRadius: 10,
 };
 

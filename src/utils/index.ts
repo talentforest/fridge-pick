@@ -11,3 +11,5 @@ export * from '@/utils/findItem';
 export * from '@/utils/getTrackedItemLabel';
 
 export * from '@/utils/getStyleByPercentage';
+
+export * from '@/utils/getRecommendMealScore';

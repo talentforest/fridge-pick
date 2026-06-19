@@ -29,7 +29,7 @@ export default function FilterTag({
     green: '!bg-green-1',
     red: '!bg-red-1',
     blue: 'bg-blue-1',
-    yellow: '!bg-yellow-3',
+    yellow: '!bg-yellow-1',
     neutral: 'bg-neutral-3',
   };
 

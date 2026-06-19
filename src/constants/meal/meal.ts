@@ -151,6 +151,7 @@ export const mealObj = {
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'goni' }],
       common: [
+        { type: 'ingredient', id: 'myeongran' },
         { type: 'ingredient', id: 'daepa' },
         { type: 'ingredient', id: 'ssukgat' },
         { type: 'ingredient', id: 'mu' },
@@ -179,6 +180,7 @@ export const mealObj = {
         { type: 'ingredient', id: 'bacon' },
         { type: 'ingredient', id: 'spaghetti_myeon' },
         { type: 'ingredient', id: 'fresh_cream' },
+        { type: 'ingredient', id: 'milk' },
       ],
       common: [
         { type: 'ingredient', id: 'onion' },
@@ -490,6 +492,12 @@ export const mealObj = {
     servingTemperature: 'either',
     isSideMeal: false,
     convenienceVariants: ['instant'],
+    ingredientStructure: {
+      essential: [{ type: 'ingredient', id: 'egg' }],
+      common: [],
+      seasoning: [],
+      optional: [],
+    },
     synonyms: ['삶은달걀', '감동란'],
   },
   bokkeum_udon: {
@@ -558,10 +566,7 @@ export const mealObj = {
     servingTemperature: 'warm',
     convenienceVariants: ['readyToEat'],
     ingredientStructure: {
-      essential: [
-        { type: 'ingredient', id: 'pork_belly' },
-        { type: 'ingredient', id: 'ground_beef' },
-      ],
+      essential: [{ type: 'ingredient', id: 'pork_belly' }],
       common: [
         { type: 'ingredient', id: 'garlic' },
         { type: 'ingredient', id: 'onion' },
@@ -800,6 +805,12 @@ export const mealObj = {
     servingTemperature: 'cold',
     isSideMeal: true,
     convenienceVariants: ['readyToEat'],
+    ingredientStructure: {
+      essential: [{ type: 'ingredient', id: 'cereal' }],
+      common: [{ type: 'ingredient', id: 'milk' }],
+      seasoning: [],
+      optional: [],
+    },
   },
   chamchi_jjigae: {
     type: 'meal',
@@ -982,6 +993,12 @@ export const mealObj = {
     servingTemperature: 'hot',
     isSideMeal: true,
     convenienceVariants: ['instant'],
+    ingredientStructure: {
+      essential: [{ type: 'ingredient', id: 'baekmi' }],
+      common: [],
+      seasoning: [],
+      optional: [],
+    },
     synonyms: ['햇반'],
   },
   corn_cheese: {
@@ -1496,15 +1513,12 @@ export const mealObj = {
         { type: 'ingredient', id: 'kal_guksu_myeon' },
         { type: 'ingredient', id: 'deulkkae_garu' },
       ],
-      common: [
-        { type: 'ingredient', id: 'aehobak' },
-        { type: 'ingredient', id: 'potato' },
-      ],
+      common: [{ type: 'ingredient', id: 'aehobak' }],
       seasoning: [
         { type: 'ingredient', id: 'yuksu_coin' },
         { type: 'ingredient', id: 'minced_garlic' },
       ],
-      optional: [],
+      optional: [{ type: 'ingredient', id: 'potato' }],
     },
   },
   doenjang_guk: {
@@ -2172,7 +2186,6 @@ export const mealObj = {
     suffix: '_bap',
     difficulty: 'easy',
     servingTemperature: 'hot',
-    convenienceVariants: ['readyToEat'],
     ingredientStructure: {
       essential: [
         { type: 'meal', id: 'cooked_rice' },
@@ -3035,7 +3048,7 @@ export const mealObj = {
     suffix: '_myeon',
     difficulty: 'medium',
     servingTemperature: 'hot',
-    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
+    convenienceVariants: ['mealkit', 'readyToEat'],
     synonyms: ['자장면'],
   },
   janchi_guksu: {
@@ -3088,7 +3101,7 @@ export const mealObj = {
     suffix: null,
     difficulty: 'medium',
     servingTemperature: 'warm',
-    convenienceVariants: ['frozen', 'readyToEat'],
+    convenienceVariants: ['mealkit', 'readyToEat'],
     ingredientStructure: {
       essential: [{ type: 'ingredient', id: 'dangmyeon' }],
       common: [
@@ -3235,7 +3248,7 @@ export const mealObj = {
     suffix: '_myeon',
     difficulty: 'medium',
     servingTemperature: 'hot',
-    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
+    convenienceVariants: ['frozen', 'readyToEat'],
   },
   jjolmyeon: {
     type: 'meal',
@@ -4207,6 +4220,12 @@ export const mealObj = {
     difficulty: 'easy',
     servingTemperature: 'hot',
     convenienceVariants: ['frozen', 'readyToEat'],
+    ingredientStructure: {
+      essential: [{ type: 'ingredient', id: 'frozen_mandu' }],
+      common: [],
+      seasoning: [],
+      optional: [],
+    },
   },
   mumallaengi: {
     type: 'meal',
@@ -4865,7 +4884,7 @@ export const mealObj = {
     suffix: '_ramen',
     difficulty: 'medium',
     servingTemperature: 'hot',
-    convenienceVariants: ['frozen', 'readyToEat'],
+    convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
   },
   ramyeon: {
     type: 'meal',
@@ -5104,7 +5123,10 @@ export const mealObj = {
     servingTemperature: 'hot',
     convenienceVariants: ['frozen', 'instant', 'mealkit', 'readyToEat'],
     ingredientStructure: {
-      essential: [{ type: 'ingredient', id: 'sagol_yuksu' }],
+      essential: [
+        { type: 'ingredient', id: 'sagol_yuksu' },
+        { type: 'ingredient', id: 'beef_brisket' },
+      ],
       common: [{ type: 'ingredient', id: 'daepa' }],
       seasoning: [{ type: 'ingredient', id: 'salt' }],
       optional: [],
@@ -5121,6 +5143,25 @@ export const mealObj = {
     difficulty: 'medium',
     servingTemperature: 'hot',
     convenienceVariants: ['frozen', 'mealkit', 'readyToEat'],
+    ingredientStructure: {
+      essential: [
+        { type: 'ingredient', id: 'paengi_beoseot' },
+        { type: 'ingredient', id: 'beef_brisket' },
+        { type: 'ingredient', id: 'sukjunamul' },
+      ],
+      common: [
+        { type: 'ingredient', id: 'daepa' },
+        { type: 'ingredient', id: 'ssukgat' },
+        { type: 'ingredient', id: 'baechu' },
+        { type: 'ingredient', id: 'neutari_beoseot' },
+        { type: 'ingredient', id: 'pyogo_beoseot' },
+      ],
+      seasoning: [
+        { type: 'ingredient', id: 'yuksu_coin' },
+        { type: 'ingredient', id: 'salt' },
+      ],
+      optional: [],
+    },
   },
   sigeumchi_namul: {
     type: 'meal',
@@ -5174,6 +5215,12 @@ export const mealObj = {
     difficulty: 'easy',
     servingTemperature: 'either',
     convenienceVariants: ['readyToEat'],
+    ingredientStructure: {
+      essential: [{ type: 'ingredient', id: 'egg' }],
+      common: [],
+      seasoning: [],
+      optional: [],
+    },
     synonyms: ['반숙', '반숙계란', '반숙달걀'],
   },
   sogalbi_gui: {

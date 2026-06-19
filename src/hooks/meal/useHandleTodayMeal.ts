@@ -1,10 +1,13 @@
 import { addTodayMealItemAtom, todayMealListAtom } from '@/atom/mealAtom';
 import { useOverlay } from '@/hooks/common/useOverlay';
-import { MealWithEnrichIngredient, TodayMeal } from '@/types/meal';
+import { EnrichedMealWithFilterList } from '@/hooks/meal/useGetMealList';
+import { TodayMeal } from '@/types/meal';
 import { useAtomValue, useSetAtom } from 'jotai';
 
-export const useHandleTodayMeal = (currMeal: MealWithEnrichIngredient) => {
+export const useHandleTodayMeal = (currMeal: EnrichedMealWithFilterList) => {
   const todayMealList = useAtomValue(todayMealListAtom);
+
+  const isTodayMeal = !!todayMealList.find(({ meal }) => meal.id === currMeal.id);
 
   const hasMainMenu = !!todayMealList.find((meal) => meal.role === 'main');
 
@@ -32,23 +35,9 @@ export const useHandleTodayMeal = (currMeal: MealWithEnrichIngredient) => {
     }
   };
 
-  const getRequiredIngredientList = () => {
-    if (!currMeal?.ingredientStructure) return [];
-
-    const { essential, common, seasoning } = currMeal.ingredientStructure;
-
-    return [...essential, ...common, ...seasoning];
-  };
-
-  const requiredIngredientNum = getRequiredIngredientList().length;
-
-  const hasItem = !!todayMealList.find(({ meal }) => meal.id === currMeal.id);
-
   return {
     todayMealList,
-    hasItem,
+    isTodayMeal,
     onAddTodayMealPress,
-    requiredIngredientNum,
-    getRequiredIngredientList,
   };
 };

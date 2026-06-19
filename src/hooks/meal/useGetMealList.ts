@@ -1,3 +1,4 @@
+import { favoriteMealListAtom } from '@/atom/favoritesAtom';
 import {
   allStorageItemListAtom,
   cautionStorageItemListAtom,
@@ -10,63 +11,114 @@ import {
   Meal,
   EnrichMealIngredientStructure,
   MealWithEnrichIngredient,
+  Difficulty,
 } from '@/types/meal';
+import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
 import { EnrichStorageItem } from '@/types/storage';
-import { enrichMealIngredientStructure } from '@/utils';
+import { enrichMealIngredientStructure, getRecommendMealScore } from '@/utils';
 import { useAtomValue } from 'jotai';
 import { useCallback, useMemo, useState } from 'react';
 
-interface UseGetMealListProps {
+/** 높은 재료 보유율 기준 */
+const HIGH_POSSESSION_THRESHOLD = 60;
+
+export type EnrichedMealWithFilterList = MealWithEnrichIngredient & {
+  filterList: MealFilterKey[];
+
+  /** 소비기한 임박 재료 목록 (만료 제외) */
+  expiredSoonList: SelectableItem[];
+  /** 필수 재료 개수 */
+  requiredIngredientCount: number;
+  /** 필수 재료 중 보유 개수 */
+  possessedIngredientCount: number;
+  /** 필수 재료 대비 재료 보유율: possessedIngredientCount/requiredIngredientCount */
+  possessionPercent: number;
+  /** 보유한 재료 목록 */
+  possessedList: SelectableItem[];
+};
+
+type UseGetMealListProps = {
   maxLength?: number;
-}
+};
 
 export const useGetMealList = ({ maxLength }: UseGetMealListProps = {}) => {
-  const [searchKeyword, setSearchKeyword] = useState('');
-
-  const mealFilterList = Object.values(filterObj['meal']);
-
   const storageItems = useAtomValue(allStorageItemListAtom);
 
-  const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom('caution'));
+  const favoriteMealList = useAtomValue(favoriteMealListAtom);
 
-  /** 간단하게 만들수 있는 메뉴인지 검사
-   * filterLabel = '간단완성'
-   */
-  const isEasyMeal = (meal: MealWithEnrichIngredient): boolean => {
-    return meal.difficulty === 'easy';
+  const expiredSoonStorageItemList = useAtomValue(
+    cautionStorageItemListAtom('expiredSoon'),
+  );
+
+  const [activeFilter, setActiveFilter] = useState<MealFilterKey | 'all'>('all');
+  const changeActiveFilter = (mealFilter: MealFilterKey) => setActiveFilter(mealFilter);
+  const mealFilterList = Object.values(filterObj['meal']);
+
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  /* -------------------------------------------------------------------------- */
+  /*                               필터 검증 함수들                                 */
+  /* -------------------------------------------------------------------------- */
+
+  /** filterLabel = '소비기한 임박'
+   * 메뉴 내 소비기한 임박한 식재료 목록 리턴 */
+  const getHasExpiredSoonIngredientByMeal = useCallback(
+    (ingredientStructure: EnrichMealIngredientStructure): SelectableItem[] => {
+      const { essential, common, seasoning } = ingredientStructure;
+      const requiredIngredientList = [...essential, ...common, ...seasoning];
+
+      return requiredIngredientList.filter((i) => {
+        return expiredSoonStorageItemList.find(({ storageItem }) => {
+          if (storageItem.type === 'meal') {
+            return storageItem.mealId === i.id;
+          }
+          return storageItem.ingredientId === i.id;
+        });
+      });
+    },
+    [expiredSoonStorageItemList],
+  );
+
+  type Possession = {
+    requiredIngredientCount: number;
+    possessedList: SelectableItem[];
+    possessedIngredientCount: number;
+    possessionPercent: number;
   };
-
-  /** 최소한의 식재료 메뉴인지 검사
-   * * filterLabel = '최소 식재료 사용'
+  /** 재료보유율 확인
+   * optional을 제외한 모든 식재료를 갖고 있는지 검사
+   * filterLabel = '식재료 보유율 높음' / possessionPercent > HIGH_POSSESSION_THRESHOLD
+   * filterLabel = '모든 재료 있음' / possessionPercent === 100
    */
-  const isMinimumMeal = (ingredientStructure: EnrichMealIngredientStructure): boolean => {
-    if (!ingredientStructure) return false;
-    const { essential, common, optional } = ingredientStructure;
-    const counts = essential.length + common.length + optional.length;
-    return counts <= 4;
-  };
-
-  /** 모든 식재료를 갖고 있는 메뉴인지 검사
-   * * filterLabel = '모든 재료 있음'
-   * * optional을 제외한 모든 식재료를 갖고 있는지 검사
-   */
-  const hasAllMeal = useCallback(
-    (mealId: string, ingredientStructure?: EnrichMealIngredientStructure): boolean => {
-      // NOTE: 완성요리 자체에 만약 식재료구조정보는 없는데 냉장고에 갖고 있는 경우는 추천
+  const getMealPossession = useCallback(
+    (mealId: string, ingredientStructure?: EnrichMealIngredientStructure): Possession => {
+      // NOTE: 완성요리 자체에 만약 식재료구조 정보는 없는데 냉장고에 갖고 있는 경우는 추천
       const hasMealInStorage = storageItems.find((item) => {
         if (item.type !== 'meal') return;
         return item.mealId === mealId;
       });
 
-      if (!ingredientStructure && hasMealInStorage) return true;
+      const initial = {
+        requiredIngredientCount: 0,
+        possessedIngredientCount: 0,
+        possessionPercent: 0,
+        possessedList: [],
+      };
+
+      if (!ingredientStructure && hasMealInStorage)
+        return { ...initial, possessionPercent: 100 };
 
       // NOTE: 완성요리가 냉장고에도 없는데 식재료 구조도 없는 경우는 바로 제거
-      if (!ingredientStructure) return false;
+      if (!ingredientStructure) return initial;
 
       const { essential, common, seasoning } = ingredientStructure;
       const requiredItems = [...essential, ...common, ...seasoning];
 
-      return requiredItems.every(({ type, id }) => {
+      const total = requiredItems.length;
+
+      if (total === 0) return initial;
+
+      const possessedList = requiredItems.filter(({ type, id }) => {
         return storageItems.some((storageItem) => {
           // ingredient 비교
           if (type === 'ingredient' && storageItem.type === 'ingredient') {
@@ -81,151 +133,146 @@ export const useGetMealList = ({ maxLength }: UseGetMealListProps = {}) => {
           return false;
         });
       });
+
+      const possessionPercent = Math.round((possessedList.length / total) * 100);
+
+      return {
+        requiredIngredientCount: total,
+        possessedList,
+        possessedIngredientCount: possessedList.length,
+        possessionPercent,
+      };
     },
     [storageItems],
   );
 
-  /** 소비기한 임박 식재료를 갖고 있는 메뉴인지 검사
-   * * filterLabel = '소비기한 임박'
-   */
-  const hasExpiredSoonIngredientMeal = useCallback(
-    (meal: MealWithEnrichIngredient): boolean => {
-      if (!meal?.ingredientStructure) return false;
+  /** filterLabel = '쉬운 메뉴' 검증 */
+  const isEasyMeal = (difficulty: Difficulty): boolean => {
+    return difficulty === 'easy';
+  };
 
-      const { essential, common, seasoning } = meal.ingredientStructure;
-
-      return [...essential, ...common, ...seasoning].some((i) => {
-        return expiredStorageItemList.find(({ storageItem }) => {
-          if (storageItem.type === 'meal') {
-            return storageItem.mealId === i.id;
-          }
-          return storageItem.ingredientId === i.id;
-        });
-      });
-    },
-    [expiredStorageItemList],
+  /** filterLabel = "나의 픽" 검증 */
+  const isFavoriteMeal = useCallback(
+    (mealId: string) => favoriteMealList.find(({ id }) => id === mealId),
+    [favoriteMealList],
   );
 
-  /** 모든 필터링 적용 가능한 결과 메뉴 리스트
-   * 아래 필터링의 베이스 함수
+  /* -------------------------------------------------------------------------- */
+  /*                               Base Meal List                               */
+  /*                                  -필터별 목록                                 */
+  /* -------------------------------------------------------------------------- */
+
+  const enrichMealList = (mealList: Meal[]): MealWithEnrichIngredient[] => {
+    return mealList.map((meal) => {
+      const { ingredientStructure: i, ...rest } = meal;
+      if (!i) return rest;
+      const ingredientStructure = enrichMealIngredientStructure(i);
+      return { ...meal, ingredientStructure };
+    });
+  };
+
+  /** 각각 부합하는 필터를 filterList에 넣은 mealList 함수
    * @param mealList - 모든 mealList || 검색 필터링된 mealList
-   * 각 meal 아이템에 맞는 필터를 추가한 결과를 리턴
+   * 필수재료, 재료보유율, 임박식재료보유여부도 계산
    */
   const addFilterInMealList = useCallback(
-    (
-      mealList: Meal[],
-    ): (MealWithEnrichIngredient & {
-      filterList: MealFilterKey[];
-    })[] => {
-      const list: MealWithEnrichIngredient[] = mealList.map((meal) => {
-        const { ingredientStructure, ...rest } = meal;
-        return ingredientStructure
-          ? {
-              ...meal,
-              ingredientStructure: enrichMealIngredientStructure(ingredientStructure),
-            }
-          : rest;
-      });
+    (mealList: Meal[]): EnrichedMealWithFilterList[] => {
+      const list: MealWithEnrichIngredient[] = enrichMealList(mealList);
+
+      const initial = {
+        requiredIngredientCount: 0,
+        possessedIngredientCount: 0,
+        possessionPercent: 0,
+        possessedList: [] as SelectableItem[],
+        expiredSoonList: [] as SelectableItem[],
+      };
 
       const filterResult = list.map((meal) => {
         const filterList: MealFilterKey[] = [];
 
-        if (isEasyMeal(meal)) {
+        if (isEasyMeal(meal.difficulty)) {
           filterList.push('easy' as const);
         }
 
-        if (hasExpiredSoonIngredientMeal(meal)) {
+        if (isFavoriteMeal(meal.id)) {
+          filterList.push('favorite' as const);
+        }
+
+        /** NOTE: 식재료 구조가 없는 식사인 경우
+         * : '쉬운 메뉴', '나의 픽' 위의 두가지 필터만 적용 가능하며 바로 아래로 리턴 */
+        if (!meal?.ingredientStructure) {
+          return {
+            ...meal,
+            ...initial,
+            filterList,
+          };
+        }
+
+        const expiredSoonList = getHasExpiredSoonIngredientByMeal(
+          meal.ingredientStructure,
+        );
+
+        if (expiredSoonList.length > 0) {
           filterList.push('expiredSoon' as const);
         }
 
-        //식재료 관련
-        if (meal?.ingredientStructure) {
-          // 최소한의 식재료
-          if (isMinimumMeal(meal.ingredientStructure)) {
-            filterList.push('minimum' as const);
-          }
-          // 모든 식재료
-          if (hasAllMeal(meal.id, meal.ingredientStructure)) {
-            filterList.push('hasAll' as const);
-          }
+        const possession = getMealPossession(meal.id, meal.ingredientStructure);
+
+        /** 보유한 식재료가 없을 때 */
+        if (!possession) {
+          return {
+            ...meal,
+            ...initial,
+            filterList,
+          };
         }
 
-        return { ...meal, filterList };
+        const { possessionPercent } = possession;
+
+        // 보유한 식재료가 있을 때
+        if (possessionPercent > HIGH_POSSESSION_THRESHOLD) {
+          filterList.push('highPossession');
+        }
+
+        const item = {
+          ...meal,
+          ...possession,
+          expiredSoonList,
+        };
+
+        return { ...item, filterList };
       });
 
       return filterResult;
     },
-    [hasAllMeal, hasExpiredSoonIngredientMeal],
+    [getHasExpiredSoonIngredientByMeal, getMealPossession, isFavoriteMeal],
   );
 
-  // --------------- Meal List -------------------
+  const allEnrichMealList = addFilterInMealList(allMealList);
 
-  /** "오늘의 식사 추천" 필터링 목록 */
-  const recommendedTodayMealList = useMemo(() => {
-    const mealList = addFilterInMealList(allMealList);
-    /** 오늘의 식사 추천 로직
-     * - 0순위 isSideMeal(밥, 단무지, ...)이 아닌 경우
-     * - 1순위 전체 식재료가 다 있는 경우
-     * - 2순위 최소한의 식재료(4개 이하)로 만들 수 있는지
-     */
-    const isRecommendedTodayMeal = (meal: MealWithEnrichIngredient) => {
-      return hasAllMeal(meal.id, meal.ingredientStructure);
-    };
+  /* -------------------------------------------------------------------------- */
+  /*                                  Meal List                                 */
+  /*                                  - 기타 목록                                 */
+  /* -------------------------------------------------------------------------- */
 
-    return mealList
-      .filter((meal) => {
-        return !meal.isSideMeal && isRecommendedTodayMeal(meal);
-      })
-      .slice(0, maxLength);
-  }, [addFilterInMealList, hasAllMeal, maxLength]);
+  /** "오늘의 식사 추천" 필터링 목록
+   * 오늘의 식사 추천 로직
+   * - 0순위 isSideMeal(밥, 단무지, ...)이 아닌 경우
+   * - 소비기한 임박 식재료 존재 // TODO
+   * - 1순위 재료 보유율이 HIGH_POSSESSION_THRESHOLD; 이상인 경우
+   */
+  const recommendedTodayMealList: EnrichedMealWithFilterList[] = useMemo(() => {
+    return allEnrichMealList.filter((meal) => {
+      return !meal.isSideMeal && meal.filterList.includes('highPossession');
+    });
+  }, [allEnrichMealList]);
 
-  /** "소비기한 임박" 필터링 목록 */
-  const expiredSoonMealList = useMemo(() => {
-    return addFilterInMealList(allMealList)
-      .filter((item) => item.filterList.includes('expiredSoon'))
-      .slice(0, maxLength);
-  }, [addFilterInMealList, maxLength]);
-
-  /** "소비기한 임박한 식재료"가 있는 메뉴 목록 */
-  const getMealListByExpiredSoonIngredient = useCallback(
-    (focusedItem: EnrichStorageItem) => {
-      if (!focusedItem) return [];
-
-      const findItem = (item: Meal | Ingredient, storageItem: EnrichStorageItem) => {
-        if (storageItem.type === 'ingredient') {
-          return item.id === storageItem.ingredientId;
-        }
-        if (storageItem.type === 'meal') {
-          return item.id === storageItem.mealId;
-        }
-        return item.label === storageItem.customLabel;
-      };
-
-      return expiredSoonMealList
-        .filter((meal) => {
-          if (!meal.ingredientStructure) return;
-
-          const essential = meal.ingredientStructure.essential.find((item) => {
-            return findItem(item, focusedItem);
-          });
-          return essential;
-        })
-        .slice(0, maxLength);
-    },
-
-    [expiredSoonMealList, maxLength],
-  );
-
-  /** "모든 재료가 있음" 필터링 목록 */
-  const hasAllMealList = useMemo(() => {
-    return addFilterInMealList(allMealList)
-      .filter((item) => item.filterList.includes('hasAll'))
-      .slice(0, maxLength);
-  }, [addFilterInMealList, maxLength]);
-
+  /* -------------------------------------------------------------------------- */
+  /*                           SEARCH KEYWORD LIST                              */
+  /*                              "검색어 결과" 목록                                */
+  /* -------------------------------------------------------------------------- */
   const debouncedSearchKeyword = useDebounce(searchKeyword, 300);
 
-  /** "검색어 결과" 필터링 목록 */
   const searchKeywordMealList = useMemo(() => {
     const filterSearchKeyword = allMealList.filter((meal) => {
       const includingLabel = meal.label.includes(debouncedSearchKeyword);
@@ -236,54 +283,129 @@ export const useGetMealList = ({ maxLength }: UseGetMealListProps = {}) => {
 
       return includingLabel || includingSynonyms;
     });
-    return addFilterInMealList(filterSearchKeyword).slice(0, maxLength);
-  }, [addFilterInMealList, debouncedSearchKeyword, maxLength]);
 
-  /** 특정 식재료를 갖고 있는 메뉴 목록
-   * - ex) 계란 활용 메뉴
-   */
+    const result = addFilterInMealList(filterSearchKeyword);
+
+    const getSearchMatchScore = (meal: EnrichedMealWithFilterList, keyword: string) => {
+      if (!keyword) return 0;
+
+      if (meal.label === keyword) return 10000;
+
+      if (meal.label.startsWith(keyword)) return 5000;
+
+      if (meal.label.includes(keyword)) return 3000;
+
+      const synonyms = meal.synonyms ?? [];
+
+      if (synonyms.some((synonym) => synonym === keyword)) {
+        return 2000;
+      }
+
+      if (synonyms.some((synonym) => synonym.includes(keyword))) {
+        return 1000;
+      }
+
+      return 0;
+    };
+
+    return [...result].sort((a, b) => {
+      const searchScoreDiff =
+        getSearchMatchScore(b, debouncedSearchKeyword) -
+        getSearchMatchScore(a, debouncedSearchKeyword);
+
+      if (searchScoreDiff !== 0) {
+        return searchScoreDiff;
+      }
+
+      return (
+        getRecommendMealScore(b, activeFilter) - getRecommendMealScore(a, activeFilter)
+      );
+    });
+  }, [activeFilter, addFilterInMealList, debouncedSearchKeyword]);
+
+  const filteredMealList = useMemo(() => {
+    const list =
+      debouncedSearchKeyword.length !== 0 ? searchKeywordMealList : allEnrichMealList;
+
+    const filtered =
+      activeFilter === 'all'
+        ? list
+        : list.filter((data) => data.filterList.includes(activeFilter));
+
+    const getSearchScore = (meal: EnrichedMealWithFilterList, keyword: string) => {
+      if (meal.label === keyword) return 10000;
+
+      if (meal.label.startsWith(keyword)) return 5000;
+
+      return 0;
+    };
+
+    const result = [...filtered].sort((a, b) => {
+      if (debouncedSearchKeyword.length > 0) {
+        const searchScoreDiff =
+          getSearchScore(b, debouncedSearchKeyword) -
+          getSearchScore(a, debouncedSearchKeyword);
+
+        if (searchScoreDiff !== 0) {
+          return searchScoreDiff;
+        }
+      }
+
+      return (
+        getRecommendMealScore(b, activeFilter) - getRecommendMealScore(a, activeFilter)
+      );
+    });
+
+    return maxLength ? result.slice(0, maxLength) : result;
+  }, [
+    debouncedSearchKeyword,
+    searchKeywordMealList,
+    allEnrichMealList,
+    activeFilter,
+    maxLength,
+  ]);
+
+  /* -------------------------------------------------------------------------- */
+  /*                        보유한 식재료를 갖고 있는 메뉴 목록                         */
+  /*                              ex) 계란 활용 메뉴                               */
+  /* -------------------------------------------------------------------------- */
   const getHasStorageItemMealList = useCallback(
     (storageItem: EnrichStorageItem) => {
-      const mealList = addFilterInMealList(allMealList);
-      return mealList
-        .filter((meal) => {
-          if (storageItem.type === 'custom') return false;
+      return allEnrichMealList.filter((meal) => {
+        if (storageItem.type === 'custom') return false;
 
-          const hasIngredientItem = (ingredientItem: Meal | Ingredient) => {
-            const { id } = ingredientItem;
+        const hasIngredientItem = (ingredientItem: Meal | Ingredient) => {
+          const { id } = ingredientItem;
 
-            if (storageItem.type === 'ingredient') {
-              return id === storageItem.ingredientId;
-            }
+          if (storageItem.type === 'ingredient') {
+            return id === storageItem.ingredientId;
+          }
 
-            if (storageItem.type === 'meal') {
-              return id === storageItem.mealId;
-            }
-          };
+          if (storageItem.type === 'meal') {
+            return id === storageItem.mealId;
+          }
+        };
 
-          if (!meal.ingredientStructure) return false;
+        if (!meal.ingredientStructure) return false;
 
-          const { essential } = meal.ingredientStructure;
+        const { essential } = meal.ingredientStructure;
 
-          return essential.find(hasIngredientItem);
-        })
-        .slice(0, maxLength);
+        return essential.find(hasIngredientItem);
+      });
     },
-    [addFilterInMealList, maxLength],
+    [allEnrichMealList],
   );
-
-  const allFilteredMealList = addFilterInMealList(allMealList);
 
   return {
     mealFilterList,
-    expiredSoonMealList,
-    hasAllMealList,
-    getMealListByExpiredSoonIngredient,
-    searchKeywordMealList,
-    allFilteredMealList,
+    filteredMealList,
     getHasStorageItemMealList,
     recommendedTodayMealList,
+    // 키워드
     searchKeyword,
     setSearchKeyword,
+    // 필터
+    changeActiveFilter,
+    activeFilter,
   };
 };

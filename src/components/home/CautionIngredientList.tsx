@@ -1,6 +1,6 @@
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import CautionStorageItem from '@/components/trackedItem/storage/CautionStorageItem';
-import CautionMealListByIngredient from '@/components/meal/CautionMealListByIngredient';
+import MealListByExpiredSoonIngredient from '@/components/meal/MealListByExpiredSoonIngredient';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
@@ -97,7 +97,7 @@ export default function CautionIngredientList({
             {/* 식재료를 이용한 메뉴 */}
             {hasCautionIngredientMeal
               ? ({ storageItem: focusedItem }) => (
-                  <CautionMealListByIngredient
+                  <MealListByExpiredSoonIngredient
                     key={focusedItem.id}
                     focusedItem={focusedItem}
                   />

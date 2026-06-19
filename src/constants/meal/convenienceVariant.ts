@@ -1,37 +1,55 @@
+import {
+  image_frozen,
+  image_instant,
+  image_mealkit,
+  image_ready_to_eat,
+} from '@/constants/image';
+
 export const convenienceVariantObj = {
-  ready_to_eat: {
-    id: 'ready_to_eat',
-    label: '바로 먹기',
-    description: '구매 후 바로 먹을 수 있는 완제품',
+  readyToEat: {
+    id: 'readyToEat',
+    label: '완성식품',
+    description: '이미 조리된 상태로 구매해서 먹어요',
+    image: image_ready_to_eat,
+    icon: null,
   },
 
   instant: {
     id: 'instant',
     label: '인스턴트',
-    description: '실온 보관 간편식',
+    description: '뜨거운 물이나 전자레인지로 간편하게 조리해요',
     defaultStorage: ['pantry'],
     expirationDays: {
       pantry: 365,
     },
+    image: image_instant,
+    icon: 'ThermometerSun',
+    color: 'yellow',
   },
 
   mealkit: {
     id: 'mealkit',
     label: '밀키트',
-    description: '재료가 포함된 냉장 밀키트',
+    description: '손질된 재료로 간편하게 조리해요',
     defaultStorage: ['fridge'],
     expirationDays: {
       fridge: 5,
     },
+    image: image_mealkit,
+    icon: 'Wind',
+    color: 'blue',
   },
 
   frozen: {
     id: 'frozen',
-    label: '냉동식품',
-    description: '냉동 보관 식품',
+    label: '냉동',
+    description: '냉동 보관 후 해동하거나 가열해 먹어요',
     defaultStorage: ['freezer'],
     expirationDays: {
       freezer: 365,
     },
+    image: image_frozen,
+    icon: 'Snowflake',
+    color: 'ice',
   },
 } as const;

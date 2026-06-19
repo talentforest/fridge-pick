@@ -1,9 +1,5 @@
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import TodayMeal from '@/components/home/TodayMeal';
-import { useGetMealList } from '@/hooks';
-import { useCallback } from 'react';
-import { MealWithEnrichIngredient } from '@/types/meal';
-import { View } from 'react-native';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
 import CautionIngredientList from '@/components/home/CautionIngredientList';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
@@ -12,35 +8,23 @@ import LabelContainer from '@/components/common/container/LabelContainer';
 import FilterContainer from '@/components/common/container/FilterContainer';
 import TextInput from '@/components/common/ui/TextInput';
 import NavigateBtn from '@/components/common/NavigateBtn';
-import SectionTitle from '@/components/common/header/SectionTitle';
-import FullBleedSection from '@/components/common/container/FullBleedSection';
-import CarouselContainer from '@/components/common/container/CarouselContainer';
-import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
-import { useFocusEffect } from '@react-navigation/native';
+import { EnrichedMealWithFilterList, useGetMealList } from '@/hooks';
+import { useCallback } from 'react';
+import { View } from 'react-native';
 
 export default function MealScreen() {
   const {
     mealFilterList,
-    hasAllMealList,
-    searchKeywordMealList,
+    filteredMealList,
     searchKeyword,
     setSearchKeyword,
-  } = useGetMealList();
+    activeFilter,
+    changeActiveFilter,
+  } = useGetMealList({ maxLength: 10 });
 
-  const data = useCallback(
-    (meal: MealWithEnrichIngredient) => <MealCard key={meal.id} meal={meal} />,
+  const filteredChildrenData = useCallback(
+    (meal: EnrichedMealWithFilterList) => <MealCard key={meal.id} meal={meal} />,
     [],
-  );
-
-  useFocusEffect(
-    useCallback(() => {
-      setSearchKeyword('');
-
-      return () => {
-        // 화면을 벗어날 때 초기화하고 싶으면 여기에
-        setSearchKeyword('');
-      };
-    }, []),
   );
 
   return (
@@ -57,25 +41,6 @@ export default function MealScreen() {
           type="expiredSoon"
         />
 
-        {/* 모든 재료가 있어요 */}
-        {hasAllMealList.length > 0 && (
-          <View className="h-[330px] gap-y-3">
-            <SectionTitle title="모든 재료가 있어요" icon="ShoppingBag" />
-            <FullBleedSection>
-              <CarouselContainer
-                data={hasAllMealList}
-                initialIndex={hasAllMealList.length}
-                itemWidth={0.45}
-                hasNavigation
-                hasPagination
-                centerFocus
-                renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
-                keyExtractor={(_, index) => `${index}`}
-              />
-            </FullBleedSection>
-          </View>
-        )}
-
         {/* 메뉴 검색바 */}
         <View className="min-h-[800px]">
           <LabelContainer label="메뉴 검색">
@@ -90,9 +55,11 @@ export default function MealScreen() {
           <FilterContainer
             columns={1}
             filterList={mealFilterList}
-            dataList={searchKeywordMealList}
+            dataList={filteredMealList}
+            changeActiveFilter={changeActiveFilter}
+            activeFilter={activeFilter}
           >
-            {data}
+            {filteredChildrenData}
           </FilterContainer>
 
           <NavigateBtn navigateTo={'AllMealListScreen'} />

@@ -4,10 +4,10 @@ import MealImage from '@/components/selectableItem/meal/MealImage';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import IconWithText from '@/components/common/IconWithText';
 import ProgressBar from '@/components/common/ProgressBar';
-import TodayMealItemSheet from '@/components/meal/TodayMealItemSheet';
-import { MealWithEnrichIngredient, TodayMeal } from '@/types/meal';
+import MealDetailSheet from '@/components/meal/MealDetailSheet';
+import { TodayMeal } from '@/types/meal';
 import { View } from 'react-native';
-import { useGetMealInfo, useOverlay } from '@/hooks';
+import { EnrichedMealWithFilterList, useOverlay } from '@/hooks';
 
 interface TodayMealCardProps {
   todayMeal: TodayMeal;
@@ -26,16 +26,14 @@ export default function TodayMealCard({
 
   const { openSheet } = useOverlay();
 
-  const onPress = (meal: MealWithEnrichIngredient) => {
+  const onPress = (meal: EnrichedMealWithFilterList) => {
     openSheet({
       enableDynamicSizing: true,
-      maxDynamicContentSize: 700,
+      maxDynamicContentSize: 750,
       hasDim: true,
-      render: () => <TodayMealItemSheet type={type} meal={meal} />,
+      render: () => <MealDetailSheet type={type} meal={meal} />,
     });
   };
-
-  const { percentage } = useGetMealInfo(meal);
 
   const commonClassName = `justify-center ${mainMenu ? 'h-[220px] items-start ' : 'h-[105px] !px-2 items-center !bg-border'} ${className}`;
 
@@ -46,10 +44,10 @@ export default function TodayMealCard({
           <IconWithText
             text="메인메뉴"
             icon="Sparkles"
-            className="-mb-2.5 rounded-full border border-yellow-3 bg-yellow-1 px-3.5 py-2.5"
-            textClassName="text-sm"
-            iconSize={12}
-            iconColor="yellow"
+            className="-mb-2.5 rounded-full border border-yellow-1 bg-blue-1 px-3.5 py-2.5"
+            textClassName="text-[13px] text-blue-7"
+            iconSize={13}
+            iconColor="blue"
           />
         )}
 
@@ -66,7 +64,12 @@ export default function TodayMealCard({
 
           {mainMenu && (
             <View className={`mt-3 items-center gap-y-2.5`}>
-              <ProgressBar label="재료보유율" percentage={percentage} />
+              <ProgressBar
+                label="재료보유율"
+                percentage={todayMeal.meal.possessionPercent}
+                possessedIngredientCount={todayMeal.meal.possessedIngredientCount}
+                requiredIngredientCount={todayMeal.meal.requiredIngredientCount}
+              />
             </View>
           )}
         </View>

@@ -1,4 +1,4 @@
-import { favoriteIngredientAtom, favoriteMealAtom } from '@/atom/favoritesAtom';
+import { favoriteIngredientListAtom, favoriteMealListAtom } from '@/atom/favoritesAtom';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import { useAtomValue } from 'jotai';
 import { View } from 'react-native';
@@ -18,8 +18,8 @@ import { StorageTypeId } from '@/types/storage';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 export default function FavoritesScreen() {
-  const favoriteMealList = useAtomValue(favoriteMealAtom);
-  const favoriteIngredientList = useAtomValue(favoriteIngredientAtom);
+  const favoriteMealList = useAtomValue(favoriteMealListAtom);
+  const favoriteIngredientList = useAtomValue(favoriteIngredientListAtom);
 
   const { openSheet, closeSheet } = useOverlay();
 

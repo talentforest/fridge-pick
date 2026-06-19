@@ -168,7 +168,7 @@ export default function CarouselContainer<T>({
   ) : (
     <View>
       <View className="mx-[24px]">
-        <GridContainer columns={requiredMinimum}>
+        <GridContainer columns={requiredMinimum} gap={10}>
           {data.map((item, index) => {
             const isCurrIndex = currentIndex - data.length === index;
             return renderItem({

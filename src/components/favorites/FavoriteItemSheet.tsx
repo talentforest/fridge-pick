@@ -14,7 +14,6 @@ import SquareBtn from '@/components/common/SquareBtn';
 import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import SelectableItemImageLabel from '@/components/selectableItem/SelectableItemImageLabel';
 
 interface FavoriteItemSheetProps {
   item: SelectableItem;
@@ -58,7 +57,7 @@ export default function FavoriteItemSheet({
       <Text className="text-xl">식재료 정보</Text>
 
       <View className="my-2 flex-row items-center justify-between px-2">
-        <SelectableItemImageLabel item={item} imageSize={80} />
+        {/* <SelectableItemImageLabel item={item} imageSize={80} /> */}
         <FavoriteBtn selectableItem={item} />
       </View>
 
@@ -67,23 +66,12 @@ export default function FavoriteItemSheet({
           {Object.values(storageObj).map((storage) => (
             <Card
               key={storage.id}
-              className={`h-[80px] flex-1 items-center justify-between gap-y-4 ${storage.id === item.defaultStorage ? '' : '!bg-neutral-3'}`}
+              className={`h-[80px] flex-1 items-center justify-between gap-y-4`}
             >
               <View className="flex-row items-center">
                 <Icon name={storage.icon} size={15} color={storage.color} />
                 <Text className="text-[15px]">{storage.label}</Text>
               </View>
-
-              {item.expirationDays[storage.id] ? (
-                <View className="flex-row items-center gap-x-1">
-                  <Text className="text-base text-neutral-5">약</Text>
-                  <Text className="font-extrabold text-base">
-                    {item.expirationDays[storage.id]}일
-                  </Text>
-                </View>
-              ) : (
-                <Text className="text-base text-neutral-5">정보없음</Text>
-              )}
             </Card>
           ))}
         </View>
@@ -93,7 +81,7 @@ export default function FavoriteItemSheet({
         <SquareBtn
           name={`${storageObj[storageItem.storage.type].label}에서 식재료 상태 확인하기`}
           iconName={storageObj[storageItem.storage.type].icon}
-          color={storageObj[storageItem.storage.type].color}
+          bgColor={storageObj[storageItem.storage.type].color}
           iconSize={18}
           className="mt-5"
           onPress={() => onNavigatePress(storageItem.storage.type)}
@@ -105,7 +93,7 @@ export default function FavoriteItemSheet({
           iconSize={18}
           disabled={!!isShoppingItem}
           className="mt-5"
-          color={isShoppingItem ? 'inActive' : 'indigo'}
+          bgColor={isShoppingItem ? 'inActive' : 'indigo'}
           onPress={onSubmitPress}
         />
       )}

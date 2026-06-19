@@ -8,7 +8,15 @@ interface SquareBtnProps {
   iconName?: IconName;
   iconSize?: number;
   textClassName?: string;
-  color?: 'blue' | 'green' | 'yellow' | 'ice' | 'indigo' | 'inActive' | 'neutral';
+  bgColor?:
+    | 'blue'
+    | 'green'
+    | 'yellow'
+    | 'ice'
+    | 'indigo'
+    | 'inActive'
+    | 'neutral'
+    | 'transparent';
 }
 
 export default function SquareBtn({
@@ -16,7 +24,7 @@ export default function SquareBtn({
   iconName,
   iconSize = 16,
   textClassName = '',
-  color = 'indigo',
+  bgColor = 'indigo',
   ...props
 }: SquareBtnProps & TouchableOpacityProps) {
   const bgColorStyle = {
@@ -27,32 +35,27 @@ export default function SquareBtn({
     indigo: 'bg-indigo-600',
     inActive: 'bg-inactive-bg',
     neutral: 'bg-neutral-7',
+    transparent: 'border border-neutral-9 bg-white',
   };
 
-  const textColorStyle = {
-    blue: '!text-white',
-    ice: 'text-white',
-    green: '!text-white',
-    indigo: '!text-white',
-    yellow: '!text-white',
-    inActive: '!text-inactive-text',
-    neutral: '!text-white',
-  };
+  const textStyle =
+    bgColor === 'transparent'
+      ? ''
+      : bgColor === 'inActive'
+        ? 'text-inactive-text'
+        : 'text-white';
+
+  const iconStyle =
+    bgColor === 'transparent' ? 'neutral' : bgColor === 'inActive' ? 'inactive' : 'white';
 
   return (
     <TouchableOpacity
       {...props}
-      className={`flex-row items-center justify-center gap-x-1 rounded-xl p-5 ${bgColorStyle[color]} ${props.className}`}
+      className={`flex-row items-center justify-center gap-x-1 rounded-xl p-5 ${bgColorStyle[bgColor]} ${props.className}`}
     >
-      {iconName && (
-        <Icon
-          name={iconName}
-          size={iconSize}
-          color={color === 'inActive' ? 'inactive' : 'white'}
-        />
-      )}
+      {iconName && <Icon name={iconName} size={iconSize} color={iconStyle} />}
 
-      <Text className={`${textColorStyle[color]} ${textClassName}`}>{name}</Text>
+      <Text className={`${textStyle} ${textClassName}`}>{name}</Text>
     </TouchableOpacity>
   );
 }

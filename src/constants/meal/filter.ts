@@ -1,45 +1,38 @@
-export const allFilterObj = {
-  id: 1,
-  name: 'all',
-  label: '전체',
-  color: 'blue',
-} as const;
-
 export const filterObj = {
   meal: {
+    all: {
+      name: 'all',
+      label: '전체',
+      color: 'blue',
+      icon: 'HandPlatter',
+    },
+
     expiredSoon: {
       name: 'expiredSoon',
-      label: '소비기한 임박 식재료 포함',
+      label: '소비기한 임박',
       color: 'red',
-      icon: 'TriangleAlert' as const,
-    },
-
-    hasAll: {
-      name: 'hasAll',
-      label: '모든 재료 있음',
-      color: 'red',
-      icon: 'ShoppingBag' as const,
-    },
-
-    minimum: {
-      name: 'minimum',
-      label: '최소한의 식재료 사용',
-      color: 'green',
-      icon: 'SquircleDashed' as const,
+      icon: 'TriangleAlert',
     },
 
     easy: {
       name: 'easy',
-      label: '쉬운 난이도',
+      label: '쉬운 메뉴',
       color: 'yellow',
-      icon: 'Timer' as const,
+      icon: 'Sparkles',
+    },
+
+    highPossession: {
+      name: 'highPossession',
+      label: '식재료 보유율 높음',
+      color: 'green',
+      icon: 'SquircleDashed',
     },
 
     favorite: {
       name: 'favorite',
-      label: '즐겨찾기',
+      label: '나의 픽',
       color: 'yellow',
-      icon: 'Timer' as const,
+      icon: 'Heart',
     },
   },
 } as const;

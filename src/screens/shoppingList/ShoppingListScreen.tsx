@@ -167,7 +167,7 @@ export default function ShoppingListScreen() {
                 name="선택항목 삭제하기"
                 iconName="Trash2"
                 iconSize={16}
-                color="yellow"
+                bgColor="yellow"
                 className="!py-4"
               />
               <SquareBtn
@@ -175,7 +175,7 @@ export default function ShoppingListScreen() {
                 name="냉장고에 넣기"
                 iconName="Grid2X2Plus"
                 iconSize={16}
-                color="blue"
+                bgColor="blue"
                 className="!py-4"
               />
             </View>

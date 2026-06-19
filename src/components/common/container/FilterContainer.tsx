@@ -1,13 +1,12 @@
 import FilterTag from '@/components/common/FilterTag';
 import Text from '@/components/common/ui/Text';
-import { allFilterObj } from '@/constants';
-import { FilterColor } from '@/types/filter';
-import { IconName } from '@/components/common/ui/Icon';
-import { ReactElement, useState } from 'react';
-import { FlatList, View } from 'react-native';
 import GridContainer from '@/components/common/container/GridContainer';
 import Card from '@/components/common/ui/Card';
 import IconWithText from '@/components/common/IconWithText';
+import { FilterColor } from '@/types/filter';
+import { IconName } from '@/components/common/ui/Icon';
+import { ReactElement } from 'react';
+import { FlatList, View } from 'react-native';
 
 type HasFilter<K> = {
   id: string;
@@ -18,43 +17,35 @@ type FilterItem<K> = {
   name: K;
   label: string;
   color: FilterColor;
-  icon?: IconName;
+  icon: IconName;
 };
 
 interface FilterContainerProps<T extends HasFilter<K>, K> {
   filterList: FilterItem<K>[];
   dataList: T[];
-  children: (data: T) => ReactElement;
   columns?: number;
   isFlatList?: boolean;
   ListHeaderComponent?: ReactElement;
-  maximum?: number;
+  activeFilter: K;
+  changeActiveFilter: (filter: K) => void;
+  children: (data: T) => ReactElement;
 }
 
 export default function FilterContainer<T extends HasFilter<K>, K>({
   filterList,
   dataList,
-  children,
   columns,
-
   ListHeaderComponent,
   isFlatList = false,
-  maximum,
+  activeFilter,
+  changeActiveFilter,
+  children,
 }: FilterContainerProps<T, K>) {
-  const [activeFilter, setActiveFilter] = useState<K | 'all'>('all');
-
-  const filteredDataList =
-    activeFilter === 'all'
-      ? dataList
-      : dataList.filter((data) => data.filterList.includes(activeFilter));
-
-  const finalDataList = filteredDataList.slice(0, maximum);
-
   return (
     <>
       {isFlatList ? (
         <FlatList
-          data={finalDataList}
+          data={dataList}
           showsVerticalScrollIndicator={false}
           numColumns={columns}
           columnWrapperStyle={{
@@ -69,7 +60,7 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
               <FilterList
                 filterList={filterList}
                 activeFilter={activeFilter}
-                setActiveFilter={setActiveFilter}
+                setActiveFilter={changeActiveFilter}
               />
             </>
           }
@@ -85,7 +76,7 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
           <FilterList
             filterList={filterList}
             activeFilter={activeFilter}
-            setActiveFilter={setActiveFilter}
+            setActiveFilter={changeActiveFilter}
           />
 
           <View className="mb-4 mt-3 flex-row items-center justify-between px-2">
@@ -103,9 +94,9 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
             />
           </View>
 
-          {finalDataList.length > 0 ? (
-            <GridContainer columns={columns} gap={12}>
-              {finalDataList.map(children)}
+          {dataList.length > 0 && children ? (
+            <GridContainer columns={columns} gap={10}>
+              {dataList.map(children)}
             </GridContainer>
           ) : (
             <Card className="h-[420px] items-center justify-center border">
@@ -131,11 +122,12 @@ function FilterList<K>({
 }: FilterListProps<K>) {
   return (
     <View className="my-3 flex-row flex-wrap gap-2">
-      {[allFilterObj, ...filterList].map(({ name, label }) => (
+      {filterList.map(({ name, label, icon, color }) => (
         <FilterTag
           key={String(name)}
           name={label}
-          color="blue"
+          color={color}
+          icon={icon}
           isActive={activeFilter === name}
           onPress={() => setActiveFilter(name)}
         />

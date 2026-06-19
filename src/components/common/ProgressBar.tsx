@@ -4,40 +4,54 @@ import { ReactNode } from 'react';
 import { View } from 'react-native';
 
 interface ProgressBarProps {
-  label: string;
+  label?: string;
   percentage: number;
+  possessedIngredientCount: number;
+  requiredIngredientCount: number;
   children?: ReactNode;
 }
 
-export default function ProgressBar({ label, percentage, children }: ProgressBarProps) {
+export default function ProgressBar({
+  label,
+  percentage,
+  possessedIngredientCount,
+  requiredIngredientCount,
+  children,
+}: ProgressBarProps) {
   const status = getPossessionStatus(percentage);
 
   const colorObj = styleByPercentageObj[status];
 
+  const requiredBoxList = Array.from(
+    { length: requiredIngredientCount },
+    (_, index) => index,
+  );
+
   return (
     <View>
-      <View className="mb-1 flex-row items-center justify-between">
-        <Text className="text-neutral-9">{label}</Text>
-        <Text className={colorObj.text}>{`${percentage}%`}</Text>
-      </View>
-
-      <View className="w-full flex-row items-center gap-x-2">
-        <View className="h-5 flex-1 bg-neutral-3">
-          <View
-            style={{ width: `${percentage}%` }}
-            className={`absolute h-full flex-1 ${colorObj.bg}`}
-          />
-
-          <View className="flex-row items-center">
-            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <View
-                key={i}
-                className={`h-full w-[10%] border-r border-dashed ${colorObj.border}`}
-              />
-            ))}
-            <View className="h-5 w-[10%]" />
-          </View>
+      {label ? (
+        <View className="mb-[6px] flex-row items-center gap-x-1">
+          <Text className="text-neutral-9">{label}</Text>
+          <Text className={`${colorObj.text} font-extrabold`}>{`${percentage}%`}</Text>
+          {possessedIngredientCount && requiredIngredientCount ? (
+            <Text className={`!text-[13px] text-neutral-9`}>
+              {possessedIngredientCount}/{requiredIngredientCount}
+            </Text>
+          ) : (
+            <></>
+          )}
         </View>
+      ) : (
+        <></>
+      )}
+
+      <View className="w-full flex-row items-center gap-x-1">
+        {requiredBoxList.map((box) => (
+          <View
+            key={box}
+            className={`h-[16px] flex-1 ${box === 0 ? 'rounded-l-[5px]' : ''} ${box === requiredBoxList.length - 1 ? 'rounded-r-[5px]' : ''} ${possessedIngredientCount > box ? colorObj.bg : 'bg-inactive-bg'}`}
+          />
+        ))}
       </View>
 
       {children}

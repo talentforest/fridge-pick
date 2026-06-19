@@ -4,19 +4,17 @@ import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
-import TextInput from '@/components/common/ui/TextInput';
 import NavigateBtn from '@/components/common/NavigateBtn';
-import LabelContainer from '@/components/common/container/LabelContainer';
 import FilterContainer from '@/components/common/container/FilterContainer';
 
 export default function RecommendedMeal() {
   const {
     mealFilterList,
-    searchKeywordMealList,
     recommendedTodayMealList,
-    searchKeyword,
-    setSearchKeyword,
-  } = useGetMealList({ maxLength: 10 });
+    filteredMealList,
+    activeFilter,
+    changeActiveFilter,
+  } = useGetMealList({ maxLength: 300 });
 
   return (
     <>
@@ -42,21 +40,15 @@ export default function RecommendedMeal() {
       )}
 
       <View className="min-h-[800px]">
-        <LabelContainer label="메뉴 검색">
-          <TextInput
-            value={searchKeyword}
-            onChangeText={setSearchKeyword}
-            placeholder="찾으시는 메뉴를 검색해주세요."
-            icon="Search"
-          />
-        </LabelContainer>
-
+        <SectionTitle title="식사 메뉴 목록" icon="HandPlatter" />
         <FilterContainer
           columns={2}
           filterList={mealFilterList}
-          dataList={searchKeywordMealList}
+          dataList={filteredMealList}
+          changeActiveFilter={changeActiveFilter}
+          activeFilter={activeFilter}
         >
-          {(meal) => <MealCompactCard key={meal.id} meal={meal} className="w-full" />}
+          {(meal) => <MealCompactCard key={meal.id} meal={meal} className="flex-1" />}
         </FilterContainer>
 
         <NavigateBtn navigateTo={'AllMealListScreen'} />

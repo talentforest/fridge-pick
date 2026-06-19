@@ -28,13 +28,13 @@ export const styleByPercentageObj = {
 
   poor: {
     bg: 'bg-red-5',
-    border: 'border-red-3',
-    text: 'text-red-7',
+    border: 'border-red-5',
+    text: 'text-red-5',
   },
 
   empty: {
     bg: 'bg-red-5',
-    border: 'border-red-3',
-    text: 'text-red-7',
+    border: 'border-red-5',
+    text: 'text-red-5',
   },
 } as const;

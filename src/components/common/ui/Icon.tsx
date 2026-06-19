@@ -173,6 +173,7 @@ export type IconColor =
   | 'neutral'
   | 'inactive'
   | 'red'
+  | 'lightBlue'
   | 'blue'
   | 'green'
   | 'indigo'
@@ -185,12 +186,14 @@ interface IconProps {
   name: IconName | CategoryIconName;
   color?: IconColor;
   hasFill?: boolean;
+  hasShadow?: boolean;
 }
 
 export default function Icon({
   name,
   color = 'text',
   hasFill = false,
+  hasShadow,
   ...props
 }: IconProps & LucideProps) {
   const colorScheme = useColorScheme() ?? 'light';
@@ -203,6 +206,7 @@ export default function Icon({
     yellow: scheme.yellow[7],
     neutral: scheme.neutral[7],
     red: scheme.red[5],
+    lightBlue: scheme.blue[5],
     blue: scheme.blue[7],
     darkGray: scheme.neutral[5],
     gray: scheme.inactive.bg,
@@ -293,8 +297,19 @@ export default function Icon({
 
   const Component = iconObj[name];
 
+  const shadowStyle = {
+    shadowColor: '#000',
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 6,
+  };
+
   return props.onPress ? (
-    <TouchableOpacity className={props.className} onPress={props.onPress}>
+    <TouchableOpacity
+      className={props.className}
+      style={hasShadow ? shadowStyle : undefined}
+      onPress={props.onPress}
+    >
       <Component
         strokeWidth={2.2}
         {...props}

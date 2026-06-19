@@ -111,14 +111,14 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
               iconName="Edit"
               name="보관위치 변경"
               className="flex-1"
-              color="indigo"
+              bgColor="indigo"
               onPress={onEditStoragePress}
             />
             <SquareBtn
               iconName="Trash2"
               name="냉장고에서 제거"
               className="flex-1"
-              color="yellow"
+              bgColor="yellow"
               onPress={onDeletePress}
             />
           </View>
