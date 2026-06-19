@@ -1,3 +1,5 @@
+import { ValidCategoryKey } from '@/types/category';
+
 export type WeightUnit = 'g' | 'kg';
 export type VolumeUnit = 'ml' | 'L';
 
@@ -21,9 +23,10 @@ export type StockUnit =
   | '알'
   | '장'
   | '스틱'
+  | 'g'
   | '송이';
 
-export const categoryUnitMap: Record<Category, StockUnit[]> = {
+export const categoryUnitMap: Record<ValidCategoryKey, StockUnit[]> = {
   noodle: ['봉', '개'],
   meat: ['팩', '마리', '개'],
   seafood: ['팩', '마리', '상자', '개'],
@@ -38,5 +41,5 @@ export const categoryUnitMap: Record<Category, StockUnit[]> = {
   sidedish: ['팩', '통', '개'],
   health: ['포', '병', '개', '스틱'],
   grains: ['봉', '개'],
-  desert: ['팩', '개', '조각', '상자', '봉', '묶음'],
+  dessert: ['팩', '개', '조각', '상자', '봉', '묶음'],
 };

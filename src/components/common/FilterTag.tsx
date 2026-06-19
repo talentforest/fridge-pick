@@ -1,59 +1,70 @@
+import Icon, { IconName } from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { FilterColor } from '@/types/filter';
-
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 
 interface FilterProps {
   name: string;
   color: FilterColor;
+  icon?: IconName;
   onPress?: () => void;
   isActive?: boolean;
   textClassName?: string;
+  className?: string;
+  iconSize?: number;
 }
 
 export default function FilterTag({
   name,
+  icon,
   color,
-  isActive,
+  isActive = false,
   onPress,
-  textClassName = '',
+  textClassName,
+  className = '',
+  iconSize = 15,
 }: FilterProps) {
   const bgColor = {
-    green: '!bg-green-100',
-    red: '!bg-red-100',
-    blue: '!bg-blue-100',
-    yellow: '!bg-yellow-100',
-    gray: '!bg-gray-100',
+    green: '!bg-green-1',
+    red: '!bg-red-1',
+    blue: 'bg-blue-1',
+    yellow: '!bg-yellow-1',
+    neutral: 'bg-neutral-3',
   };
 
   const textColorObj = {
-    green: '!text-green-700',
-    red: '!text-red-500',
-    blue: '!text-blue-700',
-    yellow: '!text-yellow-700',
-    gray: '!text-gray-600',
+    green: '!text-green-7',
+    red: 'text-red-7',
+    blue: 'text-blue-7',
+    yellow: '!text-yellow-7',
+    neutral: '!text-neutral-9',
   };
 
   const inActiveObj = {
-    bgColor: 'bg-gray-200',
-    textColor: 'text-neutral-400',
+    bgColor: 'bg-inactive-bg',
+    textColor: 'text-inactive-text',
   };
 
-  const commonClassName = 'rounded-xl px-3 py-2.5';
+  const commonClassName = 'rounded-xl px-3.5 py-3';
+
+  const currBgColor = isActive ? bgColor[color as FilterColor] : inActiveObj.bgColor;
+
+  const currTextColor = isActive ? textColorObj[color] : inActiveObj.textColor;
 
   return onPress ? (
-    <Pressable
+    <TouchableOpacity
       onPress={onPress}
-      className={`${commonClassName} ${isActive ? bgColor[color as FilterColor] : inActiveObj.bgColor}`}
+      className={`${commonClassName} flex-row items-center gap-x-0.5 ${currBgColor} ${className}`}
     >
-      <Text
-        className={`text-md ${isActive ? textColorObj[color] : inActiveObj.textColor} ${textClassName}`}
-      >
-        {name}
-      </Text>
-    </Pressable>
+      {icon && <Icon name={icon} size={iconSize} color={isActive ? color : 'inactive'} />}
+      <Text className={`${currTextColor} ${textClassName}`}>{name}</Text>
+    </TouchableOpacity>
   ) : (
-    <View className={`${commonClassName} ${bgColor[color as FilterColor]}`}>
+    <View
+      className={`${commonClassName} flex-row items-center gap-x-0.5 ${currBgColor} ${className}`}
+    >
+      {icon && <Icon name={icon} size={iconSize} color={isActive ? color : 'inactive'} />}
       <Text className={`${textColorObj[color]} ${textClassName}`}>{name}</Text>
     </View>
   );

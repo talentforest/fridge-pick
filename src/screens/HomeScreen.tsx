@@ -1,33 +1,27 @@
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
-import ExpiringIngredients from '@/components/home/ExpiringIngredients';
+import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
+import CautionIngredientList from '@/components/home/CautionIngredientList';
 import HomeHeader from '@/components/home/HomeHeader';
-import RecommendedDish from '@/components/home/RecommendedDish';
+import RecommendedMeal from '@/components/home/RecommendedMeal';
 import SpaceGrid from '@/components/home/SpaceGrid';
-import TodayDish from '@/components/home/TodayDish';
-import { ScrollView, View } from 'react-native';
+import TodayMeal from '@/components/home/TodayMeal';
+import { View } from 'react-native';
 
 export default function HomeScreen() {
   return (
-    <SafeAreaViewContainer>
-      <ScrollView
-        contentContainerClassName="gap-y-20 pb-32"
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <View className="px-6">
+    <SafeAreaViewContainer edges={['top']}>
+      <ScrollViewContainer>
+        <View>
           <HomeHeader />
-
           <SpaceGrid />
         </View>
 
-        <ExpiringIngredients />
+        <CautionIngredientList />
 
-        <View className="gap-y-20 px-6">
-          <TodayDish />
+        <TodayMeal hasHeader />
 
-          <RecommendedDish />
-        </View>
-      </ScrollView>
+        <RecommendedMeal />
+      </ScrollViewContainer>
     </SafeAreaViewContainer>
   );
 }

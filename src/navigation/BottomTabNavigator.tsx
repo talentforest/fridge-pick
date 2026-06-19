@@ -1,76 +1,146 @@
-import DishScreen from '@/screens/DishScreen';
+import MealScreen from '@/screens/meal/MealScreen';
 import HomeScreen from '@/screens/HomeScreen';
-import ManagingFoodScreen from '@/screens/ManagingFoodScreen';
-import ShoppingListScreen from '@/screens/ShoppingListScreen';
+import ShoppingListScreen from '@/screens/shoppingList/ShoppingListScreen';
+import StorageScreen from '@/screens/storage/StorageScreen';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  CookingPot,
-  Grid2X2Plus,
-  House,
-  ShoppingBasket,
-} from 'lucide-react-native';
-import { Appearance } from 'react-native';
+import { Appearance, View } from 'react-native';
+
+import type {
+  BottomTabBarProps,
+  BottomTabNavigationOptions,
+} from '@react-navigation/bottom-tabs';
+import Icon from '@/components/common/ui/Icon';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Text from '@/components/common/ui/Text';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 const Tab = createBottomTabNavigator();
-
-const tabList = {
-  홈: (color: string) => <House size={20} color={color} />,
-  식재료관리: (color: string) => <Grid2X2Plus size={20} color={color} />,
-  장보기목록: (color: string) => (
-    <ShoppingBasket size={20} color={color} strokeWidth={1.8} />
-  ),
-  요리: (color: string) => (
-    <CookingPot size={20} color={color} strokeWidth={1.8} />
-  ),
-};
 
 export default function BottomTabNavigator() {
   const colorScheme = Appearance.getColorScheme() ?? 'light';
 
   return (
     <Tab.Navigator
+      key={colorScheme}
       screenOptions={{
-        tabBarStyle: {
-          backgroundColor: colorScheme === 'dark' ? '#252525' : '#f0f0f0',
-        },
+        tabBarStyle: { backgroundColor: 'transparent' },
+        tabBarBackground: () => <View className="flex-1 bg-bg" />,
       }}
+      tabBar={(props) => <CustomTabBar {...props} />}
     >
       <Tab.Screen
-        name="홈"
+        name="HomeScreen"
         component={HomeScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => tabList['홈'](color),
-          tabBarActiveTintColor: '#111',
+          tabBarLabel: '홈',
+          tabBarIcon: ({ focused }) => TabIcon({ name: '홈', focused }),
         }}
       />
       <Tab.Screen
-        name="식재료관리"
-        component={ManagingFoodScreen}
+        name="StorageScreen"
+        component={StorageScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => tabList['식재료관리'](color),
-          tabBarActiveTintColor: '#111',
+          tabBarLabel: '식재료관리',
+          tabBarIcon: ({ focused }) => TabIcon({ name: '식재료관리', focused }),
         }}
       />
       <Tab.Screen
-        name="장보기목록"
+        name="ShoppingListScreen"
         component={ShoppingListScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => tabList['장보기목록'](color),
-          tabBarActiveTintColor: '#111',
+          tabBarLabel: '장보기목록',
+          tabBarIcon: ({ focused }) => TabIcon({ name: '장보기목록', focused }),
         }}
       />
       <Tab.Screen
-        name="요리"
-        component={DishScreen}
+        name="MealScreen"
+        component={MealScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => tabList['요리'](color),
-          tabBarActiveTintColor: '#111',
+          tabBarLabel: '식사',
+          tabBarIcon: ({ focused }) => TabIcon({ name: '식사', focused }),
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+function TabIcon({
+  name,
+  focused,
+}: {
+  name: '홈' | '식재료관리' | '장보기목록' | '식사';
+  focused: boolean;
+}) {
+  const tabIconList = {
+    홈: 'House' as const,
+    식재료관리: 'Grid2X2Plus' as const,
+    장보기목록: 'ShoppingBasket' as const,
+    식사: 'HandPlatter' as const,
+  };
+
+  return (
+    <Icon name={tabIconList[name]} size={18} color={focused ? 'text' : 'inactive'} />
+  );
+}
+
+function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <View
+      style={{ paddingBottom: insets.bottom }}
+      className="flex-row border-t border-border bg-bg"
+    >
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key] as {
+          options: BottomTabNavigationOptions;
+        };
+
+        const label = options.tabBarLabel as string;
+
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        return (
+          <TouchableOpacity
+            key={route.key}
+            onPress={onPress}
+            className="flex-1 items-center justify-center pt-4"
+          >
+            <View className="items-center gap-y-2">
+              {/* 아이콘 */}
+              {options.tabBarIcon?.({
+                focused: isFocused,
+                color: '',
+                size: 20,
+              })}
+
+              {/* 라벨 */}
+              <Text
+                className={isFocused ? 'text-xs text-text' : 'text-xs text-inactive-text'}
+              >
+                {label}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
   );
 }

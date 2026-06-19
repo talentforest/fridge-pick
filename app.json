@@ -4,20 +4,21 @@
     "slug": "fridgepick",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/shopping_basket.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/images/fridge.png",
       "resizeMode": "contain",
       "backgroundColor": "#f3f"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ellie0501.fridgepick"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/fridge.png",
         "backgroundColor": "#f3f"
       },
       "edgeToEdgeEnabled": true,
@@ -25,7 +26,7 @@
     },
     "web": {
       "bundler": "metro",
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/images/fridge.png"
     },
     "extra": {
       "eas": {
@@ -33,6 +34,6 @@
       }
     },
     "owner": "fridge-pick",
-    "plugins": ["expo-font"]
+    "plugins": ["expo-font", "@react-native-community/datetimepicker"]
   }
 }

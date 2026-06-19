@@ -13,7 +13,7 @@ export const StorageItemSchema = z
 
     unitLabel: UnitLabelSchema,
 
-    purchasedDate: z.string(), // YYYY-MM-DD
+    purchasedAt: z.string(), // YYYY-MM-DD
     expiresAt: z.string(),
 
     storage: StorageTypeSchema,

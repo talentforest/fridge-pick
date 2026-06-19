@@ -27,7 +27,62 @@ module.exports = {
         card: 'var(--color-card)',
         text: 'var(--color-text)',
         border: 'var(--color-border)',
-        inactive: 'var(--color-inactive)',
+
+        inactive: {
+          bg: 'var(--color-inactive-bg)',
+          text: 'var(--color-inactive-text)',
+        },
+
+        red: {
+          9: 'var(--color-red-9)',
+          7: 'var(--color-red-7)',
+          5: 'var(--color-red-5)',
+          3: 'var(--color-red-3)',
+          1: 'var(--color-red-1)',
+        },
+
+        blue: {
+          9: 'var(--color-blue-9)',
+          7: 'var(--color-blue-7)',
+          5: 'var(--color-blue-5)',
+          3: 'var(--color-blue-3)',
+          1: 'var(--color-blue-1)',
+        },
+
+        ice: {
+          7: 'var(--color-ice-7)',
+          5: 'var(--color-ice-5)',
+          3: 'var(--color-ice-3)',
+        },
+
+        indigo: {
+          5: 'var(--color-indigo-5)',
+          3: 'var(--color-indigo-3)',
+        },
+
+        neutral: {
+          9: 'var(--color-neutral-9)',
+          7: 'var(--color-neutral-7)',
+          5: 'var(--color-neutral-5)',
+          3: 'var(--color-neutral-3)',
+          1: 'var(--color-neutral-1)',
+        },
+
+        yellow: {
+          9: 'var(--color-yellow-9)',
+          7: 'var(--color-yellow-7)',
+          5: 'var(--color-yellow-5)',
+          3: 'var(--color-yellow-3)',
+          1: 'var(--color-yellow-1)',
+        },
+
+        green: {
+          9: 'var(--color-green-9)',
+          7: 'var(--color-green-7)',
+          5: 'var(--color-green-5)',
+          3: 'var(--color-green-3)',
+          1: 'var(--color-green-1)',
+        },
       },
 
       letterSpacing: {

@@ -1,5 +1,22 @@
-export * from '@/constants/category';
-export * from '@/constants/dish';
-export * from '@/constants/filter';
-export * from '@/constants/ingredient';
-export * from '@/theme/color';
+/** ingredient */
+export * from '@/constants/ingredient/category';
+export * from '@/constants/ingredient/expirationStatus';
+export * from '@/constants/ingredient/ingredientVariant';
+export * from '@/constants/ingredient/ingredient';
+
+/** meal */
+export * from '@/constants/meal/meal';
+export * from '@/constants/meal/mealSuffix';
+export * from '@/constants/meal/convenienceVariant';
+export * from '@/constants/meal/filter';
+
+/** shoppingList */
+export * from '@/constants/shoppingList/mockShoppingList';
+
+/** storage */
+export * from '@/constants/storage/mockStorageItemList';
+export * from '@/constants/storage/storageObj';
+
+export * from '@/constants/style';
+
+export * from '@/constants/image';
