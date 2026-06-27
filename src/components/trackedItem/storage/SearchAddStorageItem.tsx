@@ -1,43 +1,60 @@
+import { initialCustomStorageItem } from '@/constants';
+import { SelectableItem } from '@/types/selectableItem';
+import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
+import {
+  convertIngredientToStorageItem,
+  convertMealToStorageItem,
+  convertPreparedFoodToStorageItem,
+  searchIngredientAndMeal,
+} from '@/utils';
+import { View } from 'react-native';
 import GridContainer from '@/components/common/container/GridContainer';
 import LabelContainer from '@/components/common/container/LabelContainer';
 import IconWithText from '@/components/common/IconWithText';
 import TextInput from '@/components/common/ui/TextInput';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
-import { initialCustomStorageItem } from '@/constants';
-import { EnrichStorageItem } from '@/types/storage';
-import {
-  convertIngredientToStorageItem,
-  convertMealToStorageItem,
-  searchIngredientAndMeal,
-} from '@/utils';
-import { View } from 'react-native';
 
 interface SearchAddStorageItemProps {
+  currStorageType: StorageTypeId;
   searchKeyword: string;
   setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
-  setCurrStorageItem: React.Dispatch<React.SetStateAction<EnrichStorageItem | null>>;
+  setCurrStorageItem: React.Dispatch<React.SetStateAction<EnrichedStorageItem | null>>;
 }
 
 export default function SearchAddStorageItem({
+  currStorageType,
   searchKeyword,
   setSearchKeyword,
   setCurrStorageItem,
 }: SearchAddStorageItemProps) {
   const recommendedKeywordList = searchIngredientAndMeal(searchKeyword || '', 12);
 
+  const onSelectStorageItemPress = (item: SelectableItem) => {
+    if (item.kind === 'ingredient') {
+      const storageItem = convertIngredientToStorageItem(item, currStorageType);
+      setCurrStorageItem(storageItem);
+    }
+    if (item.kind === 'preparedFood') {
+      const storageItem = convertPreparedFoodToStorageItem(item, currStorageType);
+      setCurrStorageItem(storageItem);
+    }
+    if (item.kind === 'meal') {
+      const storageItem = convertMealToStorageItem(item, currStorageType);
+      setCurrStorageItem(storageItem);
+    }
+  };
+
   return (
-    <View>
-      <View className="mt-5 gap-y-2">
-        <LabelContainer label="식재료 검색">
-          <TextInput
-            value={searchKeyword}
-            onChangeText={setSearchKeyword}
-            placeholder="식재료를 검색해주세요."
-            icon="Search"
-          />
-        </LabelContainer>
-      </View>
+    <View className="pt-5">
+      <LabelContainer label="식재료 검색">
+        <TextInput
+          value={searchKeyword}
+          onChangeText={setSearchKeyword}
+          placeholder="식재료를 검색해주세요."
+          icon="Search"
+        />
+      </LabelContainer>
 
       {/* 추천 식재료 */}
       {recommendedKeywordList.length ? (
@@ -45,21 +62,12 @@ export default function SearchAddStorageItem({
           {recommendedKeywordList.map((item) => (
             <TouchableOpacity
               key={item.id}
-              onPress={() => {
-                if (item.type === 'custom') return;
-
-                const storageItem =
-                  item.type === 'ingredient'
-                    ? convertIngredientToStorageItem(item)
-                    : convertMealToStorageItem(item);
-
-                setCurrStorageItem(storageItem);
-              }}
+              onPress={() => onSelectStorageItemPress(item)}
             >
               <SelectableItemCard
                 item={item}
-                isCompact
-                className={`h-[90px] ${item.label === searchKeyword ? '!bg-blue-1' : ''}`}
+                className={`${item.label === searchKeyword ? '!bg-blue-1' : ''}`}
+                textClassName="!text-[13px]"
               />
             </TouchableOpacity>
           ))}
@@ -79,21 +87,15 @@ export default function SearchAddStorageItem({
           onPress={() => {
             const selectableItem = searchIngredientAndMeal(searchKeyword || '', 1)[0];
 
-            if (!selectableItem || selectableItem.type === 'custom') {
-              const item = {
-                ...initialCustomStorageItem,
-                customLabel: searchKeyword,
-              };
-              return setCurrStorageItem(item);
-            }
+            if (selectableItem) return;
 
-            if (selectableItem.type === 'ingredient') {
-              const item = convertIngredientToStorageItem(selectableItem);
-              return setCurrStorageItem(item);
-            }
+            const storageItem = {
+              ...initialCustomStorageItem,
+              storage: { type: currStorageType },
+              customLabel: searchKeyword,
+            };
 
-            const item = convertMealToStorageItem(selectableItem);
-            setCurrStorageItem(item);
+            return setCurrStorageItem(storageItem);
           }}
         />
       )}

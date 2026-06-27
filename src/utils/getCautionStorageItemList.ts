@@ -1,8 +1,8 @@
-import { EnrichStorageItem, ExpirationStatus, StorageItem } from '@/types/storage';
+import { EnrichedStorageItem, ExpirationStatus, StorageItem } from '@/types/storage';
 import { getExpirationStatus, getRemainingDays } from '@/utils/getExpirationDate';
 import { findIngredient, findMeal } from '@/utils/findItem';
 
-type CautionStorageItem = { storageItem: EnrichStorageItem; remainingDays: number };
+type CautionStorageItem = { storageItem: EnrichedStorageItem; remainingDays: number };
 
 /** 소비기한 주의 식재료 목록
  * @param storageItemList - 모든 보관함 아이템 데이터

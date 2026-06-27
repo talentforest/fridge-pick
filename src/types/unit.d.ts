@@ -1,4 +1,18 @@
-import { ValidCategoryKey } from '@/types/category';
+import { IngredientCategoryKey } from '@/types/category';
+
+type Unit = {
+  /** optional, 기본 표시 단위 */
+  defaultUnitLabel?: StockUnit;
+
+  /** optional, 선택 가능한 단위 (없으면 default만 사용) */
+  unitOptions?: readonly StockUnit[];
+
+  /** optional */
+  packageWeight?: {
+    amount: number;
+    unit: WeightUnit | VolumeUnit;
+  };
+};
 
 export type WeightUnit = 'g' | 'kg';
 export type VolumeUnit = 'ml' | 'L';
@@ -26,7 +40,7 @@ export type StockUnit =
   | 'g'
   | '송이';
 
-export const categoryUnitMap: Record<ValidCategoryKey, StockUnit[]> = {
+export const categoryUnitMap: Record<IngredientCategoryKey, StockUnit[]> = {
   noodle: ['봉', '개'],
   meat: ['팩', '마리', '개'],
   seafood: ['팩', '마리', '상자', '개'],

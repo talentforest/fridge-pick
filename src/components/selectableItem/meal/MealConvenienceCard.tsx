@@ -1,60 +1,50 @@
-import IconWithText from '@/components/common/IconWithText';
 import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import { convenienceVariantObj, iosShadowStyle } from '@/constants';
-import { ConvenienceVariant } from '@/types/meal';
+import { FoodSource } from '@/types/selectableItem';
+import { ReactNode } from 'react';
 import { Image, View } from 'react-native';
 
 type MealConvenienceCardProps = {
-  item: ConvenienceVariant;
+  type: FoodSource;
+  className?: string;
+  isSelected?: boolean;
+  children?: ReactNode;
 };
 
-export default function MealConvenienceCard({ item }: MealConvenienceCardProps) {
-  const onPress = () => {};
+export default function MealConvenienceCard({
+  type,
+  className = '',
+  isSelected = false,
+  children,
+}: MealConvenienceCardProps) {
+  const { icon, color, image, label, description } = convenienceVariantObj[type];
 
   return (
-    <Card className={`min-h-fit flex-1 items-center gap-x-3 !rounded-xl !pb-3`}>
-      <Image source={convenienceVariantObj[item].image} className="mb-2 size-[70px]" />
+    <Card className={`flex-1 flex-row items-center gap-x-2 !py-4 !pl-2 ${className}`}>
+      <Image source={image} className="size-[78px]" />
 
-      {convenienceVariantObj[item].icon && (
+      {icon && color && (
         <View
-          style={{ ...iosShadowStyle }}
-          className="absolute right-3 top-3 rounded-lg bg-white p-2"
+          style={{ ...iosShadowStyle, shadowRadius: 5 }}
+          className={`absolute left-2 top-1.5 rounded-lg bg-white p-1`}
         >
-          <Icon
-            name={convenienceVariantObj[item].icon}
-            size={20}
-            color={convenienceVariantObj[item].color}
-          />
+          <Icon name={icon} size={18} color={isSelected ? color : 'inactive'} />
         </View>
       )}
 
-      <View className="mb-2 items-center">
-        <View className="flex-row gap-y-1">
-          <Text className="border-b font-extrabold">
-            {convenienceVariantObj[item].label}
-          </Text>
-        </View>
+      <View className="flex-1">
+        <Text className={`mb-3 mr-auto mt-1 border-b font-extrabold`}>{label}</Text>
 
-        <View className="mt-2.5 gap-y-1">
-          <Text className="text-center text-[13px] leading-6 text-neutral-5">
-            {convenienceVariantObj[item].description}
+        {description.split('|').map((part) => (
+          <Text key={part} className=" text-[13px] leading-6 text-neutral-5">
+            {part}
           </Text>
-        </View>
+        ))}
       </View>
 
-      {item !== 'readyToEat' && (
-        <IconWithText
-          text="장보기"
-          icon="Plus"
-          iconSize={14}
-          iconColor="yellow"
-          textClassName="text-yellow-7"
-          onPress={onPress}
-          className="!gap-x-0 p-2"
-        />
-      )}
+      {children}
     </Card>
   );
 }

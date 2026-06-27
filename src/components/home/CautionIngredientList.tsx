@@ -1,6 +1,6 @@
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import CautionStorageItem from '@/components/trackedItem/storage/CautionStorageItem';
-import MealListByExpiredSoonIngredient from '@/components/meal/MealListByExpiredSoonIngredient';
+import MealListByExpiredSoonIngredient from '@/components/selectableItem/meal/MealListByExpiredSoonIngredient';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
@@ -9,13 +9,13 @@ import { cautionStorageItemListAtom } from '@/atom/storageItemAtom';
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 import { View } from 'react-native';
-import { EnrichStorageItem, StorageTypeId } from '@/types/storage';
+import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
 
 interface ExpiringIngredientsProps {
   hasCautionIngredientMeal?: boolean;
   title?: string;
   storageType?: StorageTypeId;
-  onItemPress?: (item: EnrichStorageItem) => void;
+  onItemPress?: (item: EnrichedStorageItem) => void;
   isGridType?: boolean;
   type?: 'expiredSoon' | 'expired' | 'caution';
 }

@@ -16,6 +16,7 @@ interface SquareBtnProps {
     | 'indigo'
     | 'inActive'
     | 'neutral'
+    | 'black'
     | 'transparent';
 }
 
@@ -36,6 +37,7 @@ export default function SquareBtn({
     inActive: 'bg-inactive-bg',
     neutral: 'bg-neutral-7',
     transparent: 'border border-neutral-9 bg-white',
+    black: 'bg-neutral-9',
   };
 
   const textStyle =

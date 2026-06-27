@@ -2,11 +2,11 @@ import LabelContainer from '@/components/common/container/LabelContainer';
 import IconWithText from '@/components/common/IconWithText';
 import TextArea from '@/components/common/ui/TextArea';
 import { useOverlay } from '@/hooks';
-import { EditableStorageItemData } from '@/types/storage';
+import { EditableStorageItem } from '@/types/storage';
 
 interface FormMemoProps {
   currMemo: string;
-  onItemChange: (newData: Partial<EditableStorageItemData>) => void;
+  onItemChange: (newData: Partial<EditableStorageItem>) => void;
   hasLabel?: boolean;
   onSubmit?: () => void;
   onFocus?: () => void;
@@ -36,6 +36,7 @@ export default function FormMemo({
         onFocus={onFocus}
         onBlur={shrinkSheet}
       />
+
       {onSubmit && (
         <IconWithText
           icon="CheckCircle2"

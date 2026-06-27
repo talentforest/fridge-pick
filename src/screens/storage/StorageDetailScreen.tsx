@@ -9,7 +9,7 @@ import {
 } from '@react-navigation/native';
 import { View } from 'react-native';
 import { useEffect } from 'react';
-import { EnrichStorageItem } from '@/types/storage';
+import { EnrichedStorageItem } from '@/types/storage';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
@@ -34,7 +34,7 @@ export default function StorageDetailScreen() {
 
   const isFocused = useIsFocused();
 
-  const onItemPress = (item: EnrichStorageItem) => {
+  const onItemPress = (item: EnrichedStorageItem) => {
     openSheet({
       enableDynamicSizing: false,
       keyboardBehavior: 'extend',
@@ -83,7 +83,7 @@ export default function StorageDetailScreen() {
                 name="Plus"
                 className="h-10 w-10 items-center justify-center"
                 size={24}
-                color="text"
+                color="yellow"
                 onPress={() =>
                   navigation.navigate('AddStorageItemScreen', { id: storageType })
                 }

@@ -5,13 +5,13 @@ import {
   findFavoriteItemAtom,
 } from '@/atom/favoritesAtom';
 import Icon from '@/components/common/ui/Icon';
-import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
-import { EnrichStorageItem } from '@/types/storage';
+import { SelectableItem } from '@/types/selectableItem';
+import { EnrichedStorageItem } from '@/types/storage';
 import { createSelectableItemKey, createTrackedItemKey } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 interface FavoriteBtnProps {
-  storageItem?: EnrichStorageItem;
+  storageItem?: EnrichedStorageItem;
   selectableItem?: SelectableItem;
   className?: string;
   size?: number;

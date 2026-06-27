@@ -1,13 +1,17 @@
 import { addTodayMealItemAtom, todayMealListAtom } from '@/atom/mealAtom';
 import { useOverlay } from '@/hooks/common/useOverlay';
-import { EnrichedMealWithFilterList } from '@/hooks/meal/useGetMealList';
-import { TodayMeal } from '@/types/meal';
+import { EnrichedConsumableFoodWithFilterList } from '@/hooks/meal/useGetMealList';
+import { TodayMeal } from '@/types/selectableItem';
 import { useAtomValue, useSetAtom } from 'jotai';
 
-export const useHandleTodayMeal = (currMeal: EnrichedMealWithFilterList) => {
+export const useHandleTodayMeal = (
+  currConsumableFood: EnrichedConsumableFoodWithFilterList,
+) => {
   const todayMealList = useAtomValue(todayMealListAtom);
 
-  const isTodayMeal = !!todayMealList.find(({ meal }) => meal.id === currMeal.id);
+  const isTodayMeal = !!todayMealList.find(
+    ({ consumableFood }) => consumableFood.id === currConsumableFood.id,
+  );
 
   const hasMainMenu = !!todayMealList.find((meal) => meal.role === 'main');
 
@@ -17,9 +21,9 @@ export const useHandleTodayMeal = (currMeal: EnrichedMealWithFilterList) => {
 
   const onAddTodayMealPress = () => {
     const todayMeal: TodayMeal = {
-      meal: currMeal,
+      consumableFood: currConsumableFood,
       role: hasMainMenu ? 'side' : 'main',
-      consumeMethod: 'cook',
+      consumeMethod: 'homemade',
       selectedAt: new Date().toISOString(),
     };
 

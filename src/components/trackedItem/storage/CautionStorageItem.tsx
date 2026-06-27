@@ -1,12 +1,16 @@
 import Text from '@/components/common/ui/Text';
 import { expirationStatusObj, iosShadowStyle } from '@/constants';
-import { EnrichStorageItem } from '@/types/storage';
-import { formatRemainingDays, getExpirationStatus, getTrackedItemLabel } from '@/utils';
+import { EnrichedStorageItem } from '@/types/storage';
+import {
+  formatRemainingDays,
+  getExpirationStatus,
+  getTrackedItemLabelAndCategory,
+} from '@/utils';
 import { View } from 'react-native';
-import ItemImage from '@/components/common/ItemImage';
+import FoodImage from '@/components/common/FoodImage';
 
 interface CautionStorageItemProps {
-  storageItem: EnrichStorageItem;
+  storageItem: EnrichedStorageItem;
   remainingDays: number;
   index?: number;
   isCurrIndex?: boolean;
@@ -20,7 +24,7 @@ export default function CautionStorageItem({
 }: CautionStorageItemProps) {
   const status = getExpirationStatus(remainingDays);
 
-  const label = getTrackedItemLabel(storageItem).label;
+  const label = getTrackedItemLabelAndCategory(storageItem).label;
 
   const days = formatRemainingDays(remainingDays);
 
@@ -38,7 +42,9 @@ export default function CautionStorageItem({
       )}
 
       <View className={`aspect-square items-center justify-center px-1`}>
-        <ItemImage trackedItem={storageItem} imageSize={55} />
+        {storageItem.type !== 'custom' && (
+          <FoodImage trackedItem={storageItem} imageSize={55} />
+        )}
         <Text className={`text-center leading-[20px] ${isCurrIndex ? '' : ''}`}>
           {label}
         </Text>

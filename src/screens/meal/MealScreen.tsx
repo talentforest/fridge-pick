@@ -8,13 +8,13 @@ import LabelContainer from '@/components/common/container/LabelContainer';
 import FilterContainer from '@/components/common/container/FilterContainer';
 import TextInput from '@/components/common/ui/TextInput';
 import NavigateBtn from '@/components/common/NavigateBtn';
-import { EnrichedMealWithFilterList, useGetMealList } from '@/hooks';
+import { EnrichedConsumableFoodWithFilterList, useGetMealList } from '@/hooks';
 import { useCallback } from 'react';
 import { View } from 'react-native';
 
 export default function MealScreen() {
   const {
-    mealFilterList,
+    filterList,
     filteredMealList,
     searchKeyword,
     setSearchKeyword,
@@ -23,7 +23,9 @@ export default function MealScreen() {
   } = useGetMealList({ maxLength: 10 });
 
   const filteredChildrenData = useCallback(
-    (meal: EnrichedMealWithFilterList) => <MealCard key={meal.id} meal={meal} />,
+    (meal: EnrichedConsumableFoodWithFilterList) => (
+      <MealCard key={meal.id} food={meal} />
+    ),
     [],
   );
 
@@ -54,7 +56,7 @@ export default function MealScreen() {
 
           <FilterContainer
             columns={1}
-            filterList={mealFilterList}
+            filterList={filterList}
             dataList={filteredMealList}
             changeActiveFilter={changeActiveFilter}
             activeFilter={activeFilter}

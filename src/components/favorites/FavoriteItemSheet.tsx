@@ -2,10 +2,10 @@ import { addShoppingItemAtom, findShoppingItem } from '@/atom/shoppingListAtom';
 import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
 import { storageObj } from '@/constants';
 import { useErrorHandler, useOverlay } from '@/hooks';
-import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
+import { SelectableItem } from '@/types/selectableItem';
 import { ShoppingItem } from '@/types/shoppingList';
 import { StorageTypeId } from '@/types/storage';
-import { createSelectableItemKey } from '@/utils';
+import { createSelectableItemKey, getSelectableItemLabelAndCategory } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { View } from 'react-native';
 import LabelContainer from '@/components/common/container/LabelContainer';
@@ -14,6 +14,7 @@ import SquareBtn from '@/components/common/SquareBtn';
 import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
+import FoodImage from '@/components/common/FoodImage';
 
 interface FavoriteItemSheetProps {
   item: SelectableItem;
@@ -57,7 +58,17 @@ export default function FavoriteItemSheet({
       <Text className="text-xl">식재료 정보</Text>
 
       <View className="my-2 flex-row items-center justify-between px-2">
-        {/* <SelectableItemImageLabel item={item} imageSize={80} /> */}
+        <View className="flex-1 flex-row items-center gap-x-3">
+          {/* 이미지 */}
+          <FoodImage selectableItem={item} imageSize={80} />
+          <View className="gap-y-2">
+            <Text className="line-clamp-1 text-lg">{item.label}</Text>
+            <Text className="text-neutral-5">
+              {getSelectableItemLabelAndCategory(item).categoryLabel}
+            </Text>
+          </View>
+        </View>
+
         <FavoriteBtn selectableItem={item} />
       </View>
 

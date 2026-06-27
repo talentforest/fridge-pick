@@ -1,8 +1,8 @@
 import { itemListByStorageAtom } from '@/atom/storageItemAtom';
 import { ingredientCategoryObj, storageObj } from '@/constants';
-import { CategoryKey } from '@/types/category';
+import { IngredientCategoryKey } from '@/types/category';
 import {
-  EnrichStorageItem,
+  EnrichedStorageItem,
   StorageSide,
   StorageSideId,
   StorageSpace,
@@ -47,13 +47,13 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
   const hasSide = false; // TODO: 사용자가 문쪽 안쪽을 구분해서 사용하길 원하는 경우 처리
 
   const storageItemListByCategory = useMemo(() => {
-    const grouped: Partial<Record<CategoryKey, EnrichStorageItem[]>> = {};
+    const grouped: Partial<Record<IngredientCategoryKey, EnrichedStorageItem[]>> = {};
 
     const currStorageItemList = hasSide ? currentSideItems : storageItemList;
 
     currStorageItemList.forEach((storageItem) => {
-      let category: CategoryKey = 'noCategory';
-      let enrichedItem: EnrichStorageItem = storageItem;
+      let category: IngredientCategoryKey = 'noCategory';
+      let enrichedItem: EnrichedStorageItem = storageItem;
 
       switch (storageItem.type) {
         case 'ingredient': {
@@ -67,7 +67,7 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
         }
 
         case 'meal': {
-          category = 'meal';
+          category = 'convenience';
           const meal = findMeal(storageItem.mealId);
           enrichedItem = {
             ...storageItem,
@@ -93,9 +93,9 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
     return Object.values(ingredientCategoryObj)
       .map((category) => ({
         category,
-        items: grouped[category.id] ?? [],
+        itemList: grouped[category.id] ?? [],
       }))
-      .filter((group) => group.items.length > 0);
+      .filter((group) => group.itemList.length > 0);
   }, [currentSideItems, storageItemList, hasSide]);
 
   const sideList = useMemo(

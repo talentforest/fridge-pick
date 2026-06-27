@@ -1,7 +1,7 @@
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
-import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
-import ItemImage from '@/components/common/ItemImage';
+import { SelectableItem } from '@/types/selectableItem';
+import FoodImage from '@/components/common/FoodImage';
 import { createSelectableItemKey } from '@/utils';
 import { useAtomValue } from 'jotai';
 import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
@@ -13,7 +13,6 @@ interface SelectableItemCardProps {
   item: SelectableItem;
   className?: string;
   textClassName?: string;
-  isCompact?: boolean;
   imageSize?: number;
 }
 
@@ -21,8 +20,7 @@ export default function SelectableItemCard({
   item,
   className = '',
   textClassName = '',
-  isCompact = false,
-  imageSize = 45,
+  imageSize = 60,
 }: SelectableItemCardProps) {
   const key = createSelectableItemKey(item);
 
@@ -31,21 +29,14 @@ export default function SelectableItemCard({
   const isShoppingItem = useAtomValue(findShoppingItem(key));
 
   return (
-    <Card className={`items-center justify-center gap-y-1 rounded-xl !p-1 ${className}`}>
+    <Card className={`items-center justify-center rounded-xl !px-1 !pt-2.5 ${className}`}>
       {/* 이미지 */}
-      <ItemImage selectableItem={item} imageSize={imageSize} />
+      <FoodImage selectableItem={item} imageSize={imageSize} />
 
       {/* 라벨 */}
       <Text className={`line-clamp-2 text-center leading-5 ${textClassName}`}>
         {item.label}
       </Text>
-
-      {/* 남은일수 */}
-      {/* {!isCompact &&  (
-        <Text className="text-red-600">
-          +{item.expirationDays[item.defaultStorage]}일
-        </Text>
-      )} */}
 
       {/* 장보기 목록에 있는 경우 */}
       {isShoppingItem && (

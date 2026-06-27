@@ -1,9 +1,9 @@
 import { mockStorageItemList, storageObj } from '@/constants';
 import { AppError, AppSuccess } from '@/hooks';
-import { Ingredient } from '@/types/ingredient';
+import { Ingredient } from '@/types/selectableItem';
 import {
-  EditableStorageItemData,
-  EnrichStorageItem,
+  EditableStorageItem,
+  EnrichedStorageItem,
   StorageItem,
   StorageTypeId,
 } from '@/types/storage';
@@ -20,7 +20,7 @@ import { nanoid } from 'nanoid/non-secure';
 const enrichStorageItemList = mockStorageItemList.map(enrichStorageItem);
 
 /** Basic */
-export const allStorageItemListAtom = atom<EnrichStorageItem[]>(enrichStorageItemList); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
+export const allStorageItemListAtom = atom<EnrichedStorageItem[]>(enrichStorageItemList); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
 
 export const searchKeywordAtom = atom<string>('');
 
@@ -85,7 +85,7 @@ export const addStorageItemAtom = atom(
   (
     get,
     set,
-    newItem: EnrichStorageItem,
+    newItem: EnrichedStorageItem,
   ): AppError<StorageItem | Ingredient> | AppSuccess => {
     const list = get(allStorageItemListAtom);
 
@@ -103,7 +103,7 @@ export const addStorageItemAtom = atom(
       };
     }
 
-    const newStorageItem: EnrichStorageItem = {
+    const newStorageItem: EnrichedStorageItem = {
       ...newItem,
       id: nanoid(),
     };
@@ -130,7 +130,7 @@ export const deleteStorageItemListAtom = atom(null, (get, set, ids: string[]) =>
 
 interface Props {
   id: string;
-  newData: Partial<EditableStorageItemData>;
+  newData: Partial<EditableStorageItem>;
 }
 
 /** 특정 아이템을 수정한다. */

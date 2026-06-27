@@ -1,9 +1,10 @@
-import { MealFilterKey } from '@/types/filter';
-import { Ingredient } from '@/types/ingredient';
-import { Meal, MealWithEnrichIngredient } from '@/types/meal';
-import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
+import { FoodFilterKey } from '@/types/filter';
+import {
+  ConsumableFoodWithEnrichedFoodStructure,
+  SelectableItem,
+} from '@/types/selectableItem';
 
-type RecommendMealFactors = MealWithEnrichIngredient & {
+type RecommendMealFactors = ConsumableFoodWithEnrichedFoodStructure & {
   expiredSoonList: SelectableItem[];
   requiredIngredientCount: number;
   possessedIngredientCount: number;
@@ -12,12 +13,12 @@ type RecommendMealFactors = MealWithEnrichIngredient & {
 };
 
 const getMissingCount = (
-  targetList: readonly (Ingredient | Meal)[],
+  targetList: readonly SelectableItem[],
   possessedList: readonly SelectableItem[],
 ) => {
   return targetList.filter(
-    ({ type, id }) =>
-      !possessedList.some((possessed) => possessed.type === type && possessed.id === id),
+    ({ kind, id }) =>
+      !possessedList.some((possessed) => possessed.type === kind && possessed.id === id),
   ).length;
 };
 
@@ -28,11 +29,11 @@ const getMissingCount = (
  * - essential/common 재료 보유율이 높은가
  */
 const getBaseScore = (meal: RecommendMealFactors): number => {
-  if (!meal.ingredientStructure) return 1000;
+  if (!meal.foodStructure) return 1000;
 
   let score = 0;
 
-  const { essential, common } = meal.ingredientStructure;
+  const { essential, common } = meal.foodStructure;
 
   const essentialMissingCount = getMissingCount(essential, meal.possessedList);
 
@@ -60,7 +61,7 @@ const getBaseScore = (meal: RecommendMealFactors): number => {
 
 export const getRecommendMealScore = (
   meal: RecommendMealFactors,
-  activeFilter: MealFilterKey | 'all',
+  activeFilter: FoodFilterKey | 'all',
 ): number => {
   let score = getBaseScore(meal);
 

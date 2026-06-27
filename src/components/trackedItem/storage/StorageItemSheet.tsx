@@ -2,8 +2,8 @@ import { changeStorageItemAtom, deleteStorageItemListAtom } from '@/atom/storage
 import { image_empty_plate, storageObj } from '@/constants';
 import { useOverlay, useGetMealList } from '@/hooks';
 import { useSetAtom } from 'jotai';
-import { getTrackedItemLabel } from '@/utils';
-import { EnrichStorageItem, StorageItem } from '@/types/storage';
+import { getTrackedItemLabelAndCategory } from '@/utils';
+import { EnrichedStorageItem, StorageItem } from '@/types/storage';
 import { useState } from 'react';
 import { Image, View } from 'react-native';
 import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
@@ -20,7 +20,7 @@ import Card from '@/components/common/ui/Card';
 import ModalHeader from '@/components/common/header/ModalHeader';
 
 interface StorageItemSheetProps {
-  storageItem: EnrichStorageItem;
+  storageItem: EnrichedStorageItem;
 }
 
 export default function StorageItemSheet({ storageItem }: StorageItemSheetProps) {
@@ -32,9 +32,9 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
     Pick<StorageItem, 'memo' | 'expiresAt'>
   >({ expiresAt, memo: storageItem.memo });
 
-  const { getHasStorageItemMealList } = useGetMealList();
+  const { getHasStorageItemFoodList } = useGetMealList();
 
-  const mealListHasStorageItem = getHasStorageItemMealList(storageItem);
+  const mealListHasStorageItem = getHasStorageItemFoodList(storageItem);
 
   const deleteItems = useSetAtom(deleteStorageItemListAtom);
 
@@ -76,7 +76,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
 
   if (!storageItem) return;
 
-  const label = getTrackedItemLabel(storageItem).label;
+  const label = getTrackedItemLabelAndCategory(storageItem).label;
 
   return (
     <View className="my-2 w-full flex-1 gap-y-1.5">
@@ -144,7 +144,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
               spacing={20}
               centerFocus
               keyExtractor={(_, index) => `${index}`}
-              renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
+              renderItem={({ item }) => <MealCompactCard key={item.id} food={item} />}
             />
           </FullBleedSection>
         ) : (

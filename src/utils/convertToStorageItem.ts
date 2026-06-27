@@ -1,7 +1,14 @@
 import { DEFAULT_EXPIRATION_DAYS } from '@/constants';
-import { Ingredient } from '@/types/ingredient';
-import { Meal, MealKey } from '@/types/meal';
-import { IngredientStorageItem, MealStorageItem } from '@/types/storage';
+import {
+  Ingredient,
+  Meal,
+  MealKey,
+  PreparedFood,
+  PreparedFoodKey,
+} from '@/types/selectableItem';
+
+import { IngredientStorageItem, MealStorageItem, StorageTypeId } from '@/types/storage';
+import { PreparedFoodStorageItem } from '@/types/trackedItem';
 import { formatDateString } from '@/utils/formatDate';
 import { calculateExpiresAt } from '@/utils/getExpirationDate';
 import { nanoid } from 'nanoid/non-secure';
@@ -11,17 +18,20 @@ import { nanoid } from 'nanoid/non-secure';
  */
 export const convertIngredientToStorageItem = (
   ingredient: Ingredient,
+  currStorage?: StorageTypeId,
 ): IngredientStorageItem & { ingredient: Ingredient } => {
   const now = new Date();
 
   const { id, defaultStorage, expirationDays } = ingredient;
 
-  const expiresAtValue = expirationDays[defaultStorage] || DEFAULT_EXPIRATION_DAYS;
+  const storage = currStorage ?? defaultStorage;
+
+  const expiresAtValue = expirationDays[storage] || DEFAULT_EXPIRATION_DAYS;
 
   return {
     type: 'ingredient',
     id: nanoid(),
-    storage: { type: defaultStorage },
+    storage: { type: storage },
     expiresAt: calculateExpiresAt(now, expiresAtValue),
     purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
     ingredientId: id,
@@ -31,18 +41,54 @@ export const convertIngredientToStorageItem = (
 
 export const convertMealToStorageItem = (
   meal: Meal,
+  currStorage: StorageTypeId,
 ): MealStorageItem & { meal: Meal } => {
   const now = new Date();
 
   const { id } = meal;
 
+  // 보관위치별 소비기한 설정
+  const convenienceExpirationDays = {
+    freezer: 365,
+    fridge: 7,
+    pantry: 365,
+  };
+
   return {
     type: 'meal',
     id: nanoid(),
-    storage: { type: 'fridge' },
-    expiresAt: calculateExpiresAt(now, 3),
-    purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
     mealId: id as MealKey,
+    storage: { type: currStorage },
+    foodSource: 'convenience',
+    expiresAt: calculateExpiresAt(now, convenienceExpirationDays[currStorage]),
+    purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
     meal,
+  };
+};
+
+export const convertPreparedFoodToStorageItem = (
+  preparedFood: PreparedFood,
+  currStorage: StorageTypeId,
+): PreparedFoodStorageItem & { preparedFood: PreparedFood } => {
+  const now = new Date();
+
+  const { id, availableFoodSources } = preparedFood;
+
+  // 보관위치별 소비기한 설정
+  const convenienceExpirationDays = {
+    freezer: 365,
+    fridge: 7,
+    pantry: 365,
+  };
+
+  return {
+    type: 'preparedFood',
+    id: nanoid(),
+    preparedFoodId: id as PreparedFoodKey,
+    storage: { type: currStorage },
+    foodSource: availableFoodSources ? availableFoodSources[0] : 'convenience',
+    expiresAt: calculateExpiresAt(now, convenienceExpirationDays[currStorage]),
+    purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
+    preparedFood,
   };
 };

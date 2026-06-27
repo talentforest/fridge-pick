@@ -4,7 +4,7 @@ import {
 } from '@/atom/storageItemAtom';
 import { image_fridge } from '@/constants';
 import { StackNavProp } from '@/types/RootStackParamList';
-import { EnrichStorageItem, StorageTypeId } from '@/types/storage';
+import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
 import { formatDaysSince, getRemainingDays } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
 import { useAtomValue } from 'jotai';
@@ -27,7 +27,7 @@ export default function SpaceGrid() {
     );
   };
 
-  const getRecentlyUpdate = (itemList: EnrichStorageItem[]) => {
+  const getRecentlyUpdate = (itemList: EnrichedStorageItem[]) => {
     if (itemList.length === 0) return;
 
     const purchasedAtList = itemList.map((item) => getRemainingDays(item.purchasedAt));

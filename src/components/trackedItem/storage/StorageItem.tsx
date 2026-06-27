@@ -1,11 +1,11 @@
 import { expirationStatusObj } from '@/constants';
-import { EnrichStorageItem } from '@/types/storage';
+import { EnrichedStorageItem } from '@/types/storage';
 import { getExpirationStatus, getRemainingDays } from '@/utils';
 import { View } from 'react-native';
 import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 
 interface StorageItemProps {
-  storageItem: EnrichStorageItem;
+  storageItem: EnrichedStorageItem;
   className?: string;
 }
 

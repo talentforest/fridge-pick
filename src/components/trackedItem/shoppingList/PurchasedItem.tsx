@@ -4,14 +4,14 @@ import Text from '@/components/common/ui/Text';
 import EditPurchasedItemSheet from '@/components/trackedItem/shoppingList/EditPurchasedItemSheet';
 import { storageObj } from '@/constants';
 import { useOverlay } from '@/hooks';
-import { EditableStorageItemData, EnrichStorageItem } from '@/types/storage';
+import { EditableStorageItem, EnrichedStorageItem } from '@/types/storage';
 import { formatDateString, getRemainingDays } from '@/utils';
 import { View } from 'react-native';
 import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 
 interface PurchasedItemProps {
-  storageItem: EnrichStorageItem;
-  setStorageItemList: React.Dispatch<React.SetStateAction<EnrichStorageItem[]>>;
+  storageItem: EnrichedStorageItem;
+  setStorageItemList: React.Dispatch<React.SetStateAction<EnrichedStorageItem[]>>;
   index?: number;
 }
 
@@ -41,7 +41,7 @@ export default function PurchasedItem({
     },
   ];
 
-  const onEditSubmit = (id: string, newData: Partial<EditableStorageItemData>) => {
+  const onEditSubmit = (id: string, newData: Partial<EditableStorageItem>) => {
     setStorageItemList((prev) =>
       prev.map((item) => {
         // eslint-disable-next-line unused-imports/no-unused-vars

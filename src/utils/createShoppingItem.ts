@@ -1,5 +1,5 @@
 import { allIngredientList, allMealList } from '@/constants';
-import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
+import { SelectableItem } from '@/types/selectableItem';
 import { EnrichShoppingItem, ShoppingItem } from '@/types/shoppingList';
 import { nanoid } from 'nanoid/non-secure';
 
@@ -52,7 +52,7 @@ export const convertToShoppingItem = (item: SelectableItem): ShoppingItem => {
     isPurchased: false,
   };
 
-  if (item.type === 'ingredient') {
+  if (item.kind === 'ingredient') {
     return {
       ...baseItem,
       type: 'ingredient',
@@ -60,7 +60,7 @@ export const convertToShoppingItem = (item: SelectableItem): ShoppingItem => {
     };
   }
 
-  if (item.type === 'meal') {
+  if (item.kind === 'meal') {
     return {
       ...baseItem,
       type: 'meal',

@@ -1,13 +1,12 @@
 import Text from '@/components/common/ui/Text';
 import { EnrichShoppingItem } from '@/types/shoppingList';
-import { EnrichStorageItem } from '@/types/storage';
+import { EnrichedStorageItem } from '@/types/storage';
 import { View } from 'react-native';
-import { getTrackedItemLabel } from '@/utils';
-import ItemImage from '@/components/common/ItemImage';
-import { ingredientCategoryObj } from '@/constants';
+import { getTrackedItemLabelAndCategory } from '@/utils';
+import FoodImage from '@/components/common/FoodImage';
 
 interface TrackedItemImageLabelProps {
-  item: EnrichStorageItem | EnrichShoppingItem;
+  item: EnrichedStorageItem | EnrichShoppingItem;
   imageSize?: number;
   className?: string;
   textClassName?: string;
@@ -27,18 +26,19 @@ export default function TrackedItemImageLabel({
 
   return (
     <View className={`items-center ${layoutClassName} ${className}`}>
-      <ItemImage trackedItem={item} imageSize={imageSize} />
+      <FoodImage trackedItem={item} imageSize={imageSize} />
 
-      <View className="gap-y-2">
+      <View className="gap-y-2.5">
         <Text className={`line-clamp-1 ${textClassName}`}>
-          {getTrackedItemLabel(item).label}
+          {getTrackedItemLabelAndCategory(item).label}
+          {/* {convenienceLabel ? ` (${convenienceLabel})` : ''} */}
         </Text>
 
-        {hasCategory && (
+        {/* {hasCategory && (
           <Text className="!text-neutral-7">
-            {ingredientCategoryObj[getTrackedItemLabel(item).category].label}
+            {ingredientCategoryObj[getTrackedItemLabelAndCategory(item).category].label}
           </Text>
-        )}
+        )} */}
       </View>
     </View>
   );

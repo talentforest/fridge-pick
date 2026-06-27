@@ -2,7 +2,7 @@ import { allStorageItemListAtom } from '@/atom/storageItemAtom';
 import { mockShoppingList, initialCustomStorageItem } from '@/constants';
 import { AppError, AppSuccess } from '@/hooks';
 import { ShoppingItem } from '@/types/shoppingList';
-import { EnrichStorageItem } from '@/types/storage';
+import { EnrichedStorageItem } from '@/types/storage';
 import {
   formatDateString,
   convertIngredientToStorageItem,
@@ -68,7 +68,7 @@ export const isAllPurchasedAtom = atom((get) => {
 });
 
 /** 구매 완료한 장보기 아이템을 보관함 아이템으로 전환한 목록 */
-export const convertedStorageItemListAtom = atom((get): EnrichStorageItem[] => {
+export const convertedStorageItemListAtom = atom((get): EnrichedStorageItem[] => {
   const purchasedItemList = get(purchasedItemsAtom);
 
   const now = new Date();
@@ -208,7 +208,7 @@ export const clearAllAtom = atom(null, (_get, set) => {
  */
 export const addShoppingListToStorageAtom = atom(
   null,
-  (get, set, storageItemList: EnrichStorageItem[]) => {
+  (get, set, storageItemList: EnrichedStorageItem[]) => {
     // list를 보관함 아이템 리스트로 추가
     const allStorageItemList = get(allStorageItemListAtom);
 

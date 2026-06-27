@@ -5,11 +5,11 @@ import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import MealIngredientItemCard from '@/components/selectableItem/meal/MealIngredientItemCard';
 import { difficultyObj } from '@/constants';
-import { EnrichedMealWithFilterList, useGetMealInfo } from '@/hooks';
+import { EnrichedConsumableFoodWithFilterList, useGetMealInfo } from '@/hooks';
 import { View } from 'react-native';
 
 type CookTabDetailProps = {
-  meal: EnrichedMealWithFilterList;
+  meal: EnrichedConsumableFoodWithFilterList;
 };
 
 export default function CookTabDetail({ meal }: CookTabDetailProps) {
@@ -22,7 +22,7 @@ export default function CookTabDetail({ meal }: CookTabDetailProps) {
     <View className="gap-y-3">
       {/* 메뉴 속성 필터 목록 */}
       <View className="flex-row items-center gap-x-1">
-        {meal.mealCategory && (
+        {meal.category && (
           <FilterTag
             isActive
             name="식사류"
@@ -33,20 +33,22 @@ export default function CookTabDetail({ meal }: CookTabDetailProps) {
             iconSize={13}
           />
         )}
-        <FilterTag
-          isActive
-          name={difficultyObj[meal.difficulty].label}
-          color={difficultyObj[meal.difficulty].color}
-          // icon="Zap"
-          className="!py-2"
-          textClassName="!text-[13px]"
-          iconSize={13}
-        />
+        {meal.difficulty && (
+          <FilterTag
+            isActive
+            name={difficultyObj[meal.difficulty].label}
+            color={difficultyObj[meal.difficulty].color}
+            icon="Zap"
+            className="!py-2"
+            textClassName="!text-[13px]"
+            iconSize={13}
+          />
+        )}
         <FilterTag
           isActive
           name={'뜨거움'}
           color="red"
-          // icon="Wind"
+          // icon="Wind" // NOTE
           className="!py-2"
           textClassName="!text-[13px]"
           iconSize={13}
@@ -65,7 +67,7 @@ export default function CookTabDetail({ meal }: CookTabDetailProps) {
             />
 
             {meal.requiredIngredientCount > 0 && (
-              <View className="!h-6">
+              <View className="mt-2 !h-6">
                 <IconWithText
                   text={possesionStatus.label}
                   icon={possesionStatus.icon}

@@ -2,13 +2,13 @@ import FormIngredient from '@/components/common/form/FormIngredient';
 import SquareBtn from '@/components/common/SquareBtn';
 import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 
-import { EditableStorageItemData, EnrichStorageItem } from '@/types/storage';
+import { EditableStorageItem, EnrichedStorageItem } from '@/types/storage';
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
 interface EditPurchasedItemSheetProps {
-  initialStorageItem: EnrichStorageItem;
-  onEditSubmit: (id: string, newData: Partial<EditableStorageItemData>) => void;
+  initialStorageItem: EnrichedStorageItem;
+  onEditSubmit: (id: string, newData: Partial<EditableStorageItem>) => void;
   scrollRef?: React.RefObject<ScrollView>;
 }
 
@@ -17,18 +17,11 @@ export default function EditPurchasedItemSheet({
   onEditSubmit,
 }: EditPurchasedItemSheetProps) {
   const [currStorageItem, setCurrStorageItem] =
-    useState<EnrichStorageItem>(initialStorageItem);
+    useState<EnrichedStorageItem>(initialStorageItem);
 
-  const onItemChange = (newData: Partial<EditableStorageItemData>) => {
+  const onItemChange = (newData: Partial<EditableStorageItem>) => {
     setCurrStorageItem((prev) => {
-      // eslint-disable-next-line unused-imports/no-unused-vars
-      const { customLabel, ...rest } = newData;
-
-      if (prev.type !== 'custom') {
-        return { ...prev, ...rest };
-      }
-
-      return { ...prev, ...newData };
+      return { ...prev, newData };
     });
   };
 

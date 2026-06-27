@@ -1,16 +1,21 @@
 import {
-  IngredientStructure,
-  EnrichMealIngredientStructure,
-  MealIngredientItem,
-} from '@/types/meal';
+  EnrichedFoodStructure,
+  FoodComponentItem,
+  FoodStructure,
+} from '@/types/selectableItem';
 import { EnrichShoppingItem, ShoppingItem } from '@/types/shoppingList';
-import { EnrichStorageItem, StorageItem } from '@/types/storage';
-import { findIngredient, findMeal } from '@/utils/findItem';
+import { EnrichedStorageItem, StorageItem } from '@/types/storage';
+import { findIngredient, findMeal, findPreparedFood } from '@/utils/findItem';
 
-export function enrichStorageItem(item: StorageItem): EnrichStorageItem {
+export function enrichStorageItem(item: StorageItem): EnrichedStorageItem {
   if (item.type === 'ingredient') {
     const ingredient = findIngredient(item.ingredientId);
     return { ...item, ingredient };
+  }
+
+  if (item.type === 'preparedFood') {
+    const preparedFood = findPreparedFood(item.preparedFoodId);
+    return { ...item, preparedFood };
   }
 
   if (item.type === 'meal') {
@@ -35,11 +40,10 @@ export function enrichShoppinItem(item: ShoppingItem): EnrichShoppingItem {
   return item;
 }
 
-export function enrichMealIngredientStructure(
-  structure: IngredientStructure,
-): EnrichMealIngredientStructure {
-  const resolveItem = ({ type, id }: MealIngredientItem) => {
-    if (type === 'meal') return findMeal(id);
+export function enrichFoodStructure(structure: FoodStructure): EnrichedFoodStructure {
+  const resolveItem = ({ kind, id }: FoodComponentItem) => {
+    if (kind === 'meal') return findMeal(id);
+    if (kind === 'preparedFood') return findPreparedFood(id);
     return findIngredient(id);
   };
 

@@ -1,6 +1,9 @@
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { colorTokens } from '@/theme/color';
 import {
+  ChevronUp,
+  ChevronDown,
+  PackageOpen,
   ToolCase,
   Scooter,
   BadgeQuestionMark,
@@ -83,6 +86,7 @@ import {
 import { useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'PackageOpen'
   | 'ToolCase'
   | 'Scooter'
   | 'BadgeQuestionMark'
@@ -127,6 +131,8 @@ export type IconName =
   | 'ArrowRight'
   | 'ChevronLeft'
   | 'ChevronRight'
+  | 'ChevronUp'
+  | 'ChevronDown'
   | 'Edit'
   | 'Edit3'
   | 'Timer'
@@ -180,6 +186,7 @@ export type IconColor =
   | 'darkGray'
   | 'gray'
   | 'ice'
+  | 'black'
   | 'white';
 
 interface IconProps {
@@ -209,6 +216,7 @@ export default function Icon({
     lightBlue: scheme.blue[5],
     blue: scheme.blue[7],
     darkGray: scheme.neutral[5],
+    black: scheme.neutral[9],
     gray: scheme.inactive.bg,
     green: scheme.green[7],
     ice: scheme.ice[5],
@@ -217,6 +225,7 @@ export default function Icon({
   };
 
   const iconObj: { [key in IconName | CategoryIconName]: LucideIcon } = {
+    PackageOpen,
     ToolCase,
     Scooter,
     BadgeQuestionMark,
@@ -267,6 +276,8 @@ export default function Icon({
     Edit3,
     ChevronLeft,
     ChevronRight,
+    ChevronUp,
+    ChevronDown,
     CalendarClock,
     CheckCircle,
     ClockAlert,

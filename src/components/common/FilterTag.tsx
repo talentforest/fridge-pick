@@ -31,14 +31,16 @@ export default function FilterTag({
     blue: 'bg-blue-1',
     yellow: '!bg-yellow-1',
     neutral: 'bg-neutral-3',
+    black: 'bg-neutral-9',
   };
 
   const textColorObj = {
     green: '!text-green-7',
     red: 'text-red-7',
     blue: 'text-blue-7',
-    yellow: '!text-yellow-7',
-    neutral: '!text-neutral-9',
+    yellow: 'text-yellow-7',
+    neutral: 'text-neutral-9',
+    black: 'bg-neutral-1',
   };
 
   const inActiveObj = {
@@ -46,7 +48,7 @@ export default function FilterTag({
     textColor: 'text-inactive-text',
   };
 
-  const commonClassName = 'rounded-xl px-3.5 py-3';
+  const commonClassName = 'rounded-xl px-3 py-3';
 
   const currBgColor = isActive ? bgColor[color as FilterColor] : inActiveObj.bgColor;
 
@@ -55,7 +57,7 @@ export default function FilterTag({
   return onPress ? (
     <TouchableOpacity
       onPress={onPress}
-      className={`${commonClassName} flex-row items-center gap-x-0.5 ${currBgColor} ${className}`}
+      className={`${commonClassName} bg- flex-row items-center gap-x-0.5 ${currBgColor} ${className}`}
     >
       {icon && <Icon name={icon} size={iconSize} color={isActive ? color : 'inactive'} />}
       <Text className={`${currTextColor} ${textClassName}`}>{name}</Text>

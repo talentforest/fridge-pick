@@ -1,7 +1,7 @@
 import { togglePurchasedAtom } from '@/atom/shoppingListAtom';
 import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
 import { EnrichShoppingItem } from '@/types/shoppingList';
-import { createTrackedItemKey, getTrackedItemLabel } from '@/utils';
+import { createTrackedItemKey, getTrackedItemLabelAndCategory } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Pressable, View } from 'react-native';
 import Icon from '@/components/common/ui/Icon';
@@ -37,7 +37,7 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
         <Text
           className={`line-clamp-1 flex-1 ${isPurchased ? 'line-through' : ''} ${isError ? 'text-red-500' : ''}`}
         >
-          {getTrackedItemLabel(shoppingItem).label}
+          {getTrackedItemLabelAndCategory(shoppingItem).label}
         </Text>
       </View>
 

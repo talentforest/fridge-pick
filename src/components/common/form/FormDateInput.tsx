@@ -4,14 +4,14 @@ import ModalHeader from '@/components/common/header/ModalHeader';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useOverlay } from '@/hooks';
 import { formatDateString } from '@/utils';
-import { addDays, addMonths, addWeeks } from 'date-fns';
+import { addDays } from 'date-fns';
 import { View } from 'react-native';
 import LabelContainer from '@/components/common/container/LabelContainer';
-import { EditableStorageItemData } from '@/types/storage';
+import { EditableStorageItem } from '@/types/storage';
 
 interface FormDateInputProps {
   currDate: string;
-  onItemChange: (newData: Partial<EditableStorageItemData>) => void;
+  onItemChange: (newData: Partial<EditableStorageItem>) => void;
   defaultExpirationDays?: number;
   hasLabel?: boolean;
 }
@@ -57,43 +57,47 @@ export default function FormDateInput({
 
   const plusDateBtnList = [
     {
+      label: '+1일',
+      onPress: () => onChangeDate(addDays(initialDate, 1)),
+      color: 'green' as const,
+    },
+    {
+      label: '+7일',
+      onPress: () => onChangeDate(addDays(initialDate, 7)),
+      color: 'green' as const,
+    },
+    {
+      label: '+30일',
+      onPress: () => onChangeDate(addDays(initialDate, 30)),
+      color: 'green' as const,
+    },
+    {
       label: '직접변경',
       onPress: onEditDatePickerPress,
       color: 'blue' as const,
-    },
-    {
-      label: '+하루',
-      onPress: () => onChangeDate(addDays(initialDate, 1)),
-      color: 'neutral' as const,
-    },
-    {
-      label: '+일주일',
-      onPress: () => onChangeDate(addWeeks(initialDate, 1)),
-      color: 'neutral' as const,
-    },
-    {
-      label: '+한달',
-      onPress: () => onChangeDate(addMonths(initialDate, 1)),
-      color: 'neutral' as const,
     },
   ];
 
   return (
     <LabelContainer label={hasLabel ? '소비기한' : undefined}>
-      <DateInput date={currDate} openDatePicker={onEditDatePickerPress} />
-
-      <View className="mt-1.5 flex-row flex-wrap gap-1.5">
-        {plusDateBtnList.map(({ label, onPress, color }) => (
-          <FilterTag
-            key={label}
-            isActive
-            name={label}
-            textClassName="text-sm"
-            color={color}
-            onPress={onPress}
-          />
-        ))}
-      </View>
+      <DateInput
+        date={currDate}
+        openDatePicker={onEditDatePickerPress}
+        hasConvenientButton
+      >
+        <View className="w-full flex-row flex-wrap justify-end gap-1.5 border-dashed border-inactive-text pt-1">
+          {plusDateBtnList.map(({ label, onPress, color }) => (
+            <FilterTag
+              key={label}
+              isActive
+              name={label}
+              textClassName="!text-[13px]"
+              color={color}
+              onPress={onPress}
+            />
+          ))}
+        </View>
+      </DateInput>
     </LabelContainer>
   );
 }

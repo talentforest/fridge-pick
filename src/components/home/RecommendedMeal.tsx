@@ -1,19 +1,19 @@
 import { View } from 'react-native';
 import { useGetMealList } from '@/hooks';
-import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 import SectionTitle from '@/components/common/header/SectionTitle';
+import NavigateBtn from '@/components/common/NavigateBtn';
 import FullBleedSection from '@/components/common/container/FullBleedSection';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
-import NavigateBtn from '@/components/common/NavigateBtn';
+import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
 import FilterContainer from '@/components/common/container/FilterContainer';
 
 export default function RecommendedMeal() {
   const {
-    mealFilterList,
-    recommendedTodayMealList,
+    filterList,
     filteredMealList,
-    activeFilter,
+    recommendedTodayMealList,
     changeActiveFilter,
+    activeFilter,
   } = useGetMealList({ maxLength: 300 });
 
   return (
@@ -33,7 +33,7 @@ export default function RecommendedMeal() {
               requiredMinimum={2}
               centerFocus
               keyExtractor={(item, index) => `${item.id}:${index}`}
-              renderItem={({ item }) => <MealCompactCard key={item.id} meal={item} />}
+              renderItem={({ item }) => <MealCompactCard key={item.id} food={item} />}
             />
           </FullBleedSection>
         </View>
@@ -43,12 +43,12 @@ export default function RecommendedMeal() {
         <SectionTitle title="식사 메뉴 목록" icon="HandPlatter" />
         <FilterContainer
           columns={2}
-          filterList={mealFilterList}
+          filterList={filterList}
           dataList={filteredMealList}
           changeActiveFilter={changeActiveFilter}
           activeFilter={activeFilter}
         >
-          {(meal) => <MealCompactCard key={meal.id} meal={meal} className="flex-1" />}
+          {(food) => <MealCompactCard key={food.id} food={food} className="flex-1" />}
         </FilterContainer>
 
         <NavigateBtn navigateTo={'AllMealListScreen'} />

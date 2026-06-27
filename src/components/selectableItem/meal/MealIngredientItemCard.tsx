@@ -1,8 +1,8 @@
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
-import ItemImage from '@/components/common/ItemImage';
+import FoodImage from '@/components/common/FoodImage';
 import Icon from '@/components/common/ui/Icon';
-import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
+import { SelectableItem } from '@/types/selectableItem';
 import { View } from 'react-native';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { addShoppingItemAtom, findShoppingItem } from '@/atom/shoppingListAtom';
@@ -57,7 +57,7 @@ export default function MealIngredientItemCard({
     <Card className={`h-9 flex-row items-center gap-x-2  ${className}`}>
       <View className="flex-1 flex-row items-center gap-x-1">
         {/* 이미지 */}
-        <ItemImage selectableItem={item} imageSize={imageSize} />
+        <FoodImage selectableItem={item} imageSize={imageSize} />
 
         {/* 라벨 */}
         <Text className={`line-clamp-1 text-center leading-5 ${textClassName}`}>
@@ -69,25 +69,18 @@ export default function MealIngredientItemCard({
 
       {/* 현재 보유 상태 */}
       {isStorageItem ? (
-        <IconWithText
-          text="보유중"
-          icon="Refrigerator"
-          iconSize={14}
-          iconColor="lightBlue"
-          textClassName="text-blue-5"
-          className="!gap-x-0.5 p-1.5"
-        />
+        <Text className="!gap-x-0.5 p-1.5 text-[13px] text-neutral-5">보유중</Text>
       ) : isShoppingItem ? (
         <></>
       ) : (
         <IconWithText
           text="장보기"
           icon="Plus"
-          iconSize={14}
-          iconColor="yellow"
-          textClassName="text-yellow-7"
+          iconSize={13}
+          iconColor="blue"
+          textClassName="text-blue-7 font-extrabold text-[13px]"
           onPress={onPress}
-          className="!gap-x-0.5 p-1.5"
+          className="!gap-x-0 p-1.5"
         />
       )}
     </Card>

@@ -1,3 +1,12 @@
+export const noCategoryObj = {
+  noCategory: {
+    id: 'noCategory',
+    label: '카테고리 없음',
+    icon: 'Database',
+    color: 'blue',
+  },
+};
+
 export const ingredientCategoryObj = {
   vegetable: {
     id: 'vegetable',
@@ -46,7 +55,6 @@ export const ingredientCategoryObj = {
     label: '조미료/장/오일',
     icon: 'Amphora',
     color: 'red',
-    // NOTE 추후 추가, type: 'basic' | 'sauce' | 'oil'
   },
   powder: {
     id: 'powder',
@@ -54,46 +62,82 @@ export const ingredientCategoryObj = {
     icon: 'HeartPulse',
     color: 'red',
   },
-  dessert: {
-    id: 'dessert',
-    label: '간식/베이커리',
-    icon: 'Dessert',
-    color: 'yellow',
-  },
-  drink: {
-    id: 'drink',
-    label: '음료/주류',
-    icon: 'GlassWater',
-    color: 'blue',
-    // NOTE: 추후 추가, type: 'beverage' | 'alcohol'
-  },
   can: {
     id: 'can',
     label: '통조림/병조림',
     icon: 'Database',
     color: 'blue',
   },
+} as const;
 
-  convenience: {
-    id: 'convenience',
-    label: '간편식',
-    icon: 'Database',
+export const preparedFoodCategoryObj = {
+  side_dish: {
+    id: 'side_dish',
+    label: '반찬',
+    icon: 'Salad',
+    color: 'green',
+  },
+  snack_dessert: {
+    id: 'snack',
+    label: '간식/디저트',
+    icon: 'Dessert',
+    color: 'yellow',
+  },
+  bakery: {
+    id: 'bakery',
+    label: '베이커리',
+    icon: 'Croissant',
+    color: 'yellow',
+  },
+  light_food: {
+    id: 'light_food',
+    label: '보조식',
+    icon: 'Egg',
     color: 'blue',
   },
+  drink: {
+    id: 'drink',
+    label: '음료',
+    icon: 'GlassWater',
+    color: 'blue',
+  },
+} as const;
 
-  /** ⭐ 바로 먹을수 있는것 - 요리에 이용되는 식재료가 아님 */
-  meal: {
-    id: 'meal',
-    label: '완성요리',
-    icon: 'Soup',
+export const mealCategoryObj = {
+  rice_meal: {
+    id: 'rice_meal',
+    label: '밥류',
+    icon: 'CookingPot',
     color: 'red',
   },
-
-  /** 카테고리가 없는 경우 */
-  noCategory: {
-    id: 'noCategory',
-    label: '카테고리 없음',
-    icon: 'Database', // NOTE
+  noodle_meal: {
+    id: 'noodle_meal',
+    label: '면류',
+    icon: 'LineSquiggle',
+    color: 'yellow',
+  },
+  soup_meal: {
+    id: 'soup_meal',
+    label: '국물류',
+    icon: 'Soup',
     color: 'blue',
+  },
+  main_dish_meal: {
+    id: 'main_dish_meal',
+    label: '메인반찬/요리',
+    icon: 'UtensilsCrossed',
+    color: 'red',
+  },
+  western_meal: {
+    id: 'western_meal',
+    label: '서양식',
+    icon: 'ChefHat',
+    color: 'blue',
+  },
+  fresh_meal: {
+    id: 'fresh_meal',
+    label: '샐러드/프레시',
+    icon: 'Salad',
+    color: 'green',
   },
 } as const;

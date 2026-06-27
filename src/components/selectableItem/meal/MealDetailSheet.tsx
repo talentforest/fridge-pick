@@ -1,21 +1,24 @@
 import { changeMainMenuAtom, deleteTodayMealItemAtom } from '@/atom/mealAtom';
-import { useOverlay, useHandleTodayMeal, EnrichedMealWithFilterList } from '@/hooks';
+import {
+  useOverlay,
+  useHandleTodayMeal,
+  EnrichedConsumableFoodWithFilterList,
+} from '@/hooks';
 import { useSetAtom } from 'jotai';
 import { View } from 'react-native';
 import { useState } from 'react';
 import SquareBtn from '@/components/common/SquareBtn';
 import Text from '@/components/common/ui/Text';
-import MealImage from '@/components/selectableItem/meal/MealImage';
 import ModalHeader from '@/components/common/header/ModalHeader';
 import IconWithText from '@/components/common/IconWithText';
 import Card from '@/components/common/ui/Card';
-import GridContainer from '@/components/common/container/GridContainer';
 import MealConvenienceCard from '@/components/selectableItem/meal/MealConvenienceCard';
 import FavoriteBtn from '@/components/common/FavoriteBtn';
-import CookTabDetail from '@/components/meal/CookTabDetail';
+import CookTabDetail from '@/components/selectableItem/meal/CookTabDetail';
+import FoodImage from '@/components/common/FoodImage';
 
 interface MealDetailSheetProps {
-  meal: EnrichedMealWithFilterList;
+  food: EnrichedConsumableFoodWithFilterList;
   type: 'mainMenu' | 'sideMenu';
 }
 
@@ -30,12 +33,12 @@ const tabObj = {
   },
 } as const;
 
-export default function MealDetailSheet({ meal, type }: MealDetailSheetProps) {
+export default function MealDetailSheet({ food, type }: MealDetailSheetProps) {
   const { cook, convenience } = tabObj;
 
-  const tabList = !meal?.ingredientStructure
+  const tabList = !food?.foodStructure
     ? ([convenience] as const)
-    : !meal?.convenienceVariants
+    : !food?.availableFoodSources
       ? [cook]
       : [cook, convenience];
 
@@ -46,19 +49,19 @@ export default function MealDetailSheet({ meal, type }: MealDetailSheetProps) {
   const deleteTodayMealItem = useSetAtom(deleteTodayMealItemAtom);
   const changeMainMenu = useSetAtom(changeMainMenuAtom);
 
-  const { isTodayMeal, onAddTodayMealPress } = useHandleTodayMeal(meal);
+  const { isTodayMeal, onAddTodayMealPress } = useHandleTodayMeal(food);
 
   const { closeSheet } = useOverlay();
 
   // 오늘의 메뉴 삭제하기
   const onDeletePress = () => {
-    deleteTodayMealItem([meal.id]);
+    deleteTodayMealItem([food.id]);
     closeSheet();
   };
 
   // 메인메뉴로 변경하기
   const onChangeMainMenuPress = () => {
-    changeMainMenu(meal.id);
+    changeMainMenu(food.id);
     closeSheet();
   };
 
@@ -77,8 +80,8 @@ export default function MealDetailSheet({ meal, type }: MealDetailSheetProps) {
       <View className="pb-5 pt-4">
         {/* 메뉴 이미지와 라벨 박스 */}
         <Card className="mb-4 items-center rounded-2xl border bg-white !pt-0 pb-6">
-          <MealImage meal={meal} size={140} />
-          <Text className="line-clamp-2 text-base">{meal?.label}</Text>
+          <FoodImage consumableFood={food} imageSize={140} />
+          <Text className="line-clamp-2 text-base">{food?.label}</Text>
           <FavoriteBtn className="absolute right-3 top-2 gap-y-5 rounded-lg  bg-white p-2" />
         </Card>
 
@@ -99,14 +102,24 @@ export default function MealDetailSheet({ meal, type }: MealDetailSheetProps) {
         </View>
 
         <View className="min-h-96 pt-4">
-          {currTab === tabObj.cook.label ? <CookTabDetail meal={meal} /> : <></>}
+          {currTab === tabObj.cook.label ? <CookTabDetail meal={food} /> : <></>}
 
           {currTab === tabObj.convenience.label ? (
-            <GridContainer>
-              {meal.convenienceVariants?.map((item) => (
-                <MealConvenienceCard key={item} item={item} />
+            <View className="gap-y-2">
+              {food.availableFoodSources?.map((type) => (
+                <MealConvenienceCard key={type} type={type}>
+                  <IconWithText
+                    text="장보기"
+                    icon="Plus"
+                    iconSize={14}
+                    iconColor="blue"
+                    textClassName="text-blue-7 font-extrabold"
+                    // onPress={onPress}
+                    className="!gap-x-0 px-0 py-3"
+                  />
+                </MealConvenienceCard>
               ))}
-            </GridContainer>
+            </View>
           ) : (
             <></>
           )}

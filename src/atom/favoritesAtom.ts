@@ -1,7 +1,7 @@
 import { initialCustomIngredient } from '@/constants';
 import { AppError, AppSuccess } from '@/hooks';
-import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
-import { EnrichStorageItem } from '@/types/storage';
+import { SelectableItem } from '@/types/selectableItem';
+import { EnrichedStorageItem } from '@/types/storage';
 import { findSelectableItemWithKey } from '@/utils';
 import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
@@ -10,12 +10,12 @@ export const favoriteItemListAtom = atom<SelectableItem[]>([]);
 
 export const favoriteIngredientListAtom = atom((get) => {
   const favoriteList = get(favoriteItemListAtom);
-  return favoriteList.filter(({ type }) => type !== 'meal');
+  return favoriteList.filter(({ kind }) => kind !== 'meal');
 });
 
 export const favoriteMealListAtom = atom((get) => {
   const favoriteList = get(favoriteItemListAtom);
-  return favoriteList.filter(({ type }) => type === 'meal');
+  return favoriteList.filter(({ kind }) => kind === 'meal');
 });
 
 /* -------------------------------------------------------------------------- */
@@ -41,7 +41,11 @@ export const findFavoriteItemAtom = atomFamily((key: string) => {
  */
 export const addFavoriteStorageItemAtom = atom(
   null,
-  (get, set, newItem: EnrichStorageItem): AppError<EnrichStorageItem> | AppSuccess => {
+  (
+    get,
+    set,
+    newItem: EnrichedStorageItem,
+  ): AppError<EnrichedStorageItem> | AppSuccess => {
     const list = get(favoriteItemListAtom);
 
     if (newItem.type === 'ingredient') {

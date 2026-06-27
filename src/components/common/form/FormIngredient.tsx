@@ -1,10 +1,10 @@
 import FormMemo from '@/components/common/form/FormMemo';
 import FormStorage from '@/components/common/form/FormStorage';
-import { EditableStorageItemData, EnrichStorageItem } from '@/types/storage';
+import { EditableStorageItem, EnrichedStorageItem } from '@/types/storage';
 
 interface FormIngredientProps {
-  currStorageItem: EnrichStorageItem;
-  onItemChange: (newData: Partial<EditableStorageItemData>) => void;
+  currStorageItem: EnrichedStorageItem;
+  onItemChange: (newData: Partial<EditableStorageItem>) => void;
   onMemoFocus?: () => void;
   isSheetInput?: boolean;
 }

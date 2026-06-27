@@ -3,27 +3,29 @@ import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import MealCard from '@/components/selectableItem/meal/MealCard';
 import { useGetMealList } from '@/hooks';
-import { EnrichStorageItem } from '@/types/storage';
-import { getTrackedItemLabel } from '@/utils';
+import { EnrichedStorageItem } from '@/types/storage';
+import { getTrackedItemLabelAndCategory } from '@/utils';
 import { View } from 'react-native';
 
 interface MealListByExpiredSoonIngredientProps {
-  focusedItem: EnrichStorageItem;
+  focusedItem: EnrichedStorageItem;
 }
 
 export default function MealListByExpiredSoonIngredient({
   focusedItem,
 }: MealListByExpiredSoonIngredientProps) {
-  const { getHasStorageItemMealList } = useGetMealList();
+  const { getHasStorageItemFoodList } = useGetMealList();
 
-  const mealListByExpiredSoonIngredient = getHasStorageItemMealList(focusedItem);
+  const mealListByExpiredSoonIngredient = getHasStorageItemFoodList(focusedItem);
 
   return (
     <View className="h-[350px]">
       <View className={`mt-1 flex-row items-center gap-x-2 pb-3 pl-8`}>
         <Text>임박 식재료를 이용한 메뉴</Text>
         <View className="rounded-xl bg-inactive-bg px-3 py-2.5">
-          <Text className="font-extrabold">{getTrackedItemLabel(focusedItem).label}</Text>
+          <Text className="font-extrabold">
+            {getTrackedItemLabelAndCategory(focusedItem).label}
+          </Text>
         </View>
       </View>
 
@@ -37,7 +39,7 @@ export default function MealListByExpiredSoonIngredient({
           requiredMinimum={1}
           keyExtractor={(_, index) => `${index}`}
           renderItem={({ item }) => (
-            <MealCard key={item.id} meal={item} filterList={item.filterList} />
+            <MealCard key={item.id} food={item} filterList={item.filterList} />
           )}
         />
       ) : (

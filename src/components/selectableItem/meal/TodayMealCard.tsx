@@ -1,13 +1,13 @@
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
-import MealImage from '@/components/selectableItem/meal/MealImage';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import IconWithText from '@/components/common/IconWithText';
 import ProgressBar from '@/components/common/ProgressBar';
-import MealDetailSheet from '@/components/meal/MealDetailSheet';
-import { TodayMeal } from '@/types/meal';
+import MealDetailSheet from '@/components/selectableItem/meal/MealDetailSheet';
+import FoodImage from '@/components/common/FoodImage';
+import { TodayMeal } from '@/types/trackedItem';
 import { View } from 'react-native';
-import { EnrichedMealWithFilterList, useOverlay } from '@/hooks';
+import { EnrichedConsumableFoodWithFilterList, useOverlay } from '@/hooks';
 
 interface TodayMealCardProps {
   todayMeal: TodayMeal;
@@ -22,23 +22,23 @@ export default function TodayMealCard({
 }: TodayMealCardProps) {
   const mainMenu = type === 'mainMenu';
 
-  const { meal } = todayMeal;
+  const { consumableFood } = todayMeal;
 
   const { openSheet } = useOverlay();
 
-  const onPress = (meal: EnrichedMealWithFilterList) => {
+  const onPress = (food: EnrichedConsumableFoodWithFilterList) => {
     openSheet({
       enableDynamicSizing: true,
       maxDynamicContentSize: 750,
       hasDim: true,
-      render: () => <MealDetailSheet type={type} meal={meal} />,
+      render: () => <MealDetailSheet type={type} food={food} />,
     });
   };
 
   const commonClassName = `justify-center ${mainMenu ? 'h-[220px] items-start ' : 'h-[105px] !px-2 items-center !bg-border'} ${className}`;
 
   return (
-    <TouchableOpacity onPress={() => onPress(meal)}>
+    <TouchableOpacity onPress={() => onPress(consumableFood)}>
       <Card className={`${commonClassName} ${mainMenu ? '!pt-3' : '!pt-1'}`}>
         {mainMenu && (
           <IconWithText
@@ -53,12 +53,11 @@ export default function TodayMealCard({
 
         <View className="w-full items-center justify-between">
           <View className="items-center">
-            <MealImage meal={meal} size={mainMenu ? 100 : 65} />
-
+            <FoodImage consumableFood={consumableFood} imageSize={mainMenu ? 100 : 65} />
             <Text
               className={`-mt-0.5 line-clamp-2 text-center ${mainMenu ? 'text-base' : 'text-[13px] text-neutral-7'}`}
             >
-              {meal?.label}
+              {consumableFood?.label}
             </Text>
           </View>
 
@@ -66,9 +65,11 @@ export default function TodayMealCard({
             <View className={`mt-3 items-center gap-y-2.5`}>
               <ProgressBar
                 label="재료보유율"
-                percentage={todayMeal.meal.possessionPercent}
-                possessedIngredientCount={todayMeal.meal.possessedIngredientCount}
-                requiredIngredientCount={todayMeal.meal.requiredIngredientCount}
+                percentage={todayMeal.consumableFood.possessionPercent}
+                possessedIngredientCount={
+                  todayMeal.consumableFood.possessedIngredientCount
+                }
+                requiredIngredientCount={todayMeal.consumableFood.requiredIngredientCount}
               />
             </View>
           )}

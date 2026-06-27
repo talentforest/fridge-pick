@@ -1,5 +1,5 @@
 export const filterObj = {
-  meal: {
+  food: {
     all: {
       name: 'all',
       label: '전체',

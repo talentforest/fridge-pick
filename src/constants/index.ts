@@ -7,8 +7,8 @@ export * from '@/constants/ingredient/ingredient';
 /** meal */
 export * from '@/constants/meal/meal';
 export * from '@/constants/meal/mealSuffix';
-export * from '@/constants/meal/convenienceVariant';
 export * from '@/constants/meal/filter';
+export * from '@/constants/meal/convenienceVariant';
 
 /** shoppingList */
 export * from '@/constants/shoppingList/mockShoppingList';

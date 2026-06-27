@@ -1,8 +1,8 @@
-import { ingredientCategoryObj } from '@/constants';
 import { View } from 'react-native';
-import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
+import { SelectableItem } from '@/types/selectableItem';
 import Text from '@/components/common/ui/Text';
-import ItemImage from '@/components/common/ItemImage';
+import FoodImage from '@/components/common/FoodImage';
+import { getSelectableItemLabelAndCategory } from '@/utils';
 
 interface SelectableItemImageLabelProps {
   item: SelectableItem;
@@ -16,13 +16,13 @@ export default function SelectableItemImageLabel({
   return (
     <View className="flex-1 flex-row items-center gap-x-3">
       {/* 이미지 */}
-      <ItemImage selectableItem={item} imageSize={imageSize} />
+      <FoodImage selectableItem={item} imageSize={imageSize} />
 
       <View className="flex-1 gap-y-2">
         <Text className="line-clamp-1 text-lg">{item.label}</Text>
 
         <Text className="text-neutral-5">
-          {ingredientCategoryObj[item.category].label}
+          {getSelectableItemLabelAndCategory(item).categoryLabel}
         </Text>
       </View>
     </View>

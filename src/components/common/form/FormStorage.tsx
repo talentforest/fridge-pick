@@ -4,7 +4,7 @@ import SquareBtn from '@/components/common/SquareBtn';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import { DEFAULT_EXPIRATION_DAYS, storageObj } from '@/constants';
-import { EditableStorageItemData, StorageTypeId } from '@/types/storage';
+import { EditableStorageItem, StorageTypeId } from '@/types/storage';
 import { formatDateString } from '@/utils';
 import { addDays } from 'date-fns';
 import { View } from 'react-native';
@@ -13,7 +13,7 @@ interface FormStorageProps {
   label: string;
   currStorageType: StorageTypeId;
   currDate?: string;
-  onItemChange: (newData: Partial<EditableStorageItemData>) => void;
+  onItemChange: (newData: Partial<EditableStorageItem>) => void;
   ingredientExpirationDays?: { fridge?: number; freezer?: number; pantry?: number };
 }
 

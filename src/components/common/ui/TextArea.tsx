@@ -15,7 +15,7 @@ export default function TextArea({
       allowFontScaling
       autoFocus={false}
       {...props}
-      className={`min-h-24 w-full rounded-2xl border border-border bg-card px-4 py-3.5 pb-10 font-bold leading-[20px] tracking-tightest text-text placeholder:text-inactive-text ${
+      className={`min-h-28 w-full rounded-2xl border border-border bg-card px-4 py-3.5 pb-10 font-bold leading-[20px] tracking-tightest text-text placeholder:text-inactive-text ${
         hasTextSize ? props.className : `text-base ${props.className ?? ''}`
       }`}
     />
@@ -27,7 +27,7 @@ export default function TextArea({
       allowFontScaling
       autoFocus={false}
       {...props}
-      className={`min-h-24 w-full rounded-2xl border border-border bg-card px-4 py-3.5 pb-10 font-bold leading-[20px] tracking-tightest text-text placeholder:text-inactive-text ${
+      className={`min-h-28 w-full rounded-2xl border border-border bg-card px-4 py-3.5 pb-10 font-bold leading-[20px] tracking-tightest text-text placeholder:text-inactive-text ${
         hasTextSize ? props.className : `text-base ${props.className ?? ''}`
       }`}
     />

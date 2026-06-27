@@ -1,20 +1,16 @@
-import { EnrichedMealWithFilterList } from '@/hooks/meal/useGetMealList';
+import { EnrichedConsumableFoodWithFilterList } from '@/hooks/meal/useGetMealList';
 import { getPossessionStatus, styleByPercentageObj } from '@/utils';
 import { useCallback } from 'react';
 
-export const useGetMealInfo = (meal: EnrichedMealWithFilterList) => {
-  const {
-    ingredientStructure,
-    requiredIngredientCount,
-    possessedList,
-    possessionPercent,
-  } = meal;
+export const useGetMealInfo = (meal: EnrichedConsumableFoodWithFilterList) => {
+  const { foodStructure, requiredIngredientCount, possessedList, possessionPercent } =
+    meal;
 
   const getIngredientStructureList = useCallback(
     (type?: 'required' | 'optional') => {
-      if (!ingredientStructure) return [];
+      if (!foodStructure) return [];
 
-      const { essential, common, seasoning, optional } = ingredientStructure;
+      const { essential, common, seasoning, optional } = foodStructure;
 
       const structureObj = {
         required: {
@@ -52,7 +48,7 @@ export const useGetMealInfo = (meal: EnrichedMealWithFilterList) => {
 
       return [...requiredIngredientList, ...optionalIngredientList];
     },
-    [ingredientStructure],
+    [foodStructure],
   );
 
   const needMoreIngredientNum = requiredIngredientCount - possessedList.length;

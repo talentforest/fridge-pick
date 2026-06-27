@@ -1,5 +1,4 @@
-import { Ingredient, IngredientKey } from '@/types/ingredient';
-import { Meal, MealKey } from '@/types/meal';
+import { Ingredient, IngredientKey, Meal } from '@/types/selectableItem';
 import { Timestamp } from 'firebase/firestore';
 
 type BaseShoppingItem = {
@@ -31,6 +30,7 @@ type CustomShoppingItem = BaseShoppingItem & {
 };
 
 export type ShoppingItem = IngredientShoppingItem | CustomShoppingItem | MealShoppingItem;
+
 export type EnrichShoppingItem =
   | (IngredientShoppingItem & { ingredient: Ingredient })
   | (MealShoppingItem & { meal: Meal })

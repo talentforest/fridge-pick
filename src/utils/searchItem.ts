@@ -1,7 +1,8 @@
 import { allIngredientList, allMealList } from '@/constants';
-import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
-import { EnrichStorageItem, StorageItem } from '@/types/storage';
-import { findIngredient, findMeal } from '@/utils/findItem';
+import { allPreparedFoodList } from '@/constants/preparedFood/preparedFood';
+import { SelectableItem } from '@/types/selectableItem';
+import { EnrichedStorageItem, StorageItem } from '@/types/storage';
+import { findIngredient, findMeal, findPreparedFood } from '@/utils/findItem';
 
 const CHOSUNG = [
   'ㄱ',
@@ -66,7 +67,11 @@ export function searchIngredientAndMeal(
 
   const isChosungSearch = /^[ㄱ-ㅎ]+$/.test(keyword);
 
-  const selectableItemList = [...allIngredientList, ...allMealList];
+  const selectableItemList = [
+    ...allIngredientList,
+    ...allPreparedFoodList,
+    ...allMealList,
+  ];
 
   const results = selectableItemList
     .map((item) => {
@@ -115,7 +120,7 @@ export function searchStorageItem(
   keyword: string,
   list: StorageItem[],
   maxLength?: number,
-): EnrichStorageItem[] {
+): EnrichedStorageItem[] {
   const normalized = normalize(keyword);
   if (!normalized) return [];
 
@@ -142,6 +147,11 @@ export function searchStorageItem(
       if (storageItem.type === 'meal') {
         const meal = findMeal(storageItem.mealId);
         return { ...storageItem, meal };
+      }
+
+      if (storageItem.type === 'preparedFood') {
+        const preparedFood = findPreparedFood(storageItem.preparedFoodId);
+        return { ...storageItem, preparedFood };
       }
 
       return storageItem;

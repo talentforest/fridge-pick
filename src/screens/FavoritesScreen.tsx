@@ -2,7 +2,7 @@ import { favoriteIngredientListAtom, favoriteMealListAtom } from '@/atom/favorit
 import { useOverlay } from '@/hooks/common/useOverlay';
 import { useAtomValue } from 'jotai';
 import { View } from 'react-native';
-import { SelectableItem } from '@/types/selectableItemAndTrackedItem';
+import { SelectableItem } from '@/types/selectableItem';
 import GridContainer from '@/components/common/container/GridContainer';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
@@ -60,7 +60,6 @@ export default function FavoritesScreen() {
                 >
                   <SelectableItemCard
                     item={item}
-                    isCompact
                     className="h-32 !px-2"
                     imageSize={60}
                     textClassName="text-md line-clamp-1"
@@ -83,7 +82,6 @@ export default function FavoritesScreen() {
                 <TouchableOpacity key={item.id} onPress={() => onOpenSheetPress(item)}>
                   <SelectableItemCard
                     item={item}
-                    isCompact
                     className="!px-1 pb-3"
                     textClassName="!text-[13px] line-clamp-1"
                   />

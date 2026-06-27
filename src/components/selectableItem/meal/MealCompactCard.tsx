@@ -1,45 +1,49 @@
-import MealImage from '@/components/selectableItem/meal/MealImage';
 import Text from '@/components/common/ui/Text';
 import ProgressBar from '@/components/common/ProgressBar';
 import Icon from '@/components/common/ui/Icon';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
-import MealDetailSheet from '@/components/meal/MealDetailSheet';
+import MealDetailSheet from '@/components/selectableItem/meal/MealDetailSheet';
 import { View } from 'react-native';
-import { EnrichedMealWithFilterList, useHandleTodayMeal, useOverlay } from '@/hooks';
+import {
+  EnrichedConsumableFoodWithFilterList,
+  useHandleTodayMeal,
+  useOverlay,
+} from '@/hooks';
 import { convenienceVariantObj, difficultyObj, storageObj } from '@/constants';
 import { createSelectableItemKey } from '@/utils';
 import { useAtomValue } from 'jotai';
 import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
-import { Meal } from '@/types/meal';
+import { Meal } from '@/types/selectableItem';
 import IconWithText from '@/components/common/IconWithText';
 import FilterTag from '@/components/common/FilterTag';
+import FoodImage from '@/components/common/FoodImage';
 
 interface MealCompactCardProps {
-  meal: EnrichedMealWithFilterList;
+  food: EnrichedConsumableFoodWithFilterList;
   className?: string;
 }
 
-export default function MealCompactCard({ meal, className = '' }: MealCompactCardProps) {
-  const key = createSelectableItemKey(meal as Meal);
+export default function MealCompactCard({ food, className = '' }: MealCompactCardProps) {
+  const key = createSelectableItemKey(food as Meal);
 
   const mealStorageItem = useAtomValue(findStorageItemWithKeyAtom(key));
 
   const { openSheet } = useOverlay();
 
-  const { isTodayMeal } = useHandleTodayMeal(meal);
+  const { isTodayMeal } = useHandleTodayMeal(food);
 
   const onPress = () => {
     openSheet({
       enableDynamicSizing: true,
       maxDynamicContentSize: 750,
       hasDim: true,
-      render: () => <MealDetailSheet type="mainMenu" meal={meal} />,
+      render: () => <MealDetailSheet type="mainMenu" food={food} />,
     });
   };
 
   return (
     <TouchableOpacity
-      key={meal.id}
+      key={food.id}
       onPress={onPress}
       className={`overflow-hidden rounded-2xl border border-border bg-card ${className}`}
     >
@@ -48,25 +52,27 @@ export default function MealCompactCard({ meal, className = '' }: MealCompactCar
       )}
 
       <View className="items-center justify-center bg-neutral-3 pb-5 pt-2">
-        <MealImage meal={meal} size={110} />
-        <Text className="-mt-2 text-base">{meal.label}</Text>
+        <FoodImage consumableFood={food} imageSize={110} />
+        <Text className="-mt-2 text-base">{food.label}</Text>
       </View>
 
       <View className="justify-between gap-y-4 px-3 py-3">
         <View className="items-start justify-start gap-y-2">
-          <FilterTag
-            isActive
-            name={difficultyObj[meal.difficulty].label}
-            color={difficultyObj[meal.difficulty].color}
-            icon="Zap"
-            className="!py-2"
-            textClassName="!text-[13px]"
-            iconSize={13}
-          />
+          {food.difficulty && (
+            <FilterTag
+              isActive
+              name={difficultyObj[food.difficulty].label}
+              color={difficultyObj[food.difficulty].color}
+              icon="Zap"
+              className="!py-2"
+              textClassName="!text-[13px]"
+              iconSize={13}
+            />
+          )}
 
-          {!meal.ingredientStructure && meal.convenienceVariants ? (
+          {!food.foodStructure && food.availableFoodSources ? (
             <View className="flex-row gap-x-1.5">
-              {meal.convenienceVariants.map((item) => (
+              {food.availableFoodSources.map((item) => (
                 <FilterTag
                   key={item}
                   isActive
@@ -84,12 +90,12 @@ export default function MealCompactCard({ meal, className = '' }: MealCompactCar
           )}
         </View>
 
-        {meal.ingredientStructure ? (
+        {food.foodStructure ? (
           <ProgressBar
             label="재료보유율"
-            percentage={meal.possessionPercent}
-            possessedIngredientCount={meal.possessedIngredientCount}
-            requiredIngredientCount={meal.requiredIngredientCount}
+            percentage={food.possessionPercent}
+            possessedIngredientCount={food.possessedIngredientCount}
+            requiredIngredientCount={food.requiredIngredientCount}
           />
         ) : mealStorageItem && mealStorageItem.type === 'meal' ? (
           <View className="p-1">
