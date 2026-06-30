@@ -42,11 +42,11 @@ export function getExpirationStatus(days: number): ExpirationStatus {
 }
 
 export function formatRemainingDays(days: number) {
-  if (days < 0) return `${Math.abs(days)}일 지남`;
+  if (days < 0) return `-${Math.abs(days)}일`;
   if (days === 0) return '오늘까지';
   if (days === 1) return '내일까지';
 
-  return `${days}일 남음`;
+  return `+${days}일 남음`;
 }
 
 export function formatDaysSince(days: number) {

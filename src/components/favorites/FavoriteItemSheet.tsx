@@ -1,5 +1,5 @@
 import { addShoppingItemAtom, findShoppingItem } from '@/atom/shoppingListAtom';
-import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
+import { findStorageItemWithKeyAtom } from '@/atom/storageAtom';
 import { storageObj } from '@/constants';
 import { useErrorHandler, useOverlay } from '@/hooks';
 import { SelectableItem } from '@/types/selectableItem';

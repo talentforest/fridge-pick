@@ -1,14 +1,17 @@
 /** ingredient */
-export * from '@/constants/ingredient/category';
-export * from '@/constants/ingredient/expirationStatus';
-export * from '@/constants/ingredient/ingredientVariant';
-export * from '@/constants/ingredient/ingredient';
+export * from '@/constants/selectableItem/category';
+
+export * from '@/constants/selectableItem/ingredient/expirationStatus';
+export * from '@/constants/selectableItem/ingredient/ingredientVariant';
+export * from '@/constants/selectableItem/ingredient/ingredient';
 
 /** meal */
-export * from '@/constants/meal/meal';
-export * from '@/constants/meal/mealSuffix';
-export * from '@/constants/meal/filter';
-export * from '@/constants/meal/convenienceVariant';
+export * from '@/constants/selectableItem/consumableFood/meal';
+export * from '@/constants/selectableItem/consumableFood/difficultyObj';
+export * from '@/constants/selectableItem/consumableFood/filter';
+export * from '@/constants/selectableItem/consumableFood/foodSourceObj';
+export * from '@/constants/selectableItem/consumableFood/servingTemperatureObj';
+export * from '@/constants/selectableItem/consumableFood/preparedFood';
 
 /** shoppingList */
 export * from '@/constants/shoppingList/mockShoppingList';

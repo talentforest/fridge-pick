@@ -4,7 +4,7 @@ export * from '@/utils/createShoppingItem';
 
 export * from '@/utils/formatDate';
 export * from '@/utils/getExpirationDate';
-export * from '@/utils/getCautionStorageItemList';
+export * from '@/utils/getStorageItemListByExpirationStatus';
 
 export * from '@/utils/searchItem';
 export * from '@/utils/findItem';
@@ -12,4 +12,4 @@ export * from '@/utils/getTrackedItemLabelAndCategory';
 
 export * from '@/utils/getStyleByPercentage';
 
-export * from '@/utils/getRecommendMealScore';
+export * from '@/utils/getScore';

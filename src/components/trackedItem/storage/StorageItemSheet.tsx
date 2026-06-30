@@ -1,12 +1,12 @@
-import { changeStorageItemAtom, deleteStorageItemListAtom } from '@/atom/storageItemAtom';
+import { changeStorageItemAtom, deleteStorageItemListAtom } from '@/atom/storageAtom';
 import { image_empty_plate, storageObj } from '@/constants';
-import { useOverlay, useGetMealList } from '@/hooks';
+import { useOverlay, useGetMenuList } from '@/hooks';
 import { useSetAtom } from 'jotai';
 import { getTrackedItemLabelAndCategory } from '@/utils';
 import { EnrichedStorageItem, StorageItem } from '@/types/storage';
 import { useState } from 'react';
 import { Image, View } from 'react-native';
-import MealCompactCard from '@/components/selectableItem/meal/MealCompactCard';
+
 import SquareBtn from '@/components/common/SquareBtn';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
@@ -18,6 +18,7 @@ import FullBleedSection from '@/components/common/container/FullBleedSection';
 import Text from '@/components/common/ui/Text';
 import Card from '@/components/common/ui/Card';
 import ModalHeader from '@/components/common/header/ModalHeader';
+import MenuCompactCard from '@/components/selectableItem/consumableFood/MenuCompactCard';
 
 interface StorageItemSheetProps {
   storageItem: EnrichedStorageItem;
@@ -32,9 +33,9 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
     Pick<StorageItem, 'memo' | 'expiresAt'>
   >({ expiresAt, memo: storageItem.memo });
 
-  const { getHasStorageItemFoodList } = useGetMealList();
+  const { getHasStorageItemFoodList } = useGetMenuList();
 
-  const mealListHasStorageItem = getHasStorageItemFoodList(storageItem);
+  const menuListHasStorageItem = getHasStorageItemFoodList(storageItem);
 
   const deleteItems = useSetAtom(deleteStorageItemListAtom);
 
@@ -82,7 +83,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
     <View className="my-2 w-full flex-1 gap-y-1.5">
       <ModalHeader hasX={false} title="식재료 정보" />
 
-      <View className="flex-row items-start justify-between rounded-2xl  border-gray-300 py-1">
+      <View className="flex-row items-start justify-between rounded-2xl border-gray-300 py-1">
         <TrackedItemImageLabel
           item={storageItem}
           imageSize={85}
@@ -133,18 +134,18 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
           highlight={label}
           title={`${label} 활용 메뉴`}
         />
-        {mealListHasStorageItem.length > 0 ? (
+        {menuListHasStorageItem.length > 0 ? (
           <FullBleedSection>
             <CarouselContainer
-              data={mealListHasStorageItem}
-              initialIndex={mealListHasStorageItem.length}
+              data={menuListHasStorageItem}
+              initialIndex={menuListHasStorageItem.length}
               itemWidth={0.5}
               hasNavigation
               hasPagination
               spacing={20}
               centerFocus
               keyExtractor={(_, index) => `${index}`}
-              renderItem={({ item }) => <MealCompactCard key={item.id} food={item} />}
+              renderItem={({ item }) => <MenuCompactCard key={item.id} food={item} />}
             />
           </FullBleedSection>
         ) : (

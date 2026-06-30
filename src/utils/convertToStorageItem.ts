@@ -41,7 +41,7 @@ export const convertIngredientToStorageItem = (
 
 export const convertMealToStorageItem = (
   meal: Meal,
-  currStorage: StorageTypeId,
+  currStorage?: StorageTypeId,
 ): MealStorageItem & { meal: Meal } => {
   const now = new Date();
 
@@ -54,13 +54,15 @@ export const convertMealToStorageItem = (
     pantry: 365,
   };
 
+  const storage = currStorage || 'fridge';
+
   return {
     type: 'meal',
     id: nanoid(),
     mealId: id as MealKey,
-    storage: { type: currStorage },
+    storage: { type: storage },
     foodSource: 'convenience',
-    expiresAt: calculateExpiresAt(now, convenienceExpirationDays[currStorage]),
+    expiresAt: calculateExpiresAt(now, convenienceExpirationDays[storage]),
     purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
     meal,
   };
@@ -68,7 +70,7 @@ export const convertMealToStorageItem = (
 
 export const convertPreparedFoodToStorageItem = (
   preparedFood: PreparedFood,
-  currStorage: StorageTypeId,
+  currStorage?: StorageTypeId,
 ): PreparedFoodStorageItem & { preparedFood: PreparedFood } => {
   const now = new Date();
 
@@ -81,13 +83,15 @@ export const convertPreparedFoodToStorageItem = (
     pantry: 365,
   };
 
+  const storage = currStorage ?? preparedFood.defaultStorage;
+
   return {
     type: 'preparedFood',
     id: nanoid(),
     preparedFoodId: id as PreparedFoodKey,
-    storage: { type: currStorage },
+    storage: { type: storage },
     foodSource: availableFoodSources ? availableFoodSources[0] : 'convenience',
-    expiresAt: calculateExpiresAt(now, convenienceExpirationDays[currStorage]),
+    expiresAt: calculateExpiresAt(now, convenienceExpirationDays[storage]),
     purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
     preparedFood,
   };

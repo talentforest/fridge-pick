@@ -7,6 +7,8 @@ import {
 import {
   ConsumableFood,
   ConsumableFoodWithEnrichedFoodStructure,
+  MealKey,
+  PreparedFoodKey,
   SelectableItem,
 } from '@/types/selectableItem';
 import { EnrichShoppingItem } from '@/types/shoppingList';
@@ -42,28 +44,34 @@ export default function FoodImage({
   imageSize = 55,
 }: FoodImageProps) {
   const getSelectableItemImage = (item: SelectableItem) => {
+    const key = item?.imageName || item.id;
+
     switch (item.kind) {
       case 'meal':
-        return mealCategoryImagesObj[item.id];
+        return mealCategoryImagesObj[key as MealKey];
 
       case 'preparedFood':
-        return preparedFoodCategoryImagesObj[item.id];
+        return preparedFoodCategoryImagesObj[key as PreparedFoodKey];
 
       case 'ingredient':
-        return ingredientCategoryImagesObj[item.category][item.id];
+        return ingredientCategoryImagesObj[item.category][key];
     }
   };
 
   const getTrackedItemImage = (item: EnrichShoppingItem | EnrichedStorageItem) => {
     switch (item.type) {
       case 'meal':
-        return mealCategoryImagesObj[item.meal.id];
+        return mealCategoryImagesObj[(item?.meal?.imageName || item.meal.id) as MealKey];
 
       case 'preparedFood':
-        return preparedFoodCategoryImagesObj[item.preparedFood.id];
+        return preparedFoodCategoryImagesObj[
+          (item?.preparedFood?.imageName || item.preparedFood.id) as PreparedFoodKey
+        ];
 
       case 'ingredient':
-        return ingredientCategoryImagesObj[item.ingredient.category][item.ingredientId];
+        return ingredientCategoryImagesObj[item.ingredient.category][
+          item?.ingredient.imageName || item.ingredientId
+        ];
     }
   };
 
@@ -88,6 +96,8 @@ export default function FoodImage({
 
     return image_empty_basket;
   };
+
+  if (!getSource()) return null;
 
   return (
     <Image

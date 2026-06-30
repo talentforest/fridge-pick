@@ -17,7 +17,7 @@ import SectionTitle from '@/components/common/header/SectionTitle';
 import Icon from '@/components/common/ui/Icon';
 import StorageItemSheet from '@/components/trackedItem/storage/StorageItemSheet';
 import Storage from '@/components/trackedItem/storage/Storage';
-import CautionIngredientList from '@/components/home/CautionIngredientList';
+import CautionStorageItemList from '@/components/home/CautionStorageItemList';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'StorageDetailScreen'>;
 
@@ -64,7 +64,7 @@ export default function StorageDetailScreen() {
 
       <ScrollViewContainer contentContainerClassName="gap-y-20 pt-4">
         {/* 소비기한 임박 */}
-        <CautionIngredientList
+        <CautionStorageItemList
           title="소비기한 주의 식재료"
           isGridType
           storageType={storageType}

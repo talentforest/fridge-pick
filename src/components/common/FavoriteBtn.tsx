@@ -35,10 +35,8 @@ export default function FavoriteBtn({
 
   const onPress = () => {
     if (!favoriteItem) {
-      if (storageItem) {
-        return addFavoriteStorageItem(storageItem);
-      }
-      if (selectableItem) addFavoriteSelectableItem(selectableItem);
+      if (storageItem) return addFavoriteStorageItem(storageItem);
+      if (selectableItem) return addFavoriteSelectableItem(selectableItem);
     } else {
       deleteFavoriteItem(favoriteItem.id);
     }

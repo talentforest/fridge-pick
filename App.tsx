@@ -1,4 +1,5 @@
 import RootNavigator from '@/navigation/RootNavigator';
+import Toast from '@/components/common/Toast';
 import { OverlayContainer } from '@/components/common/container/OverlayContainer';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useFonts } from 'expo-font';
@@ -30,6 +31,9 @@ export default function App() {
               <StatusBar style="auto" />
             </OverlayContainer>
           </BottomSheetModalProvider>
+
+          {/* 토스트 */}
+          <Toast />
         </View>
       </SafeAreaProvider>
     </GestureHandlerRootView>

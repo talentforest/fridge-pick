@@ -19,7 +19,6 @@ export default function ProgressBar({
   children,
 }: ProgressBarProps) {
   const status = getPossessionStatus(percentage);
-
   const colorObj = styleByPercentageObj[status];
 
   const requiredBoxList = Array.from(

@@ -1,6 +1,11 @@
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { colorTokens } from '@/theme/color';
 import {
+  Flame,
+  Egg,
+  Croissant,
+  Salad,
+  CookingPot,
   ChevronUp,
   ChevronDown,
   PackageOpen,
@@ -86,6 +91,10 @@ import {
 import { useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'Flame'
+  | 'Egg'
+  | 'Croissant'
+  | 'Salad'
   | 'PackageOpen'
   | 'ToolCase'
   | 'Scooter'
@@ -153,9 +162,7 @@ export type IconName =
   | 'Thermometer'
   | 'Wind'
   | 'Timer'
-  | 'Grid2X2Plus';
-
-export type CategoryIconName =
+  | 'Grid2X2Plus'
   | 'Beef'
   | 'Fish'
   | 'Soup'
@@ -171,7 +178,8 @@ export type CategoryIconName =
   | 'LineSquiggle'
   | 'Database'
   | 'Zap'
-  | 'Milk';
+  | 'Milk'
+  | 'CookingPot';
 
 export type IconColor =
   | 'text'
@@ -190,7 +198,7 @@ export type IconColor =
   | 'white';
 
 interface IconProps {
-  name: IconName | CategoryIconName;
+  name: IconName;
   color?: IconColor;
   hasFill?: boolean;
   hasShadow?: boolean;
@@ -224,7 +232,12 @@ export default function Icon({
     inactive: scheme.inactive.text,
   };
 
-  const iconObj: { [key in IconName | CategoryIconName]: LucideIcon } = {
+  const iconObj: { [key in IconName]: LucideIcon } = {
+    Flame,
+    Egg,
+    Croissant,
+    Salad,
+    CookingPot,
     PackageOpen,
     ToolCase,
     Scooter,

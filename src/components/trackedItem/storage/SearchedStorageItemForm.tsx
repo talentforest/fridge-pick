@@ -7,10 +7,10 @@ import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import TextInput from '@/components/common/ui/TextInput';
 import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
-import MealConvenienceCard from '@/components/selectableItem/meal/MealConvenienceCard';
+import FoodSourceCard from '@/components/selectableItem/consumableFood/FoodSourceCard';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import ConvenienceVariantListSheet from '@/components/trackedItem/storage/ConvenienceVariantListSheet';
-import { addStorageItemAtom } from '@/atom/storageItemAtom';
+import { addStorageItemAtom } from '@/atom/storageAtom';
 import { useErrorHandler, useOverlay } from '@/hooks';
 import { Ingredient } from '@/types/selectableItem';
 import { EditableStorageItem, EnrichedStorageItem, StorageItem } from '@/types/storage';
@@ -157,18 +157,14 @@ export default function SearchedStorageItemForm({
         {currStorageItem.type === 'meal' && currStorageItem.foodSource && (
           <LabelContainer label="간편식 유형">
             <TouchableOpacity onPress={onOpenConvenienceVariantsPress}>
-              <MealConvenienceCard
-                type={currStorageItem.foodSource}
-                isSelected
-                className="!h-28"
-              >
+              <FoodSourceCard type={currStorageItem.foodSource} className="!h-28">
                 <Icon
                   name="ChevronRight"
                   size={18}
                   color="blue"
                   className="rounded-full bg-blue-1 p-2"
                 />
-              </MealConvenienceCard>
+              </FoodSourceCard>
             </TouchableOpacity>
           </LabelContainer>
         )}

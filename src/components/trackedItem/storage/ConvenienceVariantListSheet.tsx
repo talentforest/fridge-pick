@@ -1,7 +1,7 @@
 import ModalHeader from '@/components/common/header/ModalHeader';
 import Icon from '@/components/common/ui/Icon';
-import MealConvenienceCard from '@/components/selectableItem/meal/MealConvenienceCard';
-import { convenienceVariantObj } from '@/constants';
+import FoodSourceCard from '@/components/selectableItem/consumableFood/FoodSourceCard';
+import { foodSourceObj } from '@/constants';
 import { useOverlay } from '@/hooks';
 import { FoodSource } from '@/types/selectableItem';
 import { EditableStorageItem } from '@/types/storage';
@@ -20,7 +20,7 @@ export default function ConvenienceVariantListSheet({
 }: ConvenienceVariantListSheetProps) {
   const { closeSheet } = useOverlay();
 
-  const recommendVariantList = Object.values(convenienceVariantObj).map(({ id }) => id);
+  const recommendVariantList = Object.values(foodSourceObj).map(({ id }) => id);
 
   return (
     <View className="py-3">
@@ -37,7 +37,7 @@ export default function ConvenienceVariantListSheet({
                 closeSheet();
               }}
             >
-              <MealConvenienceCard
+              <FoodSourceCard
                 type={id}
                 isSelected={isSelected}
                 className={isSelected ? '!border-blue-7' : ''}
@@ -48,7 +48,7 @@ export default function ConvenienceVariantListSheet({
                   size={22}
                   color={isSelected ? 'blue' : 'inactive'}
                 />
-              </MealConvenienceCard>
+              </FoodSourceCard>
             </TouchableOpacity>
           );
         })}

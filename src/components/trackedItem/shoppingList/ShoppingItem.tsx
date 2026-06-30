@@ -1,5 +1,5 @@
 import { togglePurchasedAtom } from '@/atom/shoppingListAtom';
-import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
+import { findStorageItemWithKeyAtom } from '@/atom/storageAtom';
 import { EnrichShoppingItem } from '@/types/shoppingList';
 import { createTrackedItemKey, getTrackedItemLabelAndCategory } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';

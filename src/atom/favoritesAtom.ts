@@ -1,4 +1,3 @@
-import { initialCustomIngredient } from '@/constants';
 import { AppError, AppSuccess } from '@/hooks';
 import { SelectableItem } from '@/types/selectableItem';
 import { EnrichedStorageItem } from '@/types/storage';
@@ -16,6 +15,11 @@ export const favoriteIngredientListAtom = atom((get) => {
 export const favoriteMealListAtom = atom((get) => {
   const favoriteList = get(favoriteItemListAtom);
   return favoriteList.filter(({ kind }) => kind === 'meal');
+});
+
+export const favoritePreparedFoodListAtom = atom((get) => {
+  const favoriteList = get(favoriteItemListAtom);
+  return favoriteList.filter(({ kind }) => kind === 'preparedFood');
 });
 
 /* -------------------------------------------------------------------------- */
@@ -54,15 +58,10 @@ export const addFavoriteStorageItemAtom = atom(
     if (newItem.type === 'meal') {
       set(favoriteItemListAtom, [...list, newItem.meal]);
     }
-    if (newItem.type === 'custom') {
-      const customIngredient = {
-        ...initialCustomIngredient,
-        label: newItem.customLabel,
-        defaultStorage: newItem.storage.type,
-        expirationDays: { [newItem.storage.type]: newItem.expiresAt },
-      };
-      set(favoriteItemListAtom, [...list, customIngredient]);
+    if (newItem.type === 'preparedFood') {
+      set(favoriteItemListAtom, [...list, newItem.preparedFood]);
     }
+
     return { type: 'success', item: newItem };
   },
 );

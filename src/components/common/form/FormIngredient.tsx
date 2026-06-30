@@ -18,8 +18,8 @@ export default function FormIngredient({
   const days =
     currStorageItem.type === 'ingredient'
       ? currStorageItem.ingredient?.expirationDays
-      : currStorageItem.type === 'meal'
-        ? currStorageItem.meal.expirationDays
+      : currStorageItem.type === 'preparedFood'
+        ? currStorageItem.preparedFood.expirationDays
         : undefined;
 
   return (

@@ -1,5 +1,9 @@
-import { ingredientObj, ingredientVariantsObj, mealObj } from '@/constants';
-import { preparedFoodObj } from '@/constants/preparedFood/preparedFood';
+import {
+  ingredientObj,
+  ingredientVariantsObj,
+  mealObj,
+  preparedFoodObj,
+} from '@/constants';
 import {
   IngredientCategoryKey,
   MealCategoryKey,
@@ -16,6 +20,12 @@ export type SelectableItem = Ingredient | PreparedFood | Meal;
 /* -------------------------------------------------------------------------- */
 
 /**
+ * Food → 원본 데이터
+ * SelectableItem → UI에서 선택할 대상
+ * PurchasableFood → 구매 가능한 음식
+ * ConsumableFood → 먹을 수 있는 음식
+ * TrackedItem → 사용자가 관리하는 데이터
+ *
  * Food Model
  *
  * Ingredient ─────────► PreparedFood ─────────► Meal
@@ -192,9 +202,7 @@ export type Ingredient = BaseFood & {
 /* -------------------------------------------------------------------------- */
 type PreparedFoodMap = typeof preparedFoodObj;
 
-export type PreparedFoodKey = {
-  [K in keyof PreparedFoodMap]: keyof PreparedFoodMap[K];
-}[keyof PreparedFoodMap];
+export type PreparedFoodKey = keyof PreparedFoodMap;
 
 export type PreparedFoodWithEnrichFoodStructure = Omit<PreparedFood, 'foodStructure'> & {
   foodStructure?: EnrichedFoodStructure;

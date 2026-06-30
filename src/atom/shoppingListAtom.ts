@@ -1,4 +1,4 @@
-import { allStorageItemListAtom } from '@/atom/storageItemAtom';
+import { allStorageItemListAtom } from '@/atom/storageAtom';
 import { mockShoppingList, initialCustomStorageItem } from '@/constants';
 import { AppError, AppSuccess } from '@/hooks';
 import { ShoppingItem } from '@/types/shoppingList';
@@ -11,6 +11,7 @@ import {
   findTrackedItemWithKey,
   createShoppingItem,
   convertMealToStorageItem,
+  convertPreparedFoodToStorageItem,
 } from '@/utils';
 import { Timestamp } from 'firebase/firestore';
 import { atom } from 'jotai';
@@ -27,8 +28,10 @@ export const shoppingListAtom = atom(mockShoppingList.map(enrichShoppinItem)); /
 /** 특정 식재료가 장보기목록에 포함되어있는지 검사 */
 export const findShoppingItem = atomFamily((key: string) => {
   return atom((get) => {
-    const favorites = get(shoppingListAtom);
-    return favorites.find((item) => findTrackedItemWithKey(item, key));
+    const shoppingList = get(shoppingListAtom);
+    return shoppingList.find((item) => {
+      return findTrackedItemWithKey(item, key);
+    });
   });
 });
 
@@ -86,6 +89,13 @@ export const convertedStorageItemListAtom = atom((get): EnrichedStorageItem[] =>
       };
     }
 
+    if (item.type === 'preparedFood') {
+      return {
+        ...convertPreparedFoodToStorageItem(item.preparedFood),
+        ...common,
+      };
+    }
+
     if (item.type === 'ingredient') {
       return {
         ...convertIngredientToStorageItem(item.ingredient),
@@ -125,6 +135,10 @@ export const addShoppingItemAtom = atom(
 
       if (shoppingItem.type === 'meal') {
         return shoppingItem.meal.label === inputValue;
+      }
+
+      if (shoppingItem.type === 'preparedFood') {
+        return shoppingItem.preparedFood.label === inputValue;
       }
 
       return shoppingItem.customLabel === inputValue;

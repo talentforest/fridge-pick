@@ -10,8 +10,8 @@ import {
   confirmAtom,
   expandSheetAtom,
   shrinkSheetAtom,
-  toastAtom,
 } from '@/atom/overlayAtom';
+import Toast from 'react-native-toast-message';
 
 export const useOverlay = () => {
   const openSheet = useSetAtom(openSheetAtom);
@@ -25,12 +25,15 @@ export const useOverlay = () => {
 
   const alert = useSetAtom(alertAtom);
   const confirm = useSetAtom(confirmAtom);
-  const toast = useSetAtom(toastAtom);
 
   const expandSheet = useSetAtom(expandSheetAtom);
   const shrinkSheet = useSetAtom(shrinkSheetAtom);
 
+  const showToast = Toast.show;
+
   return {
+    showToast,
+
     openSheet,
     closeSheet,
 
@@ -45,6 +48,5 @@ export const useOverlay = () => {
 
     alert,
     confirm,
-    toast,
   };
 };

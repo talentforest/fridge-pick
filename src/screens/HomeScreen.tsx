@@ -1,10 +1,10 @@
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
-import CautionIngredientList from '@/components/home/CautionIngredientList';
+import CautionStorageItemList from '@/components/home/CautionStorageItemList';
 import HomeHeader from '@/components/home/HomeHeader';
-import RecommendedMeal from '@/components/home/RecommendedMeal';
+import RecommendedMenu from '@/components/home/RecommendedMenu';
 import SpaceGrid from '@/components/home/SpaceGrid';
-import TodayMeal from '@/components/home/TodayMeal';
+import TodayMenu from '@/components/home/TodayMenu';
 import { View } from 'react-native';
 
 export default function HomeScreen() {
@@ -16,11 +16,11 @@ export default function HomeScreen() {
           <SpaceGrid />
         </View>
 
-        <CautionIngredientList />
+        <CautionStorageItemList />
 
-        <TodayMeal hasHeader />
+        <TodayMenu hasHeader />
 
-        <RecommendedMeal />
+        <RecommendedMenu />
       </ScrollViewContainer>
     </SafeAreaViewContainer>
   );

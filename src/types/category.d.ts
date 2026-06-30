@@ -18,3 +18,9 @@ type MealCategoryMap = typeof mealCategoryObj;
 export type MealCategoryItem = MealCategoryMap[MealCategoryKey];
 export type MealCategoryKey = keyof MealCategoryMap;
 export type MealCategoryLabel = MealCategoryItem['label'];
+
+export type FoodCategoryKey =
+  | IngredientCategoryKey
+  | MealCategoryKey
+  | PreparedFoodCategoryKey
+  | 'noCategory';

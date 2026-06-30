@@ -1,7 +1,7 @@
 import {
-  cautionStorageItemListAtom,
+  storageItemListByExpirationStatusAtom,
   itemListByStorageAtom,
-} from '@/atom/storageItemAtom';
+} from '@/atom/storageAtom';
 import { image_fridge } from '@/constants';
 import { StackNavProp } from '@/types/RootStackParamList';
 import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
@@ -19,7 +19,9 @@ export default function SpaceGrid() {
   const fridgeItemList = useAtomValue(itemListByStorageAtom('fridge'));
   const pantryItemList = useAtomValue(itemListByStorageAtom('pantry'));
 
-  const expiredStorageItemList = useAtomValue(cautionStorageItemListAtom('caution'));
+  const expiredStorageItemList = useAtomValue(
+    storageItemListByExpirationStatusAtom('caution'),
+  );
 
   const getExpiredItemList = (storageType: StorageTypeId) => {
     return expiredStorageItemList.filter(

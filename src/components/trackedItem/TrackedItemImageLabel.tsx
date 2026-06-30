@@ -31,14 +31,13 @@ export default function TrackedItemImageLabel({
       <View className="gap-y-2.5">
         <Text className={`line-clamp-1 ${textClassName}`}>
           {getTrackedItemLabelAndCategory(item).label}
-          {/* {convenienceLabel ? ` (${convenienceLabel})` : ''} */}
         </Text>
 
-        {/* {hasCategory && (
+        {hasCategory && (
           <Text className="!text-neutral-7">
-            {ingredientCategoryObj[getTrackedItemLabelAndCategory(item).category].label}
+            {getTrackedItemLabelAndCategory(item).categoryLabel}
           </Text>
-        )} */}
+        )}
       </View>
     </View>
   );

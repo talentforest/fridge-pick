@@ -1,13 +1,18 @@
-import { itemListByStorageAtom } from '@/atom/storageItemAtom';
-import { ingredientCategoryObj, storageObj } from '@/constants';
-import { IngredientCategoryKey } from '@/types/category';
+import { itemListByStorageAtom } from '@/atom/storageAtom';
+import {
+  ingredientCategoryObj,
+  mealCategoryObj,
+  preparedFoodCategoryObj,
+  storageObj,
+} from '@/constants';
+import { FoodCategoryKey } from '@/types/category';
 import {
   EnrichedStorageItem,
   StorageSide,
   StorageSideId,
   StorageSpace,
 } from '@/types/storage';
-import { findIngredient, findMeal } from '@/utils';
+import { findIngredient, findMeal, findPreparedFood } from '@/utils';
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 
@@ -47,18 +52,18 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
   const hasSide = false; // TODO: 사용자가 문쪽 안쪽을 구분해서 사용하길 원하는 경우 처리
 
   const storageItemListByCategory = useMemo(() => {
-    const grouped: Partial<Record<IngredientCategoryKey, EnrichedStorageItem[]>> = {};
+    const grouped: Partial<Record<FoodCategoryKey, EnrichedStorageItem[]>> = {};
 
     const currStorageItemList = hasSide ? currentSideItems : storageItemList;
 
     currStorageItemList.forEach((storageItem) => {
-      let category: IngredientCategoryKey = 'noCategory';
+      let category: FoodCategoryKey = 'noCategory';
       let enrichedItem: EnrichedStorageItem = storageItem;
 
       switch (storageItem.type) {
         case 'ingredient': {
           const ingredient = findIngredient(storageItem.ingredientId);
-          category = ingredient?.category ?? 'noCategory';
+          category = ingredient.category;
           enrichedItem = {
             ...storageItem,
             ...(ingredient ? { ingredient } : {}),
@@ -66,9 +71,19 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
           break;
         }
 
+        case 'preparedFood': {
+          const preparedFood = findPreparedFood(storageItem.preparedFoodId);
+          category = preparedFood.category;
+          enrichedItem = {
+            ...storageItem,
+            ...(preparedFood ? { preparedFood } : {}),
+          };
+          break;
+        }
+
         case 'meal': {
-          category = 'convenience';
           const meal = findMeal(storageItem.mealId);
+          category = meal.category;
           enrichedItem = {
             ...storageItem,
             ...(meal ? { meal } : {}),
@@ -90,7 +105,11 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
       grouped[category]!.push(enrichedItem);
     });
 
-    return Object.values(ingredientCategoryObj)
+    return Object.values({
+      ...ingredientCategoryObj,
+      ...mealCategoryObj,
+      ...preparedFoodCategoryObj,
+    })
       .map((category) => ({
         category,
         itemList: grouped[category.id] ?? [],

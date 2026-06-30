@@ -1,4 +1,4 @@
-import { allIngredientList, allMealList } from '@/constants';
+import { allIngredientList, allMealList, allPreparedFoodList } from '@/constants';
 import { SelectableItem } from '@/types/selectableItem';
 import { EnrichShoppingItem, ShoppingItem } from '@/types/shoppingList';
 import { nanoid } from 'nanoid/non-secure';
@@ -15,6 +15,7 @@ import { nanoid } from 'nanoid/non-secure';
 export const createShoppingItem = (inputValue: string): EnrichShoppingItem => {
   const ingredient = allIngredientList.find(({ label }) => label === inputValue);
   const meal = allMealList.find(({ label }) => label === inputValue);
+  const preparedFood = allPreparedFoodList.find(({ label }) => label === inputValue);
 
   const baseItem = {
     id: nanoid(),
@@ -27,6 +28,15 @@ export const createShoppingItem = (inputValue: string): EnrichShoppingItem => {
       type: 'ingredient',
       ingredientId: ingredient.id,
       ingredient,
+    };
+  }
+
+  if (preparedFood) {
+    return {
+      ...baseItem,
+      type: 'preparedFood',
+      preparedFoodId: preparedFood.id,
+      preparedFood,
     };
   }
 

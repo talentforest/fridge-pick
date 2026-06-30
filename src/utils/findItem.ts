@@ -1,11 +1,11 @@
-import { allIngredientList, allMealList } from '@/constants';
-import { allPreparedFoodList } from '@/constants/preparedFood/preparedFood';
+import { allIngredientList, allMealList, allPreparedFoodList } from '@/constants';
 import {
   IngredientKey,
   MealKey,
   PreparedFoodKey,
   SelectableItem,
 } from '@/types/selectableItem';
+import { EnrichedStorageItem } from '@/types/storage';
 import { TrackedItem } from '@/types/trackedItem';
 
 /** 실제 사용자 아이템을 찾을 수 있는 키 생성
@@ -75,7 +75,7 @@ export function findIngredient(ingredientId: IngredientKey) {
 export function findMeal(mealId: MealKey) {
   const result = allMealList.find(({ id }) => id === mealId);
   if (!result) {
-    throw new Error(`Ingredient not found: ${mealId}`);
+    throw new Error(`Meal not found: ${mealId}`);
   }
   return result;
 }
@@ -84,7 +84,21 @@ export function findMeal(mealId: MealKey) {
 export function findPreparedFood(preparedFoodId: PreparedFoodKey) {
   const result = allPreparedFoodList.find(({ id }) => id === preparedFoodId);
   if (!result) {
-    throw new Error(`Ingredient not found: ${preparedFoodId}`);
+    throw new Error(`PreparedFood not found: ${preparedFoodId}`);
   }
   return result;
 }
+
+export const hasConsumableFoodInStorage = (
+  storageItems: EnrichedStorageItem[],
+  foodId: string,
+) => {
+  return storageItems.some((item) => {
+    if (item.type === 'meal') {
+      return item.mealId === foodId;
+    }
+    if (item.type === 'preparedFood') {
+      return item.preparedFoodId === foodId;
+    }
+  });
+};

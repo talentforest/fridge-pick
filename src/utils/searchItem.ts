@@ -1,5 +1,4 @@
-import { allIngredientList, allMealList } from '@/constants';
-import { allPreparedFoodList } from '@/constants/preparedFood/preparedFood';
+import { allIngredientList, allMealList, allPreparedFoodList } from '@/constants';
 import { SelectableItem } from '@/types/selectableItem';
 import { EnrichedStorageItem, StorageItem } from '@/types/storage';
 import { findIngredient, findMeal, findPreparedFood } from '@/utils/findItem';

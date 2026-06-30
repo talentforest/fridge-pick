@@ -4,13 +4,19 @@ import { formatDateString } from '@/utils/formatDate';
 import { addDays } from 'date-fns';
 import { nanoid } from 'nanoid/non-secure';
 
+const now = new Date();
+
+export const getExpriredAt = (days?: number) => {
+  return formatDateString(addDays(now, days || DEFAULT_EXPIRATION_DAYS), 'yyyy-MM-dd');
+};
+
 export const mockStorageItemList: StorageItem[] = [
   {
     type: 'ingredient',
     id: '1',
     ingredientId: 'egg',
     purchasedAt: '2026-03-01',
-    expiresAt: '2026-06-14',
+    expiresAt: getExpriredAt(3),
     storage: { type: 'fridge', side: 'inner', section: '1' },
     memo: '유정란',
   },
@@ -19,7 +25,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '2',
     ingredientId: 'daepa',
     purchasedAt: '2026-03-03',
-    expiresAt: '2026-05-21',
+    expiresAt: getExpriredAt(10),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {
@@ -27,7 +33,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '4',
     ingredientId: 'broccoli',
     purchasedAt: '2026-03-01',
-    expiresAt: '2026-08-21',
+    expiresAt: getExpriredAt(2),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {
@@ -35,7 +41,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '4-potato',
     ingredientId: 'potato',
     purchasedAt: '2026-03-01',
-    expiresAt: '2026-06-14',
+    expiresAt: getExpriredAt(20),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {
@@ -43,7 +49,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '5',
     ingredientId: 'aehobak',
     purchasedAt: '2026-03-02',
-    expiresAt: '2026-06-13',
+    expiresAt: getExpriredAt(5),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {
@@ -51,7 +57,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '6',
     ingredientId: 'pyogo_beoseot',
     purchasedAt: '2026-03-03',
-    expiresAt: '2026-08-21',
+    expiresAt: getExpriredAt(20),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
 
@@ -60,7 +66,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '10',
     ingredientId: 'cheongyang_gochu',
     purchasedAt: '2026-03-02',
-    expiresAt: '2026-08-21',
+    expiresAt: getExpriredAt(5),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {
@@ -68,7 +74,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '12',
     ingredientId: 'chicken_breast',
     purchasedAt: '2026-02-25',
-    expiresAt: '2026-08-10',
+    expiresAt: getExpriredAt(70),
     storage: { type: 'freezer', side: 'inner', section: '1' },
   },
   {
@@ -76,7 +82,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: 'chicken_leg',
     ingredientId: 'chicken_leg',
     purchasedAt: '2026-02-25',
-    expiresAt: '2026-04-27',
+    expiresAt: getExpriredAt(14),
     storage: { type: 'freezer', side: 'inner', section: '1' },
   },
   {
@@ -84,7 +90,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '13',
     ingredientId: 'duck_slice',
     purchasedAt: '2026-02-28',
-    expiresAt: '2026-08-20',
+    expiresAt: getExpriredAt(-5),
     storage: { type: 'freezer', side: 'inner', section: '1' },
   },
   {
@@ -92,7 +98,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '14',
     ingredientId: 'duck_slice_smoked',
     purchasedAt: '2026-02-25',
-    expiresAt: '2026-05-01',
+    expiresAt: getExpriredAt(-30),
     storage: { type: 'freezer', side: 'inner', section: '1' },
   },
   {
@@ -100,7 +106,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '15',
     ingredientId: 'beef_brisket',
     purchasedAt: '2026-06-11',
-    expiresAt: '2026-06-12',
+    expiresAt: getExpriredAt(14),
     storage: { type: 'freezer', side: 'inner', section: '1' },
   },
   {
@@ -108,7 +114,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '17',
     ingredientId: 'pork_neck',
     purchasedAt: '2026-02-27',
-    expiresAt: '2026-06-27',
+    expiresAt: getExpriredAt(7),
     storage: { type: 'freezer', side: 'inner', section: '1' },
   },
   {
@@ -116,16 +122,8 @@ export const mockStorageItemList: StorageItem[] = [
     id: '18',
     ingredientId: 'baby_leaf',
     purchasedAt: '2026-02-21',
-    expiresAt: '2026-07-25',
+    expiresAt: getExpriredAt(4),
     storage: { type: 'fridge', side: 'inner', section: '1' },
-  },
-  {
-    type: 'ingredient',
-    id: '19',
-    ingredientId: 'beef_brisket',
-    purchasedAt: '2026-02-22',
-    expiresAt: '2026-07-25',
-    storage: { type: 'freezer', side: 'inner', section: '1' },
   },
   {
     type: 'ingredient',
@@ -141,7 +139,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '21',
     ingredientId: 'spaghetti_myeon',
     purchasedAt: '2026-04-28',
-    expiresAt: '2028-05-20',
+    expiresAt: getExpriredAt(365),
     storage: { type: 'pantry', side: 'inner', section: '1' },
   },
   {
@@ -149,7 +147,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '22',
     ingredientId: 'fusilli',
     purchasedAt: '2026-02-15',
-    expiresAt: '2028-02-15',
+    expiresAt: getExpriredAt(365),
     storage: { type: 'pantry', side: 'inner', section: '1' },
   },
   {
@@ -157,7 +155,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '23',
     ingredientId: 'memil_garu',
     purchasedAt: '2026-02-18',
-    expiresAt: '2027-05-18',
+    expiresAt: getExpriredAt(365),
     storage: { type: 'pantry', side: 'inner', section: '1' },
   },
   {
@@ -165,7 +163,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '24',
     ingredientId: 'ssal_guksu_myeon',
     purchasedAt: '2026-02-19',
-    expiresAt: '2027-04-19',
+    expiresAt: getExpriredAt(365),
     storage: { type: 'pantry', side: 'inner', section: '1' },
   },
   {
@@ -173,7 +171,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '25',
     ingredientId: 'dangmyeon',
     purchasedAt: '2026-02-15',
-    expiresAt: '2028-06-15',
+    expiresAt: getExpriredAt(365),
     storage: { type: 'pantry', side: 'inner', section: '1' },
   },
   {
@@ -181,7 +179,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '26',
     ingredientId: 'rice_paper',
     purchasedAt: '2026-02-10',
-    expiresAt: '2027-04-10',
+    expiresAt: getExpriredAt(365),
     storage: { type: 'pantry', side: 'inner', section: '1' },
   },
 
@@ -190,12 +188,10 @@ export const mockStorageItemList: StorageItem[] = [
     id: '29',
     ingredientId: 'tteokbokki_tteok',
     purchasedAt: '2026-03-03',
-    expiresAt: '2026-08-10',
+    expiresAt: getExpriredAt(30),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
 ];
-
-const now = new Date();
 
 export const initialCustomStorageItem: CustomStorageItem = {
   type: 'custom',

@@ -1,13 +1,13 @@
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import { SelectableItem } from '@/types/selectableItem';
-import FoodImage from '@/components/common/FoodImage';
 import { createSelectableItemKey } from '@/utils';
 import { useAtomValue } from 'jotai';
-import { findStorageItemWithKeyAtom } from '@/atom/storageItemAtom';
+import { findStorageItemWithKeyAtom } from '@/atom/storageAtom';
 import Icon from '@/components/common/ui/Icon';
 import { findShoppingItem } from '@/atom/shoppingListAtom';
 import { storageObj, iosShadowStyle } from '@/constants';
+import FoodImage from '@/components/common/FoodImage';
 
 interface SelectableItemCardProps {
   item: SelectableItem;
@@ -27,6 +27,8 @@ export default function SelectableItemCard({
   const storageItem = useAtomValue(findStorageItemWithKeyAtom(key));
 
   const isShoppingItem = useAtomValue(findShoppingItem(key));
+
+  if (!item) return null;
 
   return (
     <Card className={`items-center justify-center rounded-xl !px-1 !pt-2.5 ${className}`}>

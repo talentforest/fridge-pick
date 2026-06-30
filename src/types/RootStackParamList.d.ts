@@ -20,7 +20,7 @@ export type RootStackParamList = {
   FavoritesScreen: undefined;
 
   /** 전체 식사메뉴 스크린 */
-  AllMealListScreen: undefined;
+  AllConsumableFoodListScreen: undefined;
 };
 
 export type StackNavProp = NativeStackNavigationProp<RootStackParamList>;

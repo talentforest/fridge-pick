@@ -1,4 +1,6 @@
 import {
+  ConsumableFood,
+  ConsumableFoodWithEnrichedFoodStructure,
   EnrichedFoodStructure,
   FoodComponentItem,
   FoodStructure,
@@ -54,3 +56,15 @@ export function enrichFoodStructure(structure: FoodStructure): EnrichedFoodStruc
     optional: structure.optional?.map(resolveItem),
   };
 }
+
+export const getConsumableFoodListWithEnrichedFoodStructure = (
+  foodList: ConsumableFood[],
+): ConsumableFoodWithEnrichedFoodStructure[] => {
+  return foodList.map((food) => {
+    const { foodStructure: i, ...rest } = food;
+    if (!i) return rest;
+
+    const foodStructure = enrichFoodStructure(i);
+    return { ...food, foodStructure };
+  });
+};

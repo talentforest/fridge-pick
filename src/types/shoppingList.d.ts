@@ -1,4 +1,10 @@
-import { Ingredient, IngredientKey, Meal } from '@/types/selectableItem';
+import {
+  Ingredient,
+  IngredientKey,
+  Meal,
+  PreparedFood,
+  PreparedFoodKey,
+} from '@/types/selectableItem';
 import { Timestamp } from 'firebase/firestore';
 
 type BaseShoppingItem = {
@@ -11,6 +17,13 @@ type BaseShoppingItem = {
 type MealShoppingItem = BaseShoppingItem & {
   type: 'meal';
   mealId: MealKey;
+  /** 등록된 완성요리 아이템에서는 customLabel 원천 차단 */
+  customLabel?: never;
+};
+
+type PreparedFoodShoppingItem = BaseShoppingItem & {
+  type: 'preparedFood';
+  preparedFoodId: PreparedFoodKey;
   /** 등록된 완성요리 아이템에서는 customLabel 원천 차단 */
   customLabel?: never;
 };
@@ -29,10 +42,15 @@ type CustomShoppingItem = BaseShoppingItem & {
   ingredientId?: never;
 };
 
-export type ShoppingItem = IngredientShoppingItem | CustomShoppingItem | MealShoppingItem;
+export type ShoppingItem =
+  | IngredientShoppingItem
+  | PreparedFoodShoppingItem
+  | MealShoppingItem
+  | CustomShoppingItem;
 
 export type EnrichShoppingItem =
   | (IngredientShoppingItem & { ingredient: Ingredient })
+  | (PreparedFoodShoppingItem & { preparedFood: PreparedFood })
   | (MealShoppingItem & { meal: Meal })
   | CustomShoppingItem;
 

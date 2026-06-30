@@ -35,20 +35,8 @@ type ConfirmModalState = BaseModal & {
   resolve: (value: boolean) => void;
 };
 
-/** toast (옵션) */
-type ToastModalState = BaseModal & {
-  type: 'toast';
-  message: string;
-  duration?: number;
-  resolve: (value: boolean) => void;
-};
-
 /** 전체 */
-export type ModalState =
-  | CustomModal
-  | AlertModalState
-  | ConfirmModalState
-  | ToastModalState;
+export type ModalState = CustomModal | AlertModalState | ConfirmModalState;
 
 export type DatePickerParams = {
   render: () => ReactNode;
@@ -122,25 +110,6 @@ export const confirmAtom = atom(
       set(modalAtom, {
         type: 'confirm',
         title,
-        message,
-        resolve,
-      });
-    });
-  },
-);
-
-type ToastParams = {
-  message: string;
-  duration?: number; // ms
-};
-
-export const toastAtom = atom(
-  null,
-  async (_get, set, { message, duration }: ToastParams) => {
-    return await new Promise<boolean>((resolve) => {
-      set(modalAtom, {
-        type: 'toast',
-        duration,
         message,
         resolve,
       });

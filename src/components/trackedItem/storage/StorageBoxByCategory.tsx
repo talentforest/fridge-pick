@@ -4,12 +4,16 @@ import Text from '@/components/common/ui/Text';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import StorageItem from '@/components/trackedItem/storage/StorageItem';
 import { horizontalInset } from '@/constants';
-import { IngredientCategoryItem } from '@/types/category';
+import {
+  IngredientCategoryItem,
+  MealCategoryItem,
+  PreparedFoodCategoryItem,
+} from '@/types/category';
 import { EnrichedStorageItem } from '@/types/storage';
 import { View } from 'react-native';
 
 type StorageBoxByCategoryProps = {
-  category: IngredientCategoryItem;
+  category: IngredientCategoryItem | PreparedFoodCategoryItem | MealCategoryItem;
   storageItemList: EnrichedStorageItem[];
   openItemPress: (item: EnrichedStorageItem) => void;
 };

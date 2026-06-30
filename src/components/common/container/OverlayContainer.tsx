@@ -50,42 +50,9 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
     }
   }, [sheetProps]);
 
-  /** ----------------------- Toast ------------------------ */
-  useEffect(() => {
-    if (modalProps?.type === 'toast') {
-      const timeout = setTimeout(() => {
-        closeModal();
-      }, modalProps.duration ?? 3000);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [modalProps, closeModal]);
-
   return (
     <>
       {children}
-
-      {/* Toast */}
-      {modalProps?.type === 'toast' && (
-        <Modal transparent visible={!!modalProps} animationType="fade">
-          <View
-            pointerEvents="auto"
-            className="absolute inset-x-0 bottom-20 mx-auto items-center justify-center"
-          >
-            <View
-              pointerEvents="auto"
-              className="w-fit rounded-2xl bg-neutral-9 p-1"
-              style={{ ...iosShadowStyle }}
-            >
-              {modalProps.message && (
-                <Text className="px-5 py-4 text-base leading-7 !text-neutral-1">
-                  {modalProps.message}
-                </Text>
-              )}
-            </View>
-          </View>
-        </Modal>
-      )}
 
       {/* BottomSheet */}
       <BottomSheetModal
