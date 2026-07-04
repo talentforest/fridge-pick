@@ -5,7 +5,7 @@ import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import MenuDetailSheet from '@/components/selectableItem/consumableFood/MenuDetailSheet';
 import { View } from 'react-native';
 import {
-  EnrichedConsumableFoodWithFilterList,
+  EnrichedConsumableFoodWithFilter,
   useHandleTodayMenu,
   useOverlay,
 } from '@/hooks';
@@ -19,7 +19,7 @@ import FoodImage from '@/components/common/FoodImage';
 import MenuFilter from '@/components/selectableItem/consumableFood/MenuFilter';
 
 interface MenuCompactCardProps {
-  food: EnrichedConsumableFoodWithFilterList;
+  food: EnrichedConsumableFoodWithFilter;
   className?: string;
 }
 
@@ -56,8 +56,8 @@ export default function MenuCompactCard({ food, className = '' }: MenuCompactCar
         <Text className="-mt-2 text-base">{food.label}</Text>
       </View>
 
-      <View className="justify-between gap-y-4 px-3 py-3">
-        <View className="flex-row flex-wrap items-start justify-start gap-1.5 gap-y-2">
+      <View className="flex-1 justify-between gap-y-4 px-3 py-3">
+        <View className="flex-1 flex-row flex-wrap items-start justify-start gap-1.5 gap-y-2">
           <MenuFilter food={food} type="category" />
           <MenuFilter food={food} type="difficulty" />
         </View>
@@ -66,8 +66,8 @@ export default function MenuCompactCard({ food, className = '' }: MenuCompactCar
           <ProgressBar
             label="재료보유율"
             percentage={food.possessionPercent}
-            possessedIngredientCount={food.possessedIngredientCount}
-            requiredIngredientCount={food.requiredIngredientCount}
+            possessedCount={food.possessedCount}
+            requiredCount={food.requiredCount}
           />
         ) : mealStorageItem && mealStorageItem.type === 'meal' ? (
           <View className="p-1">

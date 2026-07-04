@@ -6,7 +6,7 @@ import { ScrollView, View } from 'react-native';
 import { FoodFilterKey } from '@/types/filter';
 
 import {
-  EnrichedConsumableFoodWithFilterList,
+  EnrichedConsumableFoodWithFilter,
   useHandleTodayMenu,
   useOverlay,
 } from '@/hooks';
@@ -18,7 +18,7 @@ import FoodImage from '@/components/common/FoodImage';
 import { filterObj } from '@/constants';
 
 interface MenuCardProps {
-  food: EnrichedConsumableFoodWithFilterList;
+  food: EnrichedConsumableFoodWithFilter;
   filterList?: readonly FoodFilterKey[];
   className?: string;
   maxIngredientNum?: number;
@@ -88,12 +88,12 @@ export default function MenuCard({
           <ProgressBar
             label="재료보유율"
             percentage={food.possessionPercent}
-            possessedIngredientCount={food.possessedIngredientCount}
-            requiredIngredientCount={food.requiredIngredientCount}
+            possessedCount={food.possessedCount}
+            requiredCount={food.requiredCount}
           />
         </View>
 
-        {hasIngredient && food.requiredIngredientCount > 0 && (
+        {hasIngredient && food.requiredCount > 0 && (
           <View className="w-full flex-row gap-x-1.5">
             {requiredIngredientList
               .slice(

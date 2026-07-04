@@ -6,11 +6,11 @@ import {
   servingTemperatureObj,
 } from '@/constants';
 
-import { EnrichedConsumableFoodWithFilterList } from '@/hooks';
+import { EnrichedConsumableFoodWithFilter } from '@/hooks';
 
 type MenuFilterProps = {
   type: 'difficulty' | 'category' | 'servingTemperature';
-  food: EnrichedConsumableFoodWithFilterList;
+  food: EnrichedConsumableFoodWithFilter;
 };
 
 export default function MenuFilter({ type, food }: MenuFilterProps) {

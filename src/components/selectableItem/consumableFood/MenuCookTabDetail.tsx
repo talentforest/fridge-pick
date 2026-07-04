@@ -4,21 +4,21 @@ import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import FoodStructureItemCard from '@/components/selectableItem/consumableFood/FoodStructureItemCard';
 import MenuFilter from '@/components/selectableItem/consumableFood/MenuFilter';
-import { EnrichedConsumableFoodWithFilterList, useGetMenuDetail } from '@/hooks';
-import { getPossessionStatus, styleByPercentageObj } from '@/utils';
+import { EnrichedConsumableFoodWithFilter, useGetMenuDetail } from '@/hooks';
+import { checkHasStorageItem, getPossessionStatus, styleByPercentageObj } from '@/utils';
 import { View } from 'react-native';
 
 type MenuCookTabDetailProps = {
-  consumableFood: EnrichedConsumableFoodWithFilterList;
+  consumableFood: EnrichedConsumableFoodWithFilter;
 };
 
 export default function MenuCookTabDetail({ consumableFood }: MenuCookTabDetailProps) {
   const {
     expiredSoonList,
-    possessedList,
+    requiredCount,
     possessionPercent,
-    possessedIngredientCount,
-    requiredIngredientCount,
+    possessedList,
+    possessedCount,
   } = consumableFood;
 
   const { getIngredientStructureList, possesionStatus, styleByPossesionStatus } =
@@ -45,17 +45,18 @@ export default function MenuCookTabDetail({ consumableFood }: MenuCookTabDetailP
             <ProgressBar
               label="재료보유율"
               percentage={possessionPercent}
-              possessedIngredientCount={possessedIngredientCount}
-              requiredIngredientCount={requiredIngredientCount}
+              possessedCount={possessedCount}
+              requiredCount={requiredCount}
             />
 
-            {requiredIngredientCount > 0 && (
-              <View className="mt-2 !h-6">
+            {requiredCount > 0 && (
+              <View>
                 <IconWithText
                   text={possesionStatus.label}
                   icon={possesionStatus.icon}
                   iconSize={14}
                   iconColor={possesionStatus.iconColor}
+                  className="mt-2 !h-6"
                   textClassName={styleByPossesionStatus.text}
                 />
               </View>
@@ -70,7 +71,7 @@ export default function MenuCookTabDetail({ consumableFood }: MenuCookTabDetailP
                 <View
                   className={`w-full flex-row items-center gap-x-1 self-start bg-neutral-3 p-4`}
                 >
-                  <Text className={`text-neutral-7`}>{label}</Text>
+                  <Text className="text-neutral-7">{label}</Text>
                 </View>
 
                 <View className="my-3 gap-y-3 px-2">
@@ -80,8 +81,16 @@ export default function MenuCookTabDetail({ consumableFood }: MenuCookTabDetailP
                       item={item}
                       imageSize={25}
                       className="items-center border-0 !py-0 !pl-2.5 !pr-2"
-                      isStorageItem={!!possessedList.find(({ id }) => id === item.id)}
-                      isExpiredSoon={!!expiredSoonList.find(({ id }) => id === item.id)}
+                      isStorageItem={
+                        !!possessedList.find(({ storageItem }) =>
+                          checkHasStorageItem(storageItem, item.id),
+                        )
+                      }
+                      isExpiredSoon={
+                        !!expiredSoonList.find(({ storageItem }) =>
+                          checkHasStorageItem(storageItem, item.id),
+                        )
+                      }
                     />
                   ))}
                 </View>

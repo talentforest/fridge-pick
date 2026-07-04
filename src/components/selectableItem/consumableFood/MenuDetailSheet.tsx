@@ -2,7 +2,7 @@ import { changeMainMenuAtom, deleteTodayMenuAtom } from '@/atom/todayMenuAtom';
 import {
   useOverlay,
   useHandleTodayMenu,
-  EnrichedConsumableFoodWithFilterList,
+  EnrichedConsumableFoodWithFilter,
 } from '@/hooks';
 import { useSetAtom } from 'jotai';
 import { View } from 'react-native';
@@ -20,7 +20,7 @@ import FoodImage from '@/components/common/FoodImage';
 import FavoriteBtn from '@/components/common/FavoriteBtn';
 
 interface MenuDetailSheetProps {
-  food: EnrichedConsumableFoodWithFilterList;
+  food: EnrichedConsumableFoodWithFilter;
   type: 'mainMenu' | 'sideMenu';
 }
 

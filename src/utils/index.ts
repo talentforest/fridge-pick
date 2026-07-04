@@ -12,4 +12,4 @@ export * from '@/utils/getTrackedItemLabelAndCategory';
 
 export * from '@/utils/getStyleByPercentage';
 
-export * from '@/utils/getScore';
+export * from '@/utils/calculateScore';

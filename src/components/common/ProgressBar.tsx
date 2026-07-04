@@ -6,25 +6,22 @@ import { View } from 'react-native';
 interface ProgressBarProps {
   label?: string;
   percentage: number;
-  possessedIngredientCount: number;
-  requiredIngredientCount: number;
+  possessedCount: number;
+  requiredCount: number;
   children?: ReactNode;
 }
 
 export default function ProgressBar({
   label,
   percentage,
-  possessedIngredientCount,
-  requiredIngredientCount,
+  possessedCount,
+  requiredCount,
   children,
 }: ProgressBarProps) {
   const status = getPossessionStatus(percentage);
   const colorObj = styleByPercentageObj[status];
 
-  const requiredBoxList = Array.from(
-    { length: requiredIngredientCount },
-    (_, index) => index,
-  );
+  const requiredBoxList = Array.from({ length: requiredCount }, (_, index) => index);
 
   return (
     <View>
@@ -32,9 +29,9 @@ export default function ProgressBar({
         <View className="mb-[6px] flex-row items-center gap-x-1">
           <Text className="text-neutral-9">{label}</Text>
           <Text className={`${colorObj.text} font-extrabold`}>{`${percentage}%`}</Text>
-          {possessedIngredientCount && requiredIngredientCount ? (
+          {possessedCount && requiredCount ? (
             <Text className={`!text-[13px] text-neutral-9`}>
-              {possessedIngredientCount}/{requiredIngredientCount}
+              {possessedCount}/{requiredCount}
             </Text>
           ) : (
             <></>
@@ -48,7 +45,7 @@ export default function ProgressBar({
         {requiredBoxList.map((box) => (
           <View
             key={box}
-            className={`h-[16px] flex-1 ${box === 0 ? 'rounded-l-[5px]' : ''} ${box === requiredBoxList.length - 1 ? 'rounded-r-[5px]' : ''} ${possessedIngredientCount > box ? colorObj.bg : 'bg-inactive-bg'}`}
+            className={`h-[16px] flex-1 ${box === 0 ? 'rounded-l' : ''} ${box === requiredBoxList.length - 1 ? 'rounded-r' : ''} ${possessedCount > box ? colorObj.bg : 'bg-inactive-bg'}`}
           />
         ))}
       </View>

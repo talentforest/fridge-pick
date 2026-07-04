@@ -1104,12 +1104,13 @@ export const mealObj = {
     servingTemperature: 'warm',
     availableFoodSources: ['takeout'],
     foodStructure: {
-      essential: [{ kind: 'ingredient', id: 'pork_belly' }],
-      common: [
+      essential: [
+        { kind: 'ingredient', id: 'pork_belly' },
         { kind: 'ingredient', id: 'garlic' },
         { kind: 'ingredient', id: 'onion' },
         { kind: 'ingredient', id: 'daepa' },
       ],
+      common: [],
       seasoning: [
         { kind: 'ingredient', id: 'doenjang' },
         { kind: 'ingredient', id: 'black_pepper' },

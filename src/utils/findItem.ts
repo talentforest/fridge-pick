@@ -6,7 +6,7 @@ import {
   SelectableItem,
 } from '@/types/selectableItem';
 import { EnrichedStorageItem } from '@/types/storage';
-import { TrackedItem } from '@/types/trackedItem';
+import { StorageItem, TrackedItem } from '@/types/trackedItem';
 
 /** 실제 사용자 아이템을 찾을 수 있는 키 생성
  * @param item: SelectableItem
@@ -101,4 +101,19 @@ export const hasConsumableFoodInStorage = (
       return item.preparedFoodId === foodId;
     }
   });
+};
+
+export const checkHasStorageItem = (
+  storageItem: StorageItem,
+  selectableItemId: SelectableItem['id'],
+) => {
+  if (storageItem.type === 'meal') {
+    return storageItem.mealId === selectableItemId;
+  }
+  if (storageItem.type === 'ingredient') {
+    return storageItem.ingredientId === selectableItemId;
+  }
+  if (storageItem.type === 'preparedFood') {
+    return storageItem.preparedFoodId === selectableItemId;
+  }
 };

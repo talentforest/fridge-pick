@@ -48,7 +48,7 @@ export default function FilterTag({
     textColor: 'text-inactive-text',
   };
 
-  const commonClassName = 'rounded-xl px-3 py-3';
+  const commonClassName = 'rounded-lg px-3 py-3';
 
   const currBgColor = isActive ? bgColor[color as FilterColor] : inActiveObj.bgColor;
 

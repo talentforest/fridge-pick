@@ -7,7 +7,7 @@ import MenuDetailSheet from '@/components/selectableItem/consumableFood/MenuDeta
 import FoodImage from '@/components/common/FoodImage';
 import { TodayMenu } from '@/types/trackedItem';
 import { View } from 'react-native';
-import { EnrichedConsumableFoodWithFilterList, useOverlay } from '@/hooks';
+import { EnrichedConsumableFoodWithFilter, useOverlay } from '@/hooks';
 
 interface TodayMenuCardProps {
   todayMenu: TodayMenu;
@@ -26,7 +26,7 @@ export default function TodayMenuCard({
 
   const { openSheet } = useOverlay();
 
-  const onPress = (food: EnrichedConsumableFoodWithFilterList) => {
+  const onPress = (food: EnrichedConsumableFoodWithFilter) => {
     openSheet({
       enableDynamicSizing: true,
       maxDynamicContentSize: 750,
@@ -66,8 +66,8 @@ export default function TodayMenuCard({
               <ProgressBar
                 label="재료보유율"
                 percentage={consumableFood.possessionPercent}
-                possessedIngredientCount={consumableFood.possessedIngredientCount}
-                requiredIngredientCount={consumableFood.requiredIngredientCount}
+                possessedCount={consumableFood.possessedCount}
+                requiredCount={consumableFood.requiredCount}
               />
             </View>
           )}

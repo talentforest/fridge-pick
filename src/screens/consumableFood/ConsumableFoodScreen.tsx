@@ -8,7 +8,7 @@ import LabelContainer from '@/components/common/container/LabelContainer';
 import FilterContainer from '@/components/common/container/FilterContainer';
 import TextInput from '@/components/common/ui/TextInput';
 import NavigateBtn from '@/components/common/NavigateBtn';
-import { EnrichedConsumableFoodWithFilterList, useGetMenuList } from '@/hooks';
+import { EnrichedConsumableFoodWithFilter, useGetMenuList } from '@/hooks';
 import { useCallback } from 'react';
 import { View } from 'react-native';
 
@@ -23,9 +23,7 @@ export default function ConsumableFoodScreen() {
   } = useGetMenuList({ maxLength: 10 });
 
   const filteredChildrenData = useCallback(
-    (meal: EnrichedConsumableFoodWithFilterList) => (
-      <MenuCard key={meal.id} food={meal} />
-    ),
+    (meal: EnrichedConsumableFoodWithFilter) => <MenuCard key={meal.id} food={meal} />,
     [],
   );
 
