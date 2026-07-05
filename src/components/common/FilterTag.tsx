@@ -31,7 +31,7 @@ export default function FilterTag({
     blue: 'bg-blue-1',
     yellow: '!bg-yellow-1',
     neutral: 'bg-neutral-3',
-    black: 'bg-neutral-9',
+    indigo: 'bg-indigo-1',
   };
 
   const textColorObj = {
@@ -40,7 +40,7 @@ export default function FilterTag({
     blue: 'text-blue-7',
     yellow: 'text-yellow-7',
     neutral: 'text-neutral-9',
-    black: 'bg-neutral-1',
+    indigo: 'text-indigo-5',
   };
 
   const inActiveObj = {

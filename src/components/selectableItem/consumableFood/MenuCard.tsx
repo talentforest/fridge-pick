@@ -87,8 +87,8 @@ export default function MenuCard({
         <View className={`mb-4 mt-2 items-center gap-y-2.5`}>
           <ProgressBar
             label="재료보유율"
-            percentage={food.possessionPercent}
-            possessedCount={food.possessedCount}
+            percentage={food.requiredPossessionPercent}
+            possessedCount={food.requiredPossessedList.length}
             requiredCount={food.requiredCount}
           />
         </View>

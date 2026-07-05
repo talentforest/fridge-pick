@@ -31,7 +31,7 @@ export const filterObj = {
     favorite: {
       name: 'favorite',
       label: '나의 픽',
-      color: 'yellow',
+      color: 'indigo',
       icon: 'Heart',
     },
   },

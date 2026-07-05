@@ -767,7 +767,7 @@ export const preparedFoodObj = {
     label: '감자전',
     category: 'light_food',
 
-    difficulty: 'easy',
+    difficulty: 'medium',
     servingTemperature: 'hot',
     availableFoodSources: ['takeout'],
     foodStructure: {

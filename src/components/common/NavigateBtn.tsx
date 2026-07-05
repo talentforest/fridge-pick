@@ -18,8 +18,8 @@ export default function NavigateBtn({ navigateTo }: NavigateBtnProps) {
         navigation.navigate(navigateTo);
       }}
     >
-      <Text className="!text-[15px] text-blue-7">더 많은 메뉴 보러가기</Text>
-      <Icon name="ChevronRight" size={20} color="blue" />
+      <Text className="!text-[15px] text-neutral-7">더 많은 메뉴 보러가기</Text>
+      <Icon name="ChevronRight" size={18} color="neutral" />
     </TouchableOpacity>
   );
 }

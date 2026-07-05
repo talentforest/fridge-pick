@@ -14,7 +14,7 @@ export default function RecommendedMenu() {
     recommendedTodayMenuList,
     changeActiveFilter,
     activeFilter,
-  } = useGetMenuList({ maxLength: 300 });
+  } = useGetMenuList({ maxLength: 20 });
 
   return (
     <>

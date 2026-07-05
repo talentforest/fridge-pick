@@ -45,6 +45,7 @@ export const colorTokens = {
     indigo: {
       5: '#4633c3',
       3: '#d3cdff',
+      1: '#e8e4ff',
     },
 
     red: {
@@ -107,6 +108,7 @@ export const colorTokens = {
     indigo: {
       5: '#d3cdff',
       3: '#4633c3',
+      1: '#3420a2',
     },
 
     red: {
@@ -161,6 +163,7 @@ export const lightTheme = vars({
 
   '--color-indigo-5': colorTokens.light.indigo[5],
   '--color-indigo-3': colorTokens.light.indigo[3],
+  '--color-indigo-1': colorTokens.light.indigo[1],
 
   '--color-red-9': colorTokens.light.red[9],
   '--color-red-7': colorTokens.light.red[7],
@@ -207,6 +210,7 @@ export const darkTheme = vars({
 
   '--color-indigo-5': colorTokens.dark.indigo[5],
   '--color-indigo-3': colorTokens.dark.indigo[3],
+  '--color-indigo-1': colorTokens.dark.indigo[1],
 
   '--color-red-9': colorTokens.dark.red[9],
   '--color-red-7': colorTokens.dark.red[7],

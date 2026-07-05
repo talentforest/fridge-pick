@@ -58,6 +58,7 @@ module.exports = {
         indigo: {
           5: 'var(--color-indigo-5)',
           3: 'var(--color-indigo-3)',
+          1: 'var(--color-indigo-1)',
         },
 
         neutral: {

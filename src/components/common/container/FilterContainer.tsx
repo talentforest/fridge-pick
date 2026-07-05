@@ -65,7 +65,7 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
           }
           renderItem={({ item }) => children(item)}
           ListEmptyComponent={
-            <Card className="h-[420px] items-center justify-center border">
+            <Card className="h-[420px] items-center justify-center">
               <Text className="text-inactive-text">식사메뉴가 없어요</Text>
             </Card>
           }
@@ -89,7 +89,7 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
               {dataList.map(children)}
             </GridContainer>
           ) : (
-            <Card className="h-[420px] items-center justify-center border">
+            <Card className="h-[400px] items-center justify-center">
               <Text className="text-inactive-text">식사메뉴가 없어요</Text>
             </Card>
           )}
