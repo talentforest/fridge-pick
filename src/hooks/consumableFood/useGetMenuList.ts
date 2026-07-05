@@ -1,9 +1,9 @@
-import { favoriteMealListAtom } from '@/atom/favoritesAtom';
+import { favoriteConsumableFoodListAtom } from '@/atom/favoritesAtom';
 import {
   allStorageItemListAtom,
   storageItemListByExpirationStatusAtom,
 } from '@/atom/storageAtom';
-import { allMealList, filterObj, allPreparedFoodList } from '@/constants';
+import { filterObj, allPreparedFoodList, allMealList } from '@/constants';
 import { useDebounce } from '@/hooks/common/useDebounce';
 import { FoodFilterKey } from '@/types/filter';
 import {
@@ -23,13 +23,13 @@ import { useAtomValue } from 'jotai';
 import { useCallback, useMemo, useState } from 'react';
 
 /** 높은 재료 보유율 기준 */
-const HIGH_POSSESSION_THRESHOLD = 50;
+const HIGH_POSSESSION_THRESHOLD = 60;
 
 export type PossessionData = {
   possessedList: StorageItemWithExpiration[];
   requiredPossessedList: StorageItemWithExpiration[];
   requiredCount: number;
-  possessionPercent: number;
+  requiredPossessionPercent: number;
   essentialPossessionPercent: number;
   commonPossessionPercent: number;
   seasoningPossessionPercent: number;
@@ -51,7 +51,7 @@ type UseGetMenuListProps = {
 export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
   const storageItems = useAtomValue(allStorageItemListAtom);
 
-  const favoriteMealList = useAtomValue(favoriteMealListAtom);
+  const favoriteList = useAtomValue(favoriteConsumableFoodListAtom);
 
   const availableStorageItemList = useAtomValue(
     storageItemListByExpirationStatusAtom('available'),
@@ -73,9 +73,8 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
     );
     /** [Menu(Consumable Food)] 리턴
      * 1. Meal - 전체 다
-     * 2. Prepared Food - 카테고리: light_food || side_dish만
-     */
-    return [...allMealList]; //...consumablePreparedFood
+     * 2. Prepared Food - 카테고리: light_food || side_dish만 */
+    return [...allMealList, ...consumablePreparedFood];
   }, []);
 
   /* -------------------------------------------------------------------------- */
@@ -112,8 +111,8 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
   const initialPossession: PossessionData = useMemo(() => {
     return {
       possessedList: [],
-      possessionPercent: 0,
 
+      requiredPossessionPercent: 0,
       requiredPossessedList: [],
       requiredCount: 0,
 
@@ -139,7 +138,7 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
     (foodId: string, foodStructure?: EnrichedFoodStructure): PossessionData => {
       // NOTE: 완성요리 자체에 만약 식재료구조 정보는 없는데 냉장고에 갖고 있는 경우는 추천
       if (!foodStructure && hasConsumableFoodInStorage(storageItems, foodId))
-        return { ...initialPossession, possessionPercent: 100 };
+        return { ...initialPossession, requiredPossessionPercent: 100 };
 
       // NOTE: 완성요리가 냉장고에도 없는데 식재료 구조도 없는 경우는 바로 제거
       if (!foodStructure) return initialPossession;
@@ -157,7 +156,9 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
        */
       const possessedList = getPossessedStorageItems([...requiredItems, ...optional]);
       const requiredPossessedList = getPossessedStorageItems(requiredItems);
-      const possessionPercent = Math.round((requiredPossessedList.length / total) * 100);
+      const requiredPossessionPercent = Math.round(
+        (requiredPossessedList.length / total) * 100,
+      );
 
       const getPossessionPercent = (list: readonly SelectableItem[]) => {
         const missingCount = getMissingCount(list, requiredPossessedList);
@@ -174,7 +175,7 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
         requiredCount: total,
         possessedList,
         requiredPossessedList,
-        possessionPercent,
+        requiredPossessionPercent,
         essentialPossessionPercent,
         commonPossessionPercent,
         seasoningPossessionPercent,
@@ -212,8 +213,8 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
 
   /** filterLabel = "나의 픽" 검증 */
   const isFavoriteFood = useCallback(
-    (foodId: string) => favoriteMealList.find(({ id }) => id === foodId),
-    [favoriteMealList],
+    (foodId: string) => favoriteList.find(({ id }) => id === foodId),
+    [favoriteList],
   );
 
   /* -------------------------------------------------------------------------- */
@@ -257,7 +258,7 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
 
         const expiration = getExpirationData(food.foodStructure);
 
-        const { possessionPercent } = possession;
+        const { requiredPossessionPercent } = possession;
 
         const { expiredSoonList } = expiration;
 
@@ -267,7 +268,7 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
         }
 
         /** NOTE: 식재료 보유율이 높을 때 */
-        if (possessionPercent > HIGH_POSSESSION_THRESHOLD) {
+        if (requiredPossessionPercent > HIGH_POSSESSION_THRESHOLD) {
           filterList.push('highPossession');
         }
 
@@ -291,9 +292,6 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
   );
 
   const allConsumableFoodListWithFilterList = addFilterInFoodList(allConsumableFood);
-  // const test = allConsumableFoodListWithFilterList.find(
-  //   (item) => item.label === '콩나물국',
-  // );
 
   /* -------------------------------------------------------------------------- */
   /*                           SEARCH KEYWORD LIST                              */
@@ -327,8 +325,8 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
       }
 
       // 2. 전체 재료 보유율
-      if (a.possessionPercent !== b.possessionPercent) {
-        return b.possessionPercent - a.possessionPercent;
+      if (a.requiredPossessionPercent !== b.requiredPossessionPercent) {
+        return b.requiredPossessionPercent - a.requiredPossessionPercent;
       }
 
       // 3. Common 부족 개수
@@ -417,7 +415,7 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
   const recommendedTodayMenuList: EnrichedConsumableFoodWithFilter[] = useMemo(() => {
     return allConsumableFoodListWithFilterList
       .filter((food) => food.filterList.includes('highPossession'))
-      .sort((a, b) => a.possessionPercent - b.possessionPercent);
+      .sort((a, b) => a.requiredPossessionPercent - b.requiredPossessionPercent);
   }, [allConsumableFoodListWithFilterList]);
 
   return {

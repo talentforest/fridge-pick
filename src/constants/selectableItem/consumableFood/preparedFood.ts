@@ -195,7 +195,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'broccoli_bokkeum',
     label: '브로콜리볶음',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',

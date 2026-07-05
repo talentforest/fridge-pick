@@ -56,8 +56,8 @@ export default function MenuCompactCard({ food, className = '' }: MenuCompactCar
         <Text className="-mt-2 text-base">{food.label}</Text>
       </View>
 
-      <View className="flex-1 justify-between gap-y-4 px-3 py-3">
-        <View className="flex-1 flex-row flex-wrap items-start justify-start gap-1.5 gap-y-2">
+      <View className="justify-between gap-y-4 px-3 py-3">
+        <View className="flex-row flex-wrap items-start justify-start gap-1.5 gap-y-2">
           <MenuFilter food={food} type="category" />
           <MenuFilter food={food} type="difficulty" />
         </View>
@@ -65,8 +65,8 @@ export default function MenuCompactCard({ food, className = '' }: MenuCompactCar
         {food.foodStructure ? (
           <ProgressBar
             label="재료보유율"
-            percentage={food.possessionPercent}
-            possessedCount={food.possessedList.length}
+            percentage={food.requiredPossessionPercent}
+            possessedCount={food.requiredPossessedList.length}
             requiredCount={food.requiredCount}
           />
         ) : mealStorageItem && mealStorageItem.type === 'meal' ? (

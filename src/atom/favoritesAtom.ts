@@ -22,6 +22,11 @@ export const favoritePreparedFoodListAtom = atom((get) => {
   return favoriteList.filter(({ kind }) => kind === 'preparedFood');
 });
 
+export const favoriteConsumableFoodListAtom = atom((get) => {
+  const favoriteList = get(favoriteItemListAtom);
+  return favoriteList.filter(({ kind }) => kind === 'meal' || kind === 'preparedFood');
+});
+
 /* -------------------------------------------------------------------------- */
 /*                                  Selector                                  */
 /* -------------------------------------------------------------------------- */

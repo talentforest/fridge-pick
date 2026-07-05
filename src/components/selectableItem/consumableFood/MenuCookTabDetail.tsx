@@ -13,15 +13,20 @@ type MenuCookTabDetailProps = {
 };
 
 export default function MenuCookTabDetail({ consumableFood }: MenuCookTabDetailProps) {
-  const { expiredSoonList, requiredCount, possessionPercent, possessedList } =
-    consumableFood;
+  const {
+    expiredSoonList,
+    requiredCount,
+    requiredPossessionPercent,
+    requiredPossessedList,
+    possessedList,
+  } = consumableFood;
 
   const { getIngredientStructureList, possesionStatus, styleByPossesionStatus } =
     useGetMenuDetail(consumableFood);
 
   const allIngredientStructureList = getIngredientStructureList();
 
-  const status = getPossessionStatus(consumableFood.possessionPercent);
+  const status = getPossessionStatus(consumableFood.requiredPossessionPercent);
   const colorObj = styleByPercentageObj[status];
 
   return (
@@ -39,8 +44,8 @@ export default function MenuCookTabDetail({ consumableFood }: MenuCookTabDetailP
           <Card className={`gap-y-2 !px-4 !pb-3 !pt-5 ${colorObj.border}`}>
             <ProgressBar
               label="필수재료 보유율"
-              percentage={possessionPercent}
-              possessedCount={possessedList.length}
+              percentage={requiredPossessionPercent}
+              possessedCount={requiredPossessedList.length}
               requiredCount={requiredCount}
             />
 

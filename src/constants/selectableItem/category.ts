@@ -91,7 +91,7 @@ export const preparedFoodCategoryObj = {
   },
   light_food: {
     id: 'light_food',
-    label: '보조식',
+    label: '간편식',
     icon: 'Egg',
     color: 'blue',
   },
