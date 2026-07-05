@@ -4,7 +4,6 @@ import { FoodFilterKey } from '@/types/filter';
 const SCORE = {
   // Base
   POSSESSION_PERCENT: 100,
-  ESSENTIAL_COMPLETE: 300,
   ESSENTIAL_MISSING: 10000,
   COMMON_MISSING: 500,
   SEASONING_MISSING: 200,
@@ -30,7 +29,7 @@ const SCORE = {
  */
 const calculateBaseScore = (food: EnrichedConsumableFoodWithFilter): number => {
   // 식재료 구조가 없는 메뉴는 재료 기반 추천 점수를 계산할 수 없으므로 기본 점수 0
-  if (!food.foodStructure) return -5000;
+  if (!food.foodStructure) return -50000;
 
   let score = 0;
 
@@ -41,10 +40,6 @@ const calculateBaseScore = (food: EnrichedConsumableFoodWithFilter): number => {
     requiredCount,
     possessionPercent, //
   } = food;
-
-  if (essentialMissingCount === 0) {
-    score += SCORE.ESSENTIAL_COMPLETE;
-  }
 
   score -= essentialMissingCount * SCORE.ESSENTIAL_MISSING;
   score -= commonMissingCount * SCORE.COMMON_MISSING;

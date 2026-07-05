@@ -1460,7 +1460,10 @@ export const mealObj = {
     servingTemperature: 'hot',
     availableFoodSources: ['takeout'],
     foodStructure: {
-      essential: [{ kind: 'ingredient', id: 'udon_myeon' }],
+      essential: [
+        { kind: 'ingredient', id: 'udon_myeon' },
+        { kind: 'ingredient', id: 'oyster_sauce' },
+      ],
       common: [
         { kind: 'ingredient', id: 'yangbaechu' },
         { kind: 'ingredient', id: 'saeu' },
@@ -1468,7 +1471,7 @@ export const mealObj = {
       ],
       seasoning: [
         { kind: 'ingredient', id: 'soy_sauce' },
-        { kind: 'ingredient', id: 'oyster_sauce' },
+
         { kind: 'ingredient', id: 'minced_garlic' },
         { kind: 'ingredient', id: 'cooking_oil' },
       ],
@@ -3672,9 +3675,9 @@ export const mealObj = {
         { kind: 'preparedFood', id: 'cooked_rice' },
         { kind: 'ingredient', id: 'yeoneo_hoe' },
         { kind: 'ingredient', id: 'baby_leaf' },
+        { kind: 'ingredient', id: 'avocado' },
       ],
       common: [
-        { kind: 'ingredient', id: 'avocado' },
         { kind: 'ingredient', id: 'cucumber' },
         { kind: 'ingredient', id: 'tomato' },
         { kind: 'ingredient', id: 'canned_oksusu' },

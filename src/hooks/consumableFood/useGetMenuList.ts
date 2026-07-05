@@ -17,7 +17,6 @@ import {
   checkHasStorageItem,
   getConsumableFoodListWithEnrichedFoodStructure,
   calculateMenuSortScore,
-  getSearchMatchScore,
   hasConsumableFoodInStorage,
   StorageItemWithExpiration,
 } from '@/utils';
@@ -32,9 +31,9 @@ export type PossessionData = {
   possessedCount: number;
   requiredCount: number;
   possessionPercent: number;
-  essentialMissingCount: number;
-  commonMissingCount: number;
-  seasoningMissingCount: number;
+  essentialPossessionPercent: number;
+  commonPossessionPercent: number;
+  seasoningPossessionPercent: number;
 };
 
 export type ExpirationData = {
@@ -114,13 +113,14 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
   const initialPossession: PossessionData = useMemo(() => {
     return {
       requiredCount: 0,
-      possessionPercent: 0,
-      essentialMissingCount: 0,
-      commonMissingCount: 0,
-      seasoningMissingCount: 0,
 
+      possessionPercent: 0,
       possessedCount: 0,
       possessedList: [],
+
+      essentialPossessionPercent: 0,
+      commonPossessionPercent: 0,
+      seasoningPossessionPercent: 0,
     };
   }, []);
 
@@ -164,14 +164,31 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
       const commonMissingCount = getMissingCount(common, possessedList);
       const seasoningMissingCount = getMissingCount(seasoning, possessedList);
 
+      const essentialPossessionPercent =
+        essential.length === 0
+          ? 100
+          : Math.round(
+              ((essential.length - essentialMissingCount) / essential.length) * 100,
+            );
+      const commonPossessionPercent =
+        common.length === 0
+          ? 100
+          : Math.round(((common.length - commonMissingCount) / common.length) * 100);
+      const seasoningPossessionPercent =
+        seasoning.length === 0
+          ? 100
+          : Math.round(
+              ((seasoning.length - seasoningMissingCount) / seasoning.length) * 100,
+            );
+
       return {
         requiredCount: total,
         possessedList,
         possessedCount: possessedList.length,
         possessionPercent,
-        essentialMissingCount,
-        commonMissingCount,
-        seasoningMissingCount,
+        essentialPossessionPercent,
+        commonPossessionPercent,
+        seasoningPossessionPercent,
       };
     },
     [getPossessedStorageItems, initialPossession, storageItems],
@@ -318,18 +335,42 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
         : menuList.filter((menu) => menu.filterList.includes(activeFilter));
 
     const result = menuListWithFilter.sort((a, b) => {
-      if (debouncedSearchKeyword.length > 0) {
-        const searchScoreDiff =
-          getSearchMatchScore(b, debouncedSearchKeyword) -
-          getSearchMatchScore(a, debouncedSearchKeyword);
-
-        if (searchScoreDiff !== 0) {
-          return searchScoreDiff;
-        }
+      // 1. Essential 보유율
+      if (a.essentialPossessionPercent !== b.essentialPossessionPercent) {
+        return b.essentialPossessionPercent - a.essentialPossessionPercent;
       }
-      return (
-        calculateMenuSortScore(b, activeFilter) - calculateMenuSortScore(a, activeFilter)
-      );
+
+      // 2. 전체 재료 보유율
+      if (a.possessionPercent !== b.possessionPercent) {
+        return b.possessionPercent - a.possessionPercent;
+      }
+
+      // 3. Common 부족 개수
+      if (a.commonPossessionPercent !== b.commonPossessionPercent) {
+        return b.commonPossessionPercent - a.commonPossessionPercent;
+      }
+
+      // 4. Seasoning 부족 개수
+      if (a.seasoningPossessionPercent !== b.seasoningPossessionPercent) {
+        return b.seasoningPossessionPercent - a.seasoningPossessionPercent;
+      }
+
+      // 5. 소비기한 임박 재료 활용 개수
+      if (a.expiredSoonList.length !== b.expiredSoonList.length) {
+        return b.expiredSoonList.length - a.expiredSoonList.length;
+      }
+
+      // 5. 필요한 재료 개수
+      if (a.requiredCount !== b.requiredCount) {
+        return a.requiredCount - b.requiredCount;
+      }
+
+      // 6. 가장 임박한 소비기한
+      if (a.expiredSoonRemainingDays !== b.expiredSoonRemainingDays) {
+        return a.expiredSoonRemainingDays - b.expiredSoonRemainingDays;
+      }
+
+      return 0;
     });
 
     return maxLength ? result.slice(0, maxLength) : result;
@@ -341,6 +382,7 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
     activeFilter,
     maxLength,
   ]);
+  // const test = filteredMenuList.find((item) => item.label === '떡볶이');
 
   /* -------------------------------------------------------------------------- */
   /*                        보유한 식재료를 갖고 있는 메뉴 목록                         */
