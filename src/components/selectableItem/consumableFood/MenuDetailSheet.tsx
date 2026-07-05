@@ -145,14 +145,14 @@ export default function MenuDetailSheet({ food, type }: MenuDetailSheetProps) {
                 iconName="HandPlatter"
                 onPress={onAddTodayMenuPress}
                 bgColor="blue"
-                className="flex-1 !py-[16px]"
+                className="flex-1"
               />
             ) : (
               <SquareBtn
                 name="오늘 먹을 식사에요"
                 iconName="CheckCircle2"
                 bgColor="inActive"
-                className="flex-1 !py-[16px]"
+                className="flex-1"
                 disabled
               />
             )}

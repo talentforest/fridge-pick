@@ -2,7 +2,6 @@ import FilterTag from '@/components/common/FilterTag';
 import Text from '@/components/common/ui/Text';
 import GridContainer from '@/components/common/container/GridContainer';
 import Card from '@/components/common/ui/Card';
-import IconWithText from '@/components/common/IconWithText';
 import { FilterColor } from '@/types/filter';
 import { IconName } from '@/components/common/ui/Icon';
 import { ReactElement } from 'react';
@@ -79,19 +78,10 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
             setActiveFilter={changeActiveFilter}
           />
 
-          <View className="mb-4 mt-3 flex-row items-center justify-between px-2">
+          <View className="mb-4 mt-3 flex-row items-center justify-between pl-1">
             <Text className="text-base text-neutral-7">
               총 {dataList.length}개의 메뉴
             </Text>
-
-            {/* NOTE: 추천순 / 재료 많이 보유한 순 / 부족 재료 적은 순 / 가나다순  */}
-            <IconWithText
-              text="추천순"
-              textClassName="text-base text-neutral-7"
-              icon="ArrowDown"
-              iconSize={16}
-              iconColor="neutral"
-            />
           </View>
 
           {dataList.length > 0 && children ? (

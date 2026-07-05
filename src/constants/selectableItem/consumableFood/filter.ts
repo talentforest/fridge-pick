@@ -18,7 +18,7 @@ export const filterObj = {
       name: 'easy',
       label: '쉬운 메뉴',
       color: 'yellow',
-      icon: 'Sparkles',
+      icon: 'Zap',
     },
 
     highPossession: {

@@ -66,7 +66,7 @@ export default function MenuCompactCard({ food, className = '' }: MenuCompactCar
           <ProgressBar
             label="재료보유율"
             percentage={food.possessionPercent}
-            possessedCount={food.possessedCount}
+            possessedCount={food.possessedList.length}
             requiredCount={food.requiredCount}
           />
         ) : mealStorageItem && mealStorageItem.type === 'meal' ? (

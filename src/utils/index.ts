@@ -11,5 +11,3 @@ export * from '@/utils/findItem';
 export * from '@/utils/getTrackedItemLabelAndCategory';
 
 export * from '@/utils/getStyleByPercentage';
-
-export * from '@/utils/calculateScore';

@@ -25,7 +25,7 @@ export const colorTokens = {
       7: '#15803d',
       5: '#25a264',
       3: '#86efac',
-      1: '#c6ffc8',
+      1: '#c8ffcb',
     },
 
     blue: {
@@ -57,10 +57,10 @@ export const colorTokens = {
 
     yellow: {
       9: '#5b501d',
-      7: '#d29000',
-      5: '#e9bd2e',
+      7: '#b77d00',
+      5: '#e5b825',
       3: '#ffdc69',
-      1: '#fff49d',
+      1: '#fff189',
     },
 
     orange: {
@@ -68,7 +68,7 @@ export const colorTokens = {
       7: '#ca8a04',
       5: '#e9bd2e',
       3: '#ffecac',
-      1: '#fff9c9',
+      1: '#fff8bf',
     },
   },
 

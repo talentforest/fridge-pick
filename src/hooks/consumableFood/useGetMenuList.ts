@@ -16,7 +16,6 @@ import { EnrichedStorageItem } from '@/types/storage';
 import {
   checkHasStorageItem,
   getConsumableFoodListWithEnrichedFoodStructure,
-  calculateMenuSortScore,
   hasConsumableFoodInStorage,
   StorageItemWithExpiration,
 } from '@/utils';
@@ -28,7 +27,7 @@ const HIGH_POSSESSION_THRESHOLD = 50;
 
 export type PossessionData = {
   possessedList: StorageItemWithExpiration[];
-  possessedCount: number;
+  requiredPossessedList: StorageItemWithExpiration[];
   requiredCount: number;
   possessionPercent: number;
   essentialPossessionPercent: number;
@@ -112,11 +111,11 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
 
   const initialPossession: PossessionData = useMemo(() => {
     return {
-      requiredCount: 0,
-
-      possessionPercent: 0,
-      possessedCount: 0,
       possessedList: [],
+      possessionPercent: 0,
+
+      requiredPossessedList: [],
+      requiredCount: 0,
 
       essentialPossessionPercent: 0,
       commonPossessionPercent: 0,
@@ -145,7 +144,7 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
       // NOTE: 완성요리가 냉장고에도 없는데 식재료 구조도 없는 경우는 바로 제거
       if (!foodStructure) return initialPossession;
 
-      const { essential, common, seasoning } = foodStructure;
+      const { essential, common, seasoning, optional } = foodStructure;
       const requiredItems = [...essential, ...common, ...seasoning];
 
       const total = requiredItems.length;
@@ -156,35 +155,25 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
        * - 보유했지만 소비기한이 지난 경우에는 재료 보유 인정 안함.
        * - 재료 보유한 식재료의 경우 소비기한일이 적게 남았을수록 추천.
        */
-      const possessedList = getPossessedStorageItems(requiredItems);
+      const possessedList = getPossessedStorageItems([...requiredItems, ...optional]);
+      const requiredPossessedList = getPossessedStorageItems(requiredItems);
+      const possessionPercent = Math.round((requiredPossessedList.length / total) * 100);
 
-      const possessionPercent = Math.round((possessedList.length / total) * 100);
+      const getPossessionPercent = (list: readonly SelectableItem[]) => {
+        const missingCount = getMissingCount(list, requiredPossessedList);
+        return list.length === 0
+          ? 100
+          : Math.round(((list.length - missingCount) / list.length) * 100);
+      };
 
-      const essentialMissingCount = getMissingCount(essential, possessedList);
-      const commonMissingCount = getMissingCount(common, possessedList);
-      const seasoningMissingCount = getMissingCount(seasoning, possessedList);
-
-      const essentialPossessionPercent =
-        essential.length === 0
-          ? 100
-          : Math.round(
-              ((essential.length - essentialMissingCount) / essential.length) * 100,
-            );
-      const commonPossessionPercent =
-        common.length === 0
-          ? 100
-          : Math.round(((common.length - commonMissingCount) / common.length) * 100);
-      const seasoningPossessionPercent =
-        seasoning.length === 0
-          ? 100
-          : Math.round(
-              ((seasoning.length - seasoningMissingCount) / seasoning.length) * 100,
-            );
+      const essentialPossessionPercent = getPossessionPercent(essential);
+      const commonPossessionPercent = getPossessionPercent(common);
+      const seasoningPossessionPercent = getPossessionPercent(seasoning);
 
       return {
         requiredCount: total,
         possessedList,
-        possessedCount: possessedList.length,
+        requiredPossessedList,
         possessionPercent,
         essentialPossessionPercent,
         commonPossessionPercent,
@@ -328,10 +317,7 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
 
     const menuListWithFilter =
       activeFilter === 'all'
-        ? menuList.map((item) => ({
-            ...item,
-            score: calculateMenuSortScore(item, activeFilter),
-          }))
+        ? menuList
         : menuList.filter((menu) => menu.filterList.includes(activeFilter));
 
     const result = menuListWithFilter.sort((a, b) => {
@@ -431,13 +417,7 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
   const recommendedTodayMenuList: EnrichedConsumableFoodWithFilter[] = useMemo(() => {
     return allConsumableFoodListWithFilterList
       .filter((food) => food.filterList.includes('highPossession'))
-      .sort((a, b) => {
-        return a.possessionPercent - b.possessionPercent;
-        // return (
-        //   calculateMenuSortScore(b, activeFilter) -
-        //   calculateMenuSortScore(a, activeFilter)
-        // );
-      });
+      .sort((a, b) => a.possessionPercent - b.possessionPercent);
   }, [allConsumableFoodListWithFilterList]);
 
   return {
