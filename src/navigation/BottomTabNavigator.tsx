@@ -1,7 +1,6 @@
 import ConsumableFoodScreen from '@/screens/consumableFood/ConsumableFoodScreen';
 import HomeScreen from '@/screens/HomeScreen';
 import ShoppingListScreen from '@/screens/shoppingList/ShoppingListScreen';
-import StorageScreen from '@/screens/storage/StorageScreen';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Appearance, View } from 'react-native';
@@ -30,39 +29,32 @@ export default function BottomTabNavigator() {
       tabBar={(props) => <CustomTabBar {...props} />}
     >
       <Tab.Screen
+        name="ShoppingListScreen"
+        component={ShoppingListScreen}
+        options={{
+          headerShown: false,
+          tabBarLabel: '장보기',
+          tabBarIcon: ({ focused, size }) => TabIcon({ name: '장보기', focused, size }),
+        }}
+      />
+
+      <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{
           headerShown: false,
           tabBarLabel: '홈',
-          tabBarIcon: ({ focused }) => TabIcon({ name: '홈', focused }),
+          tabBarIcon: ({ focused, size }) => TabIcon({ name: '홈', focused, size }),
         }}
       />
-      <Tab.Screen
-        name="StorageScreen"
-        component={StorageScreen}
-        options={{
-          headerShown: false,
-          tabBarLabel: '식재료관리',
-          tabBarIcon: ({ focused }) => TabIcon({ name: '식재료관리', focused }),
-        }}
-      />
-      <Tab.Screen
-        name="ShoppingListScreen"
-        component={ShoppingListScreen}
-        options={{
-          headerShown: false,
-          tabBarLabel: '장보기목록',
-          tabBarIcon: ({ focused }) => TabIcon({ name: '장보기목록', focused }),
-        }}
-      />
+
       <Tab.Screen
         name="ConsumableFoodScreen"
         component={ConsumableFoodScreen}
         options={{
           headerShown: false,
           tabBarLabel: '식사',
-          tabBarIcon: ({ focused }) => TabIcon({ name: '식사', focused }),
+          tabBarIcon: ({ focused, size }) => TabIcon({ name: '식사', focused, size }),
         }}
       />
     </Tab.Navigator>
@@ -71,20 +63,21 @@ export default function BottomTabNavigator() {
 
 function TabIcon({
   name,
+  size,
   focused,
 }: {
-  name: '홈' | '식재료관리' | '장보기목록' | '식사';
+  name: '홈' | '장보기' | '식사';
   focused: boolean;
+  size: number;
 }) {
   const tabIconList = {
     홈: 'House' as const,
-    식재료관리: 'Grid2X2Plus' as const,
-    장보기목록: 'ShoppingBasket' as const,
+    장보기: 'ShoppingBasket' as const,
     식사: 'HandPlatter' as const,
   };
 
   return (
-    <Icon name={tabIconList[name]} size={18} color={focused ? 'text' : 'inactive'} />
+    <Icon name={tabIconList[name]} size={size} color={focused ? 'text' : 'inactive'} />
   );
 }
 
@@ -94,7 +87,7 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   return (
     <View
       style={{ paddingBottom: insets.bottom }}
-      className="flex-row border-t border-border bg-bg"
+      className="flex-row border-t border-border bg-bg px-5"
     >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key] as {
@@ -128,12 +121,12 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
               {options.tabBarIcon?.({
                 focused: isFocused,
                 color: '',
-                size: 20,
+                size: 18,
               })}
 
               {/* 라벨 */}
               <Text
-                className={isFocused ? 'text-xs text-text' : 'text-xs text-inactive-text'}
+                className={`!text-[11px] ${isFocused ? 'font-extrabold text-text' : 'text-inactive-text'}`}
               >
                 {label}
               </Text>

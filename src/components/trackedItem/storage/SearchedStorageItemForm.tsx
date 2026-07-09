@@ -115,13 +115,14 @@ export default function SearchedStorageItemForm({
     <>
       <ScrollView
         ref={scrollRef}
-        contentContainerClassName="gap-y-5 pt-5"
+        contentContainerClassName="gap-y-8 pt-5"
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
         {/* 선택한 식재료 정보 */}
         <LabelContainer
           label={`선택한 식재료 ${currStorageItem.type === 'custom' ? '이름' : '정보'}`}
+          labelColor="neutral"
         >
           <View>
             {currStorageItem.type === 'custom' ? (
@@ -136,7 +137,7 @@ export default function SearchedStorageItemForm({
                 <TrackedItemImageLabel
                   item={currStorageItem}
                   isHorizontal
-                  imageSize={90}
+                  imageSize={70}
                   hasCategory
                   textClassName="text-base"
                 />
@@ -187,8 +188,6 @@ export default function SearchedStorageItemForm({
 
       <SquareBtn
         iconName="Plus"
-        className="py-5"
-        textClassName="text-base"
         bgColor="green"
         name={`${label}에 추가하기`}
         onPress={onPress}

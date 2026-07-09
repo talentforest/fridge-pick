@@ -34,6 +34,7 @@ export default function TrackedItemImageLabel({
           <Card className="h-[82px] w-[82px] items-center justify-center px-2 py-2">
             <FoodImage trackedItem={item} imageSize={imageSize} />
           </Card>
+
           <Card className="h-[82px] flex-1 justify-center gap-y-3">
             <Text className={`line-clamp-1 ${textClassName}`}>
               {getTrackedItemLabelAndCategory(item).label}
@@ -49,14 +50,16 @@ export default function TrackedItemImageLabel({
       ) : (
         <>
           <FoodImage trackedItem={item} imageSize={imageSize} />
-          <Text className={`line-clamp-1 ${textClassName}`}>
-            {getTrackedItemLabelAndCategory(item).label}
-          </Text>
-          {hasCategory && (
-            <Text className="text-neutral-5">
-              {getTrackedItemLabelAndCategory(item).categoryLabel}
+          <View className="gap-y-2">
+            <Text className={`line-clamp-1 ${textClassName}`}>
+              {getTrackedItemLabelAndCategory(item).label}
             </Text>
-          )}
+            {hasCategory && (
+              <Text className="text-neutral-5">
+                {getTrackedItemLabelAndCategory(item).categoryLabel}
+              </Text>
+            )}
+          </View>
         </>
       )}
     </View>
