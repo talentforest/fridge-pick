@@ -2,7 +2,6 @@ import { View } from 'react-native';
 import { useGetMenuList } from '@/hooks';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import NavigateBtn from '@/components/common/NavigateBtn';
-import FullBleedSection from '@/components/common/container/FullBleedSection';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import MenuCompactCard from '@/components/selectableItem/consumableFood/MenuCompactCard';
 import FilterContainer from '@/components/common/container/FilterContainer';
@@ -22,20 +21,20 @@ export default function RecommendedMenu() {
         <View className="h-[300px] gap-y-3">
           <SectionTitle title="오늘의 식사 추천" icon="HandPlatter" />
 
-          <FullBleedSection>
-            <CarouselContainer
-              data={recommendedTodayMenuList}
-              initialIndex={recommendedTodayMenuList.length}
-              itemWidth={0.43}
-              spacing={14}
-              hasNavigation
-              hasPagination
-              requiredMinimum={2}
-              centerFocus
-              keyExtractor={(item, index) => `${item.id}:${index}`}
-              renderItem={({ item }) => <MenuCompactCard key={item.id} food={item} />}
-            />
-          </FullBleedSection>
+          {/* <FullBleedSection> */}
+          <CarouselContainer
+            data={recommendedTodayMenuList}
+            initialIndex={recommendedTodayMenuList.length}
+            itemWidth={0.43}
+            spacing={14}
+            hasNavigation
+            hasPagination
+            requiredMinimum={2}
+            centerFocus
+            keyExtractor={(item, index) => `${item.id}:${index}`}
+            renderItem={({ item }) => <MenuCompactCard key={item.id} food={item} />}
+          />
+          {/* </FullBleedSection> */}
         </View>
       ) : (
         <></>

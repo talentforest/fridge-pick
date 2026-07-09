@@ -64,7 +64,7 @@ export default function TodayMenuCard({
           {mainMenu && (
             <View className={`mt-3 items-center gap-y-2.5`}>
               <ProgressBar
-                label="재료보유율"
+                label="필수재료 보유율"
                 percentage={consumableFood.possessionPercent}
                 possessedCount={consumableFood.possessedCount}
                 requiredCount={consumableFood.requiredCount}

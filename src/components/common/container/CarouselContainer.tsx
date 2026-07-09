@@ -1,3 +1,4 @@
+import FullBleedSection from '@/components/common/container/FullBleedSection';
 import GridContainer from '@/components/common/container/GridContainer';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
@@ -100,7 +101,7 @@ export default function CarouselContainer<T>({
   const flatListData = useMemo(() => [...data, ...data, ...data], [data]);
 
   return data.length > requiredMinimum ? (
-    <View>
+    <FullBleedSection>
       <View>
         <FlatList
           ref={listRef}
@@ -164,11 +165,11 @@ export default function CarouselContainer<T>({
       ) : (
         <></>
       )}
-    </View>
+    </FullBleedSection>
   ) : (
     <View>
-      <View className="mx-[24px]">
-        <GridContainer columns={requiredMinimum} gap={10}>
+      <View>
+        <GridContainer columns={requiredMinimum} gap={12}>
           {data.map((item, index) => {
             const isCurrIndex = currentIndex - data.length === index;
             return renderItem({

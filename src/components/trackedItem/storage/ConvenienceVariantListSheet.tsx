@@ -10,7 +10,7 @@ import { TouchableOpacity, View } from 'react-native';
 type ConvenienceVariantListSheetProps = {
   currConvenienceVariant: FoodSource;
   availableConvenienceVariants?: readonly FoodSource[];
-  onItemChange: (newData: Partial<Partial<EditableStorageItem>>) => void;
+  onItemChange: (newData: EditableStorageItem) => void;
 };
 
 export default function ConvenienceVariantListSheet({

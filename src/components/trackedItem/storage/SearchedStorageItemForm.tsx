@@ -83,7 +83,7 @@ export default function SearchedStorageItemForm({
     });
   };
 
-  const onItemChange = (newData: Partial<EditableStorageItem>) => {
+  const onItemChange = (newData: EditableStorageItem) => {
     setCurrStorageItem((prev): EnrichedStorageItem | null => {
       if (!prev) return null;
 

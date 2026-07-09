@@ -17,7 +17,7 @@ export default function LabelContainer({
 }: LabelContainerProps) {
   const textColor = {
     yellow: 'text-yellow-7',
-    neutral: 'text-neutral-7',
+    neutral: 'text-neutral-9',
     blue: 'text-blue-7',
     indigo: 'text-indigo-5',
   };
@@ -25,13 +25,19 @@ export default function LabelContainer({
     <View>
       {/* 라벨 */}
       {label && !tailLabel && (
-        <Text className={`mb-2 pl-1.5 ${textColor[labelColor]}`}>{label}</Text>
+        <Text className={`mb-2 pl-1.5 !text-[13px] ${textColor[labelColor]}`}>
+          {label}
+        </Text>
       )}
 
       {label && tailLabel && (
         <View className="flex-row items-center justify-between">
-          <Text className={`mb-2 pl-1.5 ${textColor[labelColor]}`}>{label}</Text>
-          <Text className={`mb-2 pr-1.5 ${textColor[labelColor]}`}>{tailLabel}</Text>
+          <Text className={`mb-2 pl-1.5 !text-[13px] ${textColor[labelColor]}`}>
+            {label}
+          </Text>
+          <Text className={`mb-2 pr-1.5 !text-[13px] ${textColor[labelColor]}`}>
+            {tailLabel}
+          </Text>
         </View>
       )}
 

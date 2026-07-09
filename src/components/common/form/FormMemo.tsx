@@ -1,14 +1,13 @@
 import LabelContainer from '@/components/common/container/LabelContainer';
-import IconWithText from '@/components/common/IconWithText';
 import TextArea from '@/components/common/ui/TextArea';
+import Text from '@/components/common/ui/Text';
 import { useOverlay } from '@/hooks';
 import { EditableStorageItem } from '@/types/storage';
 
 interface FormMemoProps {
   currMemo: string;
-  onItemChange: (newData: Partial<EditableStorageItem>) => void;
+  onItemChange: (newData: EditableStorageItem) => void;
   hasLabel?: boolean;
-  onSubmit?: () => void;
   onFocus?: () => void;
   autoFocus?: boolean;
   isSheetInput?: boolean;
@@ -17,7 +16,6 @@ interface FormMemoProps {
 export default function FormMemo({
   currMemo,
   onItemChange,
-  onSubmit,
   onFocus,
   hasLabel,
   autoFocus,
@@ -26,7 +24,7 @@ export default function FormMemo({
   const { shrinkSheet } = useOverlay();
 
   return (
-    <LabelContainer label={hasLabel ? '메모사항' : undefined}>
+    <LabelContainer label={hasLabel ? '메모사항(선택)' : undefined} labelColor="neutral">
       <TextArea
         isSheetInput={isSheetInput}
         value={currMemo}
@@ -37,17 +35,9 @@ export default function FormMemo({
         onBlur={shrinkSheet}
       />
 
-      {onSubmit && (
-        <IconWithText
-          icon="CheckCircle2"
-          text="수정완료"
-          iconSize={16}
-          iconColor="neutral"
-          className="absolute bottom-2 right-2 self-end rounded-xl bg-neutral-3 px-3.5 py-3"
-          textClassName="!text-[15px] !text-neutral-7"
-          onPress={onSubmit}
-        />
-      )}
+      <Text className="absolute bottom-3 right-4 text-sm text-neutral-5">
+        {currMemo.length} / 100
+      </Text>
     </LabelContainer>
   );
 }

@@ -1,7 +1,6 @@
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import CautionStorageItem from '@/components/trackedItem/storage/CautionStorageItem';
 import MenuListByExpiredSoonFood from '@/components/selectableItem/consumableFood/MenuListByExpiredSoonFood';
-import FullBleedSection from '@/components/common/container/FullBleedSection';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import GridContainer from '@/components/common/container/GridContainer';
@@ -45,7 +44,7 @@ export default function CautionStorageItemList({
       <SectionTitle title={title || '지금 주의해야하는 식재료'} icon="ClockAlert" />
 
       {isGridType ? (
-        <GridContainer columns={4}>
+        <GridContainer columns={3}>
           {storageItemListByStorage.map((item, index) => (
             <TouchableOpacity
               key={item.storageItem.id}
@@ -62,51 +61,49 @@ export default function CautionStorageItemList({
           ))}
         </GridContainer>
       ) : (
-        <FullBleedSection>
-          <CarouselContainer
-            data={storageItemListByStorage}
-            initialIndex={storageItemListByStorage.length}
-            itemWidth={0.25}
-            hasNavigation
-            spacing={8}
-            centerFocus
-            hasPagination
-            requiredMinimum={3}
-            keyExtractor={(_, index) => `${index}`}
-            renderItem={({ item, isCurrIndex, onPress }) =>
-              onItemPress || onPress ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    if (onItemPress) return onItemPress(item.storageItem);
-                    if (onPress) return onPress();
-                  }}
-                >
-                  <CautionStorageItem
-                    storageItem={item.storageItem}
-                    isCurrIndex={isCurrIndex}
-                    remainingDays={item.remainingDays}
-                  />
-                </TouchableOpacity>
-              ) : (
+        <CarouselContainer
+          data={storageItemListByStorage}
+          initialIndex={storageItemListByStorage.length}
+          itemWidth={0.25}
+          hasNavigation
+          spacing={8}
+          centerFocus
+          hasPagination
+          requiredMinimum={3}
+          keyExtractor={(_, index) => `${index}`}
+          renderItem={({ item, isCurrIndex, onPress }) =>
+            onItemPress || onPress ? (
+              <TouchableOpacity
+                onPress={() => {
+                  if (onItemPress) return onItemPress(item.storageItem);
+                  if (onPress) return onPress();
+                }}
+              >
                 <CautionStorageItem
                   storageItem={item.storageItem}
                   isCurrIndex={isCurrIndex}
                   remainingDays={item.remainingDays}
                 />
+              </TouchableOpacity>
+            ) : (
+              <CautionStorageItem
+                storageItem={item.storageItem}
+                isCurrIndex={isCurrIndex}
+                remainingDays={item.remainingDays}
+              />
+            )
+          }
+        >
+          {/* 식재료를 이용한 메뉴 리스트 */}
+          {hasCautionStorageItem
+            ? ({ storageItem: focusedItem }) => (
+                <MenuListByExpiredSoonFood
+                  key={focusedItem.id}
+                  focusedItem={focusedItem}
+                />
               )
-            }
-          >
-            {/* 식재료를 이용한 메뉴 */}
-            {hasCautionStorageItem
-              ? ({ storageItem: focusedItem }) => (
-                  <MenuListByExpiredSoonFood
-                    key={focusedItem.id}
-                    focusedItem={focusedItem}
-                  />
-                )
-              : undefined}
-          </CarouselContainer>
-        </FullBleedSection>
+            : undefined}
+        </CarouselContainer>
       )}
     </View>
   ) : (

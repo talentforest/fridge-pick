@@ -53,6 +53,7 @@ module.exports = {
           7: 'var(--color-ice-7)',
           5: 'var(--color-ice-5)',
           3: 'var(--color-ice-3)',
+          1: 'var(--color-ice-1)',
         },
 
         indigo: {

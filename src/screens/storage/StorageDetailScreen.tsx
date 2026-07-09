@@ -38,7 +38,7 @@ export default function StorageDetailScreen() {
     openSheet({
       enableDynamicSizing: false,
       keyboardBehavior: 'extend',
-      snapPoints: [450, 700],
+      snapPoints: [480, 700],
       hasDim: true,
       render: () => <StorageItemSheet storageItem={item} />,
     });

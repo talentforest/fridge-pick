@@ -36,7 +36,7 @@ export default function AddShoppingListScreen() {
 
     navigation.goBack();
 
-    alert({ message: '각 보관함에 성공적으로 추가되었습니다.' });
+    alert({ message: '각각 보관함으로 추가되었습니다.' });
   };
 
   return (
@@ -61,7 +61,8 @@ export default function AddShoppingListScreen() {
         />
 
         <SquareBtn
-          name={`${storageItemList.length}개의 식재료 보관함에 추가하기`}
+          name="보관함에 추가하기"
+          iconName="Plus"
           onPress={onAddToStoragePress}
         />
       </ViewContentContainer>

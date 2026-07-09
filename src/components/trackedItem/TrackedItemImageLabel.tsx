@@ -4,6 +4,7 @@ import { EnrichedStorageItem } from '@/types/storage';
 import { View } from 'react-native';
 import { getTrackedItemLabelAndCategory } from '@/utils';
 import FoodImage from '@/components/common/FoodImage';
+import Card from '@/components/common/ui/Card';
 
 interface TrackedItemImageLabelProps {
   item: EnrichedStorageItem | EnrichShoppingItem;
@@ -12,6 +13,7 @@ interface TrackedItemImageLabelProps {
   textClassName?: string;
   hasCategory?: boolean;
   isHorizontal?: boolean;
+  hasImageBox?: boolean;
 }
 
 export default function TrackedItemImageLabel({
@@ -21,24 +23,42 @@ export default function TrackedItemImageLabel({
   textClassName = '',
   hasCategory = false,
   isHorizontal = false,
+  hasImageBox = false,
 }: TrackedItemImageLabelProps) {
-  const layoutClassName = isHorizontal ? 'flex-row gap-x-4' : 'gap-y-1';
+  const layoutClassName = isHorizontal ? 'flex-row gap-x-2' : 'gap-y-1';
 
   return (
     <View className={`items-center ${layoutClassName} ${className}`}>
-      <FoodImage trackedItem={item} imageSize={imageSize} />
+      {hasImageBox ? (
+        <>
+          <Card className="h-[82px] w-[82px] items-center justify-center px-2 py-2">
+            <FoodImage trackedItem={item} imageSize={imageSize} />
+          </Card>
+          <Card className="h-[82px] flex-1 justify-center gap-y-3">
+            <Text className={`line-clamp-1 ${textClassName}`}>
+              {getTrackedItemLabelAndCategory(item).label}
+            </Text>
 
-      <View className="gap-y-2.5">
-        <Text className={`line-clamp-1 ${textClassName}`}>
-          {getTrackedItemLabelAndCategory(item).label}
-        </Text>
-
-        {hasCategory && (
-          <Text className="!text-neutral-7">
-            {getTrackedItemLabelAndCategory(item).categoryLabel}
+            {hasCategory && (
+              <Text className="text-neutral-5">
+                {getTrackedItemLabelAndCategory(item).categoryLabel}
+              </Text>
+            )}
+          </Card>
+        </>
+      ) : (
+        <>
+          <FoodImage trackedItem={item} imageSize={imageSize} />
+          <Text className={`line-clamp-1 ${textClassName}`}>
+            {getTrackedItemLabelAndCategory(item).label}
           </Text>
-        )}
-      </View>
+          {hasCategory && (
+            <Text className="text-neutral-5">
+              {getTrackedItemLabelAndCategory(item).categoryLabel}
+            </Text>
+          )}
+        </>
+      )}
     </View>
   );
 }

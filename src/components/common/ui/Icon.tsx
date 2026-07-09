@@ -1,6 +1,7 @@
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { colorTokens } from '@/theme/color';
 import {
+  NotepadText,
   Flame,
   Egg,
   Croissant,
@@ -91,6 +92,7 @@ import {
 import { useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'NotepadText'
   | 'Flame'
   | 'Egg'
   | 'Croissant'
@@ -233,6 +235,7 @@ export default function Icon({
   };
 
   const iconObj: { [key in IconName]: LucideIcon } = {
+    NotepadText,
     Flame,
     Egg,
     Croissant,

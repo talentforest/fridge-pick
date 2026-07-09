@@ -16,13 +16,13 @@ export default function MenuListByExpiredSoonFood({
 }: MenuListByExpiredSoonFoodProps) {
   const { getHasStorageItemFoodList } = useGetMenuList();
 
-  const menuListByExpiredSoonFood = getHasStorageItemFoodList(focusedItem);
+  const menuListByExpiredSoonFood = getHasStorageItemFoodList(focusedItem).slice(0, 8);
 
   return (
     <View className="h-[350px]">
-      <View className={`mt-1 flex-row items-center gap-x-2 pb-3 pl-8`}>
+      <View className={`mt-1 flex-row items-center gap-x-1 pb-3 pl-2`}>
         <Text>임박 식재료를 이용한 메뉴</Text>
-        <View className="rounded-xl bg-inactive-bg px-3 py-2.5">
+        <View className="rounded-xl bg-yellow-1 px-3 py-2.5">
           <Text className="font-extrabold">
             {getTrackedItemLabelAndCategory(focusedItem).label}
           </Text>
@@ -43,7 +43,7 @@ export default function MenuListByExpiredSoonFood({
           )}
         />
       ) : (
-        <Card className="mx-6 h-72 items-center justify-center">
+        <Card className="h-72 items-center justify-center">
           <Text className="text-inactive-text">식재료를 이용한 메뉴가 없어요</Text>
         </Card>
       )}

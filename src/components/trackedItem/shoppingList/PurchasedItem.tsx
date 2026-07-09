@@ -41,26 +41,29 @@ export default function PurchasedItem({
     },
   ];
 
-  const onEditSubmit = (id: string, newData: Partial<EditableStorageItem>) => {
-    setStorageItemList((prev) =>
-      prev.map((item) => {
-        // eslint-disable-next-line unused-imports/no-unused-vars
-        const { customLabel, ...rest } = newData;
-        if (item.type !== 'custom') {
-          return { ...item, ...rest };
+  const onEditSubmit = (id: string, newData: EditableStorageItem) => {
+    setStorageItemList((prev) => {
+      return prev.map((item) => {
+        if (item.id !== id) return item;
+
+        if (item.type === 'custom') {
+          return { ...item, ...newData };
         }
 
-        return { ...item, ...newData };
-      }),
-    );
+        const { customLabel: _, ...rest } = newData;
+
+        return { ...item, ...rest };
+      });
+    });
+
     closeSheet();
   };
 
   const onEditPress = () =>
     openSheet({
-      enableDynamicSizing: false,
-      keyboardBehavior: 'extend',
-      snapPoints: [570, 790],
+      enableDynamicSizing: true,
+      keyboardBehavior: 'interactive',
+      snapPoints: ['80%'],
       hasDim: true,
       render: () => (
         <EditPurchasedItemSheet

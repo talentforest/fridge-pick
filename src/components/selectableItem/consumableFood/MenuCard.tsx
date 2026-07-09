@@ -16,6 +16,7 @@ import MenuDetailSheet from '@/components/selectableItem/consumableFood/MenuDeta
 import Icon from '@/components/common/ui/Icon';
 import FoodImage from '@/components/common/FoodImage';
 import { filterObj } from '@/constants';
+import MenuFilter from '@/components/selectableItem/consumableFood/MenuFilter';
 
 interface MenuCardProps {
   food: EnrichedConsumableFoodWithFilter;
@@ -53,10 +54,14 @@ export default function MenuCard({
     <TouchableOpacity onPress={onPress}>
       <Card className={`items-start px-5 !pt-2 pb-5 ${className}`}>
         <View className="-ml-2 w-full flex-row items-center gap-x-1">
-          <FoodImage consumableFood={food} imageSize={80} />
+          <FoodImage consumableFood={food} imageSize={90} />
 
           <View className={`flex-1 gap-y-3`}>
             <Text className="line-clamp-2 text-base">{food?.label}</Text>
+            <View className="flex-row flex-wrap items-start justify-start gap-1.5 gap-y-2">
+              <MenuFilter food={food} type="category" />
+              <MenuFilter food={food} type="difficulty" />
+            </View>
           </View>
           <View className="absolute right-0 top-4 flex-row gap-x-2.5">
             {isTodayMenu && <Icon name="CheckCircle2" color="yellow" />}
@@ -84,44 +89,45 @@ export default function MenuCard({
           </ScrollView>
         )}
 
-        <View className={`mb-4 mt-2 items-center gap-y-2.5`}>
+        <View className={`mt-2 w-full gap-y-2.5`}>
           <ProgressBar
-            label="재료보유율"
+            label="필수재료 보유율"
             percentage={food.requiredPossessionPercent}
             possessedCount={food.requiredPossessedList.length}
             requiredCount={food.requiredCount}
           />
-        </View>
+          <View className="">
+            {hasIngredient && food.requiredCount > 0 && (
+              <View className="w-full flex-row gap-x-1.5">
+                {requiredIngredientList
+                  .slice(
+                    0,
+                    requiredIngredientList.length === 5 ? undefined : maxIngredientNum,
+                  )
+                  .map((item) => (
+                    <View
+                      key={item?.id}
+                      className="w-[18.7%] items-center justify-between gap-0.5 rounded-xl bg-neutral-1 pb-2 pt-1"
+                    >
+                      <FoodImage selectableItem={item} imageSize={40} />
+                      <Text className="line-clamp-1 text-center text-sm leading-4 text-neutral-5">
+                        {item.label}
+                      </Text>
+                    </View>
+                  ))}
 
-        {hasIngredient && food.requiredCount > 0 && (
-          <View className="w-full flex-row gap-x-1.5">
-            {requiredIngredientList
-              .slice(
-                0,
-                requiredIngredientList.length === 5 ? undefined : maxIngredientNum,
-              )
-              .map((item) => (
-                <View
-                  key={item?.id}
-                  className="w-[18.7%] items-center justify-between gap-0.5 rounded-xl bg-neutral-1 pb-2 pt-1"
-                >
-                  <FoodImage selectableItem={item} imageSize={40} />
-                  <Text className="line-clamp-1 text-center text-sm leading-4 text-neutral-5">
-                    {item.label}
-                  </Text>
-                </View>
-              ))}
-
-            {requiredIngredientList.length > 5 &&
-              requiredIngredientList.length > maxIngredientNum && (
-                <View className="w-[18%] items-center justify-center gap-0.5 rounded-xl bg-blue-1">
-                  <Text className="!text-[13px] text-blue-5">
-                    +{requiredIngredientList.length - maxIngredientNum}개
-                  </Text>
-                </View>
-              )}
+                {requiredIngredientList.length > 5 &&
+                  requiredIngredientList.length > maxIngredientNum && (
+                    <View className="w-[18%] items-center justify-center gap-0.5 rounded-xl bg-blue-1">
+                      <Text className="!text-[13px] text-blue-5">
+                        +{requiredIngredientList.length - maxIngredientNum}개
+                      </Text>
+                    </View>
+                  )}
+              </View>
+            )}
           </View>
-        )}
+        </View>
       </Card>
     </TouchableOpacity>
   );

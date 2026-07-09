@@ -7,6 +7,9 @@ export default function TextArea({
 }: { isSheetInput?: boolean } & TextInputProps) {
   const hasTextSize = props.className?.match(/text-(xs|sm|md|base|lg|xl|2xl)/);
 
+  const style =
+    'min-h-20 w-full rounded-2xl border border-border bg-card px-4 pt-3.5 pb-5 font-bold leading-[20px] tracking-tightest text-text placeholder:text-inactive-text';
+
   return isSheetInput ? (
     <BottomSheetTextInput
       multiline
@@ -14,10 +17,9 @@ export default function TextArea({
       textAlignVertical="top"
       allowFontScaling
       autoFocus={false}
+      maxLength={100}
       {...props}
-      className={`min-h-28 w-full rounded-2xl border border-border bg-card px-4 py-3.5 pb-10 font-bold leading-[20px] tracking-tightest text-text placeholder:text-inactive-text ${
-        hasTextSize ? props.className : `text-base ${props.className ?? ''}`
-      }`}
+      className={`${style} ${hasTextSize ? props.className : `${props.className ?? ''}`}`}
     />
   ) : (
     <TextInput
@@ -26,10 +28,9 @@ export default function TextArea({
       textAlignVertical="top"
       allowFontScaling
       autoFocus={false}
+      maxLength={50}
       {...props}
-      className={`min-h-28 w-full rounded-2xl border border-border bg-card px-4 py-3.5 pb-10 font-bold leading-[20px] tracking-tightest text-text placeholder:text-inactive-text ${
-        hasTextSize ? props.className : `text-base ${props.className ?? ''}`
-      }`}
+      className={`${style} ${hasTextSize ? props.className : `${props.className ?? ''}`}`}
     />
   );
 }

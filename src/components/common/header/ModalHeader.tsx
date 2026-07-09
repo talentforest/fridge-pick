@@ -23,7 +23,7 @@ export default function ModalHeader({
       {hasX && (
         <Icon
           name="X"
-          size={26}
+          size={24}
           className="p-1"
           onPress={isDatePicker ? closeDatePicker : closeModal}
         />

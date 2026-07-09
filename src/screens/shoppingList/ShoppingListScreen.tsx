@@ -9,6 +9,7 @@ import {
   toggleAllPurchasedAtom,
 } from '@/atom/shoppingListAtom';
 import { image_empty_basket } from '@/constants';
+import { searchIngredientAndMeal } from '@/utils';
 import { StackNavProp } from '@/types/RootStackParamList';
 import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
 import { useNavigation } from '@react-navigation/native';
@@ -28,7 +29,6 @@ import Card from '@/components/common/ui/Card';
 import IconWithText from '@/components/common/IconWithText';
 import Icon from '@/components/common/ui/Icon';
 import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
-import { searchIngredientAndMeal } from '@/utils';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 
 export default function ShoppingListScreen() {
@@ -198,7 +198,6 @@ export default function ShoppingListScreen() {
                     <SelectableItemCard
                       item={item}
                       className="h-20 min-w-20 !pt-1 pb-2.5"
-                      isCompact
                       textClassName="text-sm"
                       imageSize={35}
                     />

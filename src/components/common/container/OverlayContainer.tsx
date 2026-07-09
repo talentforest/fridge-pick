@@ -103,38 +103,17 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
         </BottomSheetScrollView>
       </BottomSheetModal>
 
-      {/* DatePicker */}
-      <Modal transparent visible={!!datePickerProps} animationType="fade">
-        <View className="flex-1 justify-end">
-          {datePickerProps?.hasDim && (
-            <Pressable
-              style={{ backgroundColor: colorTokens[colorScheme].neutral[5] }}
-              className="absolute h-full w-full opacity-30"
-              onPress={closeDatePicker}
-            />
-          )}
-
-          {datePickerProps?.render && (
-            <View
-              style={{ backgroundColor: colorTokens[colorScheme].bg }}
-              className="rounded-t-3xl pt-6"
-            >
-              <View className="mx-auto" style={{ paddingBottom: insets.bottom }}>
-                {datePickerProps.render()}
-              </View>
-            </View>
-          )}
-        </View>
-      </Modal>
-
       {/* Modal */}
       {modalProps?.type === 'modal' && (
         <Modal transparent visible={!!modalProps} animationType="fade">
           <View className="flex-1">
             {modalProps?.hasDim && (
+              // 배경
               <Pressable
-                style={{ backgroundColor: colorTokens[colorScheme].neutral[5] }}
-                className="flex-1 opacity-60"
+                style={{
+                  backgroundColor: colorTokens[colorScheme].neutral[7],
+                }}
+                className="flex-1 opacity-70"
                 onPress={closeModal}
               />
             )}
@@ -142,13 +121,43 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
             <View className="absolute h-full w-full items-center justify-center">
               {modalProps?.children && (
                 <View
-                  style={{ backgroundColor: colorTokens[colorScheme].bg }}
+                  style={{
+                    backgroundColor: colorTokens[colorScheme].bg,
+                    ...iosShadowStyle,
+                    shadowColor: colorTokens[colorScheme].neutral[9],
+                  }}
                   className={`max-h-[85%] w-[85%] rounded-3xl p-6`}
                 >
                   {modalProps.children}
                 </View>
               )}
             </View>
+          </View>
+        </Modal>
+      )}
+
+      {/* DatePicker */}
+      {datePickerProps?.render() && (
+        <Modal transparent visible={!!datePickerProps} animationType="fade">
+          <View className="flex-1 justify-end">
+            {datePickerProps?.hasDim && (
+              <Pressable
+                style={{ backgroundColor: colorTokens[colorScheme].neutral[5] }}
+                className="absolute h-full w-full opacity-30"
+                onPress={closeDatePicker}
+              />
+            )}
+
+            {datePickerProps?.render && (
+              <View
+                style={{ backgroundColor: colorTokens[colorScheme].bg }}
+                className="rounded-t-3xl pt-6"
+              >
+                <View className="mx-auto" style={{ paddingBottom: insets.bottom }}>
+                  {datePickerProps.render()}
+                </View>
+              </View>
+            )}
           </View>
         </Modal>
       )}

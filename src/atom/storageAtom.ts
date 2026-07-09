@@ -134,7 +134,7 @@ export const deleteStorageItemListAtom = atom(null, (get, set, ids: string[]) =>
 
 interface Props {
   id: string;
-  newData: Partial<EditableStorageItem>;
+  newData: EditableStorageItem;
 }
 
 /** 특정 아이템을 수정한다. */

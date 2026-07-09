@@ -374,31 +374,33 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
   /* -------------------------------------------------------------------------- */
   const getHasStorageItemFoodList = useCallback(
     (storageItem: EnrichedStorageItem) => {
-      return allConsumableFoodListWithFilterList.filter((enrichedFood) => {
-        if (storageItem.type === 'custom') return false;
+      return allConsumableFoodListWithFilterList
+        .filter((enrichedFood) => {
+          if (storageItem.type === 'custom') return false;
 
-        const hasIngredientItem = (food: SelectableItem) => {
-          const { id } = food;
+          const hasIngredientItem = (food: SelectableItem) => {
+            const { id } = food;
 
-          if (storageItem.type === 'ingredient') {
-            return id === storageItem.ingredientId;
-          }
+            if (storageItem.type === 'ingredient') {
+              return id === storageItem.ingredientId;
+            }
 
-          if (storageItem.type === 'preparedFood') {
-            return id === storageItem.preparedFoodId;
-          }
+            if (storageItem.type === 'preparedFood') {
+              return id === storageItem.preparedFoodId;
+            }
 
-          if (storageItem.type === 'meal') {
-            return id === storageItem.mealId;
-          }
-        };
+            if (storageItem.type === 'meal') {
+              return id === storageItem.mealId;
+            }
+          };
 
-        if (!enrichedFood.foodStructure) return false;
+          if (!enrichedFood.foodStructure) return false;
 
-        const { essential } = enrichedFood.foodStructure;
+          const { essential } = enrichedFood.foodStructure;
 
-        return essential.find(hasIngredientItem);
-      });
+          return essential.find(hasIngredientItem);
+        })
+        .slice(0, 8);
     },
     [allConsumableFoodListWithFilterList],
   );
@@ -413,10 +415,11 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
    * - 1순위 재료 보유율이 HIGH_POSSESSION_THRESHOLD; 이상인 경우
    */
   const recommendedTodayMenuList: EnrichedConsumableFoodWithFilter[] = useMemo(() => {
-    return allConsumableFoodListWithFilterList
+    return filteredMenuList
       .filter((food) => food.filterList.includes('highPossession'))
-      .sort((a, b) => a.requiredPossessionPercent - b.requiredPossessionPercent);
-  }, [allConsumableFoodListWithFilterList]);
+      .sort((a, b) => a.requiredPossessionPercent - b.requiredPossessionPercent)
+      .slice(0, 8);
+  }, [filteredMenuList]);
 
   return {
     filterList,
