@@ -14,7 +14,7 @@ type MenuFilterProps = {
 };
 
 export default function MenuFilter({ type, food }: MenuFilterProps) {
-  const className = '!rounded-md !px-2 !py-2';
+  const className = '!rounded-md !px-1.5 !py-1.5';
   return (
     <>
       {type === 'category' ? (
@@ -25,15 +25,15 @@ export default function MenuFilter({ type, food }: MenuFilterProps) {
               ? mealCategoryObj[food.category].label
               : preparedFoodCategoryObj[food.category].label
           }
-          color="neutral"
+          color="blue"
           icon={
             food.kind === 'meal'
               ? mealCategoryObj[food.category].icon
               : preparedFoodCategoryObj[food.category].icon
           }
           className={className}
-          textClassName="text-sm"
-          iconSize={13}
+          textClassName="!text-[11px]"
+          iconSize={12}
         />
       ) : (
         <></>
@@ -46,7 +46,7 @@ export default function MenuFilter({ type, food }: MenuFilterProps) {
           color={difficultyObj[food.difficulty].color}
           icon="Zap"
           className={className}
-          textClassName="text-sm"
+          textClassName="!text-[11px]"
           iconSize={13}
         />
       ) : (
@@ -60,7 +60,7 @@ export default function MenuFilter({ type, food }: MenuFilterProps) {
           color={servingTemperatureObj[food.servingTemperature].color}
           icon={servingTemperatureObj[food.servingTemperature].icon}
           className={className}
-          textClassName="text-sm"
+          textClassName="!text-[11px]"
           iconSize={13}
         />
       ) : (

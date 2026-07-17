@@ -14,8 +14,8 @@ export const expirationStatusObj = {
   /** 임박 (0~3일) */
   expiredSoon: {
     label: '임박',
-    color: 'yellow',
-    textColor: '!text-yellow-7',
+    color: 'orange',
+    textColor: '!text-orange-7',
     bgColor: 'bg-yellow-7',
     filterColor: 'bg-yellow-1',
     priority: 3,
@@ -38,7 +38,7 @@ export const expirationStatusObj = {
   /** 계산 불가 */
   unknown: {
     label: '확인 필요',
-    color: 'gray',
+    color: 'red',
     textColor: '!text-neutral-7',
     bgColor: 'bg-neutral-1',
     filterColor: 'bg-neutral-1',

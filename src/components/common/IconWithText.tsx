@@ -24,13 +24,13 @@ export default function IconWithText({
       {...props}
       className={`flex-row items-center gap-x-1 ${props.className}`}
     >
-      <Icon name={icon} size={iconSize} color={iconColor} />
+      <Icon name={icon} size={iconSize} color={iconColor} strokeWidth={3} />
 
       {text ? <Text className={textClassName}>{text}</Text> : <></>}
     </TouchableOpacity>
   ) : (
     <View className={`flex-row items-center gap-x-1 ${props.className}`}>
-      <Icon name={icon} size={iconSize} color={iconColor} />
+      <Icon name={icon} size={iconSize} color={iconColor} strokeWidth={2.5} />
       {text ? <Text className={textClassName}>{text}</Text> : <></>}
     </View>
   );

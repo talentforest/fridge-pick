@@ -6,6 +6,7 @@ import { TouchableOpacityProps } from 'react-native';
 interface SelectBtnProps {
   name: string;
   iconName?: IconName;
+  tailIconName?: IconName;
   iconSize?: number;
   textClassName?: string;
   color?:
@@ -24,6 +25,7 @@ interface SelectBtnProps {
 export default function SelectBtn({
   name,
   iconName,
+  tailIconName,
   iconSize = 16,
   textClassName = '',
   color = 'indigo',
@@ -35,7 +37,7 @@ export default function SelectBtn({
     ice: 'bg-ice-1 border-ice-3',
     green: 'bg-green-1 border-green-3',
     yellow: 'bg-yellow-1 border-yellow-5',
-    indigo: 'bg-indigo-1 border-indigo-5',
+    indigo: 'bg-indigo-1 border-indigo-3',
     inActive: 'bg-inactive-bg border-neutral-3',
     neutral: 'bg-card border-neutral-3',
     transparent: 'border border-neutral-1 bg-white',
@@ -45,10 +47,10 @@ export default function SelectBtn({
   const textColorStyle = {
     red: 'text-red-5',
     blue: 'text-blue-9',
-    ice: 'text-ice-5',
+    ice: 'text-ice-7',
     green: 'text-green-7',
     yellow: 'text-yellow-7',
-    indigo: 'text-indigo-7',
+    indigo: 'text-indigo-5',
     inActive: 'text-neutral-5',
     neutral: 'text-neutral-7',
     transparent: 'border border-neutral-9 bg-white',
@@ -68,6 +70,10 @@ export default function SelectBtn({
       <Text className={`${textColorStyle[color]} ${textClassName} font-extrabold`}>
         {name}
       </Text>
+
+      {tailIconName && (
+        <Icon strokeWidth={2.5} name={tailIconName} size={iconSize} color={iconStyle} />
+      )}
     </TouchableOpacity>
   );
 }

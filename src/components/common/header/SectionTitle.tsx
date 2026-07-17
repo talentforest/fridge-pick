@@ -1,5 +1,6 @@
 import Icon, { IconName } from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { ReactNode, useMemo } from 'react';
 import { View } from 'react-native';
 
@@ -11,6 +12,7 @@ interface SectionTitleProps {
   children?: ReactNode;
   highlight?: string;
   type?: 'main' | 'sub';
+  hasShowAllBtn?: boolean;
 }
 
 export default function SectionTitle({
@@ -21,21 +23,22 @@ export default function SectionTitle({
   children,
   highlight,
   type = 'main',
+  hasShowAllBtn = false,
 }: SectionTitleProps) {
   const colorObj = {
     yellow: 'text-yellow-7',
     red: 'text-red-5',
   };
 
-  const textSizeObj = { main: 'text-lg', sub: 'text-base' };
+  const textSizeObj = { main: '!text-[17px]', sub: 'text-base' };
 
   return (
     <View className={`flex-row items-center gap-x-1.5 pl-2 ${className}`}>
       {icon && (
         <Icon
           name={icon}
-          size={type === 'main' ? 18 : 16}
-          strokeWidth="2.5"
+          size={type === 'main' ? 17 : 16}
+          strokeWidth="3"
           color={color}
         />
       )}
@@ -47,12 +50,21 @@ export default function SectionTitle({
           textSize={textSizeObj[type]}
         />
       ) : (
-        <Text className={`mr-auto font-bold ${textSizeObj[type]} ${colorObj[color]}`}>
+        <Text
+          className={`mr-auto font-extrabold ${textSizeObj[type]} ${colorObj[color]}`}
+        >
           {title}
         </Text>
       )}
 
       {children ? children : <></>}
+
+      {hasShowAllBtn && (
+        <TouchableOpacity className="flex-row items-center gap-x-0.5">
+          <Text className="text-neutral-7">모두 보기</Text>
+          <Icon name="ChevronRight" color="neutral" size={16} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -68,7 +80,7 @@ const TitleWithHighlight = ({ text, highlight, textSize }: HighlightProps) => {
     const regex = new RegExp(`(${highlight})`, 'gi');
     return text.split(regex).map((part: string) =>
       part.toLowerCase() === highlight?.toLowerCase() ? (
-        <Text key={part} className={`${textSize} text-yellow-7`}>
+        <Text key={part} className={`${textSize} font-extrabold text-yellow-7`}>
           {part}
         </Text>
       ) : (
@@ -77,5 +89,7 @@ const TitleWithHighlight = ({ text, highlight, textSize }: HighlightProps) => {
     );
   }, [text, highlight, textSize]);
 
-  return <Text className={`${textSize} text-text`}>{highlightedText}</Text>;
+  return (
+    <Text className={`${textSize} font-extrabold text-text`}>{highlightedText}</Text>
+  );
 };

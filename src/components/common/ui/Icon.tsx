@@ -1,6 +1,9 @@
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { colorTokens } from '@/theme/color';
 import {
+  CalendarPlus,
+  NotebookPen,
+  MapPinned,
   NotepadText,
   Flame,
   Egg,
@@ -35,7 +38,7 @@ import {
   CakeSlice,
   Hourglass,
   SquircleDashed,
-  Calendar,
+  CalendarDays,
   CalendarClock,
   CheckCircle,
   CheckCircle2,
@@ -92,6 +95,9 @@ import {
 import { useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'CalendarPlus'
+  | 'MapPinned'
+  | 'NotebookPen'
   | 'NotepadText'
   | 'Flame'
   | 'Egg'
@@ -159,7 +165,7 @@ export type IconName =
   | 'Snowflake'
   | 'ThermometerSnowflake'
   | 'ThermometerSun'
-  | 'Calendar'
+  | 'CalendarDays'
   | 'Search'
   | 'Thermometer'
   | 'Wind'
@@ -184,6 +190,7 @@ export type IconName =
   | 'CookingPot';
 
 export type IconColor =
+  | 'orange'
   | 'text'
   | 'yellow'
   | 'neutral'
@@ -204,6 +211,7 @@ interface IconProps {
   color?: IconColor;
   hasFill?: boolean;
   hasShadow?: boolean;
+  hasBgColor?: boolean;
 }
 
 export default function Icon({
@@ -211,6 +219,7 @@ export default function Icon({
   color = 'text',
   hasFill = false,
   hasShadow,
+  hasBgColor,
   ...props
 }: IconProps & LucideProps) {
   const colorScheme = useColorScheme() ?? 'light';
@@ -218,6 +227,7 @@ export default function Icon({
   const scheme = colorTokens[colorScheme];
 
   const colorMap = {
+    orange: scheme.orange[7],
     white: '#fff',
     text: scheme.text,
     yellow: scheme.yellow[7],
@@ -234,7 +244,28 @@ export default function Icon({
     inactive: scheme.inactive.text,
   };
 
+  const bgColorMap = {
+    orange: 'bg-orange-1',
+    white: '#fff',
+    text: 'bg-neutral-1',
+    yellow: 'bg-yellow-1',
+    neutral: 'bg-neutral-7',
+    red: 'bg-red-1',
+    lightBlue: 'bg-blue-5',
+    blue: 'bg-blue-7',
+    darkGray: 'bg-neutral-5',
+    black: 'bg-neutral-9',
+    gray: 'bg-inactive-b',
+    green: 'bg-green-1',
+    ice: 'bg-ice-5',
+    indigo: 'bg-indigo-1',
+    inactive: 'bg-inactive-text',
+  };
+
   const iconObj: { [key in IconName]: LucideIcon } = {
+    CalendarPlus,
+    NotebookPen,
+    MapPinned,
     NotepadText,
     Flame,
     Egg,
@@ -263,7 +294,7 @@ export default function Icon({
     Bell,
     Menu,
     HandPlatter,
-    Calendar,
+    CalendarDays,
     Siren,
     CheckCircle2,
     RefreshCcw,
@@ -333,7 +364,7 @@ export default function Icon({
 
   return props.onPress ? (
     <TouchableOpacity
-      className={props.className}
+      className={`${hasBgColor ? bgColorMap[color] : ''} items-center justify-center ${props.className}`}
       style={hasShadow ? shadowStyle : undefined}
       onPress={props.onPress}
     >
@@ -346,7 +377,9 @@ export default function Icon({
       />
     </TouchableOpacity>
   ) : (
-    <View className={props.className}>
+    <View
+      className={`${hasBgColor ? bgColorMap[color] : ''} items-center justify-center ${props.className}`}
+    >
       <Component
         strokeWidth={2.2}
         {...props}

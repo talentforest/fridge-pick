@@ -25,6 +25,7 @@ export const storageObj = {
     },
     order: 1,
     color: 'ice',
+    textColor: 'text-ice-7',
     icon: 'Snowflake',
   },
 
@@ -50,14 +51,15 @@ export const storageObj = {
     },
     order: 2,
     color: 'blue',
+    textColor: 'text-blue-7',
     icon: 'Wind',
   },
 
-  /** 실온보관 */
+  /** 실온 */
   pantry: {
     type: 'ingredient',
     id: 'pantry',
-    label: '실온보관',
+    label: '실온',
     comfortLabel: '실온',
     side: {
       inner: {
@@ -75,6 +77,7 @@ export const storageObj = {
     },
     order: 3,
     color: 'yellow',
+    textColor: 'text-yellow-7',
     icon: 'ShelvingUnit',
   },
 } as const;

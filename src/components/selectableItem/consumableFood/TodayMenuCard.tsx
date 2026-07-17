@@ -28,9 +28,6 @@ export default function TodayMenuCard({
 
   const onPress = (food: EnrichedConsumableFoodWithFilter) => {
     openSheet({
-      enableDynamicSizing: true,
-      maxDynamicContentSize: 750,
-      hasDim: true,
       render: () => <MenuDetailSheet type={type} food={food} />,
     });
   };

@@ -1,12 +1,32 @@
-import { View } from 'react-native';
-import ConfigToast, { ToastConfigParams } from 'react-native-toast-message';
+import { Pressable, View } from 'react-native';
+import ConfigToast from 'react-native-toast-message';
 import Text from '@/components/common/ui/Text';
 import { iosShadowStyle } from '@/constants';
+import Icon from '@/components/common/ui/Icon';
 
 const toastConfig = {
-  custom: ({ text1 }: ToastConfigParams<unknown>) => (
-    <View className="rounded-2xl bg-neutral-9 p-1" style={iosShadowStyle}>
-      <Text className="px-5 py-4 text-base leading-7 !text-neutral-1">{text1}</Text>
+  custom: ({ text1, props }: any) => (
+    <View
+      style={iosShadowStyle}
+      className={`max-w-[80%] rounded-2xl px-6 py-5 ${props.bgColor ? '' : 'bg-blue-9'}`}
+    >
+      <Text className="!text-neutral-1">{text1}</Text>
+    </View>
+  ),
+  undo: ({ text1, props }: any) => (
+    <View
+      style={iosShadowStyle}
+      className={`max-w-[80%] flex-row items-center gap-x-3 rounded-2xl bg-blue-9 px-6 py-5 ${props.bgColor ? '' : 'bg-blue-9'}`}
+    >
+      <Text className="mb-1 max-w-[75%] !text-neutral-1">{text1}</Text>
+
+      <Pressable
+        onPress={props.onUndo}
+        className="w-[65px] flex-row items-center gap-x-1"
+      >
+        <Text className="!text-[13px] text-neutral-1">되돌리기</Text>
+        <Icon name="RotateCcw" size={12} color="white" />
+      </Pressable>
     </View>
   ),
 };

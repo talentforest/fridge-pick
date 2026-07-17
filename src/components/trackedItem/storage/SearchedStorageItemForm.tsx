@@ -70,9 +70,6 @@ export default function SearchedStorageItemForm({
     if (!currStorageItem?.foodSource) return;
 
     openSheet({
-      enableDynamicSizing: true,
-      maxDynamicContentSize: 750,
-      hasDim: true,
       render: () => (
         <ConvenienceVariantListSheet
           currConvenienceVariant={currStorageItem.foodSource!}
@@ -172,7 +169,7 @@ export default function SearchedStorageItemForm({
 
         <FormDateInput
           hasLabel
-          currDate={currStorageItem.expiresAt}
+          storageItemId={currStorageItem.id}
           onItemChange={onItemChange}
         />
 

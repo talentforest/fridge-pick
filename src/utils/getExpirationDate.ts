@@ -1,7 +1,16 @@
 import { DEFAULT_EXPIRATION_DAYS } from '@/constants';
 import { ExpirationStatus } from '@/types/storage';
 import { formatDateString } from '@/utils/formatDate';
-import { addDays, format } from 'date-fns';
+import {
+  addDays,
+  format,
+  differenceInMinutes,
+  differenceInHours,
+  differenceInCalendarDays,
+  formatDistanceStrict,
+} from 'date-fns';
+
+import { ko } from 'date-fns/locale';
 
 export function calculateExpiresAt(purchasedAt: Date, expirationDays: number) {
   return formatDateString(addDays(purchasedAt, expirationDays), 'yyyy-MM-dd');
@@ -42,11 +51,11 @@ export function getExpirationStatus(days: number): ExpirationStatus {
 }
 
 export function formatRemainingDays(days: number) {
-  if (days < 0) return `-${Math.abs(days)}일`;
+  if (days < 0) return `- ${Math.abs(days)}일`;
   if (days === 0) return '오늘까지';
   if (days === 1) return '내일까지';
 
-  return `+${days}일 남음`;
+  return `+ ${days}일`;
 }
 
 export function formatDaysSince(days: number) {
@@ -59,4 +68,41 @@ export function formatDaysSince(days: number) {
   if (days === 1) return '내일';
 
   return `${days}일 후`;
+}
+
+export function getAddedFormatLabel(days: number) {
+  const now = new Date();
+
+  const date = addDays(new Date(), days);
+
+  const minutes = differenceInMinutes(now, date);
+
+  if (minutes < 1) {
+    return '방금 전';
+  }
+
+  if (minutes < 60) {
+    return `${minutes}분 전`;
+  }
+
+  const hours = differenceInHours(now, date);
+
+  if (hours < 24) {
+    return `${hours}시간 전`;
+  }
+
+  const calendarDays = differenceInCalendarDays(now, date);
+
+  if (calendarDays === 1) {
+    return '어제';
+  }
+
+  if (calendarDays < 7) {
+    return `${calendarDays}일 전`;
+  }
+
+  return formatDistanceStrict(date, now, {
+    locale: ko,
+    addSuffix: true,
+  });
 }

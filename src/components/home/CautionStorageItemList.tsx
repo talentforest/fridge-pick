@@ -6,14 +6,14 @@ import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import GridContainer from '@/components/common/container/GridContainer';
 import { storageItemListByExpirationStatusAtom } from '@/atom/storageAtom';
 import { useAtomValue } from 'jotai';
-import { useMemo } from 'react';
 import { View } from 'react-native';
-import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
+import { StorageTypeId } from '@/types/storage';
+import { StorageItemWithExpiration } from '@/utils';
 
 interface CautionStorageItemListProps {
   title?: string;
   storageType?: StorageTypeId;
-  onItemPress?: (item: EnrichedStorageItem) => void;
+  onItemPress?: (item: StorageItemWithExpiration) => void;
   isGridType?: boolean;
   type?: 'expiredSoon' | 'expired' | 'caution';
   hasCautionStorageItem?: boolean;
@@ -31,42 +31,38 @@ export default function CautionStorageItemList({
     storageItemListByExpirationStatusAtom(type),
   );
 
-  const storageItemListByStorage = useMemo(() => {
+  const storageItemListByStorage = () => {
     if (!storageType) return storageItemListByStatus;
 
     return storageItemListByStatus.filter(
       (item) => item.storageItem.storage.type === storageType,
     );
-  }, [storageItemListByStatus, storageType]);
+  };
 
-  return storageItemListByStorage.length > 0 ? (
+  return storageItemListByStorage().length > 0 ? (
     <View className={`${hasCautionStorageItem ? 'h-[540px]' : ''} gap-y-3`}>
-      <SectionTitle title={title || '지금 주의해야하는 식재료'} icon="ClockAlert" />
+      <SectionTitle title={title || '임박 식재료'} icon="ClockAlert" hasShowAllBtn />
 
       {isGridType ? (
         <GridContainer columns={3}>
-          {storageItemListByStorage.map((item, index) => (
+          {storageItemListByStorage().map((item, index) => (
             <TouchableOpacity
               key={item.storageItem.id}
               onPress={() => {
-                if (onItemPress) return onItemPress(item.storageItem);
+                if (onItemPress) return onItemPress(item);
               }}
             >
-              <CautionStorageItem
-                index={index + 1}
-                storageItem={item.storageItem}
-                remainingDays={item.remainingDays}
-              />
+              <CautionStorageItem index={index + 1} cautionStorageItem={item} />
             </TouchableOpacity>
           ))}
         </GridContainer>
       ) : (
         <CarouselContainer
-          data={storageItemListByStorage}
+          data={storageItemListByStorage()}
           initialIndex={storageItemListByStorage.length}
           itemWidth={0.25}
           hasNavigation
-          spacing={8}
+          spacing={10}
           centerFocus
           hasPagination
           requiredMinimum={3}
@@ -75,22 +71,19 @@ export default function CautionStorageItemList({
             onItemPress || onPress ? (
               <TouchableOpacity
                 onPress={() => {
-                  if (onItemPress) return onItemPress(item.storageItem);
+                  if (onItemPress) return onItemPress(item);
                   if (onPress) return onPress();
                 }}
               >
                 <CautionStorageItem
-                  storageItem={item.storageItem}
-                  isCurrIndex={isCurrIndex}
-                  remainingDays={item.remainingDays}
+                  cautionStorageItem={item}
+                  isCurrIndex={
+                    storageItemListByStorage.length > 3 ? isCurrIndex : undefined
+                  }
                 />
               </TouchableOpacity>
             ) : (
-              <CautionStorageItem
-                storageItem={item.storageItem}
-                isCurrIndex={isCurrIndex}
-                remainingDays={item.remainingDays}
-              />
+              <CautionStorageItem cautionStorageItem={item} isCurrIndex={isCurrIndex} />
             )
           }
         >

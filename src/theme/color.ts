@@ -1,5 +1,7 @@
 import { vars } from 'nativewind';
 
+/** 색상 새로 추가시 Text 컴포넌트에도 추가하기  */
+
 export const colorTokens = {
   light: {
     bg: '#F8F8F8',
@@ -24,8 +26,8 @@ export const colorTokens = {
       9: '#0d361e',
       7: '#15803d',
       5: '#25a264',
-      3: '#86efac',
-      1: '#f4fff4',
+      3: '#62c987',
+      1: '#e5ffe5',
     },
 
     blue: {
@@ -33,20 +35,20 @@ export const colorTokens = {
       7: '#1d4ed8',
       5: '#3b82f6',
       3: '#93c5fd',
-      1: '#f1f7ff',
+      1: '#eaf3ff',
     },
 
     ice: {
-      7: '#2c5461',
+      7: '#00779f',
       5: '#06b6d4',
-      3: '#67e8f9',
-      1: '#f1fdff',
+      3: '#b4f5fd',
+      1: '#e7fbff',
     },
 
     indigo: {
       5: '#4633c3',
-      3: '#d3cdff',
-      1: '#e8e4ff',
+      3: '#afa5ff',
+      1: '#eeebff',
     },
 
     red: {
@@ -54,7 +56,7 @@ export const colorTokens = {
       7: '#b91c1c',
       5: '#ef4444',
       3: '#fca5a5',
-      1: '#fee2e2',
+      1: '#fff0f0',
     },
 
     yellow: {
@@ -62,15 +64,15 @@ export const colorTokens = {
       7: '#b77d00',
       5: '#e5b825',
       3: '#ffdc69',
-      1: '#fffded',
+      1: '#fff9bc',
     },
 
     orange: {
-      9: '#625A30',
-      7: '#ca8a04',
-      5: '#e9bd2e',
-      3: '#ffecac',
-      1: '#fff8bf',
+      9: '#c05e03',
+      7: '#f17d10',
+      5: '#ffa928',
+      3: '#ffd1a7',
+      1: '#ffe6cf',
     },
   },
 
@@ -101,7 +103,7 @@ export const colorTokens = {
     },
 
     ice: {
-      7: '#f1fdff',
+      7: '#b4f4ff',
       5: '#67e8f9',
       3: '#06b6d4',
       1: '#0e7490',
@@ -109,7 +111,7 @@ export const colorTokens = {
 
     indigo: {
       5: '#d3cdff',
-      3: '#4633c3',
+      3: '#6b56f2',
       1: '#3420a2',
     },
 
@@ -127,6 +129,14 @@ export const colorTokens = {
       5: '#fcd34d',
       3: '#d29000',
       1: '#5b501d',
+    },
+
+    orange: {
+      9: '#ffe6cf',
+      7: '#ffd1a7',
+      5: '#ffa928',
+      3: '#f17d10',
+      1: '#5d3508',
     },
 
     green: {
@@ -180,6 +190,12 @@ export const lightTheme = vars({
   '--color-yellow-3': colorTokens.light.yellow[3],
   '--color-yellow-1': colorTokens.light.yellow[1],
 
+  '--color-orange-9': colorTokens.light.orange[9],
+  '--color-orange-7': colorTokens.light.orange[7],
+  '--color-orange-5': colorTokens.light.orange[5],
+  '--color-orange-3': colorTokens.light.orange[3],
+  '--color-orange-1': colorTokens.light.orange[1],
+
   '--color-green-9': colorTokens.light.green[9],
   '--color-green-7': colorTokens.light.green[7],
   '--color-green-5': colorTokens.light.green[5],
@@ -227,6 +243,12 @@ export const darkTheme = vars({
   '--color-yellow-5': colorTokens.dark.yellow[5],
   '--color-yellow-3': colorTokens.dark.yellow[3],
   '--color-yellow-1': colorTokens.dark.yellow[1],
+
+  '--color-orange-9': colorTokens.dark.orange[9],
+  '--color-orange-7': colorTokens.dark.orange[7],
+  '--color-orange-5': colorTokens.dark.orange[5],
+  '--color-orange-3': colorTokens.dark.orange[3],
+  '--color-orange-1': colorTokens.dark.orange[1],
 
   '--color-green-9': colorTokens.dark.green[9],
   '--color-green-7': colorTokens.dark.green[7],

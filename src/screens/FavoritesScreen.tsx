@@ -27,7 +27,6 @@ export default function FavoritesScreen() {
 
   const onOpenSheetPress = (item: SelectableItem) => {
     openSheet({
-      hasDim: true,
       render: () => (
         <FavoriteItemSheet
           item={item}

@@ -10,7 +10,11 @@ interface FormStorageProps {
   label?: string;
   currStorageType: StorageTypeId;
   onItemChange: (newData: EditableStorageItem) => void;
-  ingredientExpirationDays?: { fridge?: number; freezer?: number; pantry?: number };
+  ingredientExpirationDays?: {
+    fridge?: number;
+    freezer?: number;
+    pantry?: number;
+  };
 }
 
 export default function FormStorage({

@@ -1,9 +1,10 @@
 import { filterObj } from '@/constants';
 
 export type FilterColor =
-  | 'green'
   | 'red'
   | 'blue'
+  | 'green'
+  | 'orange'
   | 'yellow'
   | 'neutral'
   | 'indigo'

@@ -66,7 +66,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
           backgroundColor: colorTokens[colorScheme].bg,
           borderRadius: 30,
         }}
-        maxDynamicContentSize={750}
+        maxDynamicContentSize={780}
         handleIndicatorStyle={{
           backgroundColor: colorTokens[colorScheme].neutral[3],
           width: 80,
@@ -77,7 +77,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
           sheetRef.current?.dismiss();
         }}
         backdropComponent={
-          sheetProps?.hasDim
+          sheetProps?.hasDim !== false
             ? (props) => (
                 <BottomSheetBackdrop
                   {...props}
@@ -96,7 +96,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             paddingBottom: insets.bottom,
-            paddingHorizontal: 24,
+            paddingHorizontal: 20,
           }}
         >
           {sheetProps && sheetProps.render()}
@@ -107,7 +107,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
       {modalProps?.type === 'modal' && (
         <Modal transparent visible={!!modalProps} animationType="fade">
           <View className="flex-1">
-            {modalProps?.hasDim && (
+            {modalProps?.hasDim !== false && (
               // 배경
               <Pressable
                 style={{
@@ -140,7 +140,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
       {datePickerProps?.render() && (
         <Modal transparent visible={!!datePickerProps} animationType="fade">
           <View className="flex-1 justify-end">
-            {datePickerProps?.hasDim && (
+            {datePickerProps?.hasDim !== false && (
               <Pressable
                 style={{ backgroundColor: colorTokens[colorScheme].neutral[5] }}
                 className="absolute h-full w-full opacity-30"
@@ -166,7 +166,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
       {(modalProps?.type === 'alert' || modalProps?.type === 'confirm') && (
         <Modal transparent visible={!!modalProps}>
           <View className="flex-1">
-            {modalProps?.hasDim && (
+            {modalProps?.hasDim !== false && (
               <Pressable
                 style={{ backgroundColor: colorTokens[colorScheme].neutral[5] }}
                 className="flex-1 opacity-30"

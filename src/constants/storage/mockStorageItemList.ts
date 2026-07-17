@@ -33,7 +33,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '4',
     ingredientId: 'broccoli',
     purchasedAt: '2026-03-01',
-    expiresAt: getExpriredAt(2),
+    expiresAt: getExpriredAt(1),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {

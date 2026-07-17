@@ -4,54 +4,72 @@ import ModalHeader from '@/components/common/header/ModalHeader';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import LabelContainer from '@/components/common/container/LabelContainer';
 import { useOverlay } from '@/hooks';
-import { formatDateString } from '@/utils';
-import { addDays } from 'date-fns';
+import { formatDateString, getRemainingDays } from '@/utils';
 import { View } from 'react-native';
 import { EditableStorageItem, StorageTypeId } from '@/types/storage';
-import SelectBtn from '@/components/common/SelectBtn';
 import Icon from '@/components/common/ui/Icon';
 import { storageObj } from '@/constants';
+import { useAtomValue } from 'jotai';
+import { findStorageItemById } from '@/atom/storageAtom';
+import DateQuickBtn from '@/components/common/DateQuickBtn';
 
-interface FormDateInputProps {
-  currDate: string;
+type InitialDateProps = {
+  initialDate: string;
+  storageItemId?: never;
+};
+
+type StorageItemProps = {
+  storageItemId: string;
+  initialDate?: never;
+};
+
+type FormDateInputProps = (InitialDateProps | StorageItemProps) & {
   onItemChange: (newData: EditableStorageItem) => void;
   defaultExpirationDays?: number;
   hasLabel?: boolean;
   currStorageType?: StorageTypeId;
-  ingredientExpirationDays?: { fridge?: number; freezer?: number; pantry?: number };
-}
+  ingredientExpirationDays?: {
+    fridge?: number;
+    freezer?: number;
+    pantry?: number;
+  };
+};
 
 export default function FormDateInput({
-  currDate,
+  initialDate,
+  storageItemId,
   onItemChange,
   hasLabel,
   currStorageType,
   ingredientExpirationDays,
 }: FormDateInputProps) {
-  const initialDate = new Date(currDate);
+  const currStorageItem = useAtomValue(findStorageItemById(storageItemId));
+
+  const { openDatePicker } = useOverlay();
 
   const onChangeDate = (date: Date) => {
     const expiresAt = formatDateString(date, 'yyyy-MM-dd');
     onItemChange({ expiresAt });
   };
 
-  const onChange = (_: any, selectedDate?: Date) => {
-    if (selectedDate) {
-      onChangeDate(selectedDate);
-    }
-  };
+  const currDate = initialDate || currStorageItem?.expiresAt;
 
-  const { openDatePicker } = useOverlay();
+  if (!currDate) return null;
 
   const onEditDatePickerPress = () => {
+    const onChange = (_: any, selectedDate?: Date) => {
+      if (selectedDate) {
+        onChangeDate(selectedDate);
+      }
+    };
+
     openDatePicker({
-      hasDim: true,
       render: () => (
         <View>
-          <ModalHeader title="소비기한 변경하기" isDatePicker hasX={false} />
+          <ModalHeader title="소비기한 직접 변경" isDatePicker hasX={false} />
           <DateTimePicker
             minimumDate={new Date()}
-            value={initialDate}
+            value={new Date(currDate)}
             mode="date"
             display="spinner"
             onChange={onChange}
@@ -62,64 +80,33 @@ export default function FormDateInput({
     });
   };
 
-  const plusDateBtnList = [
-    {
-      label: '+1일',
-      onPress: () => onChangeDate(addDays(initialDate, 1)),
-      color: 'neutral' as const,
-    },
-    {
-      label: '+7일',
-      onPress: () => onChangeDate(addDays(initialDate, 7)),
-      color: 'neutral' as const,
-    },
-    {
-      label: '+30일',
-      onPress: () => onChangeDate(addDays(initialDate, 30)),
-      color: 'neutral' as const,
-    },
-    {
-      label: '직접변경',
-      onPress: onEditDatePickerPress,
-      color: 'blue' as const,
-    },
-  ];
+  const expirationDaysByStorage = currStorageType
+    ? ingredientExpirationDays?.[currStorageType]
+    : null;
+
+  const remainingDays = getRemainingDays(currDate);
 
   return (
     <LabelContainer label={hasLabel ? '소비기한' : undefined} labelColor="neutral">
-      <DateInput
-        date={currDate}
-        openDatePicker={onEditDatePickerPress}
-        hasConvenientButton
-      />
+      <View className="gap-y-3">
+        <DateInput date={currDate} openDatePicker={onEditDatePickerPress} />
 
-      {currStorageType && ingredientExpirationDays?.[currStorageType] && (
-        <View className="mt-1.5 flex-row items-center gap-x-1 rounded-xl bg-green-1 p-4">
-          <Icon name="Info" size={13} color="green" />
-          <Text className="text-sm">
-            {storageObj[currStorageType].label} 권장 소비기한{' '}
-            <Text className="font-extrabold text-sm !text-green-7">
-              {ingredientExpirationDays?.[currStorageType]}일
-            </Text>
-            이 적용되었습니다.
-          </Text>
-        </View>
-      )}
+        {currStorageType &&
+          expirationDaysByStorage &&
+          expirationDaysByStorage === remainingDays && (
+            <View className="mt-1.5 flex-row items-center gap-x-1 rounded-xl bg-green-1 p-4">
+              <Icon name="Info" size={13} color="green" />
+              <Text className="text-sm">
+                {storageObj[currStorageType].label} 권장 소비기한{' '}
+                <Text className="font-extrabold text-sm !text-green-7">
+                  {expirationDaysByStorage}일
+                </Text>
+                이 적용되었습니다.
+              </Text>
+            </View>
+          )}
 
-      <View className="mt-2 w-full flex-row items-start justify-end gap-x-2">
-        <Text className="pl-1 pt-1 text-sm text-inactive-text">빠른변경</Text>
-        <View className="flex-row gap-x-1">
-          {plusDateBtnList.map(({ label, onPress, color }) => (
-            <SelectBtn
-              key={label}
-              name={label}
-              textClassName="text-sm font-extrabold"
-              className="!px-3 !py-2.5"
-              color={color}
-              onPress={onPress}
-            />
-          ))}
-        </View>
+        <DateQuickBtn initialDate={currDate} onChangeDate={onChangeDate} />
       </View>
     </LabelContainer>
   );

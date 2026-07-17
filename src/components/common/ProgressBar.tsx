@@ -27,10 +27,12 @@ export default function ProgressBar({
     <View>
       {label ? (
         <View className="mb-[6px] flex-row items-center gap-x-1">
-          <Text className="text-neutral-9">{label}</Text>
-          <Text className={`${colorObj.text} font-extrabold`}>{`${percentage}%`}</Text>
+          <Text className="text-sm text-neutral-9">{label}</Text>
+          <Text
+            className={`${colorObj.text} font-extrabold text-sm`}
+          >{`${percentage}%`}</Text>
           {possessedCount && requiredCount ? (
-            <Text className={`!text-[13px] text-neutral-9`}>
+            <Text className={`ml-1 text-sm text-neutral-7`}>
               {possessedCount}/{requiredCount}
             </Text>
           ) : (
@@ -45,7 +47,7 @@ export default function ProgressBar({
         {requiredBoxList.map((box) => (
           <View
             key={box}
-            className={`h-[16px] flex-1 ${box === 0 ? 'rounded-l' : ''} ${box === requiredBoxList.length - 1 ? 'rounded-r' : ''} ${possessedCount > box ? colorObj.bg : 'bg-inactive-bg'}`}
+            className={`h-[14px] flex-1 ${box === 0 ? 'rounded-l' : ''} ${box === requiredBoxList.length - 1 ? 'rounded-r' : ''} ${possessedCount > box ? colorObj.bg : 'bg-inactive-bg'}`}
           />
         ))}
       </View>

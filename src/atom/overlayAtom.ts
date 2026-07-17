@@ -8,31 +8,29 @@ export type SheetParams = Omit<BottomSheetProps, 'children'> & {
   render: () => ReactNode;
 };
 
-/** Modal Type */
-type BaseModal = {
-  hasDim?: boolean;
-};
-
 /** 일반 modal */
-type CustomModal = BaseModal & {
+type CustomModal = {
   type?: 'modal';
+  hasDim?: boolean;
   children: ReactNode;
 };
 
 /** alert */
-type AlertModalState = BaseModal & {
+type AlertModalState = {
   type: 'alert';
   title?: string;
   message?: string;
   resolve: (value: boolean) => void;
+  hasDim?: boolean;
 };
 
 /** confirm (확장용) */
-type ConfirmModalState = BaseModal & {
+type ConfirmModalState = {
   type: 'confirm';
   title?: string;
   message?: string;
   resolve: (value: boolean) => void;
+  hasDim?: boolean;
 };
 
 /** 전체 */

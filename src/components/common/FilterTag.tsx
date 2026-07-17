@@ -29,6 +29,7 @@ export default function FilterTag({
     green: '!bg-green-1',
     red: '!bg-red-1',
     blue: 'bg-blue-1',
+    orange: '!bg-orange-1',
     yellow: '!bg-yellow-1',
     neutral: 'bg-neutral-3',
     indigo: 'bg-indigo-1',
@@ -40,6 +41,7 @@ export default function FilterTag({
     red: 'text-red-7',
     blue: 'text-blue-7',
     yellow: 'text-yellow-7',
+    orange: 'text-orange-9',
     neutral: 'text-neutral-9',
     indigo: 'text-indigo-5',
     ice: 'text-ice-5',
@@ -59,7 +61,7 @@ export default function FilterTag({
   return onPress ? (
     <TouchableOpacity
       onPress={onPress}
-      className={`${commonClassName} bg- flex-row items-center justify-center gap-x-0.5 ${currBgColor} ${className}`}
+      className={`${commonClassName} flex-row items-center justify-center gap-x-0.5 ${currBgColor} ${className}`}
     >
       {icon && <Icon name={icon} size={iconSize} color={isActive ? color : 'inactive'} />}
       <Text className={`${currTextColor} ${textClassName}`}>{name}</Text>

@@ -11,7 +11,7 @@ interface GridContainerProps {
 
 export default function GridContainer({
   children,
-  horizontalInset = 24,
+  horizontalInset = 20,
   columns = 2,
   gap = 8,
   className = '',

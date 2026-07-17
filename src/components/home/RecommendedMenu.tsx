@@ -19,9 +19,8 @@ export default function RecommendedMenu() {
     <>
       {recommendedTodayMenuList.length ? (
         <View className="h-[300px] gap-y-3">
-          <SectionTitle title="오늘의 식사 추천" icon="HandPlatter" />
+          <SectionTitle title="오늘의 식사 제안" icon="HandPlatter" />
 
-          {/* <FullBleedSection> */}
           <CarouselContainer
             data={recommendedTodayMenuList}
             initialIndex={recommendedTodayMenuList.length}
@@ -34,7 +33,6 @@ export default function RecommendedMenu() {
             keyExtractor={(item, index) => `${item.id}:${index}`}
             renderItem={({ item }) => <MenuCompactCard key={item.id} food={item} />}
           />
-          {/* </FullBleedSection> */}
         </View>
       ) : (
         <></>

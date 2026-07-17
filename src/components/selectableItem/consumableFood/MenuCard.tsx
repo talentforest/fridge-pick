@@ -43,9 +43,6 @@ export default function MenuCard({
 
   const onPress = () => {
     openSheet({
-      enableDynamicSizing: true,
-      maxDynamicContentSize: 750,
-      hasDim: true,
       render: () => <MenuDetailSheet type="mainMenu" food={food} />,
     });
   };

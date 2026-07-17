@@ -168,18 +168,16 @@ export default function CarouselContainer<T>({
     </FullBleedSection>
   ) : (
     <View>
-      <View>
-        <GridContainer columns={requiredMinimum} gap={12}>
-          {data.map((item, index) => {
-            const isCurrIndex = currentIndex - data.length === index;
-            return renderItem({
-              item,
-              isCurrIndex,
-              onPress: () => setCurrentIndex(index + data.length),
-            });
-          })}
-        </GridContainer>
-      </View>
+      <GridContainer columns={requiredMinimum} gap={spacing}>
+        {data.map((item, index) => {
+          const isCurrIndex = currentIndex - data.length === index;
+          return renderItem({
+            item,
+            isCurrIndex,
+            onPress: () => setCurrentIndex(index + data.length),
+          });
+        })}
+      </GridContainer>
 
       {children && focusedItem ? (
         <View className="w-full pt-3">{children(focusedItem)}</View>

@@ -4,7 +4,7 @@ import Text from '@/components/common/ui/Text';
 import MenuCard from '@/components/selectableItem/consumableFood/MenuCard';
 import { useGetMenuList } from '@/hooks';
 import { EnrichedStorageItem } from '@/types/storage';
-import { getTrackedItemLabelAndCategory } from '@/utils';
+import { getTrackedItemData } from '@/utils';
 import { View } from 'react-native';
 
 interface MenuListByExpiredSoonFoodProps {
@@ -23,9 +23,7 @@ export default function MenuListByExpiredSoonFood({
       <View className={`mt-1 flex-row items-center gap-x-1 pb-3 pl-2`}>
         <Text>임박 식재료를 이용한 메뉴</Text>
         <View className="rounded-xl bg-yellow-1 px-3 py-2.5">
-          <Text className="font-extrabold">
-            {getTrackedItemLabelAndCategory(focusedItem).label}
-          </Text>
+          <Text className="font-extrabold">{getTrackedItemData(focusedItem).label}</Text>
         </View>
       </View>
 

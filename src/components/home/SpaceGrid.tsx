@@ -2,25 +2,31 @@ import {
   storageItemListByExpirationStatusAtom,
   itemListByStorageAtom,
 } from '@/atom/storageAtom';
-import { image_fridge } from '@/constants';
+import { image_fridge, storageObj } from '@/constants';
 import { StackNavProp } from '@/types/RootStackParamList';
 import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
-import { formatDaysSince, getRemainingDays } from '@/utils';
+import { getAddedFormatLabel, getRemainingDays } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
 import { useAtomValue } from 'jotai';
 import { Image, View } from 'react-native';
+import { Fragment } from 'react';
 import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import InsightCard from '@/components/home/InsightCard';
 
 export default function SpaceGrid() {
   const freezerItemList = useAtomValue(itemListByStorageAtom('freezer'));
   const fridgeItemList = useAtomValue(itemListByStorageAtom('fridge'));
   const pantryItemList = useAtomValue(itemListByStorageAtom('pantry'));
+  const allItemList = [...freezerItemList, ...fridgeItemList, ...pantryItemList];
 
   const expiredStorageItemList = useAtomValue(
-    storageItemListByExpirationStatusAtom('caution'),
+    storageItemListByExpirationStatusAtom('expired'),
+  );
+  const expiredSoonStorageItemList = useAtomValue(
+    storageItemListByExpirationStatusAtom('expiredSoon'),
   );
 
   const getExpiredItemList = (storageType: StorageTypeId) => {
@@ -29,110 +35,194 @@ export default function SpaceGrid() {
     );
   };
 
-  const getRecentlyUpdate = (itemList: EnrichedStorageItem[]) => {
-    if (itemList.length === 0) return;
+  const getRecentlyUpdate = (itemList: EnrichedStorageItem[]): number => {
+    if (itemList.length === 0) return 0;
 
     const purchasedAtList = itemList.map((item) => getRemainingDays(item.purchasedAt));
     return Math.max(...purchasedAtList);
   };
 
-  const storageList = {
-    fridge: [
-      {
-        id: 'freezer' as const,
-        label: '냉동실',
-        total: freezerItemList.length,
-        expiredItemNum: getExpiredItemList('freezer').length,
-        recentlyUpdateDays: getRecentlyUpdate(freezerItemList), // purchasedAt 시점 기준으로 하면 되겠다.
-      },
-      {
-        id: 'fridge' as const,
-        label: '냉장실',
-        total: fridgeItemList.length,
-        expiredItemNum: getExpiredItemList('fridge').length,
-        recentlyUpdateDays: getRecentlyUpdate(fridgeItemList),
-      },
-    ],
-    other: [
-      {
-        id: 'pantry' as const,
-        label: '실온보관',
-        total: pantryItemList.length,
-        expiredItemNum: getExpiredItemList('pantry').length,
-        recentlyUpdateDays: getRecentlyUpdate(pantryItemList),
-      },
-      {
-        id: 'favorites' as const,
-        label: '나의 픽!',
-        hasNotAllFavorites: true, // 나의 픽 식재료가 현재 보관함에 없는 경우
-      },
-    ],
+  const storageList = [
+    {
+      id: 'freezer' as const,
+      label: '냉동실',
+      total: freezerItemList.length,
+      expiredItemNum: getExpiredItemList('freezer').length,
+      recentlyUpdateDays: getRecentlyUpdate(freezerItemList), // purchasedAt 시점 기준으로 하면 되겠다.
+    },
+    {
+      id: 'fridge' as const,
+      label: '냉장실',
+      total: fridgeItemList.length,
+      expiredItemNum: getExpiredItemList('fridge').length,
+      recentlyUpdateDays: getRecentlyUpdate(fridgeItemList),
+    },
+    {
+      id: 'pantry' as const,
+      label: '실온',
+      total: pantryItemList.length,
+      expiredItemNum: getExpiredItemList('pantry').length,
+      recentlyUpdateDays: getRecentlyUpdate(pantryItemList),
+    },
+  ];
+
+  const favorite = {
+    label: '나의 픽!',
+    hasNotAllFavorites: true, // 나의 픽 식재료가 현재 보관함에 없는 경우
   };
+
+  const itemList = [
+    {
+      label: '지난 식재료',
+      data: expiredStorageItemList.length,
+      icon: 'TriangleAlert',
+      color: 'red',
+    },
+    {
+      label: '임박 식재료',
+      data: expiredSoonStorageItemList.length,
+      icon: 'ClockAlert',
+      color: 'yellow',
+    },
+    {
+      label: '총 식재료',
+      data: allItemList.length,
+      icon: 'LeafyGreen',
+      color: 'green',
+    },
+  ] as const;
 
   return (
     <View className="gap-y-[10px]">
-      <View className="flex-row gap-x-3">
-        {/* 나의 냉장고 */}
-        <Card className="h-[190px] w-[38%] gap-y-[10px] !py-5">
-          <Text>나의 냉장고</Text>
-          <View className="relative w-full flex-1 items-center justify-center">
+      <InsightCard />
+
+      {/* 나의 냉장고 */}
+      <Card className="w-full gap-y-[10px] !p-3">
+        <Text className="ml-4 mt-3 font-extrabold text-base">나의 냉장고 상태</Text>
+
+        <View className="mt-3 flex-row items-center justify-center">
+          <View className="relative h-28 w-[24%] items-center justify-center">
+            <Image source={image_fridge} className="mt-4 size-full" />
             {/* 주의 식재료가 있는 경우 빨간 점으로 표시 */}
             {expiredStorageItemList.length > 0 && (
-              <View className="ml-12 size-2.5 rounded-xl bg-red-500" />
+              <View className="absolute right-5 top-1 size-2 rounded-xl bg-red-500" />
             )}
-
-            <Image source={image_fridge} className="w-full flex-1 object-contain" />
           </View>
-        </Card>
 
-        <View className="flex-1 gap-y-[10px]">
-          {storageList.fridge.map((spaceInfo) => (
-            <TouchableSpaceCard key={spaceInfo.id} spaceInfo={spaceInfo} />
+          <View className="w-[74%] flex-row justify-between gap-y-3">
+            {itemList.map((item, index) => (
+              <Fragment key={item.label}>
+                <View className="w-20 items-center justify-center gap-y-2.5">
+                  <Icon
+                    name={item.icon}
+                    className={`rounded-full ${item.color === 'yellow' ? 'bg-yellow-1' : item.color === 'red' ? 'bg-red-1' : 'bg-green-1'} p-2.5`}
+                    color={item.color}
+                    size={15}
+                  />
+
+                  <View className="items-center gap-y-3">
+                    <Text className="text-sm text-neutral-5">{item.label}</Text>
+                    <Text className="font-extrabold text-xl">
+                      {item.data}
+                      <Text className="text-neutral-5">개</Text>
+                    </Text>
+                  </View>
+                </View>
+
+                {index < itemList.length - 1 && (
+                  <View className="border-r border-border" />
+                )}
+              </Fragment>
+            ))}
+          </View>
+        </View>
+
+        <View className="mt-5 flex-row overflow-hidden rounded-2xl bg-neutral-1">
+          {storageList.map((spaceInfo, index) => (
+            <Fragment key={spaceInfo.id}>
+              <TouchableSpaceCard spaceInfo={spaceInfo} />
+              {index < storageList.length - 1 && (
+                <View className="border-r border-border" />
+              )}
+            </Fragment>
           ))}
         </View>
-      </View>
+      </Card>
 
-      <View className="flex-row gap-x-[10px]">
-        {storageList.other.map((spaceInfo) => (
-          <TouchableSpaceCard key={spaceInfo.id} spaceInfo={spaceInfo} />
-        ))}
-      </View>
+      {/* <FavoriteTouchableSpaceCard spaceInfo={favorite} /> */}
     </View>
   );
 }
 
 const TouchableSpaceCard = ({
-  spaceInfo: { id, label, total, expiredItemNum, recentlyUpdateDays, hasNotAllFavorites },
+  spaceInfo: { id, label, total, recentlyUpdateDays, expiredItemNum },
 }: {
   spaceInfo: {
-    id: 'fridge' | 'freezer' | 'pantry' | 'favorites';
+    id: 'fridge' | 'freezer' | 'pantry';
     label: string;
     total?: number;
-    recentlyUpdateDays?: number;
+    recentlyUpdateDays: number;
     expiredItemNum?: number;
     hasNotAllFavorites?: boolean;
   };
 }) => {
   const navigation = useNavigation<StackNavProp>();
 
-  const notificationObj = {
-    hasExpiredItem: {
-      label: `주의 식재료 ${expiredItemNum}개`,
-      icon: 'ClockAlert' as const,
-      condition: expiredItemNum && expiredItemNum > 0,
-      color: 'yellow' as const,
-    },
+  return (
+    <TouchableOpacity
+      className={`h-[120px] w-[33%] gap-y-3 px-4 py-5`}
+      onPress={() => navigation.navigate('StorageDetailScreen', { id })}
+    >
+      <View className={`flex-row items-center gap-x-1.5`}>
+        <Icon name={storageObj[id].icon} color={storageObj[id].color} size={18} />
+        <Text
+          className={`font-extrabold !text-[13px] ${id === 'pantry' ? 'text-yellow-7' : id === 'freezer' ? 'text-ice-7' : 'text-blue-7'}`}
+        >
+          {label}
+        </Text>
+      </View>
 
-    recentlyUpdate: {
-      label:
-        recentlyUpdateDays !== undefined
-          ? `${formatDaysSince(recentlyUpdateDays)} 추가`
-          : '',
-      icon: undefined,
-      condition: !expiredItemNum,
-      color: 'neutral' as const,
-    },
-  };
+      <View className="flex-1">
+        <Text
+          className={`pl-0.5 font-extrabold !text-2xl ${id === 'pantry' ? 'text-yellow-7' : id === 'freezer' ? 'text-ice-7' : 'text-blue-7'}`}
+        >
+          {total}
+          <Text className="text-neutral-5">개</Text>
+        </Text>
+
+        <View className="mb-3 mt-2 h-[3px] w-5 rounded-full bg-neutral-3" />
+
+        {expiredItemNum && expiredItemNum > 0 ? (
+          <View className="flex-row items-center gap-x-0.5">
+            <Icon name="TriangleAlert" size={13} color="red" />
+            <Text className="!text-[13px] text-red-5">주의 {expiredItemNum}개</Text>
+          </View>
+        ) : recentlyUpdateDays > -1 && recentlyUpdateDays <= 3 ? (
+          <Text className="!text-[13px] text-neutral-5">
+            {getAddedFormatLabel(recentlyUpdateDays)} 추가
+          </Text>
+        ) : (
+          <Text className="w-24 !text-[13px] text-neutral-5">최근 추가 없음</Text>
+        )}
+      </View>
+
+      <Icon
+        name="ChevronRight"
+        className="absolute bottom-[56%] right-2 rounded-full bg-neutral-3 p-1.5"
+        size={16}
+        strokeWidth={3}
+        color="darkGray"
+      />
+    </TouchableOpacity>
+  );
+};
+
+const FavoriteTouchableSpaceCard = ({
+  spaceInfo: { label, hasNotAllFavorites },
+}: {
+  spaceInfo: { label: string; hasNotAllFavorites?: boolean };
+}) => {
+  const navigation = useNavigation<StackNavProp>();
 
   const favoriteNotificationObj = {
     hasNotAllFavorites: {
@@ -149,46 +239,25 @@ const TouchableSpaceCard = ({
 
   return (
     <TouchableOpacity
-      className="h-[90px] flex-1"
-      onPress={() => {
-        if (id === 'favorites') {
-          navigation.navigate('FavoritesScreen');
-        } else {
-          navigation.navigate('StorageDetailScreen', { id });
-        }
-      }}
+      className={`flex-1`}
+      onPress={() => navigation.navigate('FavoritesScreen')}
     >
-      <Card key={label} className="flex-1 !py-5">
-        <View className="flex-1 flex-row justify-between">
-          <Text>{label}</Text>
+      <Card>
+        <View
+          key={label}
+          className={`flex-1 items-center justify-between gap-y-3 px-2.5 py-5`}
+        >
+          <Text className="font-extrabold !text-[13px]">{label}</Text>
 
-          {id === 'favorites' ? (
-            <Icon name="Heart" hasFill color="red" size={22} />
-          ) : (
-            <Text className="font-extrabold text-2xl text-blue-5">{total}</Text>
-          )}
+          <Icon name="Heart" hasFill color="red" size={22} />
         </View>
 
-        {id === 'favorites' ? (
-          <Text className="text-[13px] !text-neutral-5">
-            {favoriteNotificationObj.hasNotAllFavorites.label}
-          </Text>
-        ) : (
-          <>
-            {Object.entries(notificationObj)
-              .filter(([_, item]) => item.condition)
-              .map(([key, item]) => (
-                <View key={key} className="flex-row items-center">
-                  {item.icon && <Icon name={item.icon} size={15} color={item.color} />}
-                  <Text
-                    className={`${item.color === 'yellow' ? 'text-yellow-7' : 'text-neutral-5'}`}
-                  >
-                    {item.label}
-                  </Text>
-                </View>
-              ))}
-          </>
-        )}
+        <Icon
+          name="ChevronRight"
+          className="absolute bottom-[20px] right-2.5"
+          size={16}
+          color="neutral"
+        />
       </Card>
     </TouchableOpacity>
   );

@@ -10,5 +10,5 @@ export default function FullBleedSection({
   children,
   className = '',
 }: ScreenContainerProps) {
-  return <View className={`-mx-[24px] ${className}`}>{children}</View>;
+  return <View className={`-mx-[20px] ${className}`}>{children}</View>;
 }

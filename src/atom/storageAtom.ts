@@ -40,7 +40,7 @@ export const itemListByStorageAtom = atomFamily((storage: StorageTypeId) =>
 /** nanoid id로 보관함 속 특정 식재료 아이템 찾기
  * ingredientId로 하지않는 이유는 없는 커스텀 식재료가 있기 때문
  */
-export const findItemByStorageAtom = atomFamily((storageItemId: string) =>
+export const findStorageItemById = atomFamily((storageItemId?: string) =>
   atom((get) => {
     const allStorageItemList = get(allStorageItemListAtom);
     return allStorageItemList.find((item) => item.id === storageItemId);
@@ -145,14 +145,13 @@ export const changeStorageItemAtom = atom(null, (get, set, { id, newData }: Prop
 
   const changedList = list.map((item) => {
     if (item.id === id) {
-      // eslint-disable-next-line unused-imports/no-unused-vars
-      const { customLabel, ...rest } = newData;
-
-      if (item.type !== 'custom') {
-        return { ...item, ...rest };
+      if (item.type === 'custom') {
+        return { ...item, ...newData };
       }
 
-      return { ...item, ...newData };
+      const { customLabel: _, ...rest } = newData;
+
+      return { ...item, ...rest };
     } else {
       return item;
     }

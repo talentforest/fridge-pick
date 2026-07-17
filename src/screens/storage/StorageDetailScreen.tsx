@@ -9,6 +9,7 @@ import {
 } from '@react-navigation/native';
 import { View } from 'react-native';
 import { useEffect } from 'react';
+import { StorageItemWithExpiration } from '@/utils';
 import { EnrichedStorageItem } from '@/types/storage';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
@@ -36,11 +37,15 @@ export default function StorageDetailScreen() {
 
   const onItemPress = (item: EnrichedStorageItem) => {
     openSheet({
-      enableDynamicSizing: false,
       keyboardBehavior: 'extend',
-      snapPoints: [480, 700],
-      hasDim: true,
       render: () => <StorageItemSheet storageItem={item} />,
+    });
+  };
+
+  const onCautionItemPress = (item: StorageItemWithExpiration) => {
+    openSheet({
+      keyboardBehavior: 'extend',
+      render: () => <StorageItemSheet storageItem={item.storageItem} />,
     });
   };
 
@@ -68,7 +73,7 @@ export default function StorageDetailScreen() {
           title="소비기한 주의 식재료"
           isGridType
           storageType={storageType}
-          onItemPress={onItemPress}
+          onItemPress={onCautionItemPress}
           type="caution"
         />
 
@@ -76,7 +81,7 @@ export default function StorageDetailScreen() {
         <View className="gap-y-1">
           <SectionTitle
             title={`나의 ${storageLabel} 식재료`}
-            icon={storageLabel === '실온보관' ? 'ShelvingUnit' : 'Refrigerator'}
+            icon={storageLabel === '실온' ? 'ShelvingUnit' : 'Refrigerator'}
           >
             <View className="flex-row items-center gap-x-2">
               <Icon

@@ -78,6 +78,14 @@ module.exports = {
           1: 'var(--color-yellow-1)',
         },
 
+        orange: {
+          9: 'var(--color-orange-9)',
+          7: 'var(--color-orange-7)',
+          5: 'var(--color-orange-5)',
+          3: 'var(--color-orange-3)',
+          1: 'var(--color-orange-1)',
+        },
+
         green: {
           9: 'var(--color-green-9)',
           7: 'var(--color-green-7)',

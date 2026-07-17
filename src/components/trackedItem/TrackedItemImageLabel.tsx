@@ -2,7 +2,7 @@ import Text from '@/components/common/ui/Text';
 import { EnrichShoppingItem } from '@/types/shoppingList';
 import { EnrichedStorageItem } from '@/types/storage';
 import { View } from 'react-native';
-import { getTrackedItemLabelAndCategory } from '@/utils';
+import { getTrackedItemData } from '@/utils';
 import FoodImage from '@/components/common/FoodImage';
 import Card from '@/components/common/ui/Card';
 
@@ -37,12 +37,12 @@ export default function TrackedItemImageLabel({
 
           <Card className="h-[82px] flex-1 justify-center gap-y-3">
             <Text className={`line-clamp-1 ${textClassName}`}>
-              {getTrackedItemLabelAndCategory(item).label}
+              {getTrackedItemData(item).label}
             </Text>
 
             {hasCategory && (
               <Text className="text-neutral-5">
-                {getTrackedItemLabelAndCategory(item).categoryLabel}
+                {getTrackedItemData(item).categoryLabel}
               </Text>
             )}
           </Card>
@@ -52,11 +52,11 @@ export default function TrackedItemImageLabel({
           <FoodImage trackedItem={item} imageSize={imageSize} />
           <View className="gap-y-2">
             <Text className={`line-clamp-1 ${textClassName}`}>
-              {getTrackedItemLabelAndCategory(item).label}
+              {getTrackedItemData(item).label}
             </Text>
             {hasCategory && (
               <Text className="text-neutral-5">
-                {getTrackedItemLabelAndCategory(item).categoryLabel}
+                {getTrackedItemData(item).categoryLabel}
               </Text>
             )}
           </View>

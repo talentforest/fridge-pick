@@ -22,6 +22,7 @@ export default function BottomTabNavigator() {
   return (
     <Tab.Navigator
       key={colorScheme}
+      initialRouteName="HomeScreen"
       screenOptions={{
         tabBarStyle: { backgroundColor: 'transparent' },
         tabBarBackground: () => <View className="flex-1 bg-bg" />,

@@ -36,7 +36,7 @@ export default function PurchasedItem({
     {
       label: '소비기한',
       value: formatDateString(date, 'yy년 M월 d일'),
-      icon: 'Calendar' as const,
+      icon: 'CalendarDays' as const,
       color: 'text' as const,
     },
   ];
@@ -61,10 +61,7 @@ export default function PurchasedItem({
 
   const onEditPress = () =>
     openSheet({
-      enableDynamicSizing: true,
-      keyboardBehavior: 'interactive',
       snapPoints: ['80%'],
-      hasDim: true,
       render: () => (
         <EditPurchasedItemSheet
           initialStorageItem={storageItem}

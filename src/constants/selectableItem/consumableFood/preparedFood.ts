@@ -716,7 +716,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'fried_egg',
     label: '계란프라이',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',
@@ -739,7 +739,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gaji_bokkeum',
     label: '가지볶음',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',
@@ -765,7 +765,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gamja_jeon',
     label: '감자전',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'hot',
@@ -816,7 +816,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gamja_twigim',
     label: '감자튀김',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',
@@ -834,7 +834,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gamjachae_bokkeum',
     label: '감자채볶음',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',
@@ -859,7 +859,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'ganjang_hwangtaechae_bokkeum',
     label: '간장황태채볶음',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'hot',
@@ -935,7 +935,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gochu_jangajji',
     label: '고추장아찌',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'cold',
@@ -987,7 +987,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gochujang_hwangtaechae_bokkeum',
     label: '고추장황태채볶음',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'hot',
@@ -1040,7 +1040,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gosari_namul',
     label: '고사리나물',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',
@@ -1066,7 +1066,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gul_jeon',
     label: '굴전',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'hot',
@@ -1094,7 +1094,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gyeran_jang_jorim',
     label: '계란장조림',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'cold',
@@ -1122,7 +1122,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gyeran_jjim',
     label: '계란찜',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',
@@ -1145,7 +1145,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'gyeran_mari',
     label: '계란말이',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',
@@ -1171,7 +1171,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'japchae',
     label: '잡채',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'warm',
@@ -1204,7 +1204,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'jinmichae_bokkeum',
     label: '진미채볶음',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'cold',
@@ -1252,7 +1252,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'kimchi_bokkeum',
     label: '김치볶음',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',
@@ -1278,7 +1278,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'kkaennip_jangajji',
     label: '깻잎장아찌',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',
@@ -1304,7 +1304,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'kkaennip_jeon',
     label: '깻잎전',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',
@@ -1335,7 +1335,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'kkakdugi',
     label: '깍두기',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'cold',
@@ -1362,7 +1362,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'kkomak_muchim',
     label: '꼬막무침',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',
@@ -1393,7 +1393,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'kongjaban',
     label: '콩자반',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',
@@ -1419,7 +1419,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'kongnamul_muchim',
     label: '콩나물무침',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',
@@ -1461,7 +1461,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'maneuljjong_bokkeum',
     label: '마늘쫑볶음',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',
@@ -1486,7 +1486,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'mechurial_jang_jorim',
     label: '메추리알장조림',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'cold',
@@ -1527,7 +1527,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'mu_namul',
     label: '무나물',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',
@@ -1554,7 +1554,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'mumallaengi',
     label: '무말랭이',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',
@@ -1581,7 +1581,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'musaengchae',
     label: '무생채',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',
@@ -1608,7 +1608,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'myeolchi_bokkeum',
     label: '멸치볶음',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'medium',
     servingTemperature: 'cold',
@@ -1635,7 +1635,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'myeongran_jeotgal',
     label: '명란젓',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',
@@ -1652,7 +1652,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'nakji_jeotgal',
     label: '낙지젓',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',
@@ -1669,7 +1669,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'neutari_beoseot_bokkeum',
     label: '느타리버섯볶음',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'hot',
@@ -1695,7 +1695,7 @@ export const preparedFoodObj = {
     isActive: true,
     id: 'oi_muchim',
     label: '오이무침',
-    category: 'light_food',
+    category: 'side_dish',
 
     difficulty: 'easy',
     servingTemperature: 'cold',

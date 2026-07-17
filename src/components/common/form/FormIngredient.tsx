@@ -1,9 +1,9 @@
+import { EditableStorageItem, EnrichedStorageItem } from '@/types/storage';
+import { formatDateString, getTrackedItemData } from '@/utils';
+import { View } from 'react-native';
 import FormDateInput from '@/components/common/form/FormDateInput';
 import FormMemo from '@/components/common/form/FormMemo';
 import FormStorage from '@/components/common/form/FormStorage';
-import { EditableStorageItem, EnrichedStorageItem } from '@/types/storage';
-import { formatDateString } from '@/utils';
-import { View } from 'react-native';
 
 interface FormIngredientProps {
   currStorageItem: EnrichedStorageItem;
@@ -18,12 +18,7 @@ export default function FormIngredient({
   onMemoFocus,
   isSheetInput = false,
 }: FormIngredientProps) {
-  const expirationDays =
-    currStorageItem.type === 'ingredient'
-      ? currStorageItem.ingredient?.expirationDays
-      : currStorageItem.type === 'preparedFood'
-        ? currStorageItem.preparedFood.expirationDays
-        : undefined;
+  const { expirationDays } = getTrackedItemData(currStorageItem);
 
   const onChangeDate = (date: Date) => {
     const expiresAt = formatDateString(date, 'yyyy-MM-dd');
@@ -42,11 +37,11 @@ export default function FormIngredient({
 
       <FormDateInput
         hasLabel
-        currDate={currStorageItem.expiresAt}
+        initialDate={currStorageItem.expiresAt}
         onItemChange={(newData) =>
           onChangeDate(newData.expiresAt ? new Date(newData.expiresAt) : new Date())
         }
-        currStorageType={currStorageItem.storage.type}
+        currStorageType={currStorageItem ? currStorageItem.storage.type : undefined}
         ingredientExpirationDays={expirationDays}
       />
 

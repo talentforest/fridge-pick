@@ -8,7 +8,7 @@ import {
 import { EnrichedStorageItem } from '@/types/storage';
 import { StorageItem, TrackedItem } from '@/types/trackedItem';
 
-/** 실제 사용자 아이템을 찾을 수 있는 키 생성
+/** SelectableItem을 찾을 수 있는 키 생성
  * @param item: SelectableItem
  * `${ingredientId}|${mealId}|${preparedFood}`; 형식으로 반환
  */
@@ -21,9 +21,9 @@ export function createSelectableItemKey(item?: SelectableItem) {
   return `${ingredientId}|${preparedFoodId}|${mealId}`;
 }
 
-/** 실제 사용자 아이템을 찾을 수 있는 키 생성
+/** TrackedItem을 찾을 수 있는 키 생성
  * @param item: TrackedItem
- * `${ingredientId}|${customLabel}|${mealId}|${preparedFood}`; 형식으로 반환
+ * `${ingredientId}|${mealId}|${preparedFood}|${customLabel}`; 형식으로 반환
  */
 export function createTrackedItemKey(item?: TrackedItem) {
   if (!item) return `|||`;
@@ -32,18 +32,18 @@ export function createTrackedItemKey(item?: TrackedItem) {
   const mealId = item.type === 'meal' ? item.mealId : '';
   const customLabel = item.type === 'custom' ? item.customLabel : '';
 
-  return `${ingredientId}|${customLabel}|${mealId}|${preparedFoodId}`;
+  return `${ingredientId}|${mealId}|${preparedFoodId}|${customLabel}`;
 }
 
 export function parseKey(key: string) {
-  return key.split('|') as [IngredientKey, string, MealKey, PreparedFoodKey];
+  return key.split('|') as [IngredientKey, MealKey, PreparedFoodKey, string];
 }
 
 /** 키로 보관함아이템 or 장보기아이템 존재하는지 찾기
  * boolean 반환
  */
 export const findTrackedItemWithKey = (item: TrackedItem, key: string) => {
-  const [ingredientId, customLabel, mealId, preparedFoodId] = parseKey(key);
+  const [ingredientId, mealId, preparedFoodId, customLabel] = parseKey(key);
 
   if (item.type === 'ingredient') return item.ingredientId === ingredientId;
   if (item.type === 'preparedFood') return item.preparedFoodId === preparedFoodId;
@@ -55,7 +55,7 @@ export const findTrackedItemWithKey = (item: TrackedItem, key: string) => {
  * boolean 반환
  */
 export const findSelectableItemWithKey = (item: SelectableItem, key: string): boolean => {
-  const [ingredientId, preparedFoodId, mealId] = parseKey(key);
+  const [ingredientId, mealId, preparedFoodId] = parseKey(key);
 
   if (item.kind === 'ingredient') return item.id === ingredientId;
   if (item.kind === 'preparedFood') return item.id === preparedFoodId;
@@ -104,7 +104,7 @@ export const hasConsumableFoodInStorage = (
 };
 
 export const checkHasStorageItem = (
-  storageItem: StorageItem,
+  storageItem: StorageItem | EnrichedStorageItem,
   selectableItemId: SelectableItem['id'],
 ) => {
   if (storageItem.type === 'meal') {

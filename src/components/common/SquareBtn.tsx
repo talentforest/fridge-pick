@@ -9,6 +9,7 @@ interface SquareBtnProps {
   iconSize?: number;
   textClassName?: string;
   bgColor?:
+    | 'red'
     | 'blue'
     | 'green'
     | 'yellow'
@@ -30,14 +31,15 @@ export default function SquareBtn({
 }: SquareBtnProps & TouchableOpacityProps) {
   const bgColorStyle = {
     blue: 'bg-blue-5',
+    red: '!bg-[#aa2525]',
     ice: 'bg-ice-5',
     green: 'bg-green-700',
     yellow: 'bg-amber-600',
     indigo: 'bg-indigo-600',
     inActive: 'bg-inactive-bg',
-    neutral: 'bg-neutral-7',
+    neutral: 'bg-neutral-3',
     transparent: 'border border-neutral-9 bg-white',
-    black: 'bg-neutral-9',
+    black: 'bg-[#333]',
   };
 
   const textStyle =
