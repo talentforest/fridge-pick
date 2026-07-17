@@ -22,10 +22,10 @@ const toastConfig = {
 
       <Pressable
         onPress={props.onUndo}
-        className="w-[65px] flex-row items-center gap-x-1"
+        className="w-[65px] flex-row items-center gap-x-0.5 py-2"
       >
-        <Text className="!text-[13px] text-neutral-1">되돌리기</Text>
-        <Icon name="RotateCcw" size={12} color="white" />
+        <Icon name="RotateCcw" size={12} color="yellow" className="" />
+        <Text className="!text-[13px] text-yellow-3">되돌리기</Text>
       </Pressable>
     </View>
   ),

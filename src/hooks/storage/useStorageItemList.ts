@@ -112,7 +112,11 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
     })
       .map((category) => ({
         category,
-        itemList: grouped[category.id] ?? [],
+        itemList:
+          grouped[category.id]?.sort(
+            (a, b) =>
+              new Date(a.purchasedAt).getTime() - new Date(b.purchasedAt).getTime(),
+          ) ?? [],
       }))
       .filter((group) => group.itemList.length > 0);
   }, [currentSideItems, storageItemList, hasSide]);
