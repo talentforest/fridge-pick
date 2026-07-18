@@ -94,7 +94,7 @@ export default function SpaceGrid() {
 
   return (
     <View className="gap-y-[10px]">
-      <InsightCard />
+      <InsightCard type="good" />
 
       {/* 나의 냉장고 */}
       <Card className="w-full gap-y-[10px] !p-3">
@@ -115,13 +115,18 @@ export default function SpaceGrid() {
                 <View className="w-20 items-center justify-center gap-y-2.5">
                   <Icon
                     name={item.icon}
-                    className={`rounded-full ${item.color === 'yellow' ? 'bg-yellow-1' : item.color === 'red' ? 'bg-red-1' : 'bg-green-1'} p-2.5`}
+                    className={`rounded-full p-2`}
                     color={item.color}
+                    hasBgColor
                     size={15}
                   />
 
                   <View className="items-center gap-y-3">
-                    <Text className="text-sm text-neutral-5">{item.label}</Text>
+                    <Text
+                      className={`text-sm ${item.color === 'yellow' ? 'text-yellow-7' : item.color === 'green' ? 'text-green-7' : 'text-red-5'}`}
+                    >
+                      {item.label}
+                    </Text>
                     <Text className="font-extrabold text-xl">
                       {item.data}
                       <Text className="text-neutral-5">개</Text>
@@ -170,11 +175,11 @@ const TouchableSpaceCard = ({
 
   return (
     <TouchableOpacity
-      className={`h-[120px] w-[33%] gap-y-3 px-4 py-5`}
+      className={`h-[122px] w-[33%] gap-y-3.5 px-4 py-5`}
       onPress={() => navigation.navigate('StorageDetailScreen', { id })}
     >
-      <View className={`flex-row items-center gap-x-1.5`}>
-        <Icon name={storageObj[id].icon} color={storageObj[id].color} size={18} />
+      <View className={`flex-row items-center gap-x-1`}>
+        <Icon name={storageObj[id].icon} color={storageObj[id].color} size={14} />
         <Text
           className={`font-extrabold !text-[13px] ${id === 'pantry' ? 'text-yellow-7' : id === 'freezer' ? 'text-ice-7' : 'text-blue-7'}`}
         >
@@ -190,19 +195,19 @@ const TouchableSpaceCard = ({
           <Text className="text-neutral-5">개</Text>
         </Text>
 
-        <View className="mb-3 mt-2 h-[3px] w-5 rounded-full bg-neutral-3" />
+        <View className="my-3 h-[3px] w-5 rounded-full bg-neutral-3" />
 
         {expiredItemNum && expiredItemNum > 0 ? (
           <View className="flex-row items-center gap-x-0.5">
             <Icon name="TriangleAlert" size={13} color="red" />
-            <Text className="!text-[13px] text-red-5">주의 {expiredItemNum}개</Text>
+            <Text className="text-sm text-red-5">주의 {expiredItemNum}개</Text>
           </View>
         ) : recentlyUpdateDays > -1 && recentlyUpdateDays <= 3 ? (
           <Text className="!text-[13px] text-neutral-5">
             {getAddedFormatLabel(recentlyUpdateDays)} 추가
           </Text>
         ) : (
-          <Text className="w-24 !text-[13px] text-neutral-5">최근 추가 없음</Text>
+          <Text className="w-24 text-sm text-neutral-5">최근 추가 없음</Text>
         )}
       </View>
 

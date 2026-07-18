@@ -1,6 +1,9 @@
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { colorTokens } from '@/theme/color';
 import {
+  TrendingUp,
+  ChartColumnBig,
+  ThumbsUp,
   CalendarPlus,
   NotebookPen,
   MapPinned,
@@ -95,6 +98,9 @@ import {
 import { useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'TrendingUp'
+  | 'ChartColumnBig'
+  | 'ThumbsUp'
   | 'CalendarPlus'
   | 'MapPinned'
   | 'NotebookPen'
@@ -192,6 +198,7 @@ export type IconName =
 export type IconColor =
   | 'orange'
   | 'text'
+  | 'lightYellow'
   | 'yellow'
   | 'neutral'
   | 'inactive'
@@ -230,6 +237,7 @@ export default function Icon({
     orange: scheme.orange[7],
     white: '#fff',
     text: scheme.text,
+    lightYellow: scheme.yellow[3],
     yellow: scheme.yellow[7],
     neutral: scheme.neutral[7],
     red: scheme.red[5],
@@ -248,21 +256,25 @@ export default function Icon({
     orange: 'bg-orange-1',
     white: '#fff',
     text: 'bg-neutral-1',
+    lightYellow: 'bg-yellow-1',
     yellow: 'bg-yellow-1',
-    neutral: 'bg-neutral-7',
+    neutral: 'bg-neutral-1',
     red: 'bg-red-1',
-    lightBlue: 'bg-blue-5',
-    blue: 'bg-blue-7',
+    lightBlue: 'bg-blue-1',
+    blue: 'bg-blue-1',
     darkGray: 'bg-neutral-5',
     black: 'bg-neutral-9',
-    gray: 'bg-inactive-b',
+    gray: 'bg-inactive-bg',
     green: 'bg-green-1',
-    ice: 'bg-ice-5',
+    ice: 'bg-ice-1',
     indigo: 'bg-indigo-1',
     inactive: 'bg-inactive-text',
   };
 
   const iconObj: { [key in IconName]: LucideIcon } = {
+    TrendingUp,
+    ChartColumnBig,
+    ThumbsUp,
     CalendarPlus,
     NotebookPen,
     MapPinned,
