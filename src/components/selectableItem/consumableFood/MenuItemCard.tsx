@@ -13,9 +13,9 @@ type MenuItemCardProps = {
 
 export default function MenuItemCard({ menu }: MenuItemCardProps) {
   return (
-    <Card key={menu.id} className="flex-row items-center gap-x-2 !px-3 !py-3">
+    <Card key={menu.id} className="flex-row items-center gap-x-2.5 !px-3 !py-3">
       <View className="rounded-2xl bg-neutral-1 p-1">
-        <FoodImage consumableFood={menu} imageSize={85} />
+        <FoodImage consumableFood={menu} imageSize={90} />
       </View>
 
       <View className="flex-1 gap-y-1 pt-1">

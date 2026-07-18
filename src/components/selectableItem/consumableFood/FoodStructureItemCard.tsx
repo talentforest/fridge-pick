@@ -50,7 +50,7 @@ export default function FoodStructureItemCard({
 
     if (result.type === 'duplicate') {
       showToast({
-        type: 'custom',
+        type: 'normal',
         text1: `⚠️ 이미 장보기 목록에 있어요.`,
         visibilityTime: 2000,
         position: 'bottom',
@@ -59,14 +59,10 @@ export default function FoodStructureItemCard({
 
     if (result.type === 'success') {
       showToast({
-        type: 'custom',
+        type: 'normal',
         text1: `✅ 장보기 목록에 추가했어요.`,
         visibilityTime: 2000,
         position: 'bottom',
-
-        text1Style: {
-          fontSize: 16,
-        },
       });
     }
   };

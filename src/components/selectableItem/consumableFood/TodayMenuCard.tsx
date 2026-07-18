@@ -32,6 +32,7 @@ export default function TodayMenuCard({
     });
   };
 
+  console.log('consumableFood?', consumableFood);
   const commonClassName = `justify-center ${mainMenu ? 'h-[220px] items-start ' : 'h-[105px] !px-2 items-center !bg-border'} ${className}`;
 
   return (
@@ -61,9 +62,9 @@ export default function TodayMenuCard({
           {mainMenu && (
             <View className={`mt-3 items-center gap-y-2.5`}>
               <ProgressBar
-                label="필수재료 보유율"
-                percentage={consumableFood.possessionPercent}
-                possessedCount={consumableFood.possessedCount}
+                label="재료 보유율"
+                percentage={consumableFood.requiredPossessionPercent}
+                possessedCount={consumableFood.requiredPossessedList.length}
                 requiredCount={consumableFood.requiredCount}
               />
             </View>

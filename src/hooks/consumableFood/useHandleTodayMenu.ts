@@ -33,7 +33,7 @@ export const useHandleTodayMenu = (
       closeSheet();
 
       showToast({
-        type: 'custom',
+        type: 'normal',
         text1: `✅ 오늘 먹을 메뉴로 정했어요`,
         position: 'bottom',
       });

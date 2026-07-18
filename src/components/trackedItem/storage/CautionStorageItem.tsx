@@ -35,28 +35,31 @@ export default function CautionStorageItem({
   return (
     <Card
       style={{ ...iosShadowStyle }}
-      className={`relative overflow-hidden !px-2 !pb-3 !pt-1 ${isCurrIndex ? 'border-yellow-5' : 'border-border'}`}
+      className={`relative h-[156px] overflow-hidden !px-1.5 !pb-4 !pt-1.5 ${isCurrIndex ? 'border-yellow-5' : 'border-border'}`}
     >
       {index && index <= 3 ? (
-        <View className="absolute left-0 top-0 z-10 h-10 w-8 items-center justify-center rounded-br-xl bg-yellow-5">
+        <View className="-mb-8 -ml-1.5 -mt-1.5 h-10 w-8 items-center justify-center rounded-br-xl bg-orange-5">
           <Text className="font-extrabold text-base text-white">{index}</Text>
         </View>
       ) : (
         <Icon
           name={storageObj[currStorage].icon}
           color={storageObj[currStorage].color}
-          size={15}
-          className="-mb-5 mr-auto rounded-lg bg-neutral-1 p-1.5"
+          size={16}
+          className="-mb-6 mr-auto rounded-lg bg-neutral-1 p-2"
         />
       )}
 
-      <View className={`aspect-square items-center justify-center gap-y-0.5`}>
+      <View className={`flex-1 items-center justify-center gap-y-2 py-2`}>
         {storageItem.type !== 'custom' && (
-          <FoodImage trackedItem={storageItem} imageSize={55} />
+          <FoodImage trackedItem={storageItem} imageSize={60} />
         )}
-        <Text className={`text-center leading-[20px] ${isCurrIndex ? '' : ''}`}>
-          {label}
-        </Text>
+
+        <View className="items-center justify-center">
+          <Text className={`text-center leading-[20px] ${isCurrIndex ? '' : ''}`}>
+            {label}
+          </Text>
+        </View>
       </View>
 
       <View className="mx-auto mb-3 h-[3px] w-8 rounded-full bg-neutral-3" />

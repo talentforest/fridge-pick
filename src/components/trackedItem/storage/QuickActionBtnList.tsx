@@ -7,6 +7,7 @@ import {
 import DateQuickBtn from '@/components/common/DateQuickBtn';
 import ModalHeader from '@/components/common/header/ModalHeader';
 import SquareBtn from '@/components/common/SquareBtn';
+import { ToastBgColor } from '@/components/common/Toast';
 import { IconName } from '@/components/common/ui/Icon';
 import { useOverlay } from '@/hooks';
 import { EditableStorageItem } from '@/types/storage';
@@ -42,7 +43,13 @@ export default function QuickActionBtnList({
 
   if (!currStorageItem) return null;
 
-  const onDeletePress = ({ toast }: { toast: string }) => {
+  const onDeletePress = ({
+    toast,
+    bgColor = 'bg-blue-9',
+  }: {
+    toast: string;
+    bgColor: ToastBgColor;
+  }) => {
     deleteItems([storageItemId]);
 
     showToast({
@@ -51,6 +58,7 @@ export default function QuickActionBtnList({
       visibilityTime: 4000,
       position: 'bottom',
       props: {
+        bgColor,
         onUndo: () => {
           addItem(currStorageItem);
         },
@@ -101,14 +109,19 @@ export default function QuickActionBtnList({
       title: '다 먹었어요',
       icon: 'CheckCircle2',
       color: 'blue',
-      onPress: () => onDeletePress({ toast: '✅ 다 먹어서 냉장고에서 제거했어요' }),
+      onPress: () =>
+        onDeletePress({
+          toast: '✅ 다 먹어서 냉장고에서 제거했어요',
+          bgColor: 'bg-blue-9',
+        }),
     },
     {
       id: 'discard',
       title: '버렸어요',
       icon: 'Trash2',
       color: 'red',
-      onPress: () => onDeletePress({ toast: '🗑️ 냉장고에서 제거했어요' }),
+      onPress: () =>
+        onDeletePress({ toast: '🗑️ 냉장고에서 제거했어요', bgColor: 'bg-red-9' }),
     },
     ...(hasExpirationDateBtn
       ? [
