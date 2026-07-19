@@ -45,8 +45,9 @@ export default function CautionStorageItem({
         <Icon
           name={storageObj[currStorage].icon}
           color={storageObj[currStorage].color}
-          size={16}
-          className="-mb-6 mr-auto rounded-lg bg-neutral-1 p-2"
+          size={14}
+          hasBgColor
+          className="-mb-6 mr-auto"
         />
       )}
 

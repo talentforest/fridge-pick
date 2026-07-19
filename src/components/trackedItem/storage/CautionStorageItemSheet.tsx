@@ -44,7 +44,7 @@ export default function CautionStorageItemSheet({
           </Text>
         </View>
 
-        <QuickActionBtnList storageItemId={storageItemId} hasExpirationDateBtn />
+        <QuickActionBtnList storageItemId={storageItemId} />
       </View>
 
       <AvailableMenuAccordion storageItem={cautionStorageItem} />

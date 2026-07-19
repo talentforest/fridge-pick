@@ -18,7 +18,7 @@ export function createSelectableItemKey(item?: SelectableItem) {
   const preparedFoodId = item.kind === 'preparedFood' ? item.id : '';
   const mealId = item.kind === 'meal' ? item.id : '';
 
-  return `${ingredientId}|${preparedFoodId}|${mealId}`;
+  return `${ingredientId}|${mealId}|${preparedFoodId}`;
 }
 
 /** TrackedItem을 찾을 수 있는 키 생성

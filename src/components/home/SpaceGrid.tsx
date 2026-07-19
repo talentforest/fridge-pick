@@ -66,11 +66,6 @@ export default function SpaceGrid() {
     },
   ];
 
-  const favorite = {
-    label: '나의 픽!',
-    hasNotAllFavorites: true, // 나의 픽 식재료가 현재 보관함에 없는 경우
-  };
-
   const itemList = [
     {
       label: '지난 식재료',
@@ -115,7 +110,7 @@ export default function SpaceGrid() {
                 <View className="w-20 items-center justify-center gap-y-2.5">
                   <Icon
                     name={item.icon}
-                    className={`rounded-full p-2`}
+                    className={`!rounded-full !p-2`}
                     color={item.color}
                     hasBgColor
                     size={15}
@@ -153,8 +148,6 @@ export default function SpaceGrid() {
           ))}
         </View>
       </Card>
-
-      {/* <FavoriteTouchableSpaceCard spaceInfo={favorite} /> */}
     </View>
   );
 }
@@ -218,52 +211,6 @@ const TouchableSpaceCard = ({
         strokeWidth={3}
         color="darkGray"
       />
-    </TouchableOpacity>
-  );
-};
-
-const FavoriteTouchableSpaceCard = ({
-  spaceInfo: { label, hasNotAllFavorites },
-}: {
-  spaceInfo: { label: string; hasNotAllFavorites?: boolean };
-}) => {
-  const navigation = useNavigation<StackNavProp>();
-
-  const favoriteNotificationObj = {
-    hasNotAllFavorites: {
-      label: '보관함에 픽이 없어요',
-      icon: undefined,
-      color: 'yellow' as const,
-      condition: hasNotAllFavorites,
-    },
-    // TODO
-    frequently: {
-      label: '최근 많이 먹은 식재료',
-    },
-  };
-
-  return (
-    <TouchableOpacity
-      className={`flex-1`}
-      onPress={() => navigation.navigate('FavoritesScreen')}
-    >
-      <Card>
-        <View
-          key={label}
-          className={`flex-1 items-center justify-between gap-y-3 px-2.5 py-5`}
-        >
-          <Text className="font-extrabold !text-[13px]">{label}</Text>
-
-          <Icon name="Heart" hasFill color="red" size={22} />
-        </View>
-
-        <Icon
-          name="ChevronRight"
-          className="absolute bottom-[20px] right-2.5"
-          size={16}
-          color="neutral"
-        />
-      </Card>
     </TouchableOpacity>
   );
 };

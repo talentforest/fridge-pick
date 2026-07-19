@@ -49,10 +49,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
     <View className="gap-y-8 py-2">
       {!isEditing ? (
         <>
-          <SelectableItemDetailCard
-            storageItem={currStorageItem}
-            onEditPress={toggleEditPress}
-          />
+          <SelectableItemDetailCard storageItem={currStorageItem} />
 
           <View className="gap-y-3">
             <View className="flex-row items-end gap-x-1">
@@ -61,7 +58,11 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
                 식재료 상태를 빠르게 변경해보세요
               </Text>
             </View>
-            <QuickActionBtnList storageItemId={currStorageItem.id} />
+
+            <QuickActionBtnList
+              storageItemId={currStorageItem.id}
+              toggleEditPress={toggleEditPress}
+            />
           </View>
 
           <AvailableMenuAccordion storageItem={currStorageItem} />

@@ -25,12 +25,12 @@ export type QuickAction = {
 
 type QuickActionBtnListProps = {
   storageItemId: string;
-  hasExpirationDateBtn?: boolean;
+  toggleEditPress?: () => void;
 };
 
 export default function QuickActionBtnList({
   storageItemId,
-  hasExpirationDateBtn,
+  toggleEditPress,
 }: QuickActionBtnListProps) {
   const { showToast, closeSheet, openModal } = useOverlay();
 
@@ -123,7 +123,7 @@ export default function QuickActionBtnList({
       onPress: () =>
         onDeletePress({ toast: '🗑️ 냉장고에서 제거했어요', bgColor: 'bg-red-9' }),
     },
-    ...(hasExpirationDateBtn
+    ...(!toggleEditPress
       ? [
           {
             id: 'extendExpiration' as const,
@@ -133,7 +133,15 @@ export default function QuickActionBtnList({
             onPress: onChangeDatePress,
           },
         ]
-      : []),
+      : [
+          {
+            id: 'extendExpiration' as const,
+            title: '수정할게요',
+            icon: 'Edit3' as const,
+            color: 'yellow' as const,
+            onPress: toggleEditPress,
+          },
+        ]),
   ];
 
   return (

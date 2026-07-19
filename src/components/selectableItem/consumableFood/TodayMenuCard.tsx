@@ -32,7 +32,6 @@ export default function TodayMenuCard({
     });
   };
 
-  console.log('consumableFood?', consumableFood);
   const commonClassName = `justify-center ${mainMenu ? 'h-[220px] items-start ' : 'h-[105px] !px-2 items-center !bg-border'} ${className}`;
 
   return (

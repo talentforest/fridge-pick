@@ -262,7 +262,7 @@ export default function Icon({
     red: 'bg-red-1',
     lightBlue: 'bg-blue-1',
     blue: 'bg-blue-1',
-    darkGray: 'bg-neutral-5',
+    darkGray: 'bg-neutral-1',
     black: 'bg-neutral-9',
     gray: 'bg-inactive-bg',
     green: 'bg-green-1',
@@ -376,7 +376,7 @@ export default function Icon({
 
   return props.onPress ? (
     <TouchableOpacity
-      className={`${hasBgColor ? bgColorMap[color] : ''} items-center justify-center ${props.className}`}
+      className={`${hasBgColor ? `${bgColorMap[color]} rounded-lg p-1.5` : ''} items-center justify-center ${props.className}`}
       style={hasShadow ? shadowStyle : undefined}
       onPress={props.onPress}
     >
@@ -390,7 +390,7 @@ export default function Icon({
     </TouchableOpacity>
   ) : (
     <View
-      className={`${hasBgColor ? bgColorMap[color] : ''} items-center justify-center ${props.className}`}
+      className={`${hasBgColor ? `${bgColorMap[color]} rounded-lg p-1.5` : ''} items-center justify-center ${props.className}`}
     >
       <Component
         strokeWidth={2.2}

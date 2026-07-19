@@ -2,6 +2,7 @@ import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewCon
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
 import CautionStorageItemList from '@/components/home/CautionStorageItemList';
 import HomeHeader from '@/components/home/HomeHeader';
+import MyPickList from '@/components/home/MyPickList';
 import RecommendedMenu from '@/components/home/RecommendedMenu';
 import SpaceGrid from '@/components/home/SpaceGrid';
 import TodayMenu from '@/components/home/TodayMenu';
@@ -41,13 +42,13 @@ export default function HomeScreen() {
           <SpaceGrid />
         </View>
 
+        <MyPickList />
+
         <CautionStorageItemList
           type="expiredSoon"
           onItemPress={onCautionStorageItemPress}
         />
-
         <TodayMenu hasHeader />
-
         <RecommendedMenu />
       </ScrollViewContainer>
     </SafeAreaViewContainer>

@@ -13,17 +13,16 @@ import {
 } from '@/utils';
 import FoodImage from '@/components/common/FoodImage';
 import { EnrichedStorageItem } from '@/types/storage';
+import FavoriteBtn from '@/components/common/FavoriteBtn';
 
 type SelectableItemDetailCardProps = {
   storageItem: EnrichedStorageItem;
   onNavigatePress?: () => void;
-  onEditPress?: () => void;
 };
 
 export default function SelectableItemDetailCard({
   storageItem,
   onNavigatePress,
-  onEditPress,
 }: SelectableItemDetailCardProps) {
   const { label, categoryLabel } = getTrackedItemData(storageItem);
 
@@ -38,18 +37,14 @@ export default function SelectableItemDetailCard({
       <View className="flex-1 justify-between gap-y-2">
         {/* 라벨 */}
         <View className="flex-end flex-row flex-wrap items-end px-1">
-          <View className="flex-1 flex-row  flex-wrap items-end gap-2">
+          <View className="flex-1 flex-row flex-wrap items-end gap-2">
             <Text className={`font-extrabold text-xl leading-7`}>{label}</Text>
             {/* 카테고리 */}
             <Text className="mb-0.5 text-neutral-5">{categoryLabel}</Text>
           </View>
 
           {/* 수정버튼 */}
-          {onNavigatePress ? (
-            <></>
-          ) : (
-            <Icon name="Edit3" size={15} className="ml-auto p-1" onPress={onEditPress} />
-          )}
+          <FavoriteBtn storageItem={storageItem} />
         </View>
 
         <Card className="!bg-border !px-0 !py-1.5">
