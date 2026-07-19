@@ -48,7 +48,9 @@ export default function HomeScreen() {
           type="expiredSoon"
           onItemPress={onCautionStorageItemPress}
         />
+
         <TodayMenu hasHeader />
+
         <RecommendedMenu />
       </ScrollViewContainer>
     </SafeAreaViewContainer>

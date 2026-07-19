@@ -366,7 +366,6 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
     activeFilter,
     maxLength,
   ]);
-  // const test = filteredMenuList.find((item) => item.label === '떡볶이');
 
   /* -------------------------------------------------------------------------- */
   /*                        보유한 식재료를 갖고 있는 메뉴 목록                         */
@@ -419,7 +418,8 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
       .filter((food) => food.filterList.includes('highPossession'))
       .sort((a, b) => a.requiredPossessionPercent - b.requiredPossessionPercent)
       .slice(0, 8);
-  }, [filteredMenuList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     filterList,
