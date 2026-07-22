@@ -34,7 +34,7 @@ export default function SelectableItemDetailCard({
 
   return (
     <View className="mt-3 flex-row gap-x-3">
-      <View className="flex-1 justify-between gap-y-2">
+      <View className="flex-1 justify-between gap-y-3">
         {/* 라벨 */}
         <View className="flex-end flex-row flex-wrap items-end px-1">
           <View className="flex-1 flex-row flex-wrap items-end gap-2">
@@ -43,7 +43,6 @@ export default function SelectableItemDetailCard({
             <Text className="mb-0.5 text-neutral-5">{categoryLabel}</Text>
           </View>
 
-          {/* 수정버튼 */}
           <FavoriteBtn storageItem={storageItem} />
         </View>
 
@@ -97,7 +96,7 @@ export default function SelectableItemDetailCard({
             </View>
           </View>
 
-          {/* 메모사항 */}
+          {/* 메모 */}
           {storageItem.memo ? (
             <>
               <View className="mx-3 border-b border-neutral-300" />

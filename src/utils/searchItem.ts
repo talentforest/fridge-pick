@@ -115,6 +115,17 @@ export function searchIngredientAndMeal(
   return maxLength ? results.slice(0, maxLength) : results;
 }
 
+export function findSelectableItemWithSearchKeyword(keyword: string) {
+  const normalized = normalize(keyword);
+
+  return [...allIngredientList, ...allPreparedFoodList, ...allMealList].find(
+    (item) =>
+      normalize(item.label) === normalized ||
+      normalize(item.id as string) === normalized ||
+      item.synonyms?.some((syn) => normalize(syn) === normalized),
+  );
+}
+
 export function searchStorageItem(
   keyword: string,
   list: StorageItem[],

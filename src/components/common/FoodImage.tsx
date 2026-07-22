@@ -1,5 +1,6 @@
 import {
   image_empty_basket,
+  image_shopping_basket,
   ingredientCategoryImagesObj,
   mealCategoryImagesObj,
   preparedFoodCategoryImagesObj,
@@ -97,11 +98,9 @@ export default function FoodImage({
     return image_empty_basket;
   };
 
-  if (!getSource()) return null;
-
   return (
     <Image
-      source={getSource()}
+      source={getSource() || image_shopping_basket}
       style={{ width: imageSize, height: imageSize }}
       className="aspect-square"
     />

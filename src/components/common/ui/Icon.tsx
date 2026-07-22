@@ -1,6 +1,7 @@
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { colorTokens } from '@/theme/color';
 import {
+  ArrowRightLeft,
   TrendingUp,
   ChartColumnBig,
   ThumbsUp,
@@ -98,6 +99,7 @@ import {
 import { useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'ArrowRightLeft'
   | 'TrendingUp'
   | 'ChartColumnBig'
   | 'ThumbsUp'
@@ -198,6 +200,7 @@ export type IconName =
 export type IconColor =
   | 'orange'
   | 'text'
+  | 'lightestGray'
   | 'lightYellow'
   | 'yellow'
   | 'neutral'
@@ -234,18 +237,22 @@ export default function Icon({
   const scheme = colorTokens[colorScheme];
 
   const colorMap = {
-    orange: scheme.orange[7],
     white: '#fff',
+    black: '#000',
     text: scheme.text,
+    red: scheme.red[5],
+    orange: scheme.orange[7],
+    // yellow
     lightYellow: scheme.yellow[3],
     yellow: scheme.yellow[7],
+    // neutral
     neutral: scheme.neutral[7],
-    red: scheme.red[5],
+    darkGray: scheme.neutral[5],
+    gray: scheme.inactive.bg,
+    lightestGray: scheme.neutral[1],
+    // blue
     lightBlue: scheme.blue[5],
     blue: scheme.blue[7],
-    darkGray: scheme.neutral[5],
-    black: scheme.neutral[9],
-    gray: scheme.inactive.bg,
     green: scheme.green[7],
     ice: scheme.ice[5],
     indigo: scheme.indigo[5],
@@ -253,6 +260,7 @@ export default function Icon({
   };
 
   const bgColorMap = {
+    lightestGray: 'bg-neutral-3',
     orange: 'bg-orange-1',
     white: '#fff',
     text: 'bg-neutral-1',
@@ -272,6 +280,7 @@ export default function Icon({
   };
 
   const iconObj: { [key in IconName]: LucideIcon } = {
+    ArrowRightLeft,
     TrendingUp,
     ChartColumnBig,
     ThumbsUp,

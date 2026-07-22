@@ -36,6 +36,7 @@ export default function AddStorageItemScreen() {
               currStorageType={currStorageType}
               searchKeyword={searchKeyword}
               setSearchKeyword={setSearchKeyword}
+              maxLength={12}
               setCurrStorageItem={setCurrStorageItem}
             />
           ) : (

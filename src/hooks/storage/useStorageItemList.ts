@@ -2,6 +2,7 @@ import { itemListByStorageAtom } from '@/atom/storageAtom';
 import {
   ingredientCategoryObj,
   mealCategoryObj,
+  noCategoryObj,
   preparedFoodCategoryObj,
   storageObj,
 } from '@/constants';
@@ -57,7 +58,7 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
     const currStorageItemList = hasSide ? currentSideItems : storageItemList;
 
     currStorageItemList.forEach((storageItem) => {
-      let category: FoodCategoryKey = 'noCategory';
+      let category: FoodCategoryKey = 'no_category';
       let enrichedItem: EnrichedStorageItem = storageItem;
 
       switch (storageItem.type) {
@@ -92,7 +93,7 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
         }
 
         case 'custom': {
-          category = 'noCategory';
+          category = 'no_category';
           enrichedItem = storageItem;
           break;
         }
@@ -109,6 +110,7 @@ export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
       ...ingredientCategoryObj,
       ...mealCategoryObj,
       ...preparedFoodCategoryObj,
+      ...noCategoryObj,
     })
       .map((category) => ({
         category,

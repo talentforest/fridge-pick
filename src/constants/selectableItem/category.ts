@@ -1,11 +1,11 @@
 export const noCategoryObj = {
-  noCategory: {
-    id: 'noCategory',
-    label: '카테고리 없음',
+  no_category: {
+    id: 'no_category',
+    label: '커스텀 식재료',
     icon: 'Database',
     color: 'blue',
   },
-};
+} as const;
 
 export const ingredientCategoryObj = {
   vegetable: {

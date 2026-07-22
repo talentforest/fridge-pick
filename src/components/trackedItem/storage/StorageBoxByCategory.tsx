@@ -7,13 +7,18 @@ import { horizontalInset } from '@/constants';
 import {
   IngredientCategoryItem,
   MealCategoryItem,
+  NoCategoryItem,
   PreparedFoodCategoryItem,
 } from '@/types/category';
 import { EnrichedStorageItem } from '@/types/storage';
 import { View } from 'react-native';
 
 type StorageBoxByCategoryProps = {
-  category: IngredientCategoryItem | PreparedFoodCategoryItem | MealCategoryItem;
+  category:
+    | IngredientCategoryItem
+    | PreparedFoodCategoryItem
+    | MealCategoryItem
+    | NoCategoryItem;
   storageItemList: EnrichedStorageItem[];
   openItemPress: (item: EnrichedStorageItem) => void;
 };

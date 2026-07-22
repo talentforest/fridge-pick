@@ -1,5 +1,11 @@
+import { useOverlay } from '@/hooks';
+import { StackNavProp } from '@/types/RootStackParamList';
+import { StorageItemWithExpiration } from '@/utils';
+import { useNavigation } from '@react-navigation/native';
+import { View } from 'react-native';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
+import Icon from '@/components/common/ui/Icon';
 import CautionStorageItemList from '@/components/home/CautionStorageItemList';
 import HomeHeader from '@/components/home/HomeHeader';
 import MyPickList from '@/components/home/MyPickList';
@@ -7,11 +13,7 @@ import RecommendedMenu from '@/components/home/RecommendedMenu';
 import SpaceGrid from '@/components/home/SpaceGrid';
 import TodayMenu from '@/components/home/TodayMenu';
 import CautionStorageItemSheet from '@/components/trackedItem/storage/CautionStorageItemSheet';
-import { useOverlay } from '@/hooks';
-import { StackNavProp } from '@/types/RootStackParamList';
-import { StorageItemWithExpiration } from '@/utils';
-import { useNavigation } from '@react-navigation/native';
-import { View } from 'react-native';
+import QuickAddStorageItemSheet from '@/components/trackedItem/storage/QuickAddStorageItemSheet';
 
 export default function HomeScreen() {
   const { openSheet, closeSheet } = useOverlay();
@@ -34,6 +36,15 @@ export default function HomeScreen() {
     });
   };
 
+  const onPlusPress = () => {
+    openSheet({
+      enableDynamicSizing: false,
+      snapPoints: [520],
+      keyboardBehavior: 'extend',
+      render: () => <QuickAddStorageItemSheet />,
+    });
+  };
+
   return (
     <SafeAreaViewContainer edges={['top']}>
       <ScrollViewContainer>
@@ -53,6 +64,16 @@ export default function HomeScreen() {
 
         <RecommendedMenu />
       </ScrollViewContainer>
+
+      <Icon
+        name="Plus"
+        hasBgColor
+        strokeWidth={2.8}
+        color="lightestGray"
+        onPress={onPlusPress}
+        size={28}
+        className="absolute bottom-6 right-6 !rounded-full !bg-blue-7 p-4"
+      />
     </SafeAreaViewContainer>
   );
 }

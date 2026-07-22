@@ -24,7 +24,7 @@ export default function FormMemo({
   const { shrinkSheet } = useOverlay();
 
   return (
-    <LabelContainer label={hasLabel ? '메모사항(선택)' : undefined} labelColor="neutral">
+    <LabelContainer label={hasLabel ? '메모 (선택)' : undefined} labelColor="neutral">
       <TextArea
         isSheetInput={isSheetInput}
         value={currMemo}

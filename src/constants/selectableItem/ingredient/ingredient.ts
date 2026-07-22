@@ -5122,7 +5122,7 @@ export const initialCustomIngredient = {
   kind: 'custom',
   id: nanoid(),
   label: '',
-  category: 'noCategory',
+  category: 'no_category',
   defaultStorage: 'fridge',
   expirationDays: { fridge: DEFAULT_EXPIRATION_DAYS },
 };

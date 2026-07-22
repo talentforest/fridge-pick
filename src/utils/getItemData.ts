@@ -1,6 +1,7 @@
 import {
   ingredientCategoryObj,
   mealCategoryObj,
+  noCategoryObj,
   preparedFoodCategoryObj,
 } from '@/constants';
 import { SelectableItem } from '@/types/selectableItem';
@@ -39,7 +40,7 @@ export const getTrackedItemData = (item: EnrichShoppingItem | EnrichedStorageIte
     case 'custom':
       return {
         label: item.customLabel || '찾을 수 없음',
-        categoryLabel: 'noCategory',
+        categoryLabel: noCategoryObj.no_category.label,
         expirationDays: initialExpirationDays,
       };
   }

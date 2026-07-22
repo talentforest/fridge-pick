@@ -66,13 +66,14 @@ export default function DateQuickBtn({
         <></>
       )}
 
-      <View className="gap-y-3">
+      <View className="flex-row items-start gap-x-3">
         <IconWithText
           text="빠른변경"
           iconColor="orange"
           icon="Zap"
-          className="ml-1"
-          iconSize={14}
+          className="ml-1 mt-1"
+          iconSize={12}
+          textClassName="text-sm text-orange-7"
         />
 
         <View className={`flex-row gap-x-3 ${containerClassName}`}>

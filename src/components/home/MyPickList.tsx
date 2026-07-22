@@ -3,7 +3,7 @@ import { useAtomValue } from 'jotai';
 import { View } from 'react-native';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import SectionTitle from '@/components/common/header/SectionTitle';
-import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
+import MyPickItemCard from '@/components/selectableItem/MyPickItemCard';
 
 export default function MyPickList() {
   const myPickList = useAtomValue(favoriteItemListAtom);
@@ -22,7 +22,7 @@ export default function MyPickList() {
         hasPagination
         requiredMinimum={3}
         keyExtractor={(_, index) => `${index}`}
-        renderItem={({ item }) => <SelectableItemCard item={item} />}
+        renderItem={({ item }) => <MyPickItemCard item={item} />}
       ></CarouselContainer>
     </View>
   ) : (

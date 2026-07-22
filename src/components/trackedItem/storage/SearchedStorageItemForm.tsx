@@ -7,8 +7,6 @@ import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import TextInput from '@/components/common/ui/TextInput';
 import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
-import FoodSourceCard from '@/components/selectableItem/consumableFood/FoodSourceCard';
-import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import ConvenienceVariantListSheet from '@/components/trackedItem/storage/ConvenienceVariantListSheet';
 import { addStorageItemAtom } from '@/atom/storageAtom';
 import { useErrorHandler, useOverlay } from '@/hooks';
@@ -18,12 +16,13 @@ import { useSetAtom } from 'jotai';
 import { useRef } from 'react';
 import { ScrollView, View } from 'react-native';
 import { storageObj } from '@/constants';
+import FormStorage from '@/components/common/form/FormStorage';
 
 type SearchedStorageItemFormProps = {
   setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
   setCurrStorageItem: React.Dispatch<React.SetStateAction<EnrichedStorageItem | null>>;
   currStorageItem: EnrichedStorageItem;
-  currStorageType: 'freezer' | 'fridge' | 'pantry';
+  currStorageType?: 'freezer' | 'fridge' | 'pantry';
 };
 
 export default function SearchedStorageItemForm({
@@ -46,9 +45,11 @@ export default function SearchedStorageItemForm({
     clearError();
   };
 
-  const { label } = storageObj[currStorageType];
+  const { label } = storageObj[currStorageType || 'fridge'];
 
-  const onPress = () => {
+  const onSubmitPress = () => {
+    if (!currStorageType) return;
+
     const result = addToStorage({
       ...currStorageItem,
       storage: { type: currStorageType },
@@ -130,7 +131,7 @@ export default function SearchedStorageItemForm({
                 className="border pr-12"
               />
             ) : (
-              <Card className="flex-row items-center !py-0">
+              <Card className="flex-row items-center !py-2">
                 <TrackedItemImageLabel
                   item={currStorageItem}
                   isHorizontal
@@ -151,28 +152,23 @@ export default function SearchedStorageItemForm({
           </View>
         </LabelContainer>
 
-        {/* 간편식 유형 */}
-        {currStorageItem.type === 'meal' && currStorageItem.foodSource && (
-          <LabelContainer label="간편식 유형">
-            <TouchableOpacity onPress={onOpenConvenienceVariantsPress}>
-              <FoodSourceCard type={currStorageItem.foodSource} className="!h-28">
-                <Icon
-                  name="ChevronRight"
-                  size={18}
-                  color="blue"
-                  className="rounded-full bg-blue-1 p-2"
-                />
-              </FoodSourceCard>
-            </TouchableOpacity>
-          </LabelContainer>
+        {/* 보관 위치 */}
+        {!currStorageType && (
+          <FormStorage
+            label="보관위치"
+            currStorageType={currStorageItem.storage.type}
+            onItemChange={onItemChange}
+          />
         )}
 
+        {/* 소비기한 */}
         <FormDateInput
           hasLabel
-          storageItemId={currStorageItem.id}
           onItemChange={onItemChange}
+          initialDate={currStorageItem.expiresAt}
         />
 
+        {/* 메모 (선택) */}
         <FormMemo
           hasLabel
           currMemo={currStorageItem.memo || ''}
@@ -187,7 +183,7 @@ export default function SearchedStorageItemForm({
         iconName="Plus"
         bgColor="green"
         name={`${label}에 추가하기`}
-        onPress={onPress}
+        onPress={onSubmitPress}
       />
     </>
   );

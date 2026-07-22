@@ -15,6 +15,7 @@ interface FormStorageProps {
     freezer?: number;
     pantry?: number;
   };
+  containerClassName?: string;
 }
 
 export default function FormStorage({
@@ -22,10 +23,11 @@ export default function FormStorage({
   currStorageType,
   onItemChange,
   ingredientExpirationDays,
+  containerClassName = '',
 }: FormStorageProps) {
   return (
     <LabelContainer label={label} labelColor="neutral">
-      <View className="flex-row gap-x-2">
+      <View className={`flex-row gap-3 ${containerClassName}`}>
         {Object.values(storageObj).map(({ id: storageType, label, icon, color }) => (
           <SelectBtn
             key={storageType}

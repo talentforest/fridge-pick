@@ -9,13 +9,13 @@ import { SelectableItem } from '@/types/selectableItem';
 import GridContainer from '@/components/common/container/GridContainer';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
-import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import Text from '@/components/common/ui/Text';
 import FavoriteItemSheet from '@/components/favorites/FavoriteItemSheet';
 import Card from '@/components/common/ui/Card';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import MyPickItemCard from '@/components/selectableItem/MyPickItemCard';
 
 export default function FavoritesScreen() {
   const favoriteMealList = useAtomValue(favoriteMealListAtom);
@@ -57,7 +57,7 @@ export default function FavoritesScreen() {
                   onPress={() => onOpenSheetPress(item)}
                   className="relative"
                 >
-                  <SelectableItemCard
+                  <MyPickItemCard
                     item={item}
                     className="h-32 !px-2"
                     imageSize={60}
@@ -79,7 +79,7 @@ export default function FavoritesScreen() {
             <GridContainer columns={4}>
               {favoriteMealList.map((item) => (
                 <TouchableOpacity key={item.id} onPress={() => onOpenSheetPress(item)}>
-                  <SelectableItemCard
+                  <MyPickItemCard
                     item={item}
                     className="!px-1 pb-3"
                     textClassName="!text-[13px] line-clamp-1"

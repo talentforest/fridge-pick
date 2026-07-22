@@ -9,20 +9,21 @@ import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import Icon from '@/components/common/ui/Icon';
 import FoodImage from '@/components/common/FoodImage';
+import FavoriteBtn from '@/components/common/FavoriteBtn';
 
-interface SelectableItemCardProps {
+interface MyPickItemCardProps {
   item: SelectableItem;
   className?: string;
   textClassName?: string;
   imageSize?: number;
 }
 
-export default function SelectableItemCard({
+export default function MyPickItemCard({
   item,
   className = '',
   textClassName = '',
   imageSize = 60,
-}: SelectableItemCardProps) {
+}: MyPickItemCardProps) {
   const key = createSelectableItemKey(item);
 
   const storageItem = useAtomValue(findStorageItemWithKeyAtom(key));
@@ -33,7 +34,7 @@ export default function SelectableItemCard({
 
   return (
     <Card
-      className={`items-center justify-center gap-y-0.5 rounded-xl !px-2 !pb-3 !pt-2 ${className}`}
+      className={`items-center justify-center gap-y-1 rounded-xl !px-1 !pt-5 ${className}`}
     >
       <View className="absolute left-1.5 top-1.5 flex-row  gap-x-1">
         {/* 장보기 목록에 있는 경우 */}
@@ -60,6 +61,11 @@ export default function SelectableItemCard({
       <Text className={`line-clamp-2 text-center leading-5 ${textClassName}`}>
         {item.label}
       </Text>
+
+      {/* 나의 픽 */}
+      <View className="w-full px-2">
+        <FavoriteBtn selectableItem={item} size={14} isBtn />
+      </View>
     </Card>
   );
 }

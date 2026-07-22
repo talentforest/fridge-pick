@@ -3,6 +3,7 @@ import { MealKey, PreparedFoodKey } from '@/types/selectableItem';
 import { ImageSourcePropType } from 'react-native';
 
 export const image_empty_basket = require('../../assets/images/empty_basket.png');
+export const image_shopping_basket = require('../../assets/images/shopping_basket.png');
 export const image_fridge = require('../../assets/images/fridge.png');
 
 export const image_empty_plate = require('../../assets/images/empty_plate.png');

@@ -2,6 +2,7 @@ import {
   ingredientCategoryObj,
   preparedFoodCategoryObj,
   mealCategoryObj,
+  noCategoryObj,
 } from '@/constants';
 
 type IngredientCategoryMap = typeof ingredientCategoryObj;
@@ -19,8 +20,13 @@ export type MealCategoryItem = MealCategoryMap[MealCategoryKey];
 export type MealCategoryKey = keyof MealCategoryMap;
 export type MealCategoryLabel = MealCategoryItem['label'];
 
+type NoCategoryMap = typeof noCategoryObj;
+export type NoCategoryItem = NoCategoryMap[NoCategoryKey];
+export type NoCategoryKey = keyof NoCategoryMap;
+export type NoCategoryLabel = NoCategoryItem['label'];
+
 export type FoodCategoryKey =
   | IngredientCategoryKey
   | MealCategoryKey
   | PreparedFoodCategoryKey
-  | 'noCategory';
+  | 'no_category';

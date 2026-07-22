@@ -50,10 +50,12 @@ export default function TrackedItemImageLabel({
       ) : (
         <>
           <FoodImage trackedItem={item} imageSize={imageSize} />
+
           <View className="gap-y-2">
             <Text className={`line-clamp-1 ${textClassName}`}>
               {getTrackedItemData(item).label}
             </Text>
+
             {hasCategory && (
               <Text className="text-neutral-5">
                 {getTrackedItemData(item).categoryLabel}
