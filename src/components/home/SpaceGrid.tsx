@@ -5,7 +5,7 @@ import {
 import { image_fridge, storageObj } from '@/constants';
 import { StackNavProp } from '@/types/RootStackParamList';
 import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
-import { getAddedFormatLabel, getRemainingDays } from '@/utils';
+import { getAddedFormatLabel, getRemainingDays, getTopInsight } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
 import { useAtomValue } from 'jotai';
 import { Image, View } from 'react-native';
@@ -87,9 +87,13 @@ export default function SpaceGrid() {
     },
   ] as const;
 
+  const insightProps = getTopInsight({
+    expiredCount: expiredStorageItemList.length,
+  });
+
   return (
     <View className="gap-y-[10px]">
-      <InsightCard type="good" />
+      <InsightCard {...insightProps} />
 
       {/* 나의 냉장고 */}
       <Card className="w-full gap-y-[10px] !p-3">

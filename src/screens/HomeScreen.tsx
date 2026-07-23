@@ -55,6 +55,9 @@ export default function HomeScreen() {
 
         <MyPickList />
 
+        {/* NOTE: 나의 픽인데 현재 보관함에 없는 것들 
+        이게 장보기 추천템인가 조금 다르긴 한데 */}
+
         <CautionStorageItemList
           type="expiredSoon"
           onItemPress={onCautionStorageItemPress}

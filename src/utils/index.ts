@@ -11,3 +11,4 @@ export * from '@/utils/findItem';
 export * from '@/utils/getItemData';
 
 export * from '@/utils/getStyleByPercentage';
+export * from '@/utils/getInsightData';
