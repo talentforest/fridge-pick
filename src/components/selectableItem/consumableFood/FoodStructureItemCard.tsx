@@ -9,6 +9,7 @@ import { addShoppingItemAtom, shoppingListAtom } from '@/atom/shoppingListAtom';
 
 import IconWithText from '@/components/common/IconWithText';
 import { useOverlay } from '@/hooks';
+import FilterTag from '@/components/common/FilterTag';
 
 interface FoodStructureItemCardProps {
   item: SelectableItem;
@@ -68,13 +69,15 @@ export default function FoodStructureItemCard({
   };
 
   return (
-    <Card className={`h-9 flex-row items-center gap-x-2  ${className}`}>
+    <Card className={`min-h-9 flex-row items-center gap-x-1 ${className}`}>
       <View className="flex-1 flex-row items-center gap-x-1">
         {/* 이미지 */}
-        <FoodImage selectableItem={item} imageSize={imageSize} />
+        <View className="items-center justify-center rounded-md bg-neutral-1 p-1">
+          <FoodImage selectableItem={item} imageSize={imageSize} />
+        </View>
 
         {/* 라벨 */}
-        <Text className={`line-clamp-1 text-center leading-5 ${textClassName}`}>
+        <Text className={`line-clamp-2 !text-[13px] leading-4 ${textClassName}`}>
           {item.label}
         </Text>
 
@@ -83,18 +86,24 @@ export default function FoodStructureItemCard({
 
       {/* 현재 보유 상태 */}
       {isStorageItem ? (
-        <Text className="!gap-x-0.5 p-1.5 text-[13px] text-neutral-5">보유중</Text>
+        <FilterTag
+          name="보유"
+          color="green"
+          textClassName="!text-[11px]"
+          className="!px-1.5 !py-1.5"
+          isActive
+        />
       ) : isShoppingListItem ? (
         <></>
       ) : (
         <IconWithText
-          text="장보기"
-          icon="Plus"
-          iconSize={13}
-          iconColor="blue"
-          textClassName="text-blue-7 font-extrabold !text-[13px]"
+          text=""
+          icon="ShoppingBasket"
+          iconSize={14}
+          iconColor="orange"
+          textClassName="text-blue-5 text-sm"
           onPress={onPress}
-          className="!gap-x-0 p-1.5"
+          className="!gap-x-0 rounded-full border border-orange-3 bg-white !p-1.5"
         />
       )}
     </Card>

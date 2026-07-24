@@ -57,6 +57,7 @@ export const colorTokens = {
       5: '#ef4444',
       3: '#fca5a5',
       1: '#fff0f0',
+      0: '#fef5f5',
     },
 
     yellow: {
@@ -121,6 +122,7 @@ export const colorTokens = {
       5: '#ef4444',
       3: '#b91c1c',
       1: '#510202',
+      0: '#1f0101',
     },
 
     yellow: {
@@ -183,6 +185,7 @@ export const lightTheme = vars({
   '--color-red-5': colorTokens.light.red[5],
   '--color-red-3': colorTokens.light.red[3],
   '--color-red-1': colorTokens.light.red[1],
+  '--color-red-0': colorTokens.light.red[0],
 
   '--color-yellow-9': colorTokens.light.yellow[9],
   '--color-yellow-7': colorTokens.light.yellow[7],
@@ -237,6 +240,7 @@ export const darkTheme = vars({
   '--color-red-5': colorTokens.dark.red[5],
   '--color-red-3': colorTokens.dark.red[3],
   '--color-red-1': colorTokens.dark.red[1],
+  '--color-red-0': colorTokens.dark.red[0],
 
   '--color-yellow-9': colorTokens.dark.yellow[9],
   '--color-yellow-7': colorTokens.dark.yellow[7],

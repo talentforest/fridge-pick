@@ -14,7 +14,8 @@ type MenuFilterProps = {
 };
 
 export default function MenuFilter({ type, food }: MenuFilterProps) {
-  const className = '!rounded-md !px-1.5 !py-1.5';
+  const className = '!rounded-md !px-1.5 !py-2';
+
   return (
     <>
       {type === 'category' ? (
@@ -47,7 +48,7 @@ export default function MenuFilter({ type, food }: MenuFilterProps) {
           icon="Zap"
           className={className}
           textClassName="!text-[11px]"
-          iconSize={13}
+          iconSize={12}
         />
       ) : (
         <></>
@@ -61,7 +62,7 @@ export default function MenuFilter({ type, food }: MenuFilterProps) {
           icon={servingTemperatureObj[food.servingTemperature].icon}
           className={className}
           textClassName="!text-[11px]"
-          iconSize={13}
+          iconSize={12}
         />
       ) : (
         <></>

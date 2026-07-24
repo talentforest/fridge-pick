@@ -17,7 +17,7 @@ export default function ModalHeader({
   const { closeModal, closeDatePicker } = useOverlay();
 
   return (
-    <View className="flex-row items-center justify-between pl-1">
+    <View className="flex-row items-center justify-between">
       <Text className="text-xl">{title}</Text>
 
       {hasX && (

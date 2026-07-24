@@ -1,9 +1,20 @@
 import { EnrichedConsumableFoodWithFilter } from '@/hooks';
-import { getPossessionStatus, styleByPercentageObj } from '@/utils';
+import {
+  createSelectableItemKey,
+  findTrackedItemWithKey,
+  getPossessionStatus,
+  styleByPercentageObj,
+} from '@/utils';
 import { useCallback } from 'react';
 
 export const useGetMenuDetail = (meal: EnrichedConsumableFoodWithFilter) => {
-  const { foodStructure, requiredCount, possessedList, possessionPercent } = meal;
+  const {
+    foodStructure,
+    requiredCount,
+    possessedList,
+    requiredPossessedList,
+    requiredPossessionPercent,
+  } = meal;
 
   const getIngredientStructureList = useCallback(
     (type?: 'required' | 'optional') => {
@@ -15,18 +26,36 @@ export const useGetMenuDetail = (meal: EnrichedConsumableFoodWithFilter) => {
         required: {
           label: '필요한 식재료',
           itemList: [...essential, ...common],
-          color: 'blue' as const,
-        },
+          color: 'blue',
+          possessedListByType: [...essential, ...common].filter((item) => {
+            return possessedList.find(({ storageItem }) => {
+              const key = createSelectableItemKey(item);
+              return findTrackedItemWithKey(storageItem, key);
+            });
+          }),
+        } as const,
         seasoning: {
           label: '양념 재료',
           itemList: seasoning,
           color: 'yellow' as const,
-        },
+          possessedListByType: seasoning.filter((item) => {
+            return possessedList.find(({ storageItem }) => {
+              const key = createSelectableItemKey(item);
+              return findTrackedItemWithKey(storageItem, key);
+            });
+          }),
+        } as const,
         optional: {
           label: '있으면 좋은 재료',
           itemList: optional,
-          color: 'neutral' as const,
-        },
+          color: 'neutral',
+          possessedListByType: optional.filter((item) => {
+            return possessedList.find(({ storageItem }) => {
+              const key = createSelectableItemKey(item);
+              return findTrackedItemWithKey(storageItem, key);
+            });
+          }),
+        } as const,
       };
 
       const requiredIngredientList = [
@@ -50,7 +79,7 @@ export const useGetMenuDetail = (meal: EnrichedConsumableFoodWithFilter) => {
     [foodStructure],
   );
 
-  const needMoreIngredientNum = requiredCount - possessedList.length;
+  const needMoreIngredientNum = requiredCount - requiredPossessedList.length;
 
   const possessionPercentStatusObj = {
     complete: {
@@ -60,7 +89,7 @@ export const useGetMenuDetail = (meal: EnrichedConsumableFoodWithFilter) => {
     },
 
     good: {
-      label: `식재료 ${needMoreIngredientNum}개만 더 있으면 돼요`,
+      label: `필수 식재료 ${needMoreIngredientNum}개만 더 있으면 돼요`,
       icon: 'Info',
       iconColor: 'yellow',
     },
@@ -72,7 +101,7 @@ export const useGetMenuDetail = (meal: EnrichedConsumableFoodWithFilter) => {
     },
 
     poor: {
-      label: `식재료 ${needMoreIngredientNum}개가 많이 부족해요`,
+      label: `${needMoreIngredientNum}개가 부족해요`,
       icon: 'TriangleAlert',
       iconColor: 'red',
     },
@@ -84,7 +113,7 @@ export const useGetMenuDetail = (meal: EnrichedConsumableFoodWithFilter) => {
     },
   } as const;
 
-  const status = getPossessionStatus(possessionPercent);
+  const status = getPossessionStatus(requiredPossessionPercent);
 
   const possesionStatus = possessionPercentStatusObj[status];
 

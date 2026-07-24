@@ -10,14 +10,10 @@ import { useState } from 'react';
 import { findMeal, findPreparedFood } from '@/utils';
 import { SelectableItem } from '@/types/selectableItem';
 import SquareBtn from '@/components/common/SquareBtn';
-import Text from '@/components/common/ui/Text';
 import ModalHeader from '@/components/common/header/ModalHeader';
 import IconWithText from '@/components/common/IconWithText';
-import Card from '@/components/common/ui/Card';
 import FoodSourceCard from '@/components/selectableItem/consumableFood/FoodSourceCard';
 import MenuCookTabDetail from '@/components/selectableItem/consumableFood/MenuCookTabDetail';
-import FoodImage from '@/components/common/FoodImage';
-import FavoriteBtn from '@/components/common/FavoriteBtn';
 
 interface MenuDetailSheetProps {
   food: EnrichedConsumableFoodWithFilter;
@@ -83,33 +79,7 @@ export default function MenuDetailSheet({ food, type }: MenuDetailSheetProps) {
           hasX={false}
         />
 
-        <View className="pb-5 pt-4">
-          {/* 메뉴 이미지와 라벨 박스 */}
-          <Card className="mb-4 items-center rounded-2xl border bg-card !pt-0 pb-6">
-            <FoodImage consumableFood={food} imageSize={130} />
-            <Text className="line-clamp-2 text-base">{food?.label}</Text>
-            <FavoriteBtn
-              selectableItem={selectableFood}
-              className="absolute right-3 top-2 gap-y-5 p-2"
-            />
-          </Card>
-
-          {/* 탭 목록 */}
-          <View className="flex-row gap-x-2 px-1">
-            {tabList.map((tab) => (
-              <IconWithText
-                key={tab.label}
-                className={`border-b-[3px] py-3 pr-0.5 ${currTab === tab.label ? 'border-blue-5' : 'border-transparent'}`}
-                onPress={() => setCurrTab(tab.label)}
-                icon={tab.icon}
-                text={tab.label}
-                iconSize={15}
-                textClassName={`${currTab === tab.label ? 'text-blue-7 !text-[14px]' : '!text-[14px] text-inactive-text'}`}
-                iconColor={currTab === tab.label ? 'blue' : 'inactive'}
-              />
-            ))}
-          </View>
-
+        <View className="pb-5">
           <View className="min-h-96 pt-5">
             {currTab === tabObj.cook.label ? (
               <MenuCookTabDetail consumableFood={food} />

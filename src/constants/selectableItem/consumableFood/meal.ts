@@ -4422,7 +4422,7 @@ export const mealObj = {
     label: '육개장',
     category: 'soup_meal',
 
-    difficulty: 'hard',
+    difficulty: 'medium',
     servingTemperature: 'hot',
     availableFoodSources: ['takeout'],
     foodStructure: {
