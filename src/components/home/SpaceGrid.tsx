@@ -2,7 +2,7 @@ import {
   storageItemListByExpirationStatusAtom,
   itemListByStorageAtom,
 } from '@/atom/storageAtom';
-import { image_fridge, storageObj } from '@/constants';
+import { allMealList, allPreparedFoodList, image_fridge, storageObj } from '@/constants';
 import { StackNavProp } from '@/types/RootStackParamList';
 import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
 import { getAddedFormatLabel, getRemainingDays, getTopInsight } from '@/utils';
@@ -20,7 +20,8 @@ export default function SpaceGrid() {
   const freezerItemList = useAtomValue(itemListByStorageAtom('freezer'));
   const fridgeItemList = useAtomValue(itemListByStorageAtom('fridge'));
   const pantryItemList = useAtomValue(itemListByStorageAtom('pantry'));
-  const allItemList = [...freezerItemList, ...fridgeItemList, ...pantryItemList];
+
+  const allStorageItemList = [...freezerItemList, ...fridgeItemList, ...pantryItemList];
 
   const expiredStorageItemList = useAtomValue(
     storageItemListByExpirationStatusAtom('expired'),
@@ -34,6 +35,8 @@ export default function SpaceGrid() {
       ({ storageItem }) => storageItem.storage.type === storageType,
     );
   };
+
+  const allMenuList = [...allMealList, ...allPreparedFoodList];
 
   const getRecentlyUpdate = (itemList: EnrichedStorageItem[]): number => {
     if (itemList.length === 0) return 0;
@@ -81,7 +84,7 @@ export default function SpaceGrid() {
     },
     {
       label: '총 식재료',
-      data: allItemList.length,
+      data: allStorageItemList.length,
       icon: 'LeafyGreen',
       color: 'green',
     },
@@ -89,6 +92,8 @@ export default function SpaceGrid() {
 
   const insightProps = getTopInsight({
     expiredCount: expiredStorageItemList.length,
+    allMenuList,
+    allStorageItemList,
   });
 
   return (
@@ -102,10 +107,17 @@ export default function SpaceGrid() {
         <View className="mt-3 flex-row items-center justify-center">
           <View className="relative h-28 w-[24%] items-center justify-center">
             <Image source={image_fridge} className="mt-4 size-full" />
-            {/* 주의 식재료가 있는 경우 빨간 점으로 표시 */}
-            {expiredStorageItemList.length > 0 && (
-              <View className="absolute right-5 top-1 size-2 rounded-xl bg-red-500" />
-            )}
+
+            {/* 냉장고 상태 dot */}
+            <View
+              className={`absolute right-5 top-2 size-2 rounded-xl bg-green-5 ${
+                expiredStorageItemList.length > 0
+                  ? 'bg-red-5'
+                  : expiredSoonStorageItemList.length > 0
+                    ? 'bg-yellow-5'
+                    : 'bg-green-5'
+              }`}
+            />
           </View>
 
           <View className="w-[74%] flex-row justify-between gap-y-3">
