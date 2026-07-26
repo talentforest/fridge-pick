@@ -3,7 +3,6 @@ import { createSelectableItemKey } from '@/utils';
 import { useAtomValue } from 'jotai';
 import { findStorageItemWithKeyAtom } from '@/atom/storageAtom';
 import { findShoppingItem } from '@/atom/shoppingListAtom';
-import { storageObj, iosShadowStyle } from '@/constants';
 import { View } from 'react-native';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
@@ -22,7 +21,7 @@ export default function MyPickItemCard({
   item,
   className = '',
   textClassName = '',
-  imageSize = 60,
+  imageSize = 50,
 }: MyPickItemCardProps) {
   const key = createSelectableItemKey(item);
 
@@ -34,24 +33,16 @@ export default function MyPickItemCard({
 
   return (
     <Card
-      className={`items-center justify-center gap-y-1 rounded-xl !px-1 !pt-5 ${className}`}
+      className={`flex-1 items-center justify-center gap-y-1 rounded-xl !px-1 !pt-5 ${className}`}
     >
-      <View className="absolute left-1.5 top-1.5 flex-row  gap-x-1">
+      <View className="absolute right-1.5 top-1.5 flex-row  gap-x-1">
         {/* 장보기 목록에 있는 경우 */}
         {isShoppingItem && (
           <Icon name="ShoppingBasket" size={14} color="indigo" hasBgColor />
         )}
 
         {/* 보관함에 있는 경우 */}
-        {storageItem && (
-          <Icon
-            name={storageObj[storageItem.storage.type].icon}
-            color={storageObj[storageItem.storage.type].color}
-            style={iosShadowStyle}
-            size={14}
-            hasBgColor
-          />
-        )}
+        <FavoriteBtn selectableItem={item} size={14} className="bg-red-1 p-1.5" />
       </View>
 
       {/* 이미지 */}
@@ -62,9 +53,21 @@ export default function MyPickItemCard({
         {item.label}
       </Text>
 
-      {/* 나의 픽 */}
-      <View className="w-full px-2">
-        <FavoriteBtn selectableItem={item} size={14} isBtn />
+      <View className="mt-2">
+        {storageItem ? (
+          <Text className="font-extrabold text-sm text-blue-3">보유</Text>
+        ) : (
+          <Icon
+            name="ShoppingBasket"
+            size={14}
+            hasBgColor
+            className="-mb-1 p-2"
+            color="indigo"
+            onPress={() => {
+              console.log('hi');
+            }}
+          />
+        )}
       </View>
     </Card>
   );

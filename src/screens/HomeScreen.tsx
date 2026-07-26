@@ -8,12 +8,12 @@ import ScrollViewContainer from '@/components/common/container/ScrollViewContain
 import Icon from '@/components/common/ui/Icon';
 import CautionStorageItemList from '@/components/home/CautionStorageItemList';
 import HomeHeader from '@/components/home/HomeHeader';
-import MyPickList from '@/components/home/MyPickList';
 import RecommendedMenu from '@/components/home/RecommendedMenu';
 import SpaceGrid from '@/components/home/SpaceGrid';
 import TodayMenu from '@/components/home/TodayMenu';
 import CautionStorageItemSheet from '@/components/trackedItem/storage/CautionStorageItemSheet';
 import QuickAddStorageItemSheet from '@/components/trackedItem/storage/QuickAddStorageItemSheet';
+import MyPickList from '@/components/home/MyPickList';
 
 export default function HomeScreen() {
   const { openSheet, closeSheet } = useOverlay();
@@ -53,8 +53,6 @@ export default function HomeScreen() {
           <SpaceGrid />
         </View>
 
-        <MyPickList />
-
         {/* NOTE: 나의 픽인데 현재 보관함에 없는 것들 
         이게 장보기 추천템인가 조금 다르긴 한데 */}
 
@@ -62,6 +60,8 @@ export default function HomeScreen() {
           type="expiredSoon"
           onItemPress={onCautionStorageItemPress}
         />
+
+        <MyPickList />
 
         <TodayMenu hasHeader />
 

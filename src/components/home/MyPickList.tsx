@@ -10,17 +10,17 @@ export default function MyPickList() {
 
   return myPickList.length > 0 ? (
     <View className="gap-y-3">
-      <SectionTitle title="나의 픽" icon="Heart" hasShowAllBtn />
+      <SectionTitle title="나의 픽!" icon="Heart" hasShowAllBtn />
 
       <CarouselContainer
         data={myPickList}
         initialIndex={myPickList.length}
-        itemWidth={0.25}
+        itemWidth={0.2}
         hasNavigation
-        spacing={10}
+        spacing={9}
         centerFocus
         hasPagination
-        requiredMinimum={3}
+        requiredMinimum={4}
         keyExtractor={(_, index) => `${index}`}
         renderItem={({ item }) => <MyPickItemCard item={item} />}
       ></CarouselContainer>

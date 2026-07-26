@@ -29,6 +29,7 @@ export default function SpaceGrid() {
   const expiredSoonStorageItemList = useAtomValue(
     storageItemListByExpirationStatusAtom('expiredSoon'),
   );
+  const goodStorageItemList = useAtomValue(storageItemListByExpirationStatusAtom('safe'));
 
   const getExpiredItemList = (storageType: StorageTypeId) => {
     return expiredStorageItemList.filter(
@@ -83,8 +84,8 @@ export default function SpaceGrid() {
       color: 'yellow',
     },
     {
-      label: '총 식재료',
-      data: allStorageItemList.length,
+      label: '여유 식재료',
+      data: goodStorageItemList.length,
       icon: 'LeafyGreen',
       color: 'green',
     },
@@ -101,10 +102,15 @@ export default function SpaceGrid() {
       <InsightCard {...insightProps} />
 
       {/* 나의 냉장고 */}
-      <Card className="w-full gap-y-[10px] !p-3">
-        <Text className="ml-4 mt-3 font-extrabold text-base">나의 냉장고 상태</Text>
+      <Card className="w-full !p-3">
+        <View className="mx-4 flex-row items-center justify-between pt-4">
+          <Text className="font-extrabold text-base">나의 냉장고 상태</Text>
+          <Text className="font-extrabold text-blue-5">
+            식재료 총 {allStorageItemList.length}개
+          </Text>
+        </View>
 
-        <View className="mt-3 flex-row items-center justify-center">
+        <View className="mb-5 mt-4 flex-row items-center justify-center">
           <View className="relative h-28 w-[24%] items-center justify-center">
             <Image source={image_fridge} className="mt-4 size-full" />
 
@@ -153,7 +159,7 @@ export default function SpaceGrid() {
           </View>
         </View>
 
-        <View className="mt-5 flex-row overflow-hidden rounded-2xl bg-neutral-1">
+        <View className="flex-row overflow-hidden rounded-2xl bg-neutral-1">
           {storageList.map((spaceInfo, index) => (
             <Fragment key={spaceInfo.id}>
               <TouchableSpaceCard spaceInfo={spaceInfo} />

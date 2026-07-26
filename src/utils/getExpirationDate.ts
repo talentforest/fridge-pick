@@ -58,6 +58,12 @@ export function formatRemainingDays(days: number) {
   return `+ ${days}일`;
 }
 
+export function formatDdayRemainingDays(days: number) {
+  if (days < 0) return `D+${Math.abs(days)}`;
+
+  return `D-${days}`;
+}
+
 export function formatDaysSince(days: number) {
   if (isNaN(days)) return '없음';
 

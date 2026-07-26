@@ -70,7 +70,6 @@ export default function StorageDetailScreen() {
       <ScrollViewContainer contentContainerClassName="gap-y-20 pt-4">
         {/* 소비기한 임박 */}
         <CautionStorageItemList
-          title="소비기한 주의 식재료"
           isGridType
           storageType={storageType}
           onItemPress={onCautionItemPress}

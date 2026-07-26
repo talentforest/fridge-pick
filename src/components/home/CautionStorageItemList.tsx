@@ -41,7 +41,11 @@ export default function CautionStorageItemList({
 
   return storageItemListByStorage().length > 0 ? (
     <View className={`${hasCautionStorageItem ? 'h-[540px]' : ''} gap-y-3`}>
-      <SectionTitle title={title || '임박 식재료'} icon="ClockAlert" hasShowAllBtn />
+      <SectionTitle
+        title={title || '빨리 먹어야하는 식재료가 있어요'}
+        icon="ClockAlert"
+        hasShowAllBtn
+      />
 
       {isGridType ? (
         <GridContainer columns={3}>

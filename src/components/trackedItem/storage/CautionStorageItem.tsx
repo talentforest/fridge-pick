@@ -1,7 +1,6 @@
-import Text from '@/components/common/ui/Text';
 import { expirationStatusObj, iosShadowStyle, storageObj } from '@/constants';
 import {
-  formatRemainingDays,
+  formatDdayRemainingDays,
   getExpirationStatus,
   getTrackedItemData,
   StorageItemWithExpiration,
@@ -9,6 +8,7 @@ import {
 import { View } from 'react-native';
 import FoodImage from '@/components/common/FoodImage';
 import Card from '@/components/common/ui/Card';
+import Text from '@/components/common/ui/Text';
 import Icon from '@/components/common/ui/Icon';
 
 interface CautionStorageItemProps {
@@ -30,12 +30,12 @@ export default function CautionStorageItem({
 
   const currStorage = storageItem.storage.type;
 
-  const days = formatRemainingDays(remainingDays);
+  const days = formatDdayRemainingDays(remainingDays);
 
   return (
     <Card
       style={{ ...iosShadowStyle }}
-      className={`relative h-[156px] overflow-hidden !px-1.5 !pb-4 !pt-1.5 ${isCurrIndex ? 'border-yellow-5' : 'border-border'}`}
+      className={`relative h-[150px] overflow-hidden !px-1.5 !pb-4 !pt-1.5 ${isCurrIndex ? 'border-yellow-5' : 'border-border'}`}
     >
       {index && index <= 3 ? (
         <View className="-mb-8 -ml-1.5 -mt-1.5 h-10 w-8 items-center justify-center rounded-br-xl bg-orange-5">
@@ -51,9 +51,9 @@ export default function CautionStorageItem({
         />
       )}
 
-      <View className={`flex-1 items-center justify-center gap-y-2 py-2`}>
+      <View className={`flex-1 items-center justify-center gap-y-1`}>
         {storageItem.type !== 'custom' && (
-          <FoodImage trackedItem={storageItem} imageSize={60} />
+          <FoodImage trackedItem={storageItem} imageSize={55} />
         )}
 
         <View className="items-center justify-center">
@@ -67,7 +67,7 @@ export default function CautionStorageItem({
 
       {/* 남은 일수 */}
       <Text
-        className={`-ml-0.5 text-center font-extrabold text-[15px] ${expirationStatusObj[status].textColor}`}
+        className={`text-center font-extrabold !text-[15px] ${expirationStatusObj[status].textColor}`}
       >
         {days}
       </Text>

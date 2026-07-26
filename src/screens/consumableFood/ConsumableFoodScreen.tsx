@@ -35,11 +35,7 @@ export default function ConsumableFoodScreen() {
       <ScrollViewContainer>
         <TodayMenu />
 
-        <CautionStorageItemList
-          title="지금 꼭 써야하는 식재료가 있어요"
-          hasCautionStorageItem={true}
-          type="expiredSoon"
-        />
+        <CautionStorageItemList hasCautionStorageItem={true} type="expiredSoon" />
 
         {/* 메뉴 검색바 */}
         <View className="min-h-[800px]">
