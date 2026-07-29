@@ -1,7 +1,7 @@
 import { addTodayMenuAtom, todayMenuListAtom } from '@/atom/todayMenuAtom';
 import { useOverlay } from '@/hooks/common/useOverlay';
 import { EnrichedConsumableFoodWithFilter } from '@/hooks/consumableFood/useGetMenuList';
-import { TodayMenu } from '@/types/trackedItem';
+import { TodayMenu } from '@/types/storage';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 export const useHandleTodayMenu = (

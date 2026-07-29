@@ -5,8 +5,7 @@ import {
   PreparedFoodKey,
   SelectableItem,
 } from '@/types/selectableItem';
-import { EnrichedStorageItem } from '@/types/storage';
-import { StorageItem, TrackedItem } from '@/types/trackedItem';
+import { EnrichedStorageItem, StorageItem, TrackedItem } from '@/types/storage';
 
 /** SelectableItem을 찾을 수 있는 키 생성
  * @param item: SelectableItem
@@ -60,6 +59,17 @@ export const findSelectableItemWithKey = (item: SelectableItem, key: string): bo
   if (item.kind === 'ingredient') return item.id === ingredientId;
   if (item.kind === 'preparedFood') return item.id === preparedFoodId;
   return item.id === mealId;
+};
+
+export type SelectableItemRef = {
+  kind: SelectableItem['kind'];
+  id: string;
+};
+
+export const findSelectableItem = ({ kind, id }: SelectableItemRef) => {
+  if (kind === 'ingredient') return findIngredient(id as IngredientKey);
+  if (kind === 'preparedFood') return findPreparedFood(id as PreparedFoodKey);
+  return findMeal(id as MealKey);
 };
 
 /** 키로 식재료 정보 찾기 */

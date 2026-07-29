@@ -10,6 +10,7 @@ import { addShoppingItemAtom, shoppingListAtom } from '@/atom/shoppingListAtom';
 import IconWithText from '@/components/common/IconWithText';
 import { useOverlay } from '@/hooks';
 import FilterTag from '@/components/common/FilterTag';
+import { createTrackedItemKey, findTrackedItemWithKey } from '@/utils';
 
 interface FoodStructureItemCardProps {
   item: SelectableItem;
@@ -33,15 +34,8 @@ export default function FoodStructureItemCard({
   const shoppingItemList = useAtomValue(shoppingListAtom);
 
   const isShoppingListItem = shoppingItemList.find((shoppingItem) => {
-    if (shoppingItem.type === 'ingredient') {
-      return shoppingItem.ingredientId === item.id;
-    }
-    if (shoppingItem.type === 'meal') {
-      return shoppingItem.mealId === item.id;
-    }
-    if (shoppingItem.type === 'preparedFood') {
-      return shoppingItem.preparedFoodId === item.id;
-    }
+    const key = createTrackedItemKey(item);
+    return findTrackedItemWithKey(shoppingItem, key);
   });
 
   const { showToast } = useOverlay();
@@ -103,7 +97,7 @@ export default function FoodStructureItemCard({
           iconColor="orange"
           textClassName="text-blue-5 text-sm"
           onPress={onPress}
-          className="!gap-x-0 rounded-full border border-orange-3 bg-white !p-1.5"
+          className="!gap-x-0 rounded-full border border-orange-1 bg-neutral-1 !p-1.5"
         />
       )}
     </Card>

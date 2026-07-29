@@ -47,6 +47,8 @@ function normalize(text: string) {
 }
 
 function matchText(keyword: string, text: string) {
+  if (!text) return false;
+
   const normalizedText = normalize(text);
 
   if (normalizedText.includes(keyword)) return true;

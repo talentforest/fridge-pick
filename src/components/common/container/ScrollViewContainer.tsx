@@ -1,15 +1,24 @@
+import { forwardRef } from 'react';
 import { ScrollView, ScrollViewProps } from 'react-native';
 
-export default function ScrollViewContainer({ ...props }: ScrollViewProps) {
-  return (
-    <ScrollView
-      contentInsetAdjustmentBehavior="never"
-      showsVerticalScrollIndicator={false}
-      automaticallyAdjustContentInsets={false}
-      automaticallyAdjustKeyboardInsets={false}
-      contentContainerClassName={`px-[20px] pb-32 gap-y-14 ${props.contentContainerClassName}`}
-    >
-      {props.children}
-    </ScrollView>
-  );
-}
+const ScrollViewContainer = forwardRef<ScrollView, ScrollViewProps>(
+  ({ children, contentContainerClassName, ...props }, ref) => {
+    return (
+      <ScrollView
+        ref={ref}
+        contentInsetAdjustmentBehavior="never"
+        showsVerticalScrollIndicator={false}
+        automaticallyAdjustContentInsets={false}
+        automaticallyAdjustKeyboardInsets={false}
+        {...props}
+        contentContainerClassName={`px-[20px] pb-32 gap-y-14 ${contentContainerClassName ?? ''}`}
+      >
+        {children}
+      </ScrollView>
+    );
+  },
+);
+
+ScrollViewContainer.displayName = 'ScrollViewContainer';
+
+export default ScrollViewContainer;

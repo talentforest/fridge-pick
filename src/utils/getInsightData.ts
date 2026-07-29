@@ -7,6 +7,7 @@ import {
 } from '@/types/selectableItem';
 import { EnrichedStorageItem } from '@/types/storage';
 import { findIngredient, findMeal, findPreparedFood } from '@/utils/findItem';
+import { getShoppingMenuExpansionCandidates } from '@/utils/recommendShoppingItem';
 
 type InsightData = {
   color: 'red' | 'yellow' | 'green' | 'blue' | 'indigo';
@@ -203,130 +204,6 @@ export const getInsightData = (props: InsightDataProps): InsightData => {
   }
 };
 
-type SelectableItemKind = 'ingredient' | 'preparedFood' | 'meal';
-
-type SelectableItemRef = {
-  kind: SelectableItemKind;
-  id: string;
-};
-
-type ShoppingInsightResult = {
-  kind: SelectableItemKind;
-  selectableItemId: string;
-  menuList: ConsumableFood[];
-};
-
-const getSelectableItemKey = ({ kind, id }: SelectableItemRef) => `${kind}:${id}`;
-
-const getStorageItemRef = (item: EnrichedStorageItem): SelectableItemRef | null => {
-  switch (item.type) {
-    case 'ingredient':
-      return {
-        kind: 'ingredient',
-        id: item.ingredientId,
-      };
-
-    case 'preparedFood':
-      return {
-        kind: 'preparedFood',
-        id: item.preparedFoodId,
-      };
-
-    case 'meal':
-      return {
-        kind: 'meal',
-        id: item.mealId,
-      };
-
-    default:
-      return null;
-  }
-};
-
-/**
- * 딱 1개 부족한 메뉴들을 부족한 아이템별로 묶어서, 가장 많은 메뉴를 완성시키는 식재료 아이템 하나를 찾는 함수
- * @param allMenuList
- * @param allStorageItemList
- * @returns
- */
-export const getBestShoppingInsight = (
-  allMenuList: ConsumableFood[],
-  allStorageItemList: EnrichedStorageItem[],
-): ShoppingInsightResult | null => {
-  /**
-   * 현재 보유하고 있는 항목
-   *
-   * ingredient:chicken_breast
-   * preparedFood:kimchi
-   * meal:yukgaejang
-   */
-  const possessedItemKeySet = new Set(
-    allStorageItemList
-      .map(getStorageItemRef)
-      .filter((item): item is SelectableItemRef => item !== null)
-      .map(getSelectableItemKey),
-  );
-
-  /**
-   * 식재료 하나를 추가했을 때
-   * 몇 개의 메뉴가 새롭게 완성되는지 집계
-   */
-  const candidateMap = new Map<string, ShoppingInsightResult>();
-
-  for (const menu of allMenuList) {
-    if (!menu.foodStructure) continue;
-    /**
-     * 우선 essential + common + seasoning만 완성 조건으로 사용
-     * optional만 제외
-     */
-    const requiredItemList: SelectableItemRef[] = [
-      ...menu.foodStructure.essential,
-      ...menu.foodStructure.common,
-      ...menu.foodStructure.seasoning,
-    ];
-
-    /**
-     * 메뉴에서 현재 보유하지 않은 항목 찾기
-     */
-    const missingItemList = requiredItemList.filter(
-      (item) => !possessedItemKeySet.has(getSelectableItemKey(item)),
-    );
-
-    /**
-     * 정확히 하나만 부족한 메뉴만 대상
-     *
-     * 0개 → 이미 만들 수 있음
-     * 1개 → 하나만 사면 만들 수 있음
-     * 2개 이상 → 이번 인사이트 대상 아님
-     */
-    if (missingItemList.length !== 1) {
-      continue;
-    }
-
-    const missingItem = missingItemList[0];
-
-    if (!missingItem) continue;
-
-    const key = getSelectableItemKey(missingItem);
-
-    const current = candidateMap.get(key);
-
-    candidateMap.set(key, {
-      kind: missingItem.kind,
-      selectableItemId: missingItem.id,
-      menuList: [...(current?.menuList ?? []), menu],
-    });
-  }
-
-  /**
-   * 가장 많은 메뉴를 새롭게 만들 수 있는 항목
-   */
-  return (
-    [...candidateMap.values()].sort((a, b) => b.menuList.length - a.menuList.length)[0] ??
-    null
-  );
-};
-
 export const getTopInsight = (data: TopInsightData): InsightDataProps => {
   const candidates: InsightCandidate[] = [];
 
@@ -341,18 +218,18 @@ export const getTopInsight = (data: TopInsightData): InsightDataProps => {
   }
 
   // 하나만 사면 만들 수 있는 메뉴
-  const shoppingInsight = getBestShoppingInsight(
+  const shoppingInsight = getShoppingMenuExpansionCandidates(
     data.allMenuList,
     data.allStorageItemList,
-  );
+  )?.[0];
 
   if (shoppingInsight) {
     const selectableItem =
-      shoppingInsight.kind === 'ingredient'
-        ? findIngredient(shoppingInsight.selectableItemId as IngredientKey)
-        : shoppingInsight.kind === 'meal'
-          ? findMeal(shoppingInsight.selectableItemId as MealKey)
-          : findPreparedFood(shoppingInsight.selectableItemId as PreparedFoodKey);
+      shoppingInsight.selectableItem.kind === 'ingredient'
+        ? findIngredient(shoppingInsight.selectableItem.id as IngredientKey)
+        : shoppingInsight.selectableItem.kind === 'meal'
+          ? findMeal(shoppingInsight.selectableItem.id as MealKey)
+          : findPreparedFood(shoppingInsight.selectableItem.id as PreparedFoodKey);
 
     if (selectableItem) {
       candidates.push({

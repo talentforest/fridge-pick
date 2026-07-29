@@ -1,6 +1,6 @@
 import { EnrichedStorageItem, ExpirationStatus, StorageItem } from '@/types/storage';
 import { getExpirationStatus, getRemainingDays } from '@/utils/getExpirationDate';
-import { findIngredient, findMeal, findPreparedFood } from '@/utils/findItem';
+import { enrichTrackedItem } from '@/utils/enrichItem';
 
 export type StorageItemWithExpiration = {
   storageItem: EnrichedStorageItem;
@@ -21,7 +21,7 @@ export const getStorageItemListByExpirationStatus = (
       const expirationStatus = getExpirationStatus(remainingDays);
 
       return {
-        storageItem: enrichStorageItem(item),
+        storageItem: enrichTrackedItem(item),
         remainingDays,
         expirationStatus,
       };
@@ -48,29 +48,4 @@ export const getStorageItemListByExpirationStatus = (
       }
     })
     .sort((a, b) => a.remainingDays - b.remainingDays);
-};
-
-const enrichStorageItem = (item: StorageItem): EnrichedStorageItem => {
-  switch (item.type) {
-    case 'ingredient':
-      return {
-        ...item,
-        ingredient: findIngredient(item.ingredientId)!,
-      };
-
-    case 'preparedFood':
-      return {
-        ...item,
-        preparedFood: findPreparedFood(item.preparedFoodId)!,
-      };
-
-    case 'meal':
-      return {
-        ...item,
-        meal: findMeal(item.mealId)!,
-      };
-
-    default:
-      return item;
-  }
 };

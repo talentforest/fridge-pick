@@ -96,7 +96,7 @@ export default function PurchasedItem({
                 <Icon name={icon} size={14} color={color} />
                 <Text className="!text-[15px]">{value}</Text>
                 {label === '소비기한' && (
-                  <Text className="text-red-600">(+{getRemainingDays(date)}일)</Text>
+                  <Text className="text-red-5">(+{getRemainingDays(date)}일)</Text>
                 )}
               </View>
             </View>

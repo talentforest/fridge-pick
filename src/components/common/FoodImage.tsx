@@ -12,7 +12,7 @@ import {
   PreparedFoodKey,
   SelectableItem,
 } from '@/types/selectableItem';
-import { EnrichShoppingItem } from '@/types/shoppingList';
+import { EnrichedShoppingItem } from '@/types/shoppingList';
 import { EnrichedStorageItem } from '@/types/storage';
 import { Image } from 'react-native';
 
@@ -23,7 +23,7 @@ type SelectableItemProps = {
 };
 
 type TrackedItemProps = {
-  trackedItem: EnrichShoppingItem | EnrichedStorageItem;
+  trackedItem: EnrichedShoppingItem | EnrichedStorageItem;
   selectableItem?: never;
   consumableFood?: never;
 };
@@ -59,7 +59,7 @@ export default function FoodImage({
     }
   };
 
-  const getTrackedItemImage = (item: EnrichShoppingItem | EnrichedStorageItem) => {
+  const getTrackedItemImage = (item: EnrichedShoppingItem | EnrichedStorageItem) => {
     switch (item.type) {
       case 'meal':
         return mealCategoryImagesObj[(item?.meal?.imageName || item.meal.id) as MealKey];

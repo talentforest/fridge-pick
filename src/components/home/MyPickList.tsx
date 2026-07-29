@@ -15,9 +15,9 @@ export default function MyPickList() {
       <CarouselContainer
         data={myPickList}
         initialIndex={myPickList.length}
-        itemWidth={0.2}
+        itemWidth={0.25}
         hasNavigation
-        spacing={9}
+        spacing={8}
         centerFocus
         hasPagination
         requiredMinimum={4}

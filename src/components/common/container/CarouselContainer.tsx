@@ -1,6 +1,7 @@
 import FullBleedSection from '@/components/common/container/FullBleedSection';
 import GridContainer from '@/components/common/container/GridContainer';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import { horizontalInset } from '@/constants';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { ReactNode, useMemo, useRef, useState } from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
@@ -168,7 +169,11 @@ export default function CarouselContainer<T>({
     </FullBleedSection>
   ) : (
     <View>
-      <GridContainer columns={requiredMinimum} gap={spacing}>
+      <GridContainer
+        columns={requiredMinimum}
+        gap={spacing}
+        horizontalInset={horizontalInset}
+      >
         {data.map((item, index) => {
           const isCurrIndex = currentIndex - data.length === index;
           return renderItem({

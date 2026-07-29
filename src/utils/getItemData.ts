@@ -5,10 +5,10 @@ import {
   preparedFoodCategoryObj,
 } from '@/constants';
 import { SelectableItem } from '@/types/selectableItem';
-import { EnrichShoppingItem } from '@/types/shoppingList';
+import { EnrichedShoppingItem } from '@/types/shoppingList';
 import { EnrichedStorageItem } from '@/types/storage';
 
-export const getTrackedItemData = (item: EnrichShoppingItem | EnrichedStorageItem) => {
+export const getTrackedItemData = (item: EnrichedShoppingItem | EnrichedStorageItem) => {
   const initialExpirationDays = {
     fridge: undefined,
     freezer: undefined,

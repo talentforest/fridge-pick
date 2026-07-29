@@ -5,38 +5,40 @@ import {
   FoodComponentItem,
   FoodStructure,
 } from '@/types/selectableItem';
-import { EnrichShoppingItem, ShoppingItem } from '@/types/shoppingList';
+import { EnrichedShoppingItem, ShoppingItem } from '@/types/shoppingList';
 import { EnrichedStorageItem, StorageItem } from '@/types/storage';
 import { findIngredient, findMeal, findPreparedFood } from '@/utils/findItem';
 
-export function enrichStorageItem(item: StorageItem): EnrichedStorageItem {
+export function enrichTrackedItem(item: StorageItem): EnrichedStorageItem;
+
+export function enrichTrackedItem(item: ShoppingItem): EnrichedShoppingItem;
+
+export function enrichTrackedItem(item: StorageItem | ShoppingItem) {
   if (item.type === 'ingredient') {
     const ingredient = findIngredient(item.ingredientId);
-    return { ...item, ingredient };
+
+    return {
+      ...item,
+      ingredient,
+    };
   }
 
   if (item.type === 'preparedFood') {
     const preparedFood = findPreparedFood(item.preparedFoodId);
-    return { ...item, preparedFood };
+
+    return {
+      ...item,
+      preparedFood,
+    };
   }
 
   if (item.type === 'meal') {
     const meal = findMeal(item.mealId);
-    return { ...item, meal };
-  }
 
-  return item;
-}
-
-export function enrichShoppinItem(item: ShoppingItem): EnrichShoppingItem {
-  if (item.type === 'ingredient') {
-    const ingredient = findIngredient(item.ingredientId);
-    return { ...item, ingredient };
-  }
-
-  if (item.type === 'meal') {
-    const meal = findMeal(item.mealId);
-    return { ...item, meal };
+    return {
+      ...item,
+      meal,
+    };
   }
 
   return item;

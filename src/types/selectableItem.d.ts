@@ -123,6 +123,8 @@ type BaseFood = {
   /** 표시 이름 */
   label: string;
 
+  recommendLevel: 'general' | 'preference';
+
   /** 동일 이미지 재사용 시 */
   imageName?: string;
 

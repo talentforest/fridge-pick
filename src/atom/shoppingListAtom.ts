@@ -7,11 +7,11 @@ import {
   formatDateString,
   convertIngredientToStorageItem,
   createTrackedItemKey,
-  enrichShoppinItem,
   findTrackedItemWithKey,
   createShoppingItem,
   convertMealToStorageItem,
   convertPreparedFoodToStorageItem,
+  enrichTrackedItem,
 } from '@/utils';
 import { Timestamp } from 'firebase/firestore';
 import { atom } from 'jotai';
@@ -19,7 +19,10 @@ import { atomFamily } from 'jotai-family';
 
 const now = () => Timestamp.now();
 
-export const shoppingListAtom = atom(mockShoppingList.map(enrichShoppinItem)); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
+// TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
+export const shoppingListAtom = atom(
+  mockShoppingList.map((item) => enrichTrackedItem(item)),
+);
 
 /* -------------------------------------------------------------------------- */
 /*                                  Selector                                  */
@@ -154,7 +157,7 @@ export const addShoppingItemAtom = atom(
 
     const newItem = createShoppingItem(inputValue);
 
-    set(shoppingListAtom, [...shoppingList, newItem]);
+    set(shoppingListAtom, [newItem, ...shoppingList]);
 
     return {
       type: 'success',

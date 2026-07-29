@@ -1,6 +1,6 @@
 import { togglePurchasedAtom } from '@/atom/shoppingListAtom';
 import { findStorageItemWithKeyAtom } from '@/atom/storageAtom';
-import { EnrichShoppingItem } from '@/types/shoppingList';
+import { EnrichedShoppingItem } from '@/types/shoppingList';
 import { createTrackedItemKey, getTrackedItemData } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Pressable, View } from 'react-native';
@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavProp } from '@/types/RootStackParamList';
 
 interface ShoppingItemProps {
-  shoppingItem: EnrichShoppingItem;
+  shoppingItem: EnrichedShoppingItem;
   isError: boolean;
 }
 
@@ -29,28 +29,32 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
   return (
     <Pressable
       onPress={() => togglePurchased(id)}
-      className={`h-14 flex-row items-center px-1 py-3 ${isPurchased ? 'opacity-40' : ''}`}
+      className={`h-14 ${isPurchased ? 'opacity-40' : ''}`}
     >
-      <View className="flex-1 flex-row gap-x-1.5">
-        <Icon name={isPurchased ? 'SquareCheck' : 'Square'} size={16} />
+      <View
+        className={`flex-1 flex-row items-center px-1 ${isError ? 'my-2.5  rounded-lg bg-red-0' : ''}`}
+      >
+        <View className="flex-1 flex-row gap-x-1.5">
+          <Icon name={isPurchased ? 'SquareCheck' : 'Square'} size={16} />
 
-        <Text
-          className={`line-clamp-1 flex-1 ${isPurchased ? 'line-through' : ''} ${isError ? 'text-red-500' : ''}`}
-        >
-          {getTrackedItemData(shoppingItem).label}
-        </Text>
+          <Text
+            className={`line-clamp-1 flex-1 ${isPurchased ? 'line-through' : ''} ${isError ? 'font-extrabold text-red-5' : ''}`}
+          >
+            {getTrackedItemData(shoppingItem).label}
+          </Text>
+        </View>
+
+        {isInStorageShoppingItem && (
+          <NavigateToStorageBtn
+            onPress={() =>
+              navigation.navigate('StorageDetailScreen', {
+                id: isInStorageShoppingItem.storage.type,
+              })
+            }
+            storageType={isInStorageShoppingItem.storage.type}
+          />
+        )}
       </View>
-
-      {isInStorageShoppingItem && (
-        <NavigateToStorageBtn
-          onPress={() =>
-            navigation.navigate('StorageDetailScreen', {
-              id: isInStorageShoppingItem.storage.type,
-            })
-          }
-          storageType={isInStorageShoppingItem.storage.type}
-        />
-      )}
     </Pressable>
   );
 }

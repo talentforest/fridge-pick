@@ -1,6 +1,7 @@
 export * from '@/utils/convertToStorageItem';
 export * from '@/utils/enrichItem';
 export * from '@/utils/createShoppingItem';
+export * from '@/utils/recommendShoppingItem';
 
 export * from '@/utils/formatDate';
 export * from '@/utils/getExpirationDate';

@@ -1,7 +1,12 @@
+import { allStorageItemListAtom } from '@/atom/storageAtom';
 import { AppError, AppSuccess } from '@/hooks';
 import { SelectableItem } from '@/types/selectableItem';
 import { EnrichedStorageItem } from '@/types/storage';
-import { findSelectableItemWithKey } from '@/utils';
+import {
+  createSelectableItemKey,
+  findSelectableItemWithKey,
+  findTrackedItemWithKey,
+} from '@/utils';
 import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
 
@@ -38,6 +43,18 @@ export const findFavoriteItemAtom = atomFamily((key: string) => {
   return atom((get) => {
     const favorites = get(favoriteItemListAtom);
     return favorites.find((ingredient) => findSelectableItemWithKey(ingredient, key));
+  });
+});
+
+export const isNotInStorageFavoriteListAtom = atom((get) => {
+  const allStorageItemList = get(allStorageItemListAtom);
+  const favoriteList = get(favoriteItemListAtom);
+
+  return favoriteList.filter((favoriteItem) => {
+    const key = createSelectableItemKey(favoriteItem);
+    return !allStorageItemList.some((storageItem) =>
+      findTrackedItemWithKey(storageItem, key),
+    );
   });
 });
 

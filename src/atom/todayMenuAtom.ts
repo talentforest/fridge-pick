@@ -1,5 +1,5 @@
 import { AppError, AppSuccess } from '@/hooks';
-import { TodayMenu } from '@/types/trackedItem';
+import { TodayMenu } from '@/types/storage';
 
 import { atom } from 'jotai';
 

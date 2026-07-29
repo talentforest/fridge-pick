@@ -9,11 +9,11 @@ import Icon from '@/components/common/ui/Icon';
 import CautionStorageItemList from '@/components/home/CautionStorageItemList';
 import HomeHeader from '@/components/home/HomeHeader';
 import RecommendedMenu from '@/components/home/RecommendedMenu';
-import SpaceGrid from '@/components/home/SpaceGrid';
 import TodayMenu from '@/components/home/TodayMenu';
 import CautionStorageItemSheet from '@/components/trackedItem/storage/CautionStorageItemSheet';
 import QuickAddStorageItemSheet from '@/components/trackedItem/storage/QuickAddStorageItemSheet';
 import MyPickList from '@/components/home/MyPickList';
+import SpaceGrid from '@/components/home/SpaceGrid';
 
 export default function HomeScreen() {
   const { openSheet, closeSheet } = useOverlay();

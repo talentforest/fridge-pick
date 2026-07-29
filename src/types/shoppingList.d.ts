@@ -48,7 +48,7 @@ export type ShoppingItem =
   | MealShoppingItem
   | CustomShoppingItem;
 
-export type EnrichShoppingItem =
+export type EnrichedShoppingItem =
   | (IngredientShoppingItem & { ingredient: Ingredient })
   | (PreparedFoodShoppingItem & { preparedFood: PreparedFood })
   | (MealShoppingItem & { meal: Meal })

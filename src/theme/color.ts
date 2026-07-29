@@ -35,7 +35,7 @@ export const colorTokens = {
       7: '#1d4ed8',
       5: '#3b82f6',
       3: '#93c5fd',
-      1: '#eaf3ff',
+      1: '#f1f7ff',
     },
 
     ice: {

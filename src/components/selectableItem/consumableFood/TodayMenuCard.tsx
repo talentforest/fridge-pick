@@ -5,7 +5,7 @@ import IconWithText from '@/components/common/IconWithText';
 import ProgressBar from '@/components/common/ProgressBar';
 import MenuDetailSheet from '@/components/selectableItem/consumableFood/MenuDetailSheet';
 import FoodImage from '@/components/common/FoodImage';
-import { TodayMenu } from '@/types/trackedItem';
+import { TodayMenu } from '@/types/storage';
 import { View } from 'react-native';
 import { EnrichedConsumableFoodWithFilter, useOverlay } from '@/hooks';
 

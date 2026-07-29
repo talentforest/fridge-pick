@@ -46,7 +46,7 @@ export default function SelectBtn({
 
   const textColorStyle = {
     red: 'text-red-5',
-    blue: 'text-blue-9',
+    blue: 'text-blue-7',
     ice: 'text-ice-7',
     green: 'text-green-7',
     yellow: 'text-yellow-7',
@@ -65,14 +65,16 @@ export default function SelectBtn({
       {...props}
       className={`flex-row items-center justify-center gap-x-1 rounded-xl border px-5 py-5 ${bgColorStyle[color]} ${props.className}`}
     >
-      {iconName && <Icon name={iconName} size={iconSize} color={iconStyle} />}
+      {iconName && (
+        <Icon name={iconName} size={iconSize} color={iconStyle} strokeWidth={2.5} />
+      )}
 
       <Text className={`${textColorStyle[color]} ${textClassName} font-extrabold`}>
         {name}
       </Text>
 
       {tailIconName && (
-        <Icon strokeWidth={2.5} name={tailIconName} size={iconSize} color={iconStyle} />
+        <Icon name={tailIconName} size={iconSize} color={iconStyle} strokeWidth={2.5} />
       )}
     </TouchableOpacity>
   );

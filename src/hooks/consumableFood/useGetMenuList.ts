@@ -15,6 +15,8 @@ import {
 import { EnrichedStorageItem } from '@/types/storage';
 import {
   checkHasStorageItem,
+  createSelectableItemKey,
+  findTrackedItemWithKey,
   getConsumableFoodListWithEnrichedFoodStructure,
   hasConsumableFoodInStorage,
   StorageItemWithExpiration,
@@ -378,19 +380,8 @@ export const useGetMenuList = ({ maxLength }: UseGetMenuListProps = {}) => {
           if (storageItem.type === 'custom') return false;
 
           const hasIngredientItem = (food: SelectableItem) => {
-            const { id } = food;
-
-            if (storageItem.type === 'ingredient') {
-              return id === storageItem.ingredientId;
-            }
-
-            if (storageItem.type === 'preparedFood') {
-              return id === storageItem.preparedFoodId;
-            }
-
-            if (storageItem.type === 'meal') {
-              return id === storageItem.mealId;
-            }
+            const key = createSelectableItemKey(food);
+            return findTrackedItemWithKey(storageItem, key);
           };
 
           if (!enrichedFood.foodStructure) return false;

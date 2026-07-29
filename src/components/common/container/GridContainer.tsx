@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useWindowDimensions, View } from 'react-native';
+import { horizontalInset as xInset } from '@/constants';
 
 interface GridContainerProps {
   children: ReactNode;
@@ -11,7 +12,7 @@ interface GridContainerProps {
 
 export default function GridContainer({
   children,
-  horizontalInset = 20,
+  horizontalInset = xInset,
   columns = 2,
   gap = 8,
   className = '',

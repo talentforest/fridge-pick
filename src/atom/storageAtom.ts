@@ -10,7 +10,7 @@ import {
 } from '@/types/storage';
 import {
   createTrackedItemKey,
-  enrichStorageItem,
+  enrichTrackedItem,
   findTrackedItemWithKey,
   getStorageItemListByExpirationStatus,
 } from '@/utils';
@@ -18,7 +18,7 @@ import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
 import { nanoid } from 'nanoid/non-secure';
 
-const enrichStorageItemList = mockStorageItemList.map(enrichStorageItem);
+const enrichStorageItemList = mockStorageItemList.map((item) => enrichTrackedItem(item));
 
 /** Basic */
 export const allStorageItemListAtom = atom<EnrichedStorageItem[]>(enrichStorageItemList); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록

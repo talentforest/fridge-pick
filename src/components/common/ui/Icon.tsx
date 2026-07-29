@@ -276,7 +276,7 @@ export default function Icon({
     green: 'bg-green-1',
     ice: 'bg-ice-1',
     indigo: 'bg-indigo-1',
-    inactive: 'bg-inactive-text',
+    inactive: 'bg-border',
   };
 
   const iconObj: { [key in IconName]: LucideIcon } = {

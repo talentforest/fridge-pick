@@ -1,5 +1,5 @@
 import Text from '@/components/common/ui/Text';
-import { EnrichShoppingItem } from '@/types/shoppingList';
+import { EnrichedShoppingItem } from '@/types/shoppingList';
 import { EnrichedStorageItem } from '@/types/storage';
 import { View } from 'react-native';
 import { getTrackedItemData } from '@/utils';
@@ -7,7 +7,7 @@ import FoodImage from '@/components/common/FoodImage';
 import Card from '@/components/common/ui/Card';
 
 interface TrackedItemImageLabelProps {
-  item: EnrichedStorageItem | EnrichShoppingItem;
+  item: EnrichedStorageItem | EnrichedShoppingItem;
   imageSize?: number;
   className?: string;
   textClassName?: string;

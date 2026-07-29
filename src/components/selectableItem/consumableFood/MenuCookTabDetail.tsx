@@ -68,7 +68,7 @@ export default function MenuCookTabDetail({ consumableFood }: MenuCookTabDetailP
               percentage={requiredPossessionPercent}
               possessedCount={requiredPossessedList.length}
               requiredCount={requiredCount}
-              type="circular"
+              // type="circular"
               color={styleByPossesionStatus.icon}
             />
 
@@ -89,25 +89,25 @@ export default function MenuCookTabDetail({ consumableFood }: MenuCookTabDetailP
             </View>
           </Card>
 
-          <Card className="flex-row items-center gap-x-2 !bg-[#ffe8d9] !px-3">
+          <Card className="flex-row items-center gap-x-2 !bg-orange-1 !px-3 !py-2">
             {/* <Icon name="PackageOpen" color="orange" size={40} /> */}
             <Image source={image_instant} style={{ width: 55, height: 55 }} />
 
-            <View className="flex-1 flex-row gap-y-2">
+            <View className="my-3 flex-1 flex-row items-end justify-between gap-x-3 gap-y-2">
               <View className="gap-y-2">
-                <Text className="!text-[15px]">간편식으로도 먹을 수 있어요</Text>
+                <Text className="font-extrabold">간편식으로도 먹을 수 있어요</Text>
                 <Text className="text-sm text-neutral-7">
-                  밀키트 ・ 레토르트 ・ 냉동식품
+                  밀키트 ・ 레토르트 ・ 냉동식품 등
                 </Text>
               </View>
 
               <IconWithText
-                text="장보기추가"
+                text="장보기 담기"
                 icon="ShoppingBasket"
                 iconSize={14}
                 iconColor="orange"
-                textClassName="!text-[12px] text-orange-7 font-extrabold"
-                className="ml-auto rounded-xl border border-orange-7 bg-neutral-1 px-2 py-2.5"
+                textClassName="text-sm text-orange-7 font-extrabold"
+                className="-mb-1.5 rounded-lg bg-neutral-1 px-2 py-2.5"
               />
             </View>
           </Card>
