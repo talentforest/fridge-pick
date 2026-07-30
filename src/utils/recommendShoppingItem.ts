@@ -1,4 +1,6 @@
+import { allMealList, allPreparedFoodList } from '@/constants';
 import { ConsumableFood, SelectableItem } from '@/types/selectableItem';
+import { EnrichedShoppingItem } from '@/types/shoppingList';
 import { EnrichedStorageItem } from '@/types/storage';
 import { findSelectableItem, SelectableItemRef } from '@/utils/findItem';
 
@@ -10,7 +12,9 @@ export type ShoppingInsightResult = {
 
 const getSelectableItemKey = ({ kind, id }: SelectableItemRef) => `${kind}:${id}`;
 
-const getStorageItemRef = (item: EnrichedStorageItem): SelectableItemRef | null => {
+const getStorageItemRef = (
+  item: EnrichedStorageItem | EnrichedShoppingItem,
+): SelectableItemRef | null => {
   switch (item.type) {
     case 'ingredient':
       return {
@@ -42,8 +46,7 @@ const getStorageItemRef = (item: EnrichedStorageItem): SelectableItemRef | null 
  * @returns
  */
 export const getShoppingMenuExpansionCandidates = (
-  allMenuList: ConsumableFood[],
-  allStorageItemList: EnrichedStorageItem[],
+  allStorageItemList: (EnrichedStorageItem | EnrichedShoppingItem)[],
 ): ShoppingInsightResult[] => {
   /**
    * 현재 보유하고 있는 항목
@@ -64,6 +67,8 @@ export const getShoppingMenuExpansionCandidates = (
    * 몇 개의 메뉴가 새롭게 완성되는지 집계
    */
   const candidateMap = new Map<string, ShoppingInsightResult>();
+
+  const allMenuList = [...allMealList, ...allPreparedFoodList];
 
   for (const menu of allMenuList) {
     if (!menu.foodStructure) continue;
@@ -140,4 +145,46 @@ export const filterRecommendableCandidates = (
 
 const canRecommendPreferenceItem = (item: SelectableItem): boolean => {
   return false;
+};
+
+/**
+ * 특정 식재료(또는 간편식/식사)가 생기면 새롭게 만들 수 있는 메뉴 목록
+ */
+export const getCompletableMenuListBySelectableItem = (
+  allStorageItemList: (EnrichedStorageItem | EnrichedShoppingItem)[],
+  selectableItem?: SelectableItem,
+): ConsumableFood[] => {
+  if (!selectableItem) return [];
+  const possessedItemKeySet = new Set(
+    allStorageItemList
+      .map(getStorageItemRef)
+      .filter((item): item is SelectableItemRef => item !== null)
+      .map(getSelectableItemKey),
+  );
+
+  const selectableItemKey = getSelectableItemKey(selectableItem);
+
+  const allMenuList = [...allMealList, ...allPreparedFoodList];
+
+  return allMenuList.filter((menu) => {
+    if (!menu.foodStructure) return false;
+
+    const requiredItemList: SelectableItemRef[] = [
+      ...menu.foodStructure.essential,
+      ...menu.foodStructure.common,
+      ...menu.foodStructure.seasoning,
+    ];
+
+    const missingItemList = requiredItemList.filter(
+      (item) => !possessedItemKeySet.has(getSelectableItemKey(item)),
+    );
+
+    // 이미 만들 수 있는 메뉴 제외
+    if (missingItemList.length !== 1 || !missingItemList[0]) {
+      return false;
+    }
+
+    // 부족한 하나가 바로 이 아이템인지 확인
+    return getSelectableItemKey(missingItemList[0]) === selectableItemKey;
+  });
 };

@@ -53,23 +53,28 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
     }
   };
 
+  const menuLabels = item.menuList
+    .slice(0, 2)
+    .map((item) => item.label)
+    .join(', ');
+
   const dataObj = {
     menu: {
-      filterName: '메뉴완성',
+      filterName: '마지막재료',
       color: 'blue',
-      description: `이것만 장보면-${item.menuList.length > 2 ? `${item.menuList.slice(0, 2).map((item) => item.label)} 등 ${item.menuList.length - 2}개` : item.menuList.slice(0, 2).map((item) => item.label)} 가능`,
+      description: `만 있으면-<${item.menuList.length > 2 ? `${menuLabels} 등 ${item.menuList.length - 2}개` : menuLabels}>-재료 완성!`,
       textColor: 'text-blue-5',
     },
     myPick: {
       filterName: '나의픽',
       color: 'red',
-      description: `나의픽 식재료가-보관함에 없어요`,
+      description: `나의픽 ${item.selectableItem.kind === 'ingredient' ? '식재료가' : '메뉴가'}-보관함에 없어요`,
       textColor: 'text-red-5',
     },
   } as const;
 
   return (
-    <Card className={`mt-3 !p-2 ${!!isInShoppingListItem ? 'opacity-60' : ''}`}>
+    <Card className={`mt-3 !p-2 ${!!isInShoppingListItem ? 'opacity-90' : ''}`}>
       <FilterTag
         name={dataObj[item.type].filterName}
         color={dataObj[item.type].color}
@@ -89,27 +94,26 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
           </View>
         </View>
 
-        <View className="my-3 mt-3.5 items-center gap-y-1">
-          <Text className="text-sm text-neutral-7">
-            {dataObj[item.type].description.split('-')[0]}
-          </Text>
-
-          <Text
-            className={`h-10 text-center font-extrabold !text-sm leading-[16px] text-blue-7 ${dataObj[item.type].textColor}`}
-          >
-            {dataObj[item.type].description.split('-')[1]}
-          </Text>
+        <View className="mb-2 mt-1.5 h-16 items-center justify-center gap-y-1">
+          {dataObj[item.type].description.split('-').map((text, index) => (
+            <Text
+              key={text}
+              className={`${index === 1 && item.type === 'menu' ? 'mt-1.5 font-extrabold text-sm text-text' : 'text-sm text-neutral-7'}`}
+            >
+              {text}
+            </Text>
+          ))}
         </View>
 
         <SelectBtn
-          name="담기"
-          className="!gap-x-0 !rounded-md !bg-transparent !py-2"
+          name={!!isInShoppingListItem ? '담김' : '담기'}
+          className="!rounded-md !bg-transparent !py-2"
           textClassName="text-sm"
           color={
-            !!isInShoppingListItem ? 'inActive' : item.type === 'menu' ? 'blue' : 'red'
+            !!isInShoppingListItem ? 'lightGreen' : item.type === 'menu' ? 'blue' : 'red'
           }
-          iconName="Plus"
-          iconSize={14}
+          iconName={!!isInShoppingListItem ? 'CheckCircle2' : 'Plus'}
+          iconSize={13}
           disabled={!!isInShoppingListItem}
           onPress={onAddShoppingItemPress}
         />

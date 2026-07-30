@@ -12,6 +12,7 @@ interface SelectBtnProps {
   color?:
     | 'red'
     | 'blue'
+    | 'lightGreen'
     | 'green'
     | 'yellow'
     | 'ice'
@@ -36,6 +37,7 @@ export default function SelectBtn({
     blue: 'bg-blue-1 border-blue-3',
     ice: 'bg-ice-1 border-ice-3',
     green: 'bg-green-1 border-green-3',
+    lightGreen: 'bg-green-1 border-green-3',
     yellow: 'bg-yellow-1 border-yellow-5',
     indigo: 'bg-indigo-1 border-indigo-3',
     inActive: 'bg-inactive-bg border-neutral-3',
@@ -49,6 +51,7 @@ export default function SelectBtn({
     blue: 'text-blue-7',
     ice: 'text-ice-7',
     green: 'text-green-7',
+    lightGreen: 'text-green-3',
     yellow: 'text-yellow-7',
     indigo: 'text-indigo-5',
     inActive: 'text-neutral-5',

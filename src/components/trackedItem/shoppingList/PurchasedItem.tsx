@@ -94,7 +94,7 @@ export default function PurchasedItem({
 
               <View className="flex-row items-center gap-x-1">
                 <Icon name={icon} size={14} color={color} />
-                <Text className="!text-[15px]">{value}</Text>
+                <Text>{value}</Text>
                 {label === '소비기한' && (
                   <Text className="text-red-5">(+{getRemainingDays(date)}일)</Text>
                 )}

@@ -8,9 +8,10 @@ import {
   shoppingListAtom,
   toggleAllPurchasedAtom,
 } from '@/atom/shoppingListAtom';
-import { allMealList, allPreparedFoodList, image_empty_basket } from '@/constants';
+import { image_empty_basket } from '@/constants';
 import {
   filterRecommendableCandidates,
+  getCompletableMenuListBySelectableItem,
   getShoppingMenuExpansionCandidates,
   searchIngredientAndMeal,
 } from '@/utils';
@@ -18,16 +19,14 @@ import { StackNavProp } from '@/types/RootStackParamList';
 import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
 import { useNavigation } from '@react-navigation/native';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 import { useErrorHandler, useOverlay } from '@/hooks';
 import { allStorageItemListAtom } from '@/atom/storageAtom';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
-import SquareBtn from '@/components/common/SquareBtn';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import ShoppingItem from '@/components/trackedItem/shoppingList/ShoppingItem';
 import Text from '@/components/common/ui/Text';
-import TextInput from '@/components/common/ui/TextInput';
 import KeyboardAvoidingViewContainer from '@/components/common/container/KeyboardAvoidingViewContainer';
 import Card from '@/components/common/ui/Card';
 import IconWithText from '@/components/common/IconWithText';
@@ -36,9 +35,11 @@ import ScrollViewContainer from '@/components/common/container/ScrollViewContain
 import SectionTitle from '@/components/common/header/SectionTitle';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import RecommendedShoppingItem from '@/components/trackedItem/RecommendedShoppingItem';
-import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
-import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
 import { isNotInStorageFavoriteListAtom } from '@/atom/favoritesAtom';
+import SquareBtn from '@/components/common/SquareBtn';
+import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
+import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import TextInput from '@/components/common/ui/TextInput';
 
 export default function ShoppingListScreen() {
   const [inputValue, setInputValue] = useState<string>('');
@@ -133,54 +134,82 @@ export default function ShoppingListScreen() {
 
   const allStorageItemList = useAtomValue(allStorageItemListAtom);
 
-  // 🛒 장보기
-  // - 우유만 사면 메뉴 8개 증가
-  // - 우유+양파만 사면 메뉴 18개 증가
-  // - 나의 픽 메뉴 완성
-  // - 자주 만드는 메뉴 완성
-  // - 장보기 목록 구매 시 메뉴 증가
+  const recommendShoppingList = useMemo(() => {
+    // ✅ 나의 픽 식재료가 없을 떄 완성
+    const hasNotMyPickList = isNotInStorageFavoriteList.map((item) => ({
+      type: 'myPick' as const,
+      menuList: [],
+      selectableItem: item,
+    }));
 
-  const itemList = isNotInStorageFavoriteList.map((item) => ({
-    type: 'myPick' as const,
-    menuList: [],
-    selectableItem: item,
-  }));
+    // ✅ 메뉴에서 식재료 하나가 부족할 때
+    const recommendedShoppingListForMenu = filterRecommendableCandidates(
+      getShoppingMenuExpansionCandidates(allStorageItemList),
+    );
 
-  const recommendedShoppingListForMenu = filterRecommendableCandidates(
-    getShoppingMenuExpansionCandidates(
-      [...allMealList, ...allPreparedFoodList],
-      allStorageItemList,
-    ),
-  );
+    const result = [
+      ...recommendedShoppingListForMenu.slice(0, 5),
+      ...hasNotMyPickList.slice(0, 4),
+    ];
 
-  const test = [...recommendedShoppingListForMenu.slice(0, 4), ...itemList.slice(0, 3)];
+    const prioritizeMyPick = <T extends { type: string; selectableItem: { id: string } }>(
+      list: T[],
+    ) =>
+      Array.from(
+        list
+          .reduce((map, item) => {
+            const existing = map.get(item.selectableItem.id);
+
+            if (!existing || (item.type === 'myPick' && existing.type !== 'myPick')) {
+              map.set(item.selectableItem.id, item);
+            }
+
+            return map;
+          }, new Map<string, T>())
+          .values(),
+      );
+
+    return prioritizeMyPick(result);
+  }, [allStorageItemList, isNotInStorageFavoriteList]);
+
+  const canAvailableMenuList = shoppingList
+    .map((item) => {
+      return getCompletableMenuListBySelectableItem(
+        allStorageItemList,
+        item.type === 'ingredient'
+          ? item.ingredient
+          : item.type === 'meal'
+            ? item.meal
+            : item.type === 'preparedFood'
+              ? item.preparedFood
+              : undefined,
+      );
+    })
+    .flat();
 
   return (
     <KeyboardAvoidingViewContainer>
       <SafeAreaViewContainer>
         <ScreenHeader title="장보기" isDetailPage={false} />
-
         <ScrollViewContainer
           ref={scrollViewRef}
           contentContainerClassName="!gap-y-10 !pb-40"
         >
-          {test ? (
+          {recommendShoppingList ? (
             <View className="mt-2">
               <SectionTitle title="장보기 추천" icon="Sparkles" />
-              <View className={`${test.length > 3 ? '' : ''}`}>
-                <CarouselContainer
-                  data={test}
-                  initialIndex={test.length}
-                  itemWidth={0.28}
-                  hasNavigation
-                  spacing={10}
-                  requiredMinimum={3}
-                  keyExtractor={(_, index) => `${index}`}
-                  renderItem={({ item }) => (
-                    <RecommendedShoppingItem key={item.selectableItem.id} item={item} />
-                  )}
-                />
-              </View>
+              <CarouselContainer
+                data={recommendShoppingList}
+                initialIndex={recommendShoppingList.length}
+                itemWidth={0.28}
+                hasNavigation
+                spacing={10}
+                requiredMinimum={3}
+                keyExtractor={(_, index) => `${index}`}
+                renderItem={({ item }) => (
+                  <RecommendedShoppingItem key={item.selectableItem.id} item={item} />
+                )}
+              />
             </View>
           ) : (
             <></>
@@ -189,21 +218,28 @@ export default function ShoppingListScreen() {
           <View className="gap-y-2">
             <SectionTitle title="장보기 목록" icon="ShoppingBasket" />
 
-            <Card className="flex-row gap-x-4 !bg-indigo-1 !px-5">
-              <Icon name="TrendingUp" color="indigo" />
-              <View className="gap-y-2">
-                <Text className="!text-[13px] text-blue-7">
-                  장보기 목록을 모두 구매하면
-                </Text>
-                <Text className="font-extrabold text-blue-7">
-                  만들 수 있는 메뉴가{' '}
-                  <Text className="font-extrabold text-blue-9">10개</Text> 늘어나요!
-                </Text>
-              </View>
-            </Card>
+            {canAvailableMenuList.length > 0 ? (
+              <Card className="flex-row gap-x-4 !bg-indigo-1 !px-5">
+                <Icon name="TrendingUp" color="indigo" />
+                <View className="gap-y-2">
+                  <Text className="!text-[13px] text-blue-7">
+                    장보기 목록을 모두 구매하면
+                  </Text>
+                  <Text className="font-extrabold text-blue-7">
+                    만들 수 있는 메뉴가{' '}
+                    <Text className="font-extrabold text-blue-9">
+                      {canAvailableMenuList.length}개
+                    </Text>{' '}
+                    늘어나요!
+                  </Text>
+                </View>
+              </Card>
+            ) : (
+              <></>
+            )}
 
             <Card
-              className="min-h-[52%] !p-3 !pt-2"
+              className={`!p-3 !pt-2`}
               onLayout={(e) => {
                 setShoppingListY(e.nativeEvent.layout.y);
               }}
@@ -236,8 +272,8 @@ export default function ShoppingListScreen() {
               </View>
 
               {shoppingList.length > 0 ? (
-                <View className="flex-1">
-                  <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
+                <View className="min-h-[27vh]">
+                  <ScrollView showsVerticalScrollIndicator={false}>
                     {sortedShoppingList.map((item, index) => (
                       <View key={item.id}>
                         <ShoppingItem
@@ -253,7 +289,7 @@ export default function ShoppingListScreen() {
                   </ScrollView>
                 </View>
               ) : (
-                <View className="flex-1 items-center justify-center">
+                <View className="h-[27vh] items-center justify-center pb-4">
                   <Image
                     source={image_empty_basket}
                     className="aspect-square size-24 opacity-60"
@@ -265,9 +301,9 @@ export default function ShoppingListScreen() {
           </View>
         </ScrollViewContainer>
 
+        {/* 아래 컨트롤 버튼: 체크표시된게 있을 때 + 인풋이 포커스 안됐을 때 */}
         <View className="absolute bottom-4 w-full gap-y-2 px-[28px]">
-          {/* 아래 컨트롤 버튼: 체크표시된게 있을 때 + 인풋이 포커스 안됐을 때 */}
-          {purchasedCount > 0 && !isInputFocused && (
+          {purchasedCount > 0 && ( //&& !isInputFocused
             <View className="flex-row items-start gap-x-2">
               <SquareBtn
                 onPress={onDeletePress}
@@ -290,7 +326,6 @@ export default function ShoppingListScreen() {
 
           {error?.message && <Text className="pl-1 text-sm">{error?.message}</Text>}
 
-          {/* 태그들과 인풋 */}
           {recommendedIngredientList.length > 0 && (
             <ScrollView
               horizontal
@@ -347,6 +382,7 @@ export default function ShoppingListScreen() {
           </View>
         </View>
       </SafeAreaViewContainer>
+      {/* 태그들과 인풋 */}
     </KeyboardAvoidingViewContainer>
   );
 }

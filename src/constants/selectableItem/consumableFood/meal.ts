@@ -3407,9 +3407,14 @@ export const mealObj = {
       essential: [
         { kind: 'ingredient', id: 'tomato' },
         { kind: 'ingredient', id: 'broccoli' },
+        { kind: 'ingredient', id: 'onion' },
+        { kind: 'ingredient', id: 'celery' },
       ],
       common: [],
-      seasoning: [],
+      seasoning: [
+        { kind: 'ingredient', id: 'salt' },
+        { kind: 'ingredient', id: 'black_pepper' },
+      ],
       optional: [],
     },
   },

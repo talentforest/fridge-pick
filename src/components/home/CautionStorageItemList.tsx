@@ -44,7 +44,6 @@ export default function CautionStorageItemList({
       <SectionTitle
         title={title || '빨리 먹어야하는 식재료가 있어요'}
         icon="ClockAlert"
-        hasShowAllBtn
       />
 
       {isGridType ? (

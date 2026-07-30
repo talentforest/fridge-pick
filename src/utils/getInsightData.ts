@@ -219,7 +219,6 @@ export const getTopInsight = (data: TopInsightData): InsightDataProps => {
 
   // 하나만 사면 만들 수 있는 메뉴
   const shoppingInsight = getShoppingMenuExpansionCandidates(
-    data.allMenuList,
     data.allStorageItemList,
   )?.[0];
 

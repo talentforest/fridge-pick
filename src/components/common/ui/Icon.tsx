@@ -209,6 +209,7 @@ export type IconColor =
   | 'lightBlue'
   | 'blue'
   | 'green'
+  | 'lightGreen'
   | 'indigo'
   | 'darkGray'
   | 'gray'
@@ -253,7 +254,9 @@ export default function Icon({
     // blue
     lightBlue: scheme.blue[5],
     blue: scheme.blue[7],
+    // green
     green: scheme.green[7],
+    lightGreen: scheme.green[3],
     ice: scheme.ice[5],
     indigo: scheme.indigo[5],
     inactive: scheme.inactive.text,
@@ -274,6 +277,7 @@ export default function Icon({
     black: 'bg-neutral-9',
     gray: 'bg-inactive-bg',
     green: 'bg-green-1',
+    lightGreen: 'bg-green-1',
     ice: 'bg-ice-1',
     indigo: 'bg-indigo-1',
     inactive: 'bg-border',

@@ -8,7 +8,7 @@ import {
 } from '@/utils';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { addDays } from 'date-fns';
+import { addDays, subDays } from 'date-fns';
 import { useSetAtom } from 'jotai';
 import { addStorageItemAtom } from '@/atom/storageAtom';
 import { useErrorHandler, useOverlay } from '@/hooks';
@@ -101,6 +101,15 @@ export default function QuickAddStorageItemSheet() {
           currData: formatDateString(new Date(currStorageItem.expiresAt), 'yy년 M월 d일'),
           quickBtnList: [
             {
+              id: '-1일',
+              label: '-1일',
+              onPress: () => {
+                const date = subDays(currStorageItem.expiresAt, 1);
+                const expiresAt = formatDateString(date, 'yyyy-MM-dd');
+                onItemChange({ expiresAt });
+              },
+            },
+            {
               id: '1일',
               label: '+1일',
               onPress: () => {
@@ -118,19 +127,15 @@ export default function QuickAddStorageItemSheet() {
                 onItemChange({ expiresAt });
               },
             },
-            {
-              id: '31일',
-              label: '+31일',
-              onPress: () => {
-                const date = addDays(currStorageItem.expiresAt, 31);
-                const expiresAt = formatDateString(date, 'yyyy-MM-dd');
-                onItemChange({ expiresAt });
-              },
-            },
           ],
         },
       ] as const)
     : [];
+
+  const defaultStorage =
+    currStorageItem?.type === 'ingredient'
+      ? currStorageItem.ingredient.defaultStorage
+      : 'fridge';
 
   return (
     <View>
@@ -208,7 +213,10 @@ export default function QuickAddStorageItemSheet() {
                               </Text>
                             </View>
 
-                            <Text className="text-sm text-neutral-5">기본 보관위치</Text>
+                            <Text className="text-neutral-7혀 text-sm">
+                              {item.currData === defaultStorage ? '권장' : '변경된'}{' '}
+                              보관위치
+                            </Text>
                           </View>
                         ) : (
                           <View className="gap-y-2">
@@ -227,15 +235,15 @@ export default function QuickAddStorageItemSheet() {
                       </View>
                     </View>
 
-                    <View className="mt-1 gap-y-2 bg-neutral-1 px-2.5 pb-3 pt-4">
+                    <View className="mt-1 flex-1 gap-y-2 bg-indigo-1 px-2.5 pb-3 pt-4">
                       <IconWithText
                         text="빠른변경"
                         icon="Zap"
-                        iconColor="neutral"
-                        textClassName="!text-[11px] text-neutral-7"
+                        iconColor="yellow"
+                        textClassName="!text-[11px] text-yellow-7"
                         iconSize={11}
                       />
-                      <View className="flex-row gap-x-1.5">
+                      <View className="flex-row flex-wrap gap-1.5">
                         {item.quickBtnList.map((btn) => (
                           <SelectBtn
                             key={btn.id}
