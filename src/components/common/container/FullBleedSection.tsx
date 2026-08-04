@@ -1,4 +1,3 @@
-import { horizontalInset } from '@/constants';
 import { ReactNode } from 'react';
 import { View } from 'react-native';
 
@@ -11,7 +10,5 @@ export default function FullBleedSection({
   children,
   className = '',
 }: ScreenContainerProps) {
-  const fullBleed = `-mx-[${horizontalInset}px]`;
-
-  return <View className={`${fullBleed} ${className}`}>{children}</View>;
+  return <View className={`-mx-[20px] ${className}`}>{children}</View>;
 }

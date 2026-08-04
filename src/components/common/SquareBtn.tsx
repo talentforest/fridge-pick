@@ -55,7 +55,7 @@ export default function SquareBtn({
   return (
     <TouchableOpacity
       {...props}
-      className={`flex-row items-center justify-center gap-x-1 rounded-xl px-5 py-6 ${bgColorStyle[bgColor]} ${props.className}`}
+      className={`flex-row items-center justify-center gap-x-1 rounded-xl px-5 py-5 ${bgColorStyle[bgColor]} ${props.className}`}
     >
       {iconName && <Icon name={iconName} size={iconSize} color={iconStyle} />}
 

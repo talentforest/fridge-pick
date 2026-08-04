@@ -14,7 +14,7 @@ export const favoriteItemListAtom = atom<SelectableItem[]>([]);
 
 export const favoriteIngredientListAtom = atom((get) => {
   const favoriteList = get(favoriteItemListAtom);
-  return favoriteList.filter(({ kind }) => kind !== 'meal');
+  return favoriteList.filter(({ kind }) => kind === 'ingredient');
 });
 
 export const favoriteMealListAtom = atom((get) => {

@@ -9,8 +9,6 @@ import { EnrichedStorageItem } from '@/types/storage';
 import { createSelectableItemKey, createTrackedItemKey } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';
 import Icon from '@/components/common/ui/Icon';
-import Text from '@/components/common/ui/Text';
-import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { useOverlay } from '@/hooks';
 
 interface FavoriteBtnProps {
@@ -18,7 +16,7 @@ interface FavoriteBtnProps {
   selectableItem?: SelectableItem;
   className?: string;
   size?: number;
-  isBtn?: boolean;
+  hasShadow?: boolean;
 }
 
 export default function FavoriteBtn({
@@ -26,7 +24,7 @@ export default function FavoriteBtn({
   selectableItem,
   className,
   size = 22,
-  isBtn = false,
+  hasShadow,
 }: FavoriteBtnProps) {
   const addFavoriteStorageItem = useSetAtom(addFavoriteStorageItemAtom);
   const addFavoriteSelectableItem = useSetAtom(addFavoriteSelectableItemAtom);
@@ -52,31 +50,13 @@ export default function FavoriteBtn({
     showToast({
       type: 'normal',
       text1: `${!favoriteItem ? '❤️ 나의 픽에 추가' : '🗑️ 나의 픽에서 삭제'}되었습니다!`,
-      visibilityTime: 2000,
-      position: 'bottom',
       props: {
-        bgColor: favoriteItem ? 'bg-red-9' : 'bg-blue-7',
+        bgColor: favoriteItem ? 'red' : 'blue',
       },
     });
   };
 
-  return isBtn ? (
-    <TouchableOpacity
-      onPress={onPress}
-      className="mt-4 w-full flex-row items-center justify-center gap-x-1 rounded-lg bg-red-1 px-3 py-2"
-    >
-      <Icon
-        name="Heart"
-        size={size}
-        hasFill={!!favoriteItem}
-        color={!!favoriteItem ? 'red' : 'inactive'}
-        className={`${className}`}
-        onPress={onPress}
-        hasShadow
-      />
-      <Text className="font-extrabold text-sm">나의 픽</Text>
-    </TouchableOpacity>
-  ) : (
+  return hasShadow ? (
     <Icon
       name="Heart"
       size={size}
@@ -85,6 +65,15 @@ export default function FavoriteBtn({
       className={`${className}`}
       onPress={onPress}
       hasShadow
+    />
+  ) : (
+    <Icon
+      name="Heart"
+      size={size}
+      hasFill={!!favoriteItem}
+      color={!!favoriteItem ? 'red' : 'inactive'}
+      className={`${className}`}
+      onPress={onPress}
     />
   );
 }

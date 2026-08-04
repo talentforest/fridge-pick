@@ -27,7 +27,7 @@ export function createSelectableItemKey(item?: SelectableItem) {
 export function createTrackedItemKey(item?: TrackedItem) {
   if (!item) return `|||`;
   const ingredientId = item.type === 'ingredient' ? item.ingredientId : '';
-  const preparedFoodId = item.type === 'custom' ? item.id : '';
+  const preparedFoodId = item.type === 'preparedFood' ? item.preparedFoodId : '';
   const mealId = item.type === 'meal' ? item.mealId : '';
   const customLabel = item.type === 'custom' ? item.customLabel : '';
 

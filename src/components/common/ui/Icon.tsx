@@ -381,8 +381,8 @@ export default function Icon({
   const Component = iconObj[name];
 
   const shadowStyle = {
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
+    shadowColor: scheme.text,
+    shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 6,
   };
@@ -403,6 +403,7 @@ export default function Icon({
     </TouchableOpacity>
   ) : (
     <View
+      style={hasShadow ? shadowStyle : undefined}
       className={`${hasBgColor ? `${bgColorMap[color]} rounded-lg p-1.5` : ''} items-center justify-center ${props.className}`}
     >
       <Component

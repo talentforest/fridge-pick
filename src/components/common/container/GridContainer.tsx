@@ -14,7 +14,7 @@ export default function GridContainer({
   children,
   horizontalInset = xInset,
   columns = 2,
-  gap = 8,
+  gap = 12,
   className = '',
 }: GridContainerProps) {
   const childrenArray = React.Children.toArray(children);

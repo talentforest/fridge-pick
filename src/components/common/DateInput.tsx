@@ -35,13 +35,11 @@ export default function DateInput({ date, openDatePicker, className }: DateInput
 
       {/* 날짜와 남은 일수 */}
       <View className="flex-1 flex-row items-center gap-x-2">
-        <Text className="font-extrabold">
-          {formatDateString(initialDate, 'yy년 M월 d일 EEEE')}
-        </Text>
+        <Text className="">{formatDateString(initialDate, 'yy년 M월 d일 EEEE')}</Text>
 
         <FilterTag
           name={`${formatRemainingDays(remainingDays)}`}
-          className="ml-auto !px-3 !py-2"
+          className="ml-auto !px-3.5 !py-2.5"
           isActive
           textClassName="!text-[13px] font-extrabold"
           color={expirationStatusObj[expirationStatus].color}

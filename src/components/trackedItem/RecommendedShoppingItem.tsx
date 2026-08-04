@@ -35,10 +35,8 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
       showToast({
         type: 'normal',
         text1: `⚠️ ${josa(label, '이/가')} 이미 장보기 목록에 있어요.`,
-        visibilityTime: 2000,
-        position: 'bottom',
         props: {
-          bgColor: 'bg-red-7',
+          bgColor: 'red',
         },
       });
     }
@@ -47,8 +45,6 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
       showToast({
         type: 'normal',
         text1: `✅ ${josa(label, '을/를')} 장보기 목록에 추가했어요.`,
-        visibilityTime: 2000,
-        position: 'bottom',
       });
     }
   };

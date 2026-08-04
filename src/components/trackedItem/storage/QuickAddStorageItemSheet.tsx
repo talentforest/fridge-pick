@@ -282,8 +282,6 @@ export default function QuickAddStorageItemSheet() {
                     showToast({
                       type: 'normal',
                       text1: `${storageObj[currStorageItem.storage.type].label}에 추가되었습니다!`,
-                      visibilityTime: 2000,
-                      position: 'bottom',
                     });
                   }
                 }}

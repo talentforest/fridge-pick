@@ -4,9 +4,9 @@ import { useAtomValue } from 'jotai';
 import { findStorageItemById } from '@/atom/storageAtom';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import Text from '@/components/common/ui/Text';
-import SelectableItemDetailCard from '@/components/selectableItem/SelectableItemDetailCard';
+import StorageItemDetailCard from '@/components/selectableItem/StorageItemDetailCard';
 import QuickActionBtnList from '@/components/trackedItem/storage/QuickActionBtnList';
-import AvailableMenuAccordion from '@/components/trackedItem/storage/AvailableMenuAccordion';
+import AvailableMenuList from '@/components/trackedItem/storage/AvailableMenuList';
 
 type CautionStorageItemSheetProps = {
   onNavigatePress: () => void;
@@ -31,7 +31,7 @@ export default function CautionStorageItemSheet({
 
   return (
     <View className="gap-y-8 py-2">
-      <SelectableItemDetailCard
+      <StorageItemDetailCard
         storageItem={cautionStorageItem}
         onNavigatePress={onNavigatePress}
       />
@@ -47,7 +47,7 @@ export default function CautionStorageItemSheet({
         <QuickActionBtnList storageItemId={storageItemId} />
       </View>
 
-      <AvailableMenuAccordion storageItem={cautionStorageItem} />
+      <AvailableMenuList storageItem={cautionStorageItem} />
     </View>
   );
 }

@@ -12,7 +12,7 @@ interface ModalHeaderProps {
 export default function ModalHeader({
   title,
   isDatePicker,
-  hasX = true,
+  hasX = false,
 }: ModalHeaderProps) {
   const { closeModal, closeDatePicker } = useOverlay();
 

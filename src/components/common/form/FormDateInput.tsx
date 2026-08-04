@@ -1,4 +1,3 @@
-import DateInput from '@/components/common/DateInput';
 import Text from '@/components/common/ui/Text';
 import ModalHeader from '@/components/common/header/ModalHeader';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -11,7 +10,7 @@ import Icon from '@/components/common/ui/Icon';
 import { storageObj } from '@/constants';
 import { useAtomValue } from 'jotai';
 import { findStorageItemById } from '@/atom/storageAtom';
-import DateQuickBtn from '@/components/common/DateQuickBtn';
+import DateInputWithQuickBtn from '@/components/common/DateInputWithQuickBtn';
 
 type InitialDateProps = {
   initialDate: string;
@@ -66,7 +65,7 @@ export default function FormDateInput({
     openDatePicker({
       render: () => (
         <View>
-          <ModalHeader title="소비기한 직접 변경" isDatePicker hasX={false} />
+          <ModalHeader title="소비기한 직접 변경" isDatePicker hasX />
           <DateTimePicker
             minimumDate={new Date()}
             value={new Date(currDate)}
@@ -88,13 +87,11 @@ export default function FormDateInput({
 
   return (
     <LabelContainer label={hasLabel ? '소비기한' : undefined} labelColor="neutral">
-      <View className="gap-y-3">
-        <DateInput date={currDate} openDatePicker={onEditDatePickerPress} />
-
+      <View className="gap-y-1.5">
         {currStorageType &&
           expirationDaysByStorage &&
           expirationDaysByStorage === remainingDays && (
-            <View className="mt-1.5 flex-row items-center gap-x-1 rounded-xl bg-green-1 p-4">
+            <View className="flex-row items-center gap-x-1 rounded-xl bg-green-1 p-4">
               <Icon name="Info" size={13} color="green" />
               <Text className="text-sm">
                 {storageObj[currStorageType].label} 권장 소비기한{' '}
@@ -106,7 +103,12 @@ export default function FormDateInput({
             </View>
           )}
 
-        <DateQuickBtn initialDate={currDate} onChangeDate={onChangeDate} />
+        <DateInputWithQuickBtn
+          hasDateInput
+          initialDate={currDate}
+          onChangeDate={onChangeDate}
+          openDatePicker={onEditDatePickerPress}
+        />
       </View>
     </LabelContainer>
   );

@@ -7,10 +7,10 @@ import { getTrackedItemData } from '@/utils';
 
 import Text from '@/components/common/ui/Text';
 import QuickActionBtnList from '@/components/trackedItem/storage/QuickActionBtnList';
-import AvailableMenuAccordion from '@/components/trackedItem/storage/AvailableMenuAccordion';
+import AvailableMenuList from '@/components/trackedItem/storage/AvailableMenuList';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import FormIngredient from '@/components/common/form/FormIngredient';
-import SelectableItemDetailCard from '@/components/selectableItem/SelectableItemDetailCard';
+import StorageItemDetailCard from '@/components/selectableItem/StorageItemDetailCard';
 import SquareBtn from '@/components/common/SquareBtn';
 import Card from '@/components/common/ui/Card';
 import FoodImage from '@/components/common/FoodImage';
@@ -49,7 +49,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
     <View className="gap-y-8 py-2">
       {!isEditing ? (
         <>
-          <SelectableItemDetailCard storageItem={currStorageItem} />
+          <StorageItemDetailCard storageItem={currStorageItem} />
 
           <View className="gap-y-3">
             <View className="flex-row items-end gap-x-1">
@@ -65,13 +65,13 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
             />
           </View>
 
-          <AvailableMenuAccordion storageItem={currStorageItem} />
+          <AvailableMenuList type="accordion" storageItem={currStorageItem} />
         </>
       ) : (
         <>
           <View className="w-full flex-row items-center gap-x-2">
             <Card className="items-center justify-center !bg-border !px-1 !py-0">
-              <FoodImage trackedItem={currStorageItem} imageSize={65} />
+              <FoodImage trackedItem={currStorageItem} imageSize={70} />
             </Card>
 
             <View className="gap-y-2.5">

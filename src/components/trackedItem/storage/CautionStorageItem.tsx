@@ -35,11 +35,11 @@ export default function CautionStorageItem({
   return (
     <Card
       style={{ ...iosShadowStyle }}
-      className={`relative h-[150px] overflow-hidden !px-1.5 !pb-4 !pt-1.5 ${isCurrIndex ? 'border-yellow-5' : 'border-border'}`}
+      className={`relative h-[140px] overflow-hidden !px-1.5 !pb-4 !pt-1.5 ${isCurrIndex ? 'border-yellow-5' : 'border-border'}`}
     >
       {index && index <= 3 ? (
-        <View className="-mb-8 -ml-1.5 -mt-1.5 h-10 w-8 items-center justify-center rounded-br-xl bg-orange-5">
-          <Text className="font-extrabold text-base text-white">{index}</Text>
+        <View className="-mb-8 -ml-1.5 -mt-1.5 h-9 w-7 items-center justify-center rounded-br-xl bg-orange-3">
+          <Text className="font-extrabold !text-[15px] text-white">{index}</Text>
         </View>
       ) : (
         <Icon
@@ -51,9 +51,9 @@ export default function CautionStorageItem({
         />
       )}
 
-      <View className={`flex-1 items-center justify-center gap-y-1`}>
+      <View className={`-mt-2 flex-1 items-center justify-center gap-y-1`}>
         {storageItem.type !== 'custom' && (
-          <FoodImage trackedItem={storageItem} imageSize={55} />
+          <FoodImage trackedItem={storageItem} imageSize={52} />
         )}
 
         <View className="items-center justify-center">
@@ -67,7 +67,7 @@ export default function CautionStorageItem({
 
       {/* 남은 일수 */}
       <Text
-        className={`text-center font-extrabold !text-[15px] ${expirationStatusObj[status].textColor}`}
+        className={`text-center font-extrabold text-base ${expirationStatusObj[status].textColor}`}
       >
         {days}
       </Text>

@@ -13,6 +13,7 @@ interface SectionTitleProps {
   highlight?: string;
   type?: 'main' | 'sub';
   hasShowAllBtn?: boolean;
+  onShowAllPress?: () => void;
 }
 
 export default function SectionTitle({
@@ -24,6 +25,7 @@ export default function SectionTitle({
   highlight,
   type = 'main',
   hasShowAllBtn = false,
+  onShowAllPress,
 }: SectionTitleProps) {
   const colorObj = {
     yellow: 'text-yellow-7',
@@ -59,8 +61,11 @@ export default function SectionTitle({
 
       {children ? children : <></>}
 
-      {hasShowAllBtn && (
-        <TouchableOpacity className="flex-row items-center gap-x-0.5">
+      {hasShowAllBtn && onShowAllPress && (
+        <TouchableOpacity
+          className="flex-row items-center gap-x-0.5 py-0.5"
+          onPress={onShowAllPress}
+        >
           <Text className="text-neutral-7">모두 보기</Text>
           <Icon name="ChevronRight" color="neutral" size={16} />
         </TouchableOpacity>

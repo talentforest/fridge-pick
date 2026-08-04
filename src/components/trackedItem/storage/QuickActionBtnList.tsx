@@ -4,7 +4,7 @@ import {
   deleteStorageItemListAtom,
   findStorageItemById,
 } from '@/atom/storageAtom';
-import DateQuickBtn from '@/components/common/DateQuickBtn';
+import DateInputWithQuickBtn from '@/components/common/DateInputWithQuickBtn';
 import ModalHeader from '@/components/common/header/ModalHeader';
 import SquareBtn from '@/components/common/SquareBtn';
 import { ToastBgColor } from '@/components/common/Toast';
@@ -45,7 +45,7 @@ export default function QuickActionBtnList({
 
   const onDeletePress = ({
     toast,
-    bgColor = 'bg-blue-9',
+    bgColor = 'blue',
   }: {
     toast: string;
     bgColor: ToastBgColor;
@@ -56,7 +56,6 @@ export default function QuickActionBtnList({
       type: 'undo',
       text1: toast,
       visibilityTime: 4000,
-      position: 'bottom',
       props: {
         bgColor,
         onUndo: () => {
@@ -90,9 +89,9 @@ export default function QuickActionBtnList({
     openModal({
       children: (
         <View className="gap-y-3">
-          <ModalHeader title="소비기한 연장하기" />
+          <ModalHeader title="소비기한 연장하기" hasX />
 
-          <DateQuickBtn
+          <DateInputWithQuickBtn
             initialDate={currStorageItem.expiresAt}
             onChangeDate={onChangeDate}
             btnClassName="!flex-1"
@@ -112,7 +111,7 @@ export default function QuickActionBtnList({
       onPress: () =>
         onDeletePress({
           toast: '✅ 다 먹어서 냉장고에서 제거했어요',
-          bgColor: 'bg-blue-9',
+          bgColor: 'blue',
         }),
     },
     {
@@ -120,8 +119,7 @@ export default function QuickActionBtnList({
       title: '버렸어요',
       icon: 'Trash2',
       color: 'red',
-      onPress: () =>
-        onDeletePress({ toast: '🗑️ 냉장고에서 제거했어요', bgColor: 'bg-red-9' }),
+      onPress: () => onDeletePress({ toast: '🗑️ 냉장고에서 제거했어요', bgColor: 'red' }),
     },
     ...(!toggleEditPress
       ? [

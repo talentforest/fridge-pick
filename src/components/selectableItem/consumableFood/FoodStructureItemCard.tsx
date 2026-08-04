@@ -47,8 +47,6 @@ export default function FoodStructureItemCard({
       showToast({
         type: 'normal',
         text1: `⚠️ 이미 장보기 목록에 있어요.`,
-        visibilityTime: 2000,
-        position: 'bottom',
       });
     }
 
@@ -56,8 +54,6 @@ export default function FoodStructureItemCard({
       showToast({
         type: 'normal',
         text1: `✅ 장보기 목록에 추가했어요.`,
-        visibilityTime: 2000,
-        position: 'bottom',
       });
     }
   };

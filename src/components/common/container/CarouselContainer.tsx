@@ -1,4 +1,3 @@
-import FullBleedSection from '@/components/common/container/FullBleedSection';
 import GridContainer from '@/components/common/container/GridContainer';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { horizontalInset } from '@/constants';
@@ -36,7 +35,7 @@ export default function CarouselContainer<T>({
   hasNavigation,
   centerFocus,
   requiredMinimum = 2,
-  spacing = 8,
+  spacing = 12,
   hasPagination,
   children,
 }: CarouselContainerProps<T>) {
@@ -102,7 +101,7 @@ export default function CarouselContainer<T>({
   const flatListData = useMemo(() => [...data, ...data, ...data], [data]);
 
   return data.length > requiredMinimum ? (
-    <FullBleedSection>
+    <View className={`${centerFocus ? '-mx-[20px]' : ''} -mx-[20px]`}>
       <View>
         <FlatList
           ref={listRef}
@@ -166,7 +165,7 @@ export default function CarouselContainer<T>({
       ) : (
         <></>
       )}
-    </FullBleedSection>
+    </View>
   ) : (
     <View>
       <GridContainer
@@ -211,7 +210,7 @@ const HandleBtn = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      className={`${commonClassName} opacity-40 ${direction === 'prev' ? 'left-8' : 'right-8'}`}
+      className={`${commonClassName} opacity-40 ${direction === 'prev' ? 'left-5' : 'right-5'}`}
     >
       {directionIcon[direction]}
     </TouchableOpacity>

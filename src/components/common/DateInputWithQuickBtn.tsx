@@ -12,14 +12,16 @@ type DateQuickBtnProps = {
   containerClassName?: string;
   btnClassName?: string;
   hasDateInput?: boolean;
+  openDatePicker?: () => void;
 };
 
-export default function DateQuickBtn({
+export default function DateInputWithQuickBtn({
   initialDate,
   onChangeDate,
   containerClassName = '',
   btnClassName = '',
   hasDateInput = false,
+  openDatePicker,
 }: DateQuickBtnProps) {
   const [currDate, setCurrDate] = useState<Date>(new Date(initialDate));
 
@@ -31,7 +33,7 @@ export default function DateQuickBtn({
         setCurrDate(date);
         onChangeDate(date);
       },
-      color: 'green' as const,
+      color: 'neutral' as const,
     },
     {
       label: '+ 7일',
@@ -40,7 +42,7 @@ export default function DateQuickBtn({
         setCurrDate(date);
         onChangeDate(date);
       },
-      color: 'blue' as const,
+      color: 'neutral' as const,
     },
     {
       label: '+ 30일',
@@ -49,42 +51,43 @@ export default function DateQuickBtn({
         setCurrDate(date);
         onChangeDate(date);
       },
-      color: 'indigo' as const,
+      color: 'neutral' as const,
     },
-    // {
-    //   label: '직접변경',
-    //   onPress: onEditDatePickerPress,
-    //   color: 'blue' as const,
-    // },
+    {
+      label: '직접변경',
+      onPress: openDatePicker,
+      color: 'neutral' as const,
+    },
   ];
 
   return (
-    <View className="gap-y-5">
+    <View className="gap-y-1.5">
       {hasDateInput ? (
-        <DateInput date={formatDateString(currDate, 'yyyy-MM-dd')} />
+        <DateInput
+          openDatePicker={openDatePicker}
+          date={formatDateString(currDate, 'yyyy-MM-dd')}
+        />
       ) : (
         <></>
       )}
 
-      <View className="flex-row items-start gap-x-3">
+      <View className="flex-row items-start gap-x-2">
         <IconWithText
           text="빠른변경"
-          iconColor="orange"
+          iconColor="darkGray"
           icon="Zap"
           className="ml-1 mt-1"
-          iconSize={12}
-          textClassName="text-sm text-orange-7"
+          iconSize={11}
+          textClassName="text-sm text-neutral-7"
         />
 
-        <View className={`flex-row gap-x-3 ${containerClassName}`}>
+        <View className={`flex-row gap-x-1.5 ${containerClassName}`}>
           {plusDateBtnList.map(({ label, onPress, color }) => (
             <SelectBtn
               key={label}
               name={label}
-              iconName="CalendarPlus"
-              iconSize={16}
-              textClassName="font-extrabold"
-              className={`items-center justify-between !px-3 !py-4 ${btnClassName}`}
+              textClassName="!font-extrabold text-sm"
+              className={`items-center justify-between !rounded-lg !px-3 !py-2 ${btnClassName}`}
               color={color}
               onPress={onPress}
             />

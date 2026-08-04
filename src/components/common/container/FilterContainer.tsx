@@ -85,7 +85,7 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
           </View>
 
           {dataList.length > 0 && children ? (
-            <GridContainer columns={columns} gap={10}>
+            <GridContainer columns={columns} gap={12}>
               {dataList.map(children)}
             </GridContainer>
           ) : (

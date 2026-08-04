@@ -8,6 +8,7 @@ export const colorTokens = {
     card: '#FFFFFF',
     text: '#333333',
     border: '#efefef',
+    line: '#cdcdcd',
 
     inactive: {
       bg: '#e7e7e7',
@@ -20,6 +21,7 @@ export const colorTokens = {
       5: '#999999',
       3: '#E9E9E9',
       1: '#F8F8F8',
+      0: '#fff',
     },
 
     green: {
@@ -36,6 +38,7 @@ export const colorTokens = {
       5: '#3b82f6',
       3: '#93c5fd',
       1: '#f1f7ff',
+      0: '#f5f9ff',
     },
 
     ice: {
@@ -43,6 +46,7 @@ export const colorTokens = {
       5: '#06b6d4',
       3: '#b4f5fd',
       1: '#e7fbff',
+      0: '#f5fdff',
     },
 
     indigo: {
@@ -66,6 +70,7 @@ export const colorTokens = {
       5: '#e5b825',
       3: '#ffdc69',
       1: '#fff9bc',
+      0: '#fffef3',
     },
 
     orange: {
@@ -82,6 +87,7 @@ export const colorTokens = {
     card: '#252525',
     text: '#FFFFFF',
     border: '#2a2a2a',
+    line: '#2a2a2a',
     inactive: {
       bg: '#333',
       text: '#666',
@@ -93,6 +99,7 @@ export const colorTokens = {
       5: '#999999',
       3: '#404040',
       1: '#171717',
+      0: '#000',
     },
 
     blue: {
@@ -101,6 +108,7 @@ export const colorTokens = {
       5: '#3b82f6',
       3: '#1d4ed8',
       1: '#1a1886',
+      0: '#04032a',
     },
 
     ice: {
@@ -108,6 +116,7 @@ export const colorTokens = {
       5: '#67e8f9',
       3: '#06b6d4',
       1: '#0e7490',
+      0: '#043441',
     },
 
     indigo: {
@@ -131,6 +140,7 @@ export const colorTokens = {
       5: '#fcd34d',
       3: '#d29000',
       1: '#5b501d',
+      0: '#382f06',
     },
 
     orange: {
@@ -156,6 +166,7 @@ export const lightTheme = vars({
   '--color-card': colorTokens.light.card,
   '--color-text': colorTokens.light.text,
   '--color-border': colorTokens.light.border,
+  '--color-line': colorTokens.light.line,
   '--color-inactive-bg': colorTokens.light.inactive.bg,
   '--color-inactive-text': colorTokens.light.inactive.text,
 
@@ -164,17 +175,20 @@ export const lightTheme = vars({
   '--color-neutral-5': colorTokens.light.neutral[5],
   '--color-neutral-3': colorTokens.light.neutral[3],
   '--color-neutral-1': colorTokens.light.neutral[1],
+  '--color-neutral-0': colorTokens.light.neutral[0],
 
   '--color-blue-9': colorTokens.light.blue[9],
   '--color-blue-7': colorTokens.light.blue[7],
   '--color-blue-5': colorTokens.light.blue[5],
   '--color-blue-3': colorTokens.light.blue[3],
   '--color-blue-1': colorTokens.light.blue[1],
+  '--color-blue-0': colorTokens.light.blue[0],
 
   '--color-ice-7': colorTokens.light.ice[7],
   '--color-ice-5': colorTokens.light.ice[5],
   '--color-ice-3': colorTokens.light.ice[3],
   '--color-ice-1': colorTokens.light.ice[1],
+  '--color-ice-0': colorTokens.light.ice[0],
 
   '--color-indigo-5': colorTokens.light.indigo[5],
   '--color-indigo-3': colorTokens.light.indigo[3],
@@ -192,6 +206,7 @@ export const lightTheme = vars({
   '--color-yellow-5': colorTokens.light.yellow[5],
   '--color-yellow-3': colorTokens.light.yellow[3],
   '--color-yellow-1': colorTokens.light.yellow[1],
+  '--color-yellow-0': colorTokens.light.yellow[0],
 
   '--color-orange-9': colorTokens.light.orange[9],
   '--color-orange-7': colorTokens.light.orange[7],
@@ -211,6 +226,7 @@ export const darkTheme = vars({
   '--color-card': colorTokens.dark.card,
   '--color-text': colorTokens.dark.text,
   '--color-border': colorTokens.dark.border,
+  '--color-line': colorTokens.dark.line,
   '--color-inactive-bg': colorTokens.dark.inactive.bg,
   '--color-inactive-text': colorTokens.dark.inactive.text,
 
@@ -219,17 +235,20 @@ export const darkTheme = vars({
   '--color-neutral-5': colorTokens.dark.neutral[5],
   '--color-neutral-3': colorTokens.dark.neutral[3],
   '--color-neutral-1': colorTokens.dark.neutral[1],
+  '--color-neutral-0': colorTokens.dark.neutral[0],
 
   '--color-blue-9': colorTokens.dark.blue[9],
   '--color-blue-7': colorTokens.dark.blue[7],
   '--color-blue-5': colorTokens.dark.blue[5],
   '--color-blue-3': colorTokens.dark.blue[3],
   '--color-blue-1': colorTokens.dark.blue[1],
+  '--color-blue-0': colorTokens.dark.blue[0],
 
   '--color-ice-7': colorTokens.dark.ice[7],
   '--color-ice-5': colorTokens.dark.ice[5],
   '--color-ice-3': colorTokens.dark.ice[3],
   '--color-ice-1': colorTokens.dark.ice[1],
+  '--color-ice-0': colorTokens.dark.ice[0],
 
   '--color-indigo-5': colorTokens.dark.indigo[5],
   '--color-indigo-3': colorTokens.dark.indigo[3],
@@ -247,6 +266,7 @@ export const darkTheme = vars({
   '--color-yellow-5': colorTokens.dark.yellow[5],
   '--color-yellow-3': colorTokens.dark.yellow[3],
   '--color-yellow-1': colorTokens.dark.yellow[1],
+  '--color-yellow-0': colorTokens.dark.yellow[0],
 
   '--color-orange-9': colorTokens.dark.orange[9],
   '--color-orange-7': colorTokens.dark.orange[7],

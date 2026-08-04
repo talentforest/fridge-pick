@@ -77,11 +77,11 @@ export const preparedFoodCategoryObj = {
     icon: 'Salad',
     color: 'green',
   },
-  snack_dessert: {
-    id: 'snack_dessert',
-    label: '간식/디저트',
-    icon: 'Dessert',
-    color: 'yellow',
+  light_food: {
+    id: 'light_food',
+    label: '간편식',
+    icon: 'Egg',
+    color: 'blue',
   },
   bakery: {
     id: 'bakery',
@@ -89,17 +89,17 @@ export const preparedFoodCategoryObj = {
     icon: 'Croissant',
     color: 'yellow',
   },
-  light_food: {
-    id: 'light_food',
-    label: '간편식',
-    icon: 'Egg',
-    color: 'blue',
-  },
   drink: {
     id: 'drink',
     label: '음료',
     icon: 'GlassWater',
     color: 'blue',
+  },
+  snack_dessert: {
+    id: 'snack_dessert',
+    label: '간식/디저트',
+    icon: 'Dessert',
+    color: 'yellow',
   },
 } as const;
 

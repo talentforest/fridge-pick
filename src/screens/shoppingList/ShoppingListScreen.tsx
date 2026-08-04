@@ -198,18 +198,20 @@ export default function ShoppingListScreen() {
           {recommendShoppingList ? (
             <View className="mt-2">
               <SectionTitle title="장보기 추천" icon="Sparkles" />
-              <CarouselContainer
-                data={recommendShoppingList}
-                initialIndex={recommendShoppingList.length}
-                itemWidth={0.28}
-                hasNavigation
-                spacing={10}
-                requiredMinimum={3}
-                keyExtractor={(_, index) => `${index}`}
-                renderItem={({ item }) => (
-                  <RecommendedShoppingItem key={item.selectableItem.id} item={item} />
-                )}
-              />
+              <View className="pl-[20px]">
+                <CarouselContainer
+                  data={recommendShoppingList}
+                  initialIndex={recommendShoppingList.length}
+                  itemWidth={0.29}
+                  hasNavigation
+                  spacing={10}
+                  requiredMinimum={3}
+                  keyExtractor={(_, index) => `${index}`}
+                  renderItem={({ item }) => (
+                    <RecommendedShoppingItem key={item.selectableItem.id} item={item} />
+                  )}
+                />
+              </View>
             </View>
           ) : (
             <></>
@@ -250,25 +252,23 @@ export default function ShoppingListScreen() {
                   text="전체 선택"
                   icon={isAllPurchased ? 'SquareCheck' : 'Square'}
                   iconSize={16}
-                  iconColor={isAllPurchased ? 'blue' : 'text'}
+                  iconColor={isAllPurchased ? 'blue' : 'lightBlue'}
                   className="flex-row items-center gap-x-1.5 px-1 py-4"
                   onPress={onAllPurchasedClick}
-                  textClassName={isAllPurchased ? 'text-blue-7' : 'text-text'}
+                  textClassName={isAllPurchased ? 'text-blue-7' : 'text-blue-5'}
                 />
 
-                {purchasedCount > 0 ? (
-                  <View className="flex-row">
+                <View className="flex-row">
+                  {purchasedCount > 0 ? (
                     <Text className="font-extrabold !text-[13px] text-blue-7">
                       {purchasedCount}개 선택
                     </Text>
-                    <Text className="mx-1.5">|</Text>
-                    <Text className="!text-[13px] text-neutral-7">
+                  ) : (
+                    <Text className="!text-[13px] text-neutral-5">
                       총 {shoppingList.length}개
                     </Text>
-                  </View>
-                ) : (
-                  <Text className="!text-[13px]">총 {shoppingList.length}개</Text>
-                )}
+                  )}
+                </View>
               </View>
 
               {shoppingList.length > 0 ? (
@@ -306,14 +306,6 @@ export default function ShoppingListScreen() {
           {purchasedCount > 0 && ( //&& !isInputFocused
             <View className="flex-row items-start gap-x-2">
               <SquareBtn
-                onPress={onDeletePress}
-                name="선택항목 삭제하기"
-                iconName="Trash2"
-                iconSize={16}
-                bgColor="yellow"
-                className="!py-4"
-              />
-              <SquareBtn
                 onPress={onAddToStoragePress}
                 name="냉장고에 넣기"
                 iconName="Grid2X2Plus"
@@ -321,10 +313,20 @@ export default function ShoppingListScreen() {
                 bgColor="blue"
                 className="!py-4"
               />
+              <SquareBtn
+                onPress={onDeletePress}
+                name="선택항목 삭제하기"
+                iconName="Trash2"
+                iconSize={16}
+                bgColor="red"
+                className="!py-4"
+              />
             </View>
           )}
 
-          {error?.message && <Text className="pl-1 text-sm">{error?.message}</Text>}
+          {error?.message && (
+            <Text className="pl-1 text-sm text-red-5">{error?.message}</Text>
+          )}
 
           {recommendedIngredientList.length > 0 && (
             <ScrollView

@@ -27,6 +27,7 @@ module.exports = {
         card: 'var(--color-card)',
         text: 'var(--color-text)',
         border: 'var(--color-border)',
+        line: 'var(--color-line)',
 
         inactive: {
           bg: 'var(--color-inactive-bg)',
@@ -48,6 +49,7 @@ module.exports = {
           5: 'var(--color-blue-5)',
           3: 'var(--color-blue-3)',
           1: 'var(--color-blue-1)',
+          0: 'var(--color-blue-0)',
         },
 
         ice: {
@@ -55,6 +57,7 @@ module.exports = {
           5: 'var(--color-ice-5)',
           3: 'var(--color-ice-3)',
           1: 'var(--color-ice-1)',
+          0: 'var(--color-ice-0)',
         },
 
         indigo: {
@@ -69,6 +72,7 @@ module.exports = {
           5: 'var(--color-neutral-5)',
           3: 'var(--color-neutral-3)',
           1: 'var(--color-neutral-1)',
+          0: 'var(--color-neutral-0)',
         },
 
         yellow: {
@@ -77,6 +81,7 @@ module.exports = {
           5: 'var(--color-yellow-5)',
           3: 'var(--color-yellow-3)',
           1: 'var(--color-yellow-1)',
+          0: 'var(--color-yellow-0)',
         },
 
         orange: {

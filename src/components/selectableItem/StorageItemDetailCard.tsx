@@ -20,7 +20,7 @@ type SelectableItemDetailCardProps = {
   onNavigatePress?: () => void;
 };
 
-export default function SelectableItemDetailCard({
+export default function StorageItemDetailCard({
   storageItem,
   onNavigatePress,
 }: SelectableItemDetailCardProps) {

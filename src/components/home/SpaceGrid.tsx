@@ -2,13 +2,19 @@ import {
   storageItemListByExpirationStatusAtom,
   itemListByStorageAtom,
 } from '@/atom/storageAtom';
-import { allMealList, allPreparedFoodList, image_fridge, storageObj } from '@/constants';
+import {
+  allMealList,
+  allPreparedFoodList,
+  image_fridge,
+  image_fridge_dark,
+  storageObj,
+} from '@/constants';
 import { StackNavProp } from '@/types/RootStackParamList';
 import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
 import { getAddedFormatLabel, getRemainingDays, getTopInsight } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
 import { useAtomValue } from 'jotai';
-import { Image, View } from 'react-native';
+import { Image, useColorScheme, View } from 'react-native';
 import { Fragment } from 'react';
 import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
@@ -97,6 +103,8 @@ export default function SpaceGrid() {
     allStorageItemList,
   });
 
+  const scheme = useColorScheme();
+
   return (
     <View className="gap-y-[10px]">
       <InsightCard {...insightProps} />
@@ -111,12 +119,15 @@ export default function SpaceGrid() {
         </View>
 
         <View className="mb-5 mt-4 flex-row items-center justify-center">
-          <View className="relative h-28 w-[24%] items-center justify-center">
-            <Image source={image_fridge} className="mt-4 size-full" />
+          <View className="relative h-32 w-[28%] items-center justify-center">
+            <Image
+              source={scheme === 'dark' ? image_fridge_dark : image_fridge}
+              className="mt-2 size-full"
+            />
 
             {/* 냉장고 상태 dot */}
             <View
-              className={`absolute right-5 top-2 size-2 rounded-xl bg-green-5 ${
+              className={`absolute right-5 top-1.5 size-2 rounded-xl bg-green-5 ${
                 expiredStorageItemList.length > 0
                   ? 'bg-red-5'
                   : expiredSoonStorageItemList.length > 0

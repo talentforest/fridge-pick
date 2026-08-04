@@ -63,9 +63,9 @@ export default function CautionStorageItemList({
         <CarouselContainer
           data={storageItemListByStorage()}
           initialIndex={storageItemListByStorage.length}
-          itemWidth={0.25}
+          itemWidth={0.24}
           hasNavigation
-          spacing={10}
+          spacing={12}
           centerFocus
           hasPagination
           requiredMinimum={3}

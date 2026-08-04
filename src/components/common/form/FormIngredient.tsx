@@ -27,7 +27,7 @@ export default function FormIngredient({
   };
 
   return (
-    <View className="gap-y-6">
+    <View className="gap-y-8">
       <FormStorage
         label="보관위치"
         onItemChange={onItemChange}

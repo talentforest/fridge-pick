@@ -8,6 +8,7 @@ interface SelectBtnProps {
   iconName?: IconName;
   tailIconName?: IconName;
   iconSize?: number;
+  iconStrokeWidth?: number;
   textClassName?: string;
   color?:
     | 'red'
@@ -27,6 +28,7 @@ export default function SelectBtn({
   name,
   iconName,
   tailIconName,
+  iconStrokeWidth = 2.5,
   iconSize = 16,
   textClassName = '',
   color = 'indigo',
@@ -34,14 +36,14 @@ export default function SelectBtn({
 }: SelectBtnProps & TouchableOpacityProps) {
   const bgColorStyle = {
     red: 'bg-card border-red-3',
-    blue: 'bg-blue-1 border-blue-3',
-    ice: 'bg-ice-1 border-ice-3',
+    blue: 'bg-blue-0 border-blue-5',
+    ice: 'bg-ice-0 border-ice-5',
     green: 'bg-green-1 border-green-3',
     lightGreen: 'bg-green-1 border-green-3',
-    yellow: 'bg-yellow-1 border-yellow-5',
+    yellow: 'bg-yellow-0 border-yellow-5',
     indigo: 'bg-indigo-1 border-indigo-3',
     inActive: 'bg-inactive-bg border-neutral-3',
-    neutral: 'bg-card border-neutral-3',
+    neutral: 'bg-neutral-0 border-line',
     transparent: 'border border-neutral-1 bg-white',
     black: 'bg-neutral-1 border-neutral-7',
   };
@@ -66,10 +68,15 @@ export default function SelectBtn({
   return (
     <TouchableOpacity
       {...props}
-      className={`flex-row items-center justify-center gap-x-1 rounded-xl border px-5 py-5 ${bgColorStyle[color]} ${props.className}`}
+      className={`flex-row items-center justify-center gap-x-1 rounded-lg border px-5 py-4 ${bgColorStyle[color]} ${props.className}`}
     >
       {iconName && (
-        <Icon name={iconName} size={iconSize} color={iconStyle} strokeWidth={2.5} />
+        <Icon
+          name={iconName}
+          size={iconSize}
+          color={iconStyle}
+          strokeWidth={iconStrokeWidth}
+        />
       )}
 
       <Text className={`${textColorStyle[color]} ${textClassName} font-extrabold`}>
@@ -77,7 +84,12 @@ export default function SelectBtn({
       </Text>
 
       {tailIconName && (
-        <Icon name={tailIconName} size={iconSize} color={iconStyle} strokeWidth={2.5} />
+        <Icon
+          name={tailIconName}
+          size={iconSize}
+          color={iconStyle}
+          strokeWidth={iconStrokeWidth}
+        />
       )}
     </TouchableOpacity>
   );

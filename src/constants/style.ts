@@ -1,10 +1,10 @@
 import { ShadowStyleIOS } from 'react-native';
 
 export const iosShadowStyle: ShadowStyleIOS = {
-  shadowColor: '#000',
-  shadowOpacity: 0.15,
-  shadowOffset: { width: 0, height: -3 },
-  shadowRadius: 10,
+  shadowColor: '#919191',
+  shadowOpacity: 0.05,
+  shadowOffset: { width: 0, height: -2 },
+  shadowRadius: 3,
 };
 
 export const shadowStyle: { elevation: number } = {
