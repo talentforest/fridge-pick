@@ -17,7 +17,7 @@ export const useHandleTodayMenu = (
 
   const addTodayMenu = useSetAtom(addTodayMenuAtom);
 
-  const { closeSheet, showToast } = useOverlay();
+  const { showToast } = useOverlay();
 
   const onAddTodayMenuPress = () => {
     const todayMenu: TodayMenu = {
@@ -30,8 +30,6 @@ export const useHandleTodayMenu = (
     const result = addTodayMenu(todayMenu);
 
     if (result.type === 'success') {
-      closeSheet();
-
       showToast({
         type: 'normal',
         text1: `✅ 오늘 먹을 메뉴로 정했어요`,

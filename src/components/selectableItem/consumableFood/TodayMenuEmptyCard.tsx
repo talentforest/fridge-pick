@@ -4,25 +4,20 @@ import { image_empty_plate } from '@/constants';
 import { Image, View } from 'react-native';
 
 interface TodayMenuEmptyCardProps {
-  type: 'mainMenu' | 'sideMenu';
   className?: string;
 }
 
-export default function TodayMenuEmptyCard({ type, className }: TodayMenuEmptyCardProps) {
-  const commonClassName = `items-center justify-center !px-1 ${type === 'mainMenu' ? '!py-4 h-[220px]' : 'h-[105px] !bg-border'} ${className}`;
+export default function TodayMenuEmptyCard({ className }: TodayMenuEmptyCardProps) {
+  const commonClassName = `items-center !py-6 justify-center ${className}`;
 
   return (
     <Card className={commonClassName}>
-      {type === 'mainMenu' && (
-        <>
-          <Image source={image_empty_plate} className="aspect-square h-[80px]" />
+      <Image source={image_empty_plate} className="aspect-square h-[80px]" />
 
-          <View className="my-3 items-center justify-center">
-            <Text className="mb-0.5 leading-6 text-neutral-5">오늘의 메뉴가</Text>
-            <Text className="leading-6 text-neutral-5">아직 없어요</Text>
-          </View>
-        </>
-      )}
+      <View className="mb-2 items-center justify-center">
+        <Text className="mt-0.5 leading-5 text-neutral-5">오늘 먹을 메뉴가</Text>
+        <Text className="leading-6 text-neutral-5">아직 없어요</Text>
+      </View>
     </Card>
   );
 }

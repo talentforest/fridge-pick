@@ -6,8 +6,13 @@ import Icon from '@/components/common/ui/Icon';
 
 export type ToastBgColor = 'blue' | 'yellow' | 'red';
 
-const getContainerCommonClassName = ({ bgColor }: { bgColor: ToastBgColor }) => {
-  return `max-w-[80%] rounded-2xl px-6 py-5 ${bgColor || 'bg-blue-9'}`;
+const getContainerCommonClassName = ({ bgColor = 'blue' }: { bgColor: ToastBgColor }) => {
+  const color = {
+    blue: 'bg-blue-9',
+    red: 'bg-red-9',
+    yellow: 'bg-yellow-9',
+  };
+  return `max-w-[80%] rounded-2xl px-6 py-5 ${color[bgColor]}`;
 };
 
 const toastConfig = {

@@ -1,6 +1,7 @@
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { colorTokens } from '@/theme/color';
 import {
+  Sandwich,
   ArrowRightLeft,
   TrendingUp,
   ChartColumnBig,
@@ -99,6 +100,7 @@ import {
 import { useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'Sandwich'
   | 'ArrowRightLeft'
   | 'TrendingUp'
   | 'ChartColumnBig'
@@ -284,6 +286,7 @@ export default function Icon({
   };
 
   const iconObj: { [key in IconName]: LucideIcon } = {
+    Sandwich,
     ArrowRightLeft,
     TrendingUp,
     ChartColumnBig,

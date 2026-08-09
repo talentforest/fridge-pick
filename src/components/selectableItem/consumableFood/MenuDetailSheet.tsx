@@ -17,7 +17,6 @@ import MenuCookTabDetail from '@/components/selectableItem/consumableFood/MenuCo
 
 interface MenuDetailSheetProps {
   food: EnrichedConsumableFoodWithFilter;
-  type: 'mainMenu' | 'sideMenu';
 }
 
 const tabObj = {
@@ -31,7 +30,7 @@ const tabObj = {
   },
 } as const;
 
-export default function MenuDetailSheet({ food, type }: MenuDetailSheetProps) {
+export default function MenuDetailSheet({ food }: MenuDetailSheetProps) {
   const { cook, convenience } = tabObj;
 
   const tabList = !food?.foodStructure
@@ -51,6 +50,12 @@ export default function MenuDetailSheet({ food, type }: MenuDetailSheetProps) {
 
   const { closeSheet } = useOverlay();
 
+  // 오늘의 메뉴 추가하기
+  const onAddPress = () => {
+    onAddTodayMenuPress();
+    closeSheet();
+  };
+
   // 오늘의 메뉴 삭제하기
   const onDeletePress = () => {
     deleteTodayMenu([food.id]);
@@ -63,21 +68,13 @@ export default function MenuDetailSheet({ food, type }: MenuDetailSheetProps) {
     closeSheet();
   };
 
-  const titleObj = {
-    mainMenu: '오늘의 메인 메뉴',
-    sideMenu: '같이 먹을 메뉴',
-  };
-
   const selectableFood: SelectableItem =
     food.kind === 'meal' ? findMeal(food.id) : findPreparedFood(food.id);
 
   return (
     <>
       <View className="py-3">
-        <ModalHeader
-          title={!isTodayMenu ? '메뉴 상세 정보' : titleObj[type]}
-          hasX={false}
-        />
+        <ModalHeader title={'메뉴 상세 정보'} hasX={false} />
 
         <View className="pb-5">
           <View className="min-h-96 pt-5">
@@ -108,12 +105,12 @@ export default function MenuDetailSheet({ food, type }: MenuDetailSheetProps) {
             )}
           </View>
 
-          <View className="mt-5 flex-row gap-x-2">
+          <View className="mt-6 gap-y-2">
             {!isTodayMenu ? (
               <SquareBtn
-                name="오늘의 식사에 추가"
+                name="오늘 먹을 메뉴에 추가"
                 iconName="HandPlatter"
-                onPress={onAddTodayMenuPress}
+                onPress={onAddPress}
                 bgColor="blue"
                 className="flex-1"
               />
@@ -126,27 +123,29 @@ export default function MenuDetailSheet({ food, type }: MenuDetailSheetProps) {
                 disabled
               />
             )}
-          </View>
 
-          {isTodayMenu && (
-            <View className="mt-12 justify-between gap-y-2">
-              <SquareBtn
-                name="오늘의 식사에서 삭제"
-                iconName="Trash2"
-                onPress={onDeletePress}
-                bgColor="yellow"
-              />
-
-              {type === 'sideMenu' && (
+            {isTodayMenu && (
+              <View className="justify-between gap-y-2">
                 <SquareBtn
-                  name="오늘의 메인메뉴로 변경"
-                  iconName="HandPlatter"
-                  onPress={onChangeMainMenuPress}
-                  bgColor="green"
+                  name="오늘 먹을 메뉴에서 삭제"
+                  iconName="Trash2"
+                  onPress={onDeletePress}
+                  bgColor="yellow"
                 />
-              )}
-            </View>
-          )}
+
+                {/* {type === 'sideMenu' ? (
+                  <SquareBtn
+                    name="오늘의 메인메뉴로 변경"
+                    iconName="HandPlatter"
+                    onPress={onChangeMainMenuPress}
+                    bgColor="green"
+                  />
+                ) : (
+                  <></>
+                )} */}
+              </View>
+            )}
+          </View>
         </View>
       </View>
     </>

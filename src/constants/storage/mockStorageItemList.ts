@@ -25,7 +25,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '2',
     ingredientId: 'daepa',
     purchasedAt: '2026-03-03',
-    expiresAt: getExpriredAt(10),
+    expiresAt: getExpriredAt(2),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {
@@ -49,7 +49,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '5',
     ingredientId: 'aehobak',
     purchasedAt: '2026-03-02',
-    expiresAt: getExpriredAt(5),
+    expiresAt: getExpriredAt(2),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {
@@ -57,7 +57,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '6',
     ingredientId: 'pyogo_beoseot',
     purchasedAt: '2026-03-03',
-    expiresAt: getExpriredAt(20),
+    expiresAt: getExpriredAt(3),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
 
@@ -66,7 +66,7 @@ export const mockStorageItemList: StorageItem[] = [
     id: '10',
     ingredientId: 'cheongyang_gochu',
     purchasedAt: '2026-03-02',
-    expiresAt: getExpriredAt(5),
+    expiresAt: getExpriredAt(3),
     storage: { type: 'fridge', side: 'inner', section: '1' },
   },
   {

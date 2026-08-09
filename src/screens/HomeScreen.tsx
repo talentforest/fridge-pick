@@ -15,6 +15,12 @@ import QuickAddStorageItemSheet from '@/components/trackedItem/storage/QuickAddS
 import MyPickList from '@/components/home/MyPickList';
 import SpaceGrid from '@/components/home/SpaceGrid';
 
+// ① 나의 보관함 — 전체 상태
+// ② 관리가 필요한 식재료 — 지금 처리할 것
+// ③ 오늘의 현황 — 오늘 먹을 메뉴 + 장보기
+// ④ 나의 픽 현황 — 내 선호 식재료/메뉴가 현재 얼마나 충족돼 있는지
+// ⑤ 이번 달 기록 — 소비/폐기/식사 + 의미 있는 변화 한 줄
+
 export default function HomeScreen() {
   const { openSheet, closeSheet } = useOverlay();
 
@@ -50,11 +56,9 @@ export default function HomeScreen() {
       <ScrollViewContainer>
         <View>
           <HomeHeader />
+          {/* TODO: 현재 상태 자체가 아니라 데이터를 해석해서 얻은 정보 */}
           <SpaceGrid />
         </View>
-
-        {/* NOTE: 나의 픽인데 현재 보관함에 없는 것들 
-        이게 장보기 추천템인가 조금 다르긴 한데 */}
 
         <CautionStorageItemList
           type="expiredSoon"
@@ -63,6 +67,7 @@ export default function HomeScreen() {
 
         <MyPickList />
 
+        {/* TODO: 오늘 먹을 메뉴 "요약" 정말 간단하게 요약된걸로 */}
         <TodayMenu hasHeader />
 
         <RecommendedMenu />

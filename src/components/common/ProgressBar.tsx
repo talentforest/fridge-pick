@@ -42,16 +42,14 @@ export default function ProgressBar({
   return (
     <>
       {type === 'bar' ? (
-        <View>
+        <View className="gap-y-1">
           {label ? (
-            <View className="mb-[6px] flex-row items-center gap-x-1">
-              <Text className="text-sm text-neutral-9">{label}</Text>
-              <Text
-                className={`${colorObj.text} font-extrabold text-sm`}
-              >{`${percentage}%`}</Text>
+            <View className="flex-row items-center gap-x-1">
+              <Text className="text-sm text-neutral-7">{label}</Text>
+
               {possessedCount && requiredCount ? (
-                <Text className={`ml-1 text-sm text-neutral-7`}>
-                  {possessedCount}/{requiredCount}
+                <Text className={`text-sm text-neutral-7`}>
+                  {possessedCount} / {requiredCount}
                 </Text>
               ) : (
                 <></>
@@ -61,13 +59,16 @@ export default function ProgressBar({
             <></>
           )}
 
-          <View className="w-full flex-row items-center gap-x-1">
-            {requiredBoxList.map((box) => (
-              <View
-                key={box}
-                className={`h-[14px] flex-1 ${box === 0 ? 'rounded-l' : ''} ${box === requiredBoxList.length - 1 ? 'rounded-r' : ''} ${possessedCount > box ? colorObj.bg : 'bg-inactive-bg'}`}
-              />
-            ))}
+          <View className="w-full flex-row items-center justify-between gap-x-1.5">
+            <View className="flex-1 flex-row items-center justify-between gap-x-0.5">
+              {requiredBoxList.map((box) => (
+                <View
+                  key={box}
+                  className={`h-3 flex-1 ${box === 0 ? 'rounded-l' : ''} ${box === requiredBoxList.length - 1 ? 'rounded-r' : ''} ${possessedCount > box ? colorObj.bg : 'bg-inactive-bg'}`}
+                />
+              ))}
+            </View>
+            <Text className={`${colorObj.text} font-heavy text-sm`}>{percentage}%</Text>
           </View>
 
           {children}

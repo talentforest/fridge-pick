@@ -74,13 +74,13 @@ export const preparedFoodCategoryObj = {
   side_dish: {
     id: 'side_dish',
     label: '반찬',
-    icon: 'Salad',
-    color: 'green',
+    icon: 'EggFried',
+    color: 'neutral',
   },
   light_food: {
     id: 'light_food',
     label: '간편식',
-    icon: 'Egg',
+    icon: 'Sandwich',
     color: 'blue',
   },
   bakery: {
@@ -107,7 +107,7 @@ export const mealCategoryObj = {
   rice_meal: {
     id: 'rice_meal',
     label: '밥류',
-    icon: 'Soup',
+    icon: 'Wheat',
     color: 'red',
   },
   noodle_meal: {
@@ -118,7 +118,7 @@ export const mealCategoryObj = {
   },
   soup_meal: {
     id: 'soup_meal',
-    label: '국물류',
+    label: '국류',
     icon: 'Soup',
     color: 'blue',
   },
@@ -132,12 +132,17 @@ export const mealCategoryObj = {
     id: 'western_meal',
     label: '서양식',
     icon: 'UtensilsCrossed',
-    color: 'blue',
+    color: 'orange',
   },
   fresh_meal: {
     id: 'fresh_meal',
-    label: '샐러드/프레시',
+    label: '프레시',
     icon: 'Salad',
     color: 'green',
   },
 } as const;
+
+export const consumableFoodCategoryObj = {
+  ...preparedFoodCategoryObj,
+  ...mealCategoryObj,
+};

@@ -59,7 +59,7 @@ export default function SquareBtn({
     >
       {iconName && <Icon name={iconName} size={iconSize} color={iconStyle} />}
 
-      <Text className={`${textStyle} ${textClassName}`}>{name}</Text>
+      <Text className={`${textStyle} font-extrabold ${textClassName}`}>{name}</Text>
     </TouchableOpacity>
   );
 }

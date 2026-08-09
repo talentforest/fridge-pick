@@ -213,7 +213,7 @@ export type PreparedFoodWithEnrichFoodStructure = Omit<PreparedFood, 'foodStruct
 /** 반찬/간식/보조식
  * 직접 조리 없이 바로 먹을 수 있는 상태의 음식.
  * 완결된 한 끼 식사 meal은 아니지만, 식사에 곁들이거나 간단히 먹거나 일부 경우 재료처럼 활용될 수 있는 중간층.
- * 하지만 보통 단독으로 “오늘의 식사” 메인 후보는 아님
+ * 하지만 보통 단독으로 “오늘 먹을 메뉴” 메인 후보는 아님
  */
 export type PreparedFood = {
   kind: 'preparedFood';

@@ -4,7 +4,7 @@ import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
-import MenuItemCard from '@/components/selectableItem/consumableFood/MenuItemCard';
+import MenuHorizontalCard from '@/components/selectableItem/consumableFood/MenuHorizontalCard';
 import { useGetMenuList } from '@/hooks';
 import { EnrichedStorageItem } from '@/types/storage';
 import { getTrackedItemData } from '@/utils';
@@ -61,7 +61,7 @@ export default function AvailableMenuList({
 
                   {/* 메뉴 리스트 */}
                   {menuListHasStorageItem.slice(0, 4).map((menu) => (
-                    <MenuItemCard key={menu.id} menu={menu} />
+                    <MenuHorizontalCard key={menu.id} menu={menu} />
                   ))}
 
                   {menuListHasStorageItem.length > 4 ? (
@@ -96,7 +96,7 @@ export default function AvailableMenuList({
                 hasPagination
                 requiredMinimum={1}
                 keyExtractor={(_, index) => `${index}`}
-                renderItem={({ item }) => <MenuItemCard menu={item} />}
+                renderItem={({ item }) => <MenuHorizontalCard menu={item} />}
               />
             </View>
           ) : (

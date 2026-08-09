@@ -20,7 +20,7 @@ export default function ConsumableFoodScreen() {
     setSearchKeyword,
     activeFilter,
     changeActiveFilter,
-  } = useGetMenuList({ maxLength: 10 });
+  } = useGetMenuList({ maxLength: 30 });
 
   const filteredChildrenData = useCallback(
     (meal: EnrichedConsumableFoodWithFilter) => <MenuCard key={meal.id} food={meal} />,
@@ -29,13 +29,13 @@ export default function ConsumableFoodScreen() {
 
   return (
     <SafeAreaViewContainer>
-      <ScreenHeader title="오늘의 식사" isDetailPage={false} />
+      <ScreenHeader title="식사 메뉴" isDetailPage={false} />
 
       {/* 전체 식사 메뉴 리스트 */}
-      <ScrollViewContainer>
-        <TodayMenu />
+      <ScrollViewContainer contentContainerClassName="mt-3">
+        <TodayMenu hasHeader />
 
-        <CautionStorageItemList hasCautionStorageItem={true} type="expiredSoon" />
+        <CautionStorageItemList type="expiredSoon" />
 
         {/* 메뉴 검색바 */}
         <View className="min-h-[800px]">
@@ -49,7 +49,7 @@ export default function ConsumableFoodScreen() {
           </LabelContainer>
 
           <FilterContainer
-            columns={1}
+            columns={2}
             filterList={filterList}
             dataList={filteredMenuList}
             changeActiveFilter={changeActiveFilter}

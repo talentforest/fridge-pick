@@ -15,7 +15,7 @@ export const expirationStatusObj = {
   expiredSoon: {
     label: '임박',
     color: 'orange',
-    textColor: '!text-orange-5',
+    textColor: '!text-orange-7',
     bgColor: 'bg-orange-5',
     filterColor: 'bg-orange-3',
     priority: 3,

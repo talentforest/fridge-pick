@@ -20,6 +20,7 @@ module.exports = {
         normal: ['NanumSquareNeoRegular'],
         bold: ['NanumSquareNeoBold'],
         extrabold: ['NanumSquareNeoExtraBold'],
+        heavy: ['NanumSquareNeoHeavy'],
       },
 
       colors: {

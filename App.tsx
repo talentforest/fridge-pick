@@ -17,6 +17,7 @@ export default function App() {
     NanumSquareNeoExtraBold: require('./assets/fonts/NanumSquareNeoExtraBold.ttf'),
     NanumSquareNeoBold: require('./assets/fonts/NanumSquareNeoBold.ttf'),
     NanumSquareNeoRegular: require('./assets/fonts/NanumSquareNeoRegular.ttf'),
+    NanumSquareNeoHeavy: require('./assets/fonts/NanumSquareNeoHeavy.ttf'),
   });
 
   if (!fontLoaded) return null;

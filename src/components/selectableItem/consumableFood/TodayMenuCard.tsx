@@ -1,74 +1,67 @@
+import { deleteTodayMenuAtom } from '@/atom/todayMenuAtom';
+import FilterTag from '@/components/common/FilterTag';
+import FoodImage from '@/components/common/FoodImage';
+import IconWithText from '@/components/common/IconWithText';
+import ProgressBar from '@/components/common/ProgressBar';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
-import IconWithText from '@/components/common/IconWithText';
-import ProgressBar from '@/components/common/ProgressBar';
 import MenuDetailSheet from '@/components/selectableItem/consumableFood/MenuDetailSheet';
-import FoodImage from '@/components/common/FoodImage';
-import { TodayMenu } from '@/types/storage';
-import { View } from 'react-native';
+import { consumableFoodCategoryObj } from '@/constants';
 import { EnrichedConsumableFoodWithFilter, useOverlay } from '@/hooks';
+import { useSetAtom } from 'jotai';
+import { View } from 'react-native';
 
-interface TodayMenuCardProps {
-  todayMenu: TodayMenu;
-  type: 'mainMenu' | 'sideMenu';
-  className?: string;
-}
+type MenuItemCardProps = {
+  menu: EnrichedConsumableFoodWithFilter;
+};
 
-export default function TodayMenuCard({
-  todayMenu,
-  className = '',
-  type,
-}: TodayMenuCardProps) {
-  const mainMenu = type === 'mainMenu';
+export default function MenuHorizontalCard({ menu }: MenuItemCardProps) {
+  const deleteTodayMenu = useSetAtom(deleteTodayMenuAtom);
 
-  const { consumableFood } = todayMenu;
+  const category = consumableFoodCategoryObj[menu.category];
 
   const { openSheet } = useOverlay();
 
-  const onPress = (food: EnrichedConsumableFoodWithFilter) => {
-    openSheet({
-      render: () => <MenuDetailSheet type={type} food={food} />,
-    });
+  const onCardPress = () => {
+    openSheet({ render: () => <MenuDetailSheet food={menu} /> });
   };
 
-  const commonClassName = `justify-center ${mainMenu ? 'h-[220px] items-start ' : 'h-[105px] !px-2 items-center !bg-border'} ${className}`;
-
   return (
-    <TouchableOpacity onPress={() => onPress(consumableFood)}>
-      <Card className={`${commonClassName} ${mainMenu ? '!pt-3' : '!pt-1'}`}>
-        {mainMenu && (
-          <IconWithText
-            text="메인메뉴"
-            icon="Sparkles"
-            className="-mb-2.5 rounded-full border border-yellow-1 bg-blue-1 px-3.5 py-2.5"
-            textClassName="text-[13px] text-blue-7"
-            iconSize={13}
-            iconColor="blue"
-          />
-        )}
+    <TouchableOpacity onPress={onCardPress}>
+      <Card key={menu.id} className="overflow-hidden !p-2">
+        <FilterTag
+          name={category.label}
+          color={category.color}
+          icon={category.icon}
+          iconSize={10}
+          isActive
+          className="mr-auto !px-2 !py-1.5"
+          textClassName="text-xs !font-bold"
+        />
 
-        <View className="w-full items-center justify-between">
-          <View className="items-center">
-            <FoodImage consumableFood={consumableFood} imageSize={mainMenu ? 100 : 65} />
-            <Text
-              className={`-mt-0.5 line-clamp-2 text-center ${mainMenu ? 'text-base' : 'text-[13px] text-neutral-7'}`}
-            >
-              {consumableFood?.label}
-            </Text>
-          </View>
-
-          {mainMenu && (
-            <View className={`mt-3 items-center gap-y-2.5`}>
-              <ProgressBar
-                label="재료 보유율"
-                percentage={consumableFood.requiredPossessionPercent}
-                possessedCount={consumableFood.requiredPossessedList.length}
-                requiredCount={consumableFood.requiredCount}
-              />
-            </View>
-          )}
+        <View className="-mt-2 items-center justify-center p-0.5">
+          <FoodImage consumableFood={menu} imageSize={80} />
         </View>
+
+        <View className="-mt-0.5 items-center justify-center gap-y-2 px-1 pb-1">
+          <Text className="text-center !text-[13px]">{menu.label}</Text>
+
+          <ProgressBar
+            percentage={menu.requiredPossessionPercent}
+            possessedCount={menu.requiredPossessedList.length}
+            requiredCount={menu.requiredCount}
+          />
+        </View>
+
+        <IconWithText
+          icon="Trash2"
+          iconSize={14}
+          iconColor="neutral"
+          textClassName="text-neutral-7 !text-[13px]"
+          className="absolute right-0 top-1 !gap-x-0.5 p-2"
+          onPress={() => deleteTodayMenu([menu.id])}
+        />
       </Card>
     </TouchableOpacity>
   );

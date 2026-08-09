@@ -51,7 +51,7 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
             justifyContent: 'space-between',
             marginBottom: 8,
           }}
-          contentContainerClassName="pb-10 px-6"
+          contentContainerClassName="pb-10 px-5"
           keyExtractor={(item) => item.id}
           ListHeaderComponent={
             <>
@@ -85,7 +85,7 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
           </View>
 
           {dataList.length > 0 && children ? (
-            <GridContainer columns={columns} gap={12}>
+            <GridContainer columns={columns} gap={10}>
               {dataList.map(children)}
             </GridContainer>
           ) : (
