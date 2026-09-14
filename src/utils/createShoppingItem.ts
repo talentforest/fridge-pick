@@ -1,26 +1,25 @@
-import { allIngredientList, allMealList, allPreparedFoodList } from '@/constants';
+import { allIngredientList, allFoodList } from '@/constants';
 import { SelectableItem } from '@/types/selectableItem';
-import { EnrichedShoppingItem, ShoppingItem } from '@/types/shoppingList';
+import { EnrichedShoppingItem, ShoppingItem } from '@/types/shoppingItem';
 import { nanoid } from 'nanoid/non-secure';
-
-// export type CustomIngredient = Pick<
-//   Ingredient,
-//   'label' | 'category' | 'defaultStorage' | 'expirationDays'
-// > & {
-//   type: 'custom';
-//   /** nanoid */
-//   id: string;
-// };
 
 export const createShoppingItem = (inputValue: string): EnrichedShoppingItem => {
   const ingredient = allIngredientList.find(({ label }) => label === inputValue);
-  const meal = allMealList.find(({ label }) => label === inputValue);
-  const preparedFood = allPreparedFoodList.find(({ label }) => label === inputValue);
+  const food = allFoodList.find(({ label }) => label === inputValue);
 
   const baseItem = {
     id: nanoid(),
     isPurchased: false,
   };
+
+  if (food) {
+    return {
+      ...baseItem,
+      type: 'food',
+      foodId: food.id,
+      food,
+    };
+  }
 
   if (ingredient) {
     return {
@@ -28,24 +27,6 @@ export const createShoppingItem = (inputValue: string): EnrichedShoppingItem => 
       type: 'ingredient',
       ingredientId: ingredient.id,
       ingredient,
-    };
-  }
-
-  if (preparedFood) {
-    return {
-      ...baseItem,
-      type: 'preparedFood',
-      preparedFoodId: preparedFood.id,
-      preparedFood,
-    };
-  }
-
-  if (meal) {
-    return {
-      ...baseItem,
-      type: 'meal',
-      mealId: meal.id,
-      meal,
     };
   }
 
@@ -70,17 +51,17 @@ export const convertToShoppingItem = (item: SelectableItem): ShoppingItem => {
     };
   }
 
-  if (item.kind === 'meal') {
+  if (item.kind === 'food') {
     return {
       ...baseItem,
-      type: 'meal',
-      mealId: item.id,
+      type: 'food',
+      foodId: item.id,
     };
   }
 
   return {
     ...baseItem,
     type: 'custom',
-    customLabel: item.label,
+    customLabel: '', // NOTE: 여기 체크
   };
 };

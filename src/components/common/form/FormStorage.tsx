@@ -1,6 +1,7 @@
 import LabelContainer from '@/components/common/container/LabelContainer';
 import SelectBtn from '@/components/common/SelectBtn';
 import { DEFAULT_EXPIRATION_DAYS, storageObj } from '@/constants';
+import { StorageDurations } from '@/types/selectableItem';
 import { EditableStorageItem, StorageTypeId } from '@/types/storage';
 import { formatDateString } from '@/utils';
 import { addDays } from 'date-fns';
@@ -10,11 +11,7 @@ interface FormStorageProps {
   label?: string;
   currStorageType: StorageTypeId;
   onItemChange: (newData: EditableStorageItem) => void;
-  ingredientExpirationDays?: {
-    fridge?: number;
-    freezer?: number;
-    pantry?: number;
-  };
+  expirationPeriods?: StorageDurations;
   containerClassName?: string;
 }
 
@@ -22,7 +19,7 @@ export default function FormStorage({
   label,
   currStorageType,
   onItemChange,
-  ingredientExpirationDays,
+  expirationPeriods,
   containerClassName = '',
 }: FormStorageProps) {
   return (
@@ -39,7 +36,7 @@ export default function FormStorage({
             onPress={() => {
               const date = addDays(
                 new Date(),
-                ingredientExpirationDays?.[storageType] || DEFAULT_EXPIRATION_DAYS,
+                expirationPeriods?.[storageType]?.value || DEFAULT_EXPIRATION_DAYS,
               );
               const expiresAt = formatDateString(date, 'yyyy-MM-dd');
               onItemChange({ storage: { type: storageType }, expiresAt });

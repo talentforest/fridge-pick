@@ -1,11 +1,6 @@
-import {
-  ingredientCategoryObj,
-  mealCategoryObj,
-  noCategoryObj,
-  preparedFoodCategoryObj,
-} from '@/constants';
-import { SelectableItem } from '@/types/selectableItem';
-import { EnrichedShoppingItem } from '@/types/shoppingList';
+import { ingredientCategoryObj, foodCategoryObj } from '@/constants';
+import { Food, Ingredient, SelectableItem } from '@/types/selectableItem';
+import { EnrichedShoppingItem } from '@/types/shoppingItem';
 import { EnrichedStorageItem } from '@/types/storage';
 
 export const getTrackedItemData = (item: EnrichedShoppingItem | EnrichedStorageItem) => {
@@ -16,48 +11,28 @@ export const getTrackedItemData = (item: EnrichedShoppingItem | EnrichedStorageI
   };
 
   switch (item.type) {
-    case 'meal':
+    case 'food':
       return {
-        label: item.meal?.label || '찾을 수 없음',
-        categoryLabel: mealCategoryObj[item.meal.category].label,
-        expirationDays: initialExpirationDays,
-      };
-
-    case 'preparedFood':
-      return {
-        label: item.preparedFood?.label || '찾을 수 없음',
-        categoryLabel: preparedFoodCategoryObj[item.preparedFood.category].label,
-        expirationDays: item.preparedFood.expirationDays,
+        label: item.food?.label || '찾을 수 없음',
+        categoryLabel: foodCategoryObj[item.food.category].label,
+        recommendedDurations: initialExpirationDays,
       };
 
     case 'ingredient':
       return {
         label: item.ingredient?.label || '찾을 수 없음',
         categoryLabel: ingredientCategoryObj[item.ingredient.category].label,
-        expirationDays: item.ingredient.expirationDays,
-      };
-
-    case 'custom':
-      return {
-        label: item.customLabel || '찾을 수 없음',
-        categoryLabel: noCategoryObj.no_category.label,
-        expirationDays: initialExpirationDays,
+        recommendedDurations: item.ingredient.recommendedDurations,
       };
   }
 };
 
 export const getSelectableItemLabelAndCategory = (item: SelectableItem) => {
   switch (item.kind) {
-    case 'meal':
+    case 'food':
       return {
         label: item?.label || '찾을 수 없음',
-        categoryLabel: mealCategoryObj[item.category].label,
-      };
-
-    case 'preparedFood':
-      return {
-        label: item?.label || '찾을 수 없음',
-        categoryLabel: preparedFoodCategoryObj[item.category].label,
+        categoryLabel: foodCategoryObj[item.category].label,
       };
 
     case 'ingredient':
@@ -65,5 +40,17 @@ export const getSelectableItemLabelAndCategory = (item: SelectableItem) => {
         label: item?.label || '찾을 수 없음',
         categoryLabel: ingredientCategoryObj[item.category].label,
       };
+  }
+};
+
+export const getStorageSelectableItem = (
+  storageItem: EnrichedStorageItem,
+): Ingredient | Food => {
+  switch (storageItem.type) {
+    case 'ingredient':
+      return storageItem.ingredient;
+
+    case 'food':
+      return storageItem.food;
   }
 };

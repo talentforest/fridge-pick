@@ -26,11 +26,11 @@ export default function FilterTag({
   iconSize = 15,
 }: FilterProps) {
   const bgColor = {
-    green: '!bg-green-1',
-    red: '!bg-red-1',
+    green: 'bg-green-1',
+    red: 'bg-red-1',
     blue: 'bg-blue-1',
-    orange: '!bg-orange-1',
-    yellow: '!bg-yellow-1',
+    orange: 'bg-orange-1',
+    yellow: 'bg-yellow-1',
     neutral: 'bg-neutral-3',
     indigo: 'bg-indigo-1',
     ice: 'bg-ice-1',
@@ -42,7 +42,7 @@ export default function FilterTag({
     blue: '!text-blue-7',
     yellow: '!text-yellow-7',
     orange: '!text-orange-9',
-    neutral: '!text-neutral-9',
+    neutral: '!text-text',
     indigo: '!text-indigo-5',
     ice: '!text-ice-5',
   };
@@ -65,7 +65,14 @@ export default function FilterTag({
       onPress={onPress}
       className={`${commonClassName} flex-row items-center justify-center gap-x-0.5 ${currBgColor} ${className}`}
     >
-      {icon && <Icon name={icon} size={iconSize} color={isActive ? color : 'inactive'} />}
+      {icon && (
+        <Icon
+          name={icon}
+          size={iconSize}
+          color={isActive ? color : 'inactive'}
+          strokeWidth={2.5}
+        />
+      )}
       <Text className={`${currTextColor} text-inactive-text ${textClassName}`}>
         {name}
       </Text>
@@ -74,7 +81,14 @@ export default function FilterTag({
     <View
       className={`${commonClassName} flex-row items-center justify-center gap-x-0.5 ${currBgColor} ${className}`}
     >
-      {icon && <Icon name={icon} size={iconSize} color={isActive ? color : 'inactive'} />}
+      {icon && (
+        <Icon
+          name={icon}
+          size={iconSize}
+          color={isActive ? color : 'inactive'}
+          strokeWidth={2.5}
+        />
+      )}
       <Text className={`${currTextColor} ${textClassName}`}>{name}</Text>
     </View>
   );

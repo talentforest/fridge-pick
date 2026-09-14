@@ -8,7 +8,6 @@ import Text from '@/components/common/ui/Text';
 import FoodImage from '@/components/common/FoodImage';
 import { useOverlay } from '@/hooks';
 import Card from '@/components/common/ui/Card';
-import FavoriteBtn from '@/components/common/FavoriteBtn';
 import SelectBtn from '@/components/common/SelectBtn';
 import IconWithText from '@/components/common/IconWithText';
 
@@ -56,41 +55,37 @@ export default function MyPickItemCard({
   };
 
   return (
-    <View className={`items-center justify-center gap-y-2 !px-0 py-2 ${className}`}>
+    <View className={`items-center justify-center gap-y-1.5 !px-2 py-2 ${className}`}>
       {/* 이미지 */}
-      <Card className="rounded-full p-3">
+      <Card className="aspect-square w-[90%] items-center justify-center rounded-full">
         <FoodImage selectableItem={item} imageSize={imageSize} />
-
-        <FavoriteBtn
-          selectableItem={item}
-          size={13}
-          hasShadow
-          className="absolute -right-0 -top-1 rounded-full bg-neutral-0 p-1.5"
-        />
       </Card>
 
       {/* 라벨 */}
-      <Text className={`line-clamp-1 text-center !text-[13px] ${textClassName}`}>
+      <Text
+        className={`line-clamp-2 text-center !text-[13px] leading-5 ${textClassName}`}
+      >
         {item.label}
       </Text>
 
-      <View className="">
+      <View>
         {storageItem ? (
           <IconWithText
             icon="CheckCircle2"
             iconColor="lightGreen"
             iconSize={12}
-            className="py-1.5"
-            textClassName="text-sm  text-green-3"
+            className="!px-2 !py-1.5"
+            textClassName="!text-[11px] font-heavy text-green-3"
             text="보유"
           />
         ) : (
           <SelectBtn
             iconName="ShoppingBasket"
-            iconSize={13}
-            iconStrokeWidth={2}
+            iconSize={11}
+            iconStrokeWidth={2.5}
             name={isShoppingItem ? '담김' : '담기'}
-            textClassName="!text-sm !font-bold"
+            disabled={!!isShoppingItem}
+            textClassName="!text-[11px] font-heavy"
             className="!rounded-md border-0 !px-2 !py-1.5"
             color={isShoppingItem ? 'inActive' : 'indigo'}
             onPress={!isShoppingItem ? onAddShoppingItemPress : undefined}

@@ -71,21 +71,21 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
           }
         />
       ) : (
-        <View>
+        <View className="gap-y-4">
           <FilterList
             filterList={filterList}
             activeFilter={activeFilter}
             setActiveFilter={changeActiveFilter}
           />
 
-          <View className="mb-4 mt-3 flex-row items-center justify-between pl-1">
-            <Text className="text-base text-neutral-7">
+          <View className="mt-2 flex-row items-center justify-between pl-1">
+            <Text className="font-extrabold text-neutral-7">
               총 {dataList.length}개의 메뉴
             </Text>
           </View>
 
           {dataList.length > 0 && children ? (
-            <GridContainer columns={columns} gap={10}>
+            <GridContainer columns={columns} gap={14}>
               {dataList.map(children)}
             </GridContainer>
           ) : (
@@ -111,7 +111,7 @@ function FilterList<K>({
   setActiveFilter,
 }: FilterListProps<K>) {
   return (
-    <View className="my-3 flex-row flex-wrap gap-2">
+    <View className="flex-row flex-wrap gap-2">
       {filterList.map(({ name, label, icon, color }) => (
         <FilterTag
           key={String(name)}

@@ -7,7 +7,7 @@ import {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Appearance, Modal, Pressable, View } from 'react-native';
+import { Appearance, Keyboard, Modal, Platform, Pressable, View } from 'react-native';
 import { useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
@@ -49,6 +49,16 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
       sheetRef.current?.dismiss();
     }
   }, [sheetProps]);
+
+  useEffect(() => {
+    const eventName = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+
+    const subscription = Keyboard.addListener(eventName, () => {
+      sheetRef.current?.snapToIndex(0);
+    });
+
+    return () => subscription.remove();
+  }, []);
 
   return (
     <>
@@ -95,8 +105,9 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
-            paddingBottom: insets.bottom,
+            paddingBottom: insets.bottom + 10,
             paddingHorizontal: 20,
+            paddingTop: 12,
           }}
         >
           {sheetProps && sheetProps.render()}
@@ -151,9 +162,9 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
             {datePickerProps?.render && (
               <View
                 style={{ backgroundColor: colorTokens[colorScheme].bg }}
-                className="rounded-t-3xl pt-6"
+                className="rounded-t-[36px] pt-10"
               >
-                <View className="mx-auto" style={{ paddingBottom: insets.bottom }}>
+                <View className="mx-8" style={{ paddingBottom: insets.bottom }}>
                   {datePickerProps.render()}
                 </View>
               </View>
@@ -176,7 +187,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
 
             <View className="absolute h-full w-full items-center justify-center">
               <View
-                className={`max-h-[85%] w-[75%] rounded-3xl bg-neutral-9 p-1`}
+                className={`max-h-[85%] w-[75%] rounded-3xl bg-neutral-1 p-1`}
                 style={{
                   ...iosShadowStyle,
                   shadowOffset: { width: 0, height: 4 },
@@ -191,7 +202,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
                   )}
 
                   {modalProps.message && (
-                    <Text className="text-base leading-7 !text-neutral-1">
+                    <Text className="text-base leading-[25px] tracking-tighter !text-text">
                       {modalProps.message}
                     </Text>
                   )}
@@ -206,7 +217,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
                       }}
                       className="p-4"
                     >
-                      <Text className="font-extrabold text-base !text-neutral-3">
+                      <Text className="font-extrabold !text-[15px] !text-neutral-5">
                         취소
                       </Text>
                     </TouchableOpacity>
@@ -214,12 +225,15 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
 
                   <TouchableOpacity
                     onPress={() => {
+                      if (modalProps.onConfirmPress) {
+                        modalProps.onConfirmPress();
+                      }
                       modalProps.resolve(true);
                       closeModal();
                     }}
                     className="p-4"
                   >
-                    <Text className="font-extrabold text-base !text-blue-5">확인</Text>
+                    <Text className="font-heavy !text-[15px] !text-green-5">확인</Text>
                   </TouchableOpacity>
                 </View>
               </View>

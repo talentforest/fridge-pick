@@ -4,21 +4,12 @@ import Text from '@/components/common/ui/Text';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import StorageItem from '@/components/trackedItem/storage/StorageItem';
 import { horizontalInset } from '@/constants';
-import {
-  IngredientCategoryItem,
-  MealCategoryItem,
-  NoCategoryItem,
-  PreparedFoodCategoryItem,
-} from '@/types/category';
+import { Category } from '@/types/category';
 import { EnrichedStorageItem } from '@/types/storage';
 import { View } from 'react-native';
 
 type StorageBoxByCategoryProps = {
-  category:
-    | IngredientCategoryItem
-    | PreparedFoodCategoryItem
-    | MealCategoryItem
-    | NoCategoryItem;
+  category: Category;
   storageItemList: EnrichedStorageItem[];
   openItemPress: (item: EnrichedStorageItem) => void;
 };
@@ -31,12 +22,12 @@ export default function StorageBoxByCategory({
   return (
     <View key={category.id} className={`flex-1 bg-card px-[16px] pb-4`}>
       <View className="h-12 flex-row items-center gap-x-1">
-        {category.icon && <Icon name={category.icon} size={14} color="blue" />}
+        {category.icon && <Icon name={category.icon} size={12} color={category.color} />}
 
-        <Text className="text-blue-7">{category.label}</Text>
+        <Text className="font-heavy !text-sm text-neutral-7">{category.label}</Text>
       </View>
 
-      <GridContainer columns={5} gap={4} horizontalInset={horizontalInset + 16}>
+      <GridContainer columns={5} gap={6} horizontalInset={horizontalInset + 16}>
         {/* 식재료 리스트 */}
         {storageItemList.map((storageItem) => (
           <TouchableOpacity

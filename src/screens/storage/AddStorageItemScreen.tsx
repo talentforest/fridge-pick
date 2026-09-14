@@ -1,8 +1,9 @@
 import { storageObj } from '@/constants';
 import { RootStackParamList } from '@/types/RootStackParamList';
-import { EnrichedStorageItem } from '@/types/storage';
+import { EditableStorageItem, EnrichedStorageItem, StorageItem } from '@/types/storage';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
+import { useErrorHandler } from '@/hooks';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import KeyboardAvoidingViewContainer from '@/components/common/container/KeyboardAvoidingViewContainer';
@@ -25,25 +26,40 @@ export default function AddStorageItemScreen() {
     null,
   );
 
+  const { clearError } = useErrorHandler<StorageItem>();
+
+  const initializeStorageItem = () => {
+    setSearchKeyword('');
+    setCurrStorageItem(null);
+    clearError();
+  };
+
+  const onItemChange = (newData: EditableStorageItem) => {
+    setCurrStorageItem((prev): EnrichedStorageItem | null => {
+      if (!prev) return null;
+      return { ...prev, ...newData };
+    });
+  };
+
   return (
     <KeyboardAvoidingViewContainer>
       <SafeAreaViewContainer edges={['top', 'bottom']}>
-        <ScreenHeader title={`${label}에 식재료 추가`} onLeftPress={undefined} />
+        <ScreenHeader title={`${label}에 추가`} onLeftPress={undefined} />
 
         <ViewContentContainer>
           {currStorageItem === null ? (
             <SearchAddStorageItem
-              currStorageType={currStorageType}
               searchKeyword={searchKeyword}
+              currStorageType={currStorageType}
               setSearchKeyword={setSearchKeyword}
-              maxLength={12}
               setCurrStorageItem={setCurrStorageItem}
+              maxLength={12}
             />
           ) : (
             <SearchedStorageItemForm
+              initialize={initializeStorageItem}
+              onItemChange={onItemChange}
               currStorageItem={currStorageItem}
-              setSearchKeyword={setSearchKeyword}
-              setCurrStorageItem={setCurrStorageItem}
               currStorageType={currStorageType}
             />
           )}

@@ -1,7 +1,7 @@
 import { allStorageItemListAtom } from '@/atom/storageAtom';
-import { mockShoppingList, initialCustomStorageItem } from '@/constants';
+import { mockShoppingList } from '@/constants';
 import { AppError, AppSuccess } from '@/hooks';
-import { ShoppingItem } from '@/types/shoppingList';
+import { ShoppingItem } from '@/types/shoppingItem';
 import { EnrichedStorageItem } from '@/types/storage';
 import {
   formatDateString,
@@ -9,8 +9,7 @@ import {
   createTrackedItemKey,
   findTrackedItemWithKey,
   createShoppingItem,
-  convertMealToStorageItem,
-  convertPreparedFoodToStorageItem,
+  convertFoodToStorageItem,
   enrichTrackedItem,
 } from '@/utils';
 import { Timestamp } from 'firebase/firestore';
@@ -82,34 +81,19 @@ export const convertedStorageItemListAtom = atom((get): EnrichedStorageItem[] =>
   const itemList = purchasedItemList.map((item) => {
     const common = {
       id: item.id,
-      purchasedAt: formatDateString(now, 'yyyy-MM-dd'),
+      storedAt: formatDateString(now, 'yyyy-MM-dd'),
     };
 
-    if (item.type === 'meal') {
+    if (item.type === 'food') {
       return {
-        ...convertMealToStorageItem(item.meal),
-        ...common,
-      };
-    }
-
-    if (item.type === 'preparedFood') {
-      return {
-        ...convertPreparedFoodToStorageItem(item.preparedFood),
-        ...common,
-      };
-    }
-
-    if (item.type === 'ingredient') {
-      return {
-        ...convertIngredientToStorageItem(item.ingredient),
+        ...convertFoodToStorageItem(item.food),
         ...common,
       };
     }
 
     return {
-      ...initialCustomStorageItem,
+      ...convertIngredientToStorageItem(item.ingredient),
       ...common,
-      customLabel: item.customLabel!, // TODO: 타입 안정성 강화하기
     };
   });
 
@@ -135,16 +119,7 @@ export const addShoppingItemAtom = atom(
       if (shoppingItem.type === 'ingredient') {
         return shoppingItem.ingredient.label === inputValue;
       }
-
-      if (shoppingItem.type === 'meal') {
-        return shoppingItem.meal.label === inputValue;
-      }
-
-      if (shoppingItem.type === 'preparedFood') {
-        return shoppingItem.preparedFood.label === inputValue;
-      }
-
-      return shoppingItem.customLabel === inputValue;
+      return shoppingItem.food.label === inputValue;
     });
 
     if (duplicateItem) {

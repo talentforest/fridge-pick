@@ -25,17 +25,15 @@ export default function LabelContainer({
     <View>
       {/* 라벨 */}
       {label && !tailLabel && (
-        <Text className={`mb-2 pl-1.5 !text-[13px] ${textColor[labelColor]}`}>
-          {label}
-        </Text>
+        <Text className={`mb-2 pl-1 !text-[13px] ${textColor[labelColor]}`}>{label}</Text>
       )}
 
       {label && tailLabel && (
         <View className="flex-row items-center justify-between">
-          <Text className={`mb-2 pl-1.5 !text-[13px] ${textColor[labelColor]}`}>
+          <Text className={`mb-2 pl-1 !text-[13px] ${textColor[labelColor]}`}>
             {label}
           </Text>
-          <Text className={`mb-2 pr-1.5 !text-[13px] ${textColor[labelColor]}`}>
+          <Text className={`mb-2 pr-1 !text-[13px] ${textColor[labelColor]}`}>
             {tailLabel}
           </Text>
         </View>

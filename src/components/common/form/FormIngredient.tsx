@@ -18,7 +18,7 @@ export default function FormIngredient({
   onMemoFocus,
   isSheetInput = false,
 }: FormIngredientProps) {
-  const { expirationDays } = getTrackedItemData(currStorageItem);
+  const { recommendedDurations } = getTrackedItemData(currStorageItem);
 
   const onChangeDate = (date: Date) => {
     const expiresAt = formatDateString(date, 'yyyy-MM-dd');
@@ -32,7 +32,7 @@ export default function FormIngredient({
         label="보관위치"
         onItemChange={onItemChange}
         currStorageType={currStorageItem.storage.type}
-        ingredientExpirationDays={expirationDays}
+        expirationPeriods={recommendedDurations}
       />
 
       <FormDateInput
@@ -42,7 +42,7 @@ export default function FormIngredient({
           onChangeDate(newData.expiresAt ? new Date(newData.expiresAt) : new Date())
         }
         currStorageType={currStorageItem ? currStorageItem.storage.type : undefined}
-        ingredientExpirationDays={expirationDays}
+        expirationPeriods={recommendedDurations}
       />
 
       <FormMemo

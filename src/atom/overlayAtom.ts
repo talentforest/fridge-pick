@@ -22,6 +22,7 @@ type AlertModalState = {
   message?: string;
   resolve: (value: boolean) => void;
   hasDim?: boolean;
+  onConfirmPress?: () => void;
 };
 
 /** confirm (확장용) */
@@ -31,6 +32,7 @@ type ConfirmModalState = {
   message?: string;
   resolve: (value: boolean) => void;
   hasDim?: boolean;
+  onConfirmPress?: () => void;
 };
 
 /** 전체 */
@@ -85,16 +87,18 @@ export const closeDatePickerAtom = atom(null, (_get, set) => {
 type AlertParams = {
   title?: string;
   message?: string;
+  onConfirmPress?: () => void;
 };
 
 export const alertAtom = atom(
   null,
-  async (_get, set, { title, message }: AlertParams) => {
+  async (_get, set, { title, message, onConfirmPress }: AlertParams) => {
     return await new Promise<boolean>((resolve) => {
       set(modalAtom, {
         type: 'alert',
         title,
         message,
+        onConfirmPress,
         resolve,
       });
     });
@@ -103,12 +107,13 @@ export const alertAtom = atom(
 
 export const confirmAtom = atom(
   null,
-  async (_get, set, { title, message }: AlertParams) => {
+  async (_get, set, { title, message, onConfirmPress }: AlertParams) => {
     return await new Promise<boolean>((resolve) => {
       set(modalAtom, {
         type: 'confirm',
         title,
         message,
+        onConfirmPress,
         resolve,
       });
     });

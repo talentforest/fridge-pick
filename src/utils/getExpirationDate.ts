@@ -8,35 +8,35 @@ import {
   differenceInHours,
   differenceInCalendarDays,
   formatDistanceStrict,
+  parseISO,
+  isValid,
 } from 'date-fns';
 
 import { ko } from 'date-fns/locale';
 
-export function calculateExpiresAt(purchasedAt: Date, expirationDays: number) {
-  return formatDateString(addDays(purchasedAt, expirationDays), 'yyyy-MM-dd');
+export function calculateExpiresAt(storedAt: Date, recommendedDurations: number) {
+  return formatDateString(addDays(storedAt, recommendedDurations), 'yyyy-MM-dd');
 }
 
 /** "오늘부터" 소비일수를 통해 "소비기한 날짜"를 구하는 함수  */
 export function getExpirationDate(
-  expirationDays?: number,
+  recommendedDurations?: number,
   formatStr?: 'yy.MM.dd',
 ): Date | string {
-  const result = addDays(new Date(), expirationDays || DEFAULT_EXPIRATION_DAYS);
+  const result = addDays(new Date(), recommendedDurations || DEFAULT_EXPIRATION_DAYS);
 
   return formatStr ? format(result, formatStr) : result;
 }
 
 export function getRemainingDays(expirationDate: Date | string) {
-  const today = new Date();
-
   const date =
-    typeof expirationDate === 'string' ? new Date(expirationDate) : expirationDate;
+    typeof expirationDate === 'string' ? parseISO(expirationDate) : expirationDate;
 
-  const diff = date.getTime() - today.getTime();
+  if (!isValid(date)) {
+    throw new Error('유효하지 않은 expirationDate입니다.');
+  }
 
-  const result = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-  return result;
+  return differenceInCalendarDays(date, new Date());
 }
 
 /** 소비기한 기준은 이 함수로 통일 */

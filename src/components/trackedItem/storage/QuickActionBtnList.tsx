@@ -94,7 +94,6 @@ export default function QuickActionBtnList({
           <DateInputWithQuickBtn
             initialDate={currStorageItem.expiresAt}
             onChangeDate={onChangeDate}
-            btnClassName="!flex-1"
             hasDateInput
           />
         </View>

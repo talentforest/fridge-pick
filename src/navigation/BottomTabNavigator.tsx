@@ -1,4 +1,4 @@
-import ConsumableFoodScreen from '@/screens/consumableFood/ConsumableFoodScreen';
+import FoodScreen from '@/screens/food/FoodScreen';
 import HomeScreen from '@/screens/HomeScreen';
 import ShoppingListScreen from '@/screens/shoppingList/ShoppingListScreen';
 
@@ -50,8 +50,8 @@ export default function BottomTabNavigator() {
       />
 
       <Tab.Screen
-        name="ConsumableFoodScreen"
-        component={ConsumableFoodScreen}
+        name="FoodScreen"
+        component={FoodScreen}
         options={{
           headerShown: false,
           tabBarLabel: '식사',

@@ -1,13 +1,13 @@
 import {
-  ConsumableFood,
-  ConsumableFoodWithEnrichedFoodStructure,
+  Food,
+  FoodWithEnrichedFoodStructure,
   EnrichedFoodStructure,
   FoodComponentItem,
   FoodStructure,
 } from '@/types/selectableItem';
-import { EnrichedShoppingItem, ShoppingItem } from '@/types/shoppingList';
+import { EnrichedShoppingItem, ShoppingItem } from '@/types/shoppingItem';
 import { EnrichedStorageItem, StorageItem } from '@/types/storage';
-import { findIngredient, findMeal, findPreparedFood } from '@/utils/findItem';
+import { findIngredient, findFood } from '@/utils/findItem';
 
 export function enrichTrackedItem(item: StorageItem): EnrichedStorageItem;
 
@@ -23,21 +23,12 @@ export function enrichTrackedItem(item: StorageItem | ShoppingItem) {
     };
   }
 
-  if (item.type === 'preparedFood') {
-    const preparedFood = findPreparedFood(item.preparedFoodId);
+  if (item.type === 'food') {
+    const food = findFood(item.foodId);
 
     return {
       ...item,
-      preparedFood,
-    };
-  }
-
-  if (item.type === 'meal') {
-    const meal = findMeal(item.mealId);
-
-    return {
-      ...item,
-      meal,
+      food,
     };
   }
 
@@ -46,8 +37,7 @@ export function enrichTrackedItem(item: StorageItem | ShoppingItem) {
 
 export function enrichFoodStructure(structure: FoodStructure): EnrichedFoodStructure {
   const resolveItem = ({ kind, id }: FoodComponentItem) => {
-    if (kind === 'meal') return findMeal(id);
-    if (kind === 'preparedFood') return findPreparedFood(id);
+    if (kind === 'food') return findFood(id);
     return findIngredient(id);
   };
 
@@ -59,9 +49,9 @@ export function enrichFoodStructure(structure: FoodStructure): EnrichedFoodStruc
   };
 }
 
-export const getConsumableFoodListWithEnrichedFoodStructure = (
-  foodList: ConsumableFood[],
-): ConsumableFoodWithEnrichedFoodStructure[] => {
+export const getFoodListWithEnrichedFoodStructure = (
+  foodList: Food[],
+): FoodWithEnrichedFoodStructure[] => {
   return foodList.map((food) => {
     const { foodStructure: i, ...rest } = food;
     if (!i) return rest;

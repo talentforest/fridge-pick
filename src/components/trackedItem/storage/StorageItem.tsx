@@ -1,8 +1,9 @@
 import { expirationStatusObj } from '@/constants';
 import { EnrichedStorageItem } from '@/types/storage';
-import { getExpirationStatus, getRemainingDays } from '@/utils';
+import { getExpirationStatus, getRemainingDays, getTrackedItemData } from '@/utils';
 import { View } from 'react-native';
-import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
+import FoodImage from '@/components/common/FoodImage';
+import Text from '@/components/common/ui/Text';
 
 interface StorageItemProps {
   storageItem: EnrichedStorageItem;
@@ -17,8 +18,18 @@ export default function StorageItem({ storageItem, className = '' }: StorageItem
   const shouldShowDot = status !== 'unknown' && status !== 'safe';
 
   return (
-    <View className={`relative items-center bg-card ${className}`}>
-      <TrackedItemImageLabel item={storageItem} textClassName="text-sm" />
+    <View className={`relative items-center gap-y-1 bg-card ${className}`}>
+      <FoodImage
+        trackedItem={storageItem}
+        imageSize={40}
+        iconSize={12}
+        className="p-1"
+        iconClassName="!p-1 -top-0.5 -right-1"
+      />
+
+      <Text className="line-clamp-1 text-center text-sm">
+        {getTrackedItemData(storageItem).label}
+      </Text>
 
       {shouldShowDot && (
         <View

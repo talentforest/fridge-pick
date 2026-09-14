@@ -1,15 +1,8 @@
 import { storageObj } from '@/constants';
-import { useOverlay } from '@/hooks';
-import { RootStackParamList, StackNavProp } from '@/types/RootStackParamList';
-import {
-  RouteProp,
-  useIsFocused,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import { View } from 'react-native';
+import { useOverlay, useHandleNavigate } from '@/hooks';
+import { RootStackParamList } from '@/types/RootStackParamList';
+import { RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
 import { useEffect } from 'react';
-import { StorageItemWithExpiration } from '@/utils';
 import { EnrichedStorageItem } from '@/types/storage';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
@@ -19,6 +12,7 @@ import Icon from '@/components/common/ui/Icon';
 import StorageItemSheet from '@/components/trackedItem/storage/StorageItemSheet';
 import Storage from '@/components/trackedItem/storage/Storage';
 import CautionStorageItemList from '@/components/home/CautionStorageItemList';
+import SectionContainer from '@/components/common/container/SectionContainer';
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'StorageDetailScreen'>;
 
@@ -31,7 +25,7 @@ export default function StorageDetailScreen() {
 
   const { openSheet, closeSheet } = useOverlay();
 
-  const navigation = useNavigation<StackNavProp>();
+  const { goBack, goNavigate } = useHandleNavigate();
 
   const isFocused = useIsFocused();
 
@@ -42,15 +36,8 @@ export default function StorageDetailScreen() {
     });
   };
 
-  const onCautionItemPress = (item: StorageItemWithExpiration) => {
-    openSheet({
-      keyboardBehavior: 'extend',
-      render: () => <StorageItemSheet storageItem={item.storageItem} />,
-    });
-  };
-
   const headerLeftPress = () => {
-    navigation.goBack();
+    goBack();
   };
 
   useEffect(() => {
@@ -67,37 +54,27 @@ export default function StorageDetailScreen() {
     <SafeAreaViewContainer>
       <ScreenHeader title={storageLabel} onLeftPress={headerLeftPress} />
 
-      <ScrollViewContainer contentContainerClassName="gap-y-20 pt-4">
+      <ScrollViewContainer contentContainerClassName="pt-4">
         {/* 소비기한 임박 */}
-        <CautionStorageItemList
-          isGridType
-          storageType={storageType}
-          onItemPress={onCautionItemPress}
-          type="caution"
-        />
+        <SectionContainer>
+          <SectionTitle icon="ClockAlert" title="가장 먼저 관리해야해요" color="red" />
+          <CautionStorageItemList isGridType storageType={storageType} type="caution" />
+        </SectionContainer>
 
         {/* 나의 공간 */}
-        <View className="gap-y-1">
-          <SectionTitle
-            title={`나의 ${storageLabel} 식재료`}
-            icon={storageLabel === '실온' ? 'ShelvingUnit' : 'Refrigerator'}
-          >
-            <View className="flex-row items-center gap-x-2">
-              <Icon
-                name="Plus"
-                className="h-10 w-10 items-center justify-center"
-                size={24}
-                color="yellow"
-                onPress={() =>
-                  navigation.navigate('AddStorageItemScreen', { id: storageType })
-                }
-              />
-            </View>
+        <SectionContainer>
+          <SectionTitle title={`나의 ${storageLabel} 식재료`}>
+            <Icon
+              name="Plus"
+              color="blue"
+              size={24}
+              onPress={() => goNavigate('AddStorageItemScreen', { id: storageType })}
+            />
           </SectionTitle>
 
           {/* 스토리지 박스 */}
           <Storage storageType={storageType} openItemPress={onItemPress} />
-        </View>
+        </SectionContainer>
       </ScrollViewContainer>
     </SafeAreaViewContainer>
   );

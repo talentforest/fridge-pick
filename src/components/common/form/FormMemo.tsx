@@ -26,6 +26,7 @@ export default function FormMemo({
   return (
     <LabelContainer label={hasLabel ? '메모 (선택)' : undefined} labelColor="neutral">
       <TextArea
+        className="border !p-5"
         isSheetInput={isSheetInput}
         value={currMemo}
         onChangeText={(text) => onItemChange({ memo: text })}
@@ -35,8 +36,8 @@ export default function FormMemo({
         onBlur={shrinkSheet}
       />
 
-      <Text className="absolute bottom-3 right-4 text-sm text-neutral-5">
-        {currMemo.length} / 100
+      <Text className="absolute bottom-4 right-5 text-sm text-neutral-5">
+        {currMemo.length} / 50
       </Text>
     </LabelContainer>
   );

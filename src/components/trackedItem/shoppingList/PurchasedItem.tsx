@@ -5,9 +5,9 @@ import EditPurchasedItemSheet from '@/components/trackedItem/shoppingList/EditPu
 import { storageObj } from '@/constants';
 import { useOverlay } from '@/hooks';
 import { EditableStorageItem, EnrichedStorageItem } from '@/types/storage';
-import { formatDateString, getRemainingDays } from '@/utils';
+import { formatDateString, getRemainingDays, getTrackedItemData } from '@/utils';
 import { View } from 'react-native';
-import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
+import FoodImage from '@/components/common/FoodImage';
 
 interface PurchasedItemProps {
   storageItem: EnrichedStorageItem;
@@ -45,14 +45,7 @@ export default function PurchasedItem({
     setStorageItemList((prev) => {
       return prev.map((item) => {
         if (item.id !== id) return item;
-
-        if (item.type === 'custom') {
-          return { ...item, ...newData };
-        }
-
-        const { customLabel: _, ...rest } = newData;
-
-        return { ...item, ...rest };
+        return { ...item, ...newData };
       });
     });
 
@@ -75,12 +68,16 @@ export default function PurchasedItem({
       {/* 인덱스 넘버 */}
       {index && (
         <View className="absolute left-0 top-0 items-center justify-center rounded-br-xl bg-blue-1 p-2.5">
-          <Text className="font-extrabold text-blue-5">{index}</Text>
+          <Text className="font-extrabold text-blue-7">{index}</Text>
         </View>
       )}
 
-      {/* 식재료 이미지 */}
-      <TrackedItemImageLabel item={storageItem} className="w-28 pt-0.5" />
+      <View className="w-24 items-center justify-center pt-0.5">
+        <FoodImage trackedItem={storageItem} imageSize={55} />
+        <Text className="line-clamp-1 !text-[13px]">
+          {getTrackedItemData(storageItem).label}
+        </Text>
+      </View>
 
       {/* 중간선 */}
       <View className="ml-1 mr-3.5 border-r border-neutral-3" />

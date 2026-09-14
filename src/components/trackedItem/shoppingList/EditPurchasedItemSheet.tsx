@@ -20,27 +20,12 @@ export default function EditPurchasedItemSheet({
     useState<EnrichedStorageItem>(initialStorageItem);
 
   const onItemChange = (newData: EditableStorageItem) => {
-    setCurrStorageItem((prev) => {
-      if (prev.type === 'custom') {
-        return { ...prev, ...newData };
-      }
-
-      const { customLabel: _, ...rest } = newData;
-
-      return { ...prev, ...rest };
-    });
+    setCurrStorageItem((prev) => ({ ...prev, ...newData }));
   };
 
   return (
-    <View className="mt-2 gap-y-5">
-      <TrackedItemImageLabel
-        item={currStorageItem}
-        imageSize={70}
-        hasCategory
-        textClassName="text-lg"
-        isHorizontal
-        hasImageBox
-      />
+    <View className="gap-y-5">
+      <TrackedItemImageLabel item={currStorageItem} />
 
       <FormIngredient
         currStorageItem={currStorageItem}

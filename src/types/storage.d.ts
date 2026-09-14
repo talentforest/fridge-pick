@@ -1,18 +1,19 @@
-import { storageObj } from '@/constants';
-import { EnrichedConsumableFoodWithFilter } from '@/hooks';
-import {
+import type { storageObj } from '@/constants';
+import type {
   Ingredient,
-  Meal,
-  MealKey,
-  PreparedFoodKey,
-  PreparedFood,
+  Food,
+  FoodForm,
+  IngredientVariantKey,
+  FoodId,
+  IngredientId,
+  FoodVariantId,
 } from '@/types/selectableItem';
-import { Timestamp } from 'firebase/firestore';
+import type { ShoppingItem } from '@/types/shoppingItem';
+import type { Timestamp } from 'firebase/firestore';
 
 /* -------------------------------------------------------------------------- */
 /*                                   Storage                                  */
 /* -------------------------------------------------------------------------- */
-
 export type ExpirationStatus = 'safe' | 'expired' | 'expiredSoon' | 'unknown';
 
 export type Storage = typeof storageObj;
@@ -27,11 +28,15 @@ export type StorageSection = StorageSide[StorageSideId]['sections'];
 export type StorageSectionId = StorageSection[number]['id'];
 export type StorageSectionLabel = StorageSection[number]['label'];
 
-export type StorageSpace = {
+export type StorageLocation = {
   type: StorageTypeId;
   side?: StorageSideId;
   section?: StorageSectionId;
 };
+
+/* -------------------------------------------------------------------------- */
+/*                                 StorageItem                                */
+/* -------------------------------------------------------------------------- */
 
 export type DocMeta = {
   /** 메타데이터 */
@@ -39,14 +44,16 @@ export type DocMeta = {
   updatedAt: Timestamp;
 };
 
+export type StorageItemDocument = StorageItem & DocMeta;
+
 /** 내가 실제 갖고 있는 식재료 정보
  * ingredientId 속성으로 기본 식재료 정보를 찾아 사용
  */
 type BaseStorageItem = {
   id: string;
-  storage: StorageSpace;
-  /** YYYY-MM-DD */
-  purchasedAt: string;
+  storage: StorageLocation;
+  /** YYYY-MM-DD 형식 */
+  storedAt: string;
   /** YYYY-MM-DD 형식 */
   expiresAt: string;
   /** Optional */
@@ -55,58 +62,29 @@ type BaseStorageItem = {
 
 type IngredientStorageItem = BaseStorageItem & {
   type: 'ingredient';
-  ingredientId: IngredientKey;
-  customLabel?: never;
+  ingredientId: IngredientId;
+  variantId?: IngredientVariantKey;
 };
 
-type CustomStorageItem = BaseStorageItem & {
-  type: 'custom';
-  customLabel: string;
-  ingredientId?: never;
+type FoodStorageItem = BaseStorageItem & {
+  type: 'food';
+  foodId: FoodId;
+  variantId?: FoodVariantId;
+  foodForm?: FoodForm;
+  isLeftover?: boolean;
 };
 
-type PreparedFoodStorageItem = BaseStorageItem & {
-  type: 'preparedFood';
-  preparedFoodId: PreparedFoodKey;
-  foodSource?: FoodSource;
-};
-
-type MealStorageItem = BaseStorageItem & {
-  type: 'meal';
-  mealId: MealKey;
-  foodSource?: FoodSource;
-}; // 커스텀 Meal은 없음.
-
-export type EditableProperty = 'storage' | 'expiresAt' | 'memo' | 'foodSource';
-
-export type StorageItem =
-  | IngredientStorageItem
-  | CustomStorageItem
-  | MealStorageItem
-  | PreparedFoodStorageItem;
-
-type EditableCustomStorageItem = Pick<
-  CustomStorageItem,
-  EditableProperty | 'customLabel'
->;
-
-type EditableIngredientStorageItem =
-  | Pick<IngredientStorageItem, EditableProperty>
-  | EditableCustomStorageItem;
+export type StorageItem = IngredientStorageItem | FoodStorageItem;
 
 export type EditableStorageItem = Partial<{
-  storage: StorageSpace;
+  storage: StorageLocation;
   expiresAt: string;
   memo: string;
-  foodSource: FoodSource;
-  customLabel: string;
 }>;
 
 export type EnrichedStorageItem =
-  | CustomStorageItem
   | (IngredientStorageItem & { ingredient: Ingredient })
-  | (PreparedFoodStorageItem & { preparedFood: PreparedFood })
-  | (MealStorageItem & { meal: Meal });
+  | (FoodStorageItem & { food: Food });
 
 // TODO: ComsumptionLog 작성하기
 
@@ -115,27 +93,5 @@ export type EnrichedStorageItem =
  * TrackedItem
  * ├─ StorageItem
  * └─ ShoppingItem
- * TodayMenu
  */
 export type TrackedItem = StorageItem | ShoppingItem;
-
-/* -------------------------------------------------------------------------- */
-/*                              Common Property                               */
-/* -------------------------------------------------------------------------- */
-
-type EditableMealStorageItem = Pick<MealStorageItem, EditableProperty>;
-
-/* -------------------------------------------------------------------------- */
-/*                             Today Menu Item                                */
-/*                             = 이번엔 어떻게 먹는가                              */
-/* -------------------------------------------------------------------------- */
-
-/** [메인요리 | 반찬] 타입구분
- * “이 음식이 식사의 중심이면 main, 아니면 side”
- */
-export type TodayMenu = {
-  consumableFood: EnrichedConsumableFoodWithFilter;
-  role: 'main' | 'side'; // 여기서 main과 side를 한번더 구분하는 이유는 오늘 먹을 메뉴에서 메인 메뉴는 무조건 하나여야함. 만약 메인 메뉴를 두개 골랐는데 메인으로 선정된 메뉴 말고 다른 메뉴를 메인으로 올리고 싶을 때 수정 가능하도록
-  consumeMethod: FoodSource;
-  selectedAt: string;
-};

@@ -1,11 +1,32 @@
-export const noCategoryObj = {
-  no_category: {
-    id: 'no_category',
-    label: '커스텀 식재료',
-    icon: 'Database',
-    color: 'blue',
+import { categoryImageObj } from '@/constants/image';
+
+const {
+  ingredient: {
+    can,
+    vegetable,
+    dairy,
+    meat,
+    fruit,
+    noodle,
+    seafood,
+    seasoning,
+    powder,
+    grains,
   },
-} as const;
+  food: {
+    bakery,
+    snack_dessert,
+    rice_meal,
+    side_dish,
+    light_food,
+    drink,
+    soup_meal,
+    western_meal,
+    noodle_meal,
+    main_dish_meal,
+    fresh_meal,
+  },
+} = categoryImageObj;
 
 export const ingredientCategoryObj = {
   vegetable: {
@@ -13,136 +34,151 @@ export const ingredientCategoryObj = {
     label: '채소·버섯',
     icon: 'LeafyGreen',
     color: 'green',
+    image: vegetable,
   },
   meat: {
     id: 'meat',
     label: '정육·가공육',
     icon: 'Beef',
     color: 'red',
+    image: meat,
   },
   seafood: {
     id: 'seafood',
     label: '수산·수산가공',
     icon: 'Fish',
     color: 'blue',
+    image: seafood,
   },
   grains: {
     id: 'grains',
     label: '쌀·콩·잡곡',
     icon: 'Wheat',
-    color: 'red',
+    color: 'yellow',
+    image: grains,
   },
   noodle: {
     id: 'noodle',
     label: '면·조리용떡',
     icon: 'LineSquiggle',
     color: 'yellow',
+    image: noodle,
   },
   fruit: {
     id: 'fruit',
     label: '과일·견과',
-    icon: 'Apple',
-    color: 'red',
+    icon: 'Citrus',
+    color: 'orange',
+    image: fruit,
   },
   dairy: {
     id: 'dairy',
     label: '유제품',
     icon: 'Milk',
     color: 'yellow',
+    image: dairy,
   },
   seasoning: {
     id: 'seasoning',
     label: '조미료·장·오일',
     icon: 'Amphora',
     color: 'red',
+    image: seasoning,
   },
   powder: {
     id: 'powder',
     label: '가루·분말',
-    icon: 'HeartPulse',
-    color: 'red',
+    icon: 'PaperBag',
+    color: 'orange',
+    image: powder,
   },
   can: {
     id: 'can',
     label: '통조림·병조림',
     icon: 'Database',
     color: 'blue',
+    image: can,
   },
 } as const;
 
-export const preparedFoodCategoryObj = {
+export const foodCategoryObj = {
   side_dish: {
     id: 'side_dish',
     label: '반찬',
     icon: 'EggFried',
-    color: 'neutral',
+    color: 'yellow',
+    image: side_dish,
   },
   light_food: {
     id: 'light_food',
     label: '간편식',
     icon: 'Sandwich',
     color: 'blue',
+    image: light_food,
   },
   bakery: {
     id: 'bakery',
     label: '베이커리',
     icon: 'Croissant',
     color: 'yellow',
+    image: bakery,
   },
   drink: {
     id: 'drink',
     label: '음료',
     icon: 'GlassWater',
     color: 'blue',
+    image: drink,
   },
   snack_dessert: {
     id: 'snack_dessert',
-    label: '간식/디저트',
+    label: '간식·디저트',
     icon: 'Dessert',
     color: 'yellow',
+    image: snack_dessert,
   },
-} as const;
-
-export const mealCategoryObj = {
   rice_meal: {
     id: 'rice_meal',
     label: '밥류',
     icon: 'Wheat',
     color: 'red',
+    image: rice_meal,
   },
   noodle_meal: {
     id: 'noodle_meal',
     label: '면류',
     icon: 'LineSquiggle',
     color: 'yellow',
+    image: noodle_meal,
   },
   soup_meal: {
     id: 'soup_meal',
-    label: '국류',
+    label: '국·찌개류',
     icon: 'Soup',
-    color: 'blue',
+    color: 'red',
+    image: soup_meal,
   },
   main_dish_meal: {
     id: 'main_dish_meal',
     label: '메인요리',
-    icon: 'UtensilsCrossed',
-    color: 'red',
+    icon: 'HandPlatter',
+    color: 'orange',
+    image: main_dish_meal,
   },
   western_meal: {
     id: 'western_meal',
     label: '서양식',
     icon: 'UtensilsCrossed',
     color: 'orange',
+    image: western_meal,
   },
   fresh_meal: {
     id: 'fresh_meal',
     label: '프레시',
     icon: 'Salad',
     color: 'green',
+    image: fresh_meal,
   },
 } as const;
 
-export const consumableFoodCategoryObj = {
-  ...preparedFoodCategoryObj,
-  ...mealCategoryObj,
-};
+export const allCategoryObj = { ...ingredientCategoryObj, ...foodCategoryObj };

@@ -1,8 +1,7 @@
 import { Ingredient } from '@/types/selectableItem';
 import { DEFAULT_EXPIRATION_DAYS } from '@/constants/storage/storageObj';
-import { nanoid } from 'nanoid/non-secure';
 
-export const vegetableObj = {
+export const vegetableObj: { [key in string]: Ingredient } = {
   chonggak_mu: {
     id: 'chonggak_mu',
     label: '총각무',
@@ -11,7 +10,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '단',
     unitOptions: ['단', '개', 'g'],
     synonyms: ['알타리무', '알타리'],
@@ -24,7 +26,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180, fridge: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 6, unit: 'month' },
+        fridge: { value: 1, unit: 'year' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', 'g'],
     synonyms: ['말린무', '무말랭이용무'],
@@ -37,7 +45,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', 'g'],
     synonyms: ['파슬리잎', '생파슬리'],
@@ -50,7 +64,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 3, freezer: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉', 'g'],
     synonyms: ['삶은우거지', '배추우거지'],
@@ -63,7 +83,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 5, unit: 'day' } },
+    },
     defaultUnitLabel: '단',
     unitOptions: ['단', '봉', 'g'],
     synonyms: ['어린무', '열무잎'],
@@ -76,13 +99,15 @@ export const vegetableObj = {
     label: '곤드레',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 5,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 5, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
-    unitOptions: ['g', 'pack'],
-    packageWeight: { amount: 100, unit: 'g' },
+    unitOptions: ['g'],
   },
 
   ma: {
@@ -93,13 +118,15 @@ export const vegetableObj = {
     label: '마',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 30,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'month' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩'],
-    packageWeight: { amount: 300, unit: 'g' },
   },
 
   hobak: {
@@ -110,9 +137,12 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'pantry',
-    expirationDays: {
-      fridge: 7,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: '조각',
     unitOptions: ['조각', '개'],
@@ -125,7 +155,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -137,7 +173,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -149,7 +188,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -161,7 +206,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -173,7 +221,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -185,7 +236,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 5, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -197,7 +254,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -209,7 +272,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -221,7 +290,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -233,7 +305,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -245,7 +320,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -257,7 +338,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -269,7 +356,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -281,7 +374,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 5, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -293,7 +392,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -305,7 +407,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -317,7 +425,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -329,7 +443,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -341,7 +461,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -353,7 +476,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -365,7 +491,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -377,7 +509,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -389,7 +524,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -401,7 +542,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -413,7 +557,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -425,7 +572,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -437,7 +590,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -450,13 +606,15 @@ export const vegetableObj = {
     label: '더덕',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 14,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
-    unitOptions: ['g', 'ea', 'pack'],
-    packageWeight: { amount: 200, unit: 'g' },
+    unitOptions: ['g'],
   },
   dolnamul: {
     id: 'dolnamul',
@@ -466,7 +624,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -478,7 +639,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -490,7 +657,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -502,7 +675,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 5, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -514,7 +693,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -526,7 +708,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'month' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -538,7 +723,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -550,7 +741,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'month' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -562,7 +756,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -574,7 +774,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -586,7 +792,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
     synonyms: ['초록파프리카'],
@@ -600,7 +812,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
     imageName: 'cheongyang_gochu',
@@ -613,7 +831,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '통'],
   },
@@ -625,7 +846,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -637,7 +861,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 5, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -649,7 +879,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -661,7 +897,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -673,7 +915,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -685,7 +933,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
     synonyms: ['상추잎'],
@@ -698,7 +949,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -710,7 +964,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -722,7 +982,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -734,7 +997,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -746,7 +1012,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -758,7 +1030,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -770,7 +1045,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -782,7 +1060,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'month' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -794,7 +1075,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 5, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -806,7 +1093,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -818,7 +1108,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'month' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -830,7 +1123,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -842,7 +1138,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -854,7 +1156,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
     synonyms: ['적양배추'],
@@ -867,7 +1172,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -879,7 +1187,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -891,7 +1205,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -903,7 +1223,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -915,7 +1241,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -927,7 +1256,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -939,7 +1274,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -951,7 +1289,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 5, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -963,7 +1307,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -975,7 +1322,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 4 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 4, unit: 'day' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -987,7 +1337,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
   },
@@ -999,7 +1352,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'month' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -1011,7 +1367,10 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'month' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
@@ -1023,7 +1382,13 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 5, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -1035,13 +1400,19 @@ export const vegetableObj = {
     recommendLevel: 'general',
     category: 'vegetable',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
   },
 } as const;
 
-export const meatObj = {
+export const meatObj: { [key in string]: Ingredient } = {
   chicken_gizzard: {
     id: 'chicken_gizzard',
     label: '닭근위',
@@ -1050,7 +1421,13 @@ export const meatObj = {
     recommendLevel: 'preference',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['닭똥집', '근위'],
@@ -1063,7 +1440,13 @@ export const meatObj = {
     recommendLevel: 'preference',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['무뼈닭발', '통닭발'],
@@ -1076,7 +1459,13 @@ export const meatObj = {
     recommendLevel: 'preference',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['곱창', '돼지소창'],
@@ -1090,9 +1479,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 7,
-      freezer: 30,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 1, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
@@ -1106,9 +1498,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1123,27 +1518,30 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
     synonyms: ['차돌박이'],
-    variants: {
-      bulgogi: {
-        label: '불고기용',
-        imageName: 'bulgogi',
-      },
-      shabu: {
-        label: '샤브샤브용',
-        imageName: 'shabu',
-      },
-      soup: {
-        label: '국거리용',
-        imageName: 'soup',
-      },
-    },
+    // variants: {
+    //   bulgogi: {
+    //     label: '불고기용',
+    //     imageName: 'bulgogi',
+    //   },
+    //   shabu: {
+    //     label: '샤브샤브용',
+    //     imageName: 'shabu',
+    //   },
+    //   soup: {
+    //     label: '국거리용',
+    //     imageName: 'soup',
+    //   },
+    // },
   },
 
   beef_chuck: {
@@ -1155,22 +1553,25 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
-    variants: {
-      bulgogi: {
-        label: '불고기용',
-        imageName: 'bulgogi',
-      },
-      shabu: {
-        label: '샤브샤브용',
-        imageName: 'shabu',
-      },
-    },
+    // variants: {
+    //   bulgogi: {
+    //     label: '불고기용',
+    //     imageName: 'bulgogi',
+    //   },
+    //   shabu: {
+    //     label: '샤브샤브용',
+    //     imageName: 'shabu',
+    //   },
+    // },
   },
 
   beef_chuck_flap: {
@@ -1181,9 +1582,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1197,9 +1601,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1213,18 +1620,21 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
-    variants: {
-      bulgogi: {
-        label: '불고기용',
-        imageName: 'bulgogi',
-      },
-    },
+    // variants: {
+    //   bulgogi: {
+    //     label: '불고기용',
+    //     imageName: 'bulgogi',
+    //   },
+    // },
   },
 
   beef_oyster_blade: {
@@ -1236,9 +1646,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1252,9 +1665,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1269,9 +1685,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1285,22 +1704,25 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
-    variants: {
-      bulgogi: {
-        label: '불고기용',
-        imageName: 'bulgogi',
-      },
-      shabu: {
-        label: '샤브샤브용',
-        imageName: 'shabu',
-      },
-    },
+    // variants: {
+    //   bulgogi: {
+    //     label: '불고기용',
+    //     imageName: 'bulgogi',
+    //   },
+    //   shabu: {
+    //     label: '샤브샤브용',
+    //     imageName: 'shabu',
+    //   },
+    // },
   },
 
   beef_shank: {
@@ -1311,9 +1733,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1328,18 +1753,21 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
-    variants: {
-      cube_rib: {
-        label: '소갈비찜',
-        imageName: 'cube_rib',
-      },
-    },
+    // variants: {
+    //   cube_rib: {
+    //     label: '소갈비찜',
+    //     imageName: 'cube_rib',
+    //   },
+    // },
   },
 
   beef_shoulder: {
@@ -1351,22 +1779,25 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
-    variants: {
-      bulgogi: {
-        label: '불고기용',
-        imageName: 'bulgogi',
-      },
-      soup: {
-        label: '국거리용',
-        imageName: 'soup',
-      },
-    },
+    // variants: {
+    //   bulgogi: {
+    //     label: '불고기용',
+    //     imageName: 'bulgogi',
+    //   },
+    //   soup: {
+    //     label: '국거리용',
+    //     imageName: 'soup',
+    //   },
+    // },
   },
 
   beef_sirloin: {
@@ -1377,9 +1808,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1393,9 +1827,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1409,9 +1846,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1425,22 +1865,25 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
-    variants: {
-      diet: {
-        label: '식단용',
-        imageName: 'chicken_breast_diet',
-      },
-      smoked: {
-        label: '훈제',
-        imageName: 'chicken_breast_smoked',
-      },
-    },
+    // variants: {
+    //   diet: {
+    //     label: '식단용',
+    //     imageName: 'chicken_breast_diet',
+    //   },
+    //   smoked: {
+    //     label: '훈제',
+    //     imageName: 'chicken_breast_smoked',
+    //   },
+    // },
   },
 
   chicken_leg: {
@@ -1451,18 +1894,21 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
-    variants: {
-      boneless: {
-        label: '닭다리살정육',
-        imageName: 'chicken_leg_boneless',
-      },
-    },
+    // variants: {
+    //   boneless: {
+    //     label: '닭다리살정육',
+    //     imageName: 'chicken_leg_boneless',
+    //   },
+    // },
   },
 
   chicken_stew_cut: {
@@ -1473,9 +1919,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
@@ -1489,9 +1938,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
@@ -1505,9 +1957,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: '마리',
     unitOptions: ['마리'],
@@ -1522,9 +1977,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
@@ -1538,9 +1996,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 3,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
@@ -1554,8 +2015,11 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 21,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'week' },
+      },
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '판'],
@@ -1570,9 +2034,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 1,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
@@ -1587,9 +2054,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 1,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
@@ -1604,8 +2074,11 @@ export const meatObj = {
     recommendLevel: 'preference',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 14,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
@@ -1619,9 +2092,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1635,26 +2111,29 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 3,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
-    variants: {
-      frozen: {
-        label: '냉동',
-        imageName: 'pork_belly_frozen',
-      },
-      suyuk: {
-        label: '수육용',
-        imageName: 'suyuk',
-      },
-      thin: {
-        label: '대패',
-        imageName: 'pork_belly_thin',
-      },
-    },
+    // variants: {
+    //   frozen: {
+    //     label: '냉동',
+    //     imageName: 'pork_belly_frozen',
+    //   },
+    //   suyuk: {
+    //     label: '수육용',
+    //     imageName: 'suyuk',
+    //   },
+    //   thin: {
+    //     label: '대패',
+    //     imageName: 'pork_belly_thin',
+    //   },
+    // },
   },
 
   pork_jowl: {
@@ -1665,9 +2144,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 3,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1681,9 +2163,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1697,9 +2182,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 3,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1713,22 +2201,25 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
-    variants: {
-      bulgogi: {
-        label: '불고기용',
-        imageName: 'bulgogi',
-      },
-      suyuk: {
-        label: '수육용',
-        imageName: 'suyuk',
-      },
-    },
+    // variants: {
+    //   bulgogi: {
+    //     label: '불고기용',
+    //     imageName: 'bulgogi',
+    //   },
+    //   suyuk: {
+    //     label: '수육용',
+    //     imageName: 'suyuk',
+    //   },
+    // },
   },
 
   pork_rib: {
@@ -1739,9 +2230,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1756,9 +2250,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1773,22 +2270,25 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
-    variants: {
-      bulgogi: {
-        label: '불고기용',
-        imageName: 'bulgogi',
-      },
-      suyuk: {
-        label: '수육용',
-        imageName: 'suyuk',
-      },
-    },
+    // variants: {
+    //   bulgogi: {
+    //     label: '불고기용',
+    //     imageName: 'bulgogi',
+    //   },
+    //   suyuk: {
+    //     label: '수육용',
+    //     imageName: 'suyuk',
+    //   },
+    // },
   },
 
   pork_skin: {
@@ -1799,9 +2299,12 @@ export const meatObj = {
     recommendLevel: 'preference',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 3,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
@@ -1815,9 +2318,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 3,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1832,9 +2338,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 2,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
@@ -1848,8 +2357,11 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 14,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '개'],
@@ -1863,9 +2375,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 14,
-      freezer: 60,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '장', 'g'],
@@ -1879,9 +2394,12 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 14,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '개', 'g'],
@@ -1896,8 +2414,11 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'pantry',
-    expirationDays: {
-      pantry: 365,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+      },
     },
     defaultUnitLabel: '캔',
     unitOptions: ['캔'],
@@ -1912,16 +2433,19 @@ export const meatObj = {
     recommendLevel: 'general',
     category: 'meat',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 14,
-      freezer: 180,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 6, unit: 'month' },
+      },
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
 } as const;
 
-export const seafoodObj = {
+export const seafoodObj: { [key in string]: Ingredient } = {
   goni: {
     id: 'goni',
     label: '곤이',
@@ -1930,7 +2454,13 @@ export const seafoodObj = {
     recommendLevel: 'preference',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 1, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['생선곤이', '알탕곤이'],
@@ -1943,9 +2473,12 @@ export const seafoodObj = {
     recommendLevel: 'preference',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 1 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 3, unit: 'day' } },
+    },
     defaultUnitLabel: '팩',
-    unitOptions: ['팩', '점', 'g'],
+    unitOptions: ['팩', 'g'],
     synonyms: ['생선회', '광어회', '모둠회'],
   },
   jangeo: {
@@ -1956,7 +2489,13 @@ export const seafoodObj = {
     recommendLevel: 'preference',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '마리', 'g'],
     synonyms: ['민물장어', '손질장어'],
@@ -1970,13 +2509,15 @@ export const seafoodObj = {
     label: '어묵',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 14,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉'],
-    packageWeight: { amount: 300, unit: 'g' },
   },
 
   matsal: {
@@ -1987,13 +2528,15 @@ export const seafoodObj = {
     label: '맛살',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: {
-      fridge: 30,
-      freezer: 90,
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'month' },
+        freezer: { value: 3, unit: 'month' },
+      },
     },
     defaultUnitLabel: '개',
     unitOptions: ['개'],
-    packageWeight: { amount: 140, unit: 'g' },
   },
 
   jeoneo: {
@@ -2004,7 +2547,13 @@ export const seafoodObj = {
     recommendLevel: 'preference',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '마리',
     unitOptions: ['마리', '팩', 'g'],
   },
@@ -2017,7 +2566,13 @@ export const seafoodObj = {
     recommendLevel: 'preference',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2030,7 +2585,13 @@ export const seafoodObj = {
     recommendLevel: 'preference',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['아귀'],
@@ -2044,7 +2605,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2057,7 +2624,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2070,7 +2643,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2083,7 +2662,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2096,7 +2681,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['흰살생선필렛'],
@@ -2110,7 +2701,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2123,7 +2720,13 @@ export const seafoodObj = {
     recommendLevel: 'preference',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2136,7 +2739,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2149,7 +2758,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2162,7 +2777,10 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2175,7 +2793,10 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
     synonyms: ['북어포', '어포'],
@@ -2189,7 +2810,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['넙치'],
@@ -2204,7 +2831,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2217,7 +2850,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2230,7 +2869,10 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
     synonyms: ['김밥김'],
@@ -2244,7 +2886,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['조기'],
@@ -2258,7 +2906,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2271,7 +2925,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2284,7 +2944,10 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2297,7 +2960,10 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2310,7 +2976,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2323,7 +2995,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2336,7 +3014,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2349,7 +3033,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2362,7 +3052,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2375,7 +3071,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2388,7 +3090,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2401,7 +3109,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2414,7 +3128,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2427,7 +3147,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2440,7 +3166,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2453,7 +3185,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['연어', '연어필렛', '연어 스테이크', '연어스테이크'],
@@ -2467,7 +3205,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2480,7 +3224,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2493,7 +3243,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2506,7 +3262,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2519,7 +3281,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2532,7 +3300,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2545,7 +3319,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2558,7 +3338,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2571,7 +3357,10 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2584,7 +3373,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2597,7 +3392,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2610,7 +3411,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2623,7 +3430,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2636,7 +3449,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2649,7 +3468,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2662,7 +3487,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2675,10 +3506,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'freezer',
-    expirationDays: { freezer: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { freezer: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
-    synonyms: ['생태, 명태'],
+    synonyms: ['생태', '명태'],
     imageName: 'myeongtae',
   },
 
@@ -2690,7 +3524,10 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'freezer',
-    expirationDays: { freezer: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { freezer: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '마리',
     unitOptions: ['마리', '팩'],
     synonyms: ['반건조명태'],
@@ -2704,7 +3541,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '마리',
     unitOptions: ['마리', '팩'],
   },
@@ -2717,7 +3560,10 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '마리',
     unitOptions: ['마리', '봉'],
   },
@@ -2730,7 +3576,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 1, unit: 'week' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['스모크연어'],
@@ -2744,7 +3596,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['생연어'],
@@ -2758,7 +3616,10 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 1 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 3, unit: 'day' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['연어사시미'],
@@ -2772,7 +3633,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '마리',
     unitOptions: ['마리', '팩', 'g'],
   },
@@ -2785,7 +3652,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '마리',
     unitOptions: ['마리', '팩', 'g'],
   },
@@ -2798,7 +3671,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '마리',
     unitOptions: ['마리', '팩'],
     synonyms: ['임연수어'],
@@ -2812,7 +3691,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 1, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 3, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
   },
@@ -2825,7 +3710,13 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '마리',
     unitOptions: ['마리', '팩'],
   },
@@ -2838,14 +3729,20 @@ export const seafoodObj = {
     recommendLevel: 'general',
     category: 'seafood',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 2, freezer: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'day' },
+        freezer: { value: 1, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '마리',
     unitOptions: ['마리', '팩', 'g'],
     synonyms: ['조피볼락'],
   },
 } as const;
 
-export const grainsObj = {
+export const grainsObj: { [key in string]: Ingredient } = {
   baekmi: {
     id: 'baekmi',
     label: '백미',
@@ -2854,7 +3751,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2867,7 +3767,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
     synonyms: ['찰보리'],
@@ -2881,7 +3784,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2894,7 +3800,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2907,7 +3816,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2920,7 +3832,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2933,7 +3848,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2946,7 +3864,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2959,7 +3880,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2972,7 +3896,13 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 10, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 10, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '모',
     unitOptions: ['모'],
   },
@@ -2985,7 +3915,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -2998,7 +3931,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
     synonyms: ['백태', '메주콩'],
@@ -3012,7 +3948,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3025,7 +3964,13 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 10, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 10, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '모',
     unitOptions: ['모'],
   },
@@ -3038,7 +3983,13 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 10, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 10, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '모',
     unitOptions: ['모'],
   },
@@ -3051,7 +4002,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3064,7 +4018,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3077,7 +4034,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3090,7 +4050,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3103,7 +4066,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3116,7 +4082,13 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 10, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 10, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
     synonyms: ['비지'],
@@ -3130,7 +4102,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3143,7 +4118,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3156,7 +4134,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3169,7 +4150,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3182,7 +4166,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3195,7 +4182,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩', 'kg', 'g'],
   },
@@ -3208,7 +4198,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3221,7 +4214,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3234,7 +4230,13 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 10, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 10, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '모',
     unitOptions: ['모'],
   },
@@ -3247,7 +4249,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
     synonyms: ['찰수수'],
@@ -3261,7 +4266,10 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3274,7 +4282,13 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 10, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 10, unit: 'day' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '모',
     unitOptions: ['모'],
   },
@@ -3287,13 +4301,16 @@ export const grainsObj = {
     recommendLevel: 'general',
     category: 'grains',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
 } as const;
 
-export const noodleObj = {
+export const noodleObj: { [key in string]: Ingredient } = {
   lasagna_myeon: {
     id: 'lasagna_myeon',
     label: '라자냐면',
@@ -3302,7 +4319,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '개', '장', 'g'],
     synonyms: ['라자냐', '라자냐시트'],
@@ -3315,7 +4335,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', 'g'],
     synonyms: ['마카로니면', '파스타면'],
@@ -3328,7 +4351,13 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3340,7 +4369,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3352,7 +4384,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3364,7 +4399,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3376,7 +4414,13 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3388,7 +4432,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
     imageName: 'oksusu_myeon',
@@ -3401,7 +4448,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3413,7 +4463,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3425,7 +4478,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3437,7 +4493,13 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3449,7 +4511,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3461,7 +4526,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3473,7 +4541,13 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3485,7 +4559,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3497,7 +4574,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3509,7 +4589,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3521,7 +4604,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3533,7 +4619,13 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3545,7 +4637,13 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3557,7 +4655,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 730 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3569,7 +4670,10 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 730 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3581,7 +4685,13 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14, freezer: 60 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 2, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3593,13 +4703,16 @@ export const noodleObj = {
     recommendLevel: 'general',
     category: 'noodle',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
 } as const;
 
-export const fruitObj = {
+export const fruitObj: { [key in string]: Ingredient } = {
   bam: {
     id: 'bam',
     label: '밤',
@@ -3608,7 +4721,14 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14, fridge: 30, freezer: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 2, unit: 'week' },
+        fridge: { value: 1, unit: 'month' },
+        freezer: { value: 6, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉', 'g'],
     synonyms: ['생밤', '깐밤'],
@@ -3622,7 +4742,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3634,7 +4757,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3646,7 +4772,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3658,7 +4787,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3670,7 +4802,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 5 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3682,7 +4817,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 5, unit: 'day' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -3694,7 +4832,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3706,7 +4847,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3718,7 +4862,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3730,7 +4877,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 5, unit: 'day' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -3742,7 +4892,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -3754,7 +4907,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3766,7 +4922,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3778,7 +4937,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3790,7 +4952,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3802,7 +4967,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -3814,7 +4982,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3826,7 +4997,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3838,7 +5012,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3850,7 +5027,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3862,7 +5042,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3874,7 +5057,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3886,7 +5072,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3898,7 +5087,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3910,7 +5102,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3922,7 +5117,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3934,7 +5132,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3946,7 +5147,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3958,7 +5162,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3970,7 +5177,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -3982,7 +5192,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -3994,7 +5207,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -4006,7 +5222,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -4018,7 +5237,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -4030,7 +5252,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -4042,7 +5267,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -4054,7 +5282,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -4066,7 +5297,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4078,7 +5312,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 5 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 5, unit: 'day' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4090,7 +5327,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -4102,7 +5342,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -4114,7 +5357,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -4126,7 +5372,10 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 3, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
   },
@@ -4138,13 +5387,16 @@ export const fruitObj = {
     recommendLevel: 'general',
     category: 'fruit',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
 } as const;
 
-export const dairyObj = {
+export const dairyObj: { [key in string]: Ingredient } = {
   brie_cheese: {
     id: 'brie_cheese',
     label: '브리치즈',
@@ -4153,7 +5405,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4166,7 +5421,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4179,7 +5437,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'month' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4192,7 +5453,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
@@ -4205,7 +5469,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'month' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4218,7 +5485,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4231,7 +5501,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
     synonyms: ['에멘탈치즈'],
@@ -4245,7 +5518,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4258,7 +5534,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4271,7 +5550,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4284,7 +5566,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '병'],
   },
@@ -4297,7 +5582,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4310,7 +5598,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 30 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'month' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4323,7 +5614,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4336,7 +5630,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4349,7 +5646,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
     synonyms: ['슬라이스치즈'],
@@ -4363,7 +5663,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4376,7 +5679,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4389,7 +5695,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
     synonyms: ['휘핑크림스프레이'],
@@ -4403,7 +5712,10 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -4416,13 +5728,16 @@ export const dairyObj = {
     recommendLevel: 'general',
     category: 'dairy',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 7 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 1, unit: 'week' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
 } as const;
 
-export const canObj = {
+export const canObj: { [key in string]: Ingredient } = {
   canned_beondegi: {
     id: 'canned_beondegi',
     label: '번데기통조림',
@@ -4431,7 +5746,10 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['번데기'],
@@ -4445,7 +5763,10 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['옥수수캔'],
@@ -4459,7 +5780,10 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '캔'],
     synonyms: ['올리브'],
@@ -4473,7 +5797,10 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['완두콩'],
@@ -4487,7 +5814,10 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['참치캔', '참치'],
@@ -4501,7 +5831,10 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['토마토캔', '홀토마토'],
@@ -4515,7 +5848,10 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['파인애플캔'],
@@ -4529,7 +5865,10 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '캔'],
     synonyms: ['피클병조림'],
@@ -4543,7 +5882,10 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '캔'],
     synonyms: ['할라피뇨'],
@@ -4557,7 +5899,10 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['황도'],
@@ -4571,14 +5916,17 @@ export const canObj = {
     recommendLevel: 'general',
     category: 'can',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['골뱅이캔', '골뱅이'],
   },
 } as const;
 
-export const seasoningObj = {
+export const seasoningObj: { [key in string]: Ingredient } = {
   mala_sauce: {
     id: 'mala_sauce',
     label: '마라소스',
@@ -4587,7 +5935,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 6, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '병', '통', '개'],
     synonyms: ['마라양념', '마라탕소스'],
@@ -4600,7 +5954,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 1, unit: 'year' },
+      },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '개'],
     synonyms: ['멸치액', '액젓'],
@@ -4613,7 +5973,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180, fridge: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 6, unit: 'month' },
+        fridge: { value: 6, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '통',
     unitOptions: ['통', '병', '개'],
     synonyms: ['피넛버터', '땅콩버터'],
@@ -4626,7 +5992,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 1, unit: 'year' },
+      },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '개'],
     synonyms: ['참치액', '참치액상조미료'],
@@ -4639,7 +6011,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 6, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통', '개'],
     synonyms: ['스위트칠리소스', '칠리'],
@@ -4652,7 +6030,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 5 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 5, unit: 'day' },
+      },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '팩', '개'],
     synonyms: ['크림소스', '크림스파게티소스'],
@@ -4665,10 +6049,12 @@ export const seasoningObj = {
     label: '아보카도오일',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: 'ml',
     unitOptions: ['ml', 'L'],
-    packageWeight: { amount: 500, unit: 'ml' },
     imageName: 'olive_oil',
   },
 
@@ -4680,10 +6066,12 @@ export const seasoningObj = {
     label: '올리브오일',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: 'ml',
-    unitOptions: ['ml', 'L', 'tbsp', 'tsp'],
-    packageWeight: { amount: 500, unit: 'ml' },
+    unitOptions: ['ml', 'L'],
   },
 
   oligodang: {
@@ -4694,10 +6082,12 @@ export const seasoningObj = {
     label: '올리고당',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: 'g',
     unitOptions: ['g', 'ml'],
-    packageWeight: { amount: 700, unit: 'g' },
   },
 
   honey: {
@@ -4708,10 +6098,12 @@ export const seasoningObj = {
     label: '꿀',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 730 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 2, unit: 'year' } },
+    },
     defaultUnitLabel: 'g',
-    unitOptions: ['g', 'tbsp', 'tsp'],
-    packageWeight: { amount: 500, unit: 'g' },
+    unitOptions: ['g'],
   },
 
   mulyeot: {
@@ -4722,10 +6114,12 @@ export const seasoningObj = {
     label: '물엿',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: 'g',
-    unitOptions: ['g', 'ml', 'tbsp', 'tsp'],
-    packageWeight: { amount: 700, unit: 'g' },
+    unitOptions: ['g', 'ml'],
     imageName: 'oligodang',
   },
 
@@ -4737,10 +6131,15 @@ export const seasoningObj = {
     label: '두반장',
     category: 'seasoning',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 180, pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 6, unit: 'month' },
+        pantry: { value: 1, unit: 'year' },
+      },
+    },
     defaultUnitLabel: 'g',
-    unitOptions: ['g', 'tbsp', 'tsp'],
-    packageWeight: { amount: 250, unit: 'g' },
+    unitOptions: ['g'],
   },
 
   aeu_ganjang: {
@@ -4751,10 +6150,15 @@ export const seasoningObj = {
     label: '어간장',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 1, unit: 'year' },
+      },
+    },
     defaultUnitLabel: 'ml',
-    unitOptions: ['ml', 'L', 'tbsp', 'tsp'],
-    packageWeight: { amount: 500, unit: 'ml' },
+    unitOptions: ['ml', 'L'],
     imageName: 'soy_sauce',
   },
 
@@ -4766,10 +6170,15 @@ export const seasoningObj = {
     label: '국간장',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 1, unit: 'year' },
+      },
+    },
     defaultUnitLabel: 'ml',
-    unitOptions: ['ml', 'L', 'tbsp', 'tsp'],
-    packageWeight: { amount: 500, unit: 'ml' },
+    unitOptions: ['ml', 'L'],
     imageName: 'soy_sauce',
   },
 
@@ -4781,10 +6190,15 @@ export const seasoningObj = {
     label: '양조간장',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 1, unit: 'year' },
+      },
+    },
     defaultUnitLabel: 'ml',
-    unitOptions: ['ml', 'L', 'tbsp', 'tsp'],
-    packageWeight: { amount: 500, unit: 'ml' },
+    unitOptions: ['ml', 'L'],
     imageName: 'soy_sauce',
   },
 
@@ -4796,7 +6210,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
   },
@@ -4809,7 +6226,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -4822,7 +6242,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
   },
@@ -4835,7 +6258,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -4848,7 +6274,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
     synonyms: ['통깨', '볶음참깨'],
@@ -4862,7 +6291,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통'],
   },
@@ -4875,7 +6307,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -4888,7 +6323,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -4901,7 +6339,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -4914,7 +6355,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통'],
     synonyms: ['오일'],
@@ -4928,7 +6372,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -4941,7 +6388,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통'],
   },
@@ -4954,7 +6404,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -4967,7 +6420,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '통',
     unitOptions: ['통', '봉'],
   },
@@ -4980,7 +6436,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
   },
@@ -4993,7 +6452,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '통',
     unitOptions: ['통', '봉'],
   },
@@ -5006,7 +6468,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통'],
   },
@@ -5019,7 +6484,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -5032,7 +6500,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -5045,7 +6516,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'freezer',
-    expirationDays: { fridge: 14, freezer: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 3, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -5058,7 +6535,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'freezer',
-    expirationDays: { fridge: 14, freezer: 90 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        fridge: { value: 2, unit: 'week' },
+        freezer: { value: 3, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통'],
     imageName: 'minced_garlic',
@@ -5072,7 +6555,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -5085,7 +6571,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180, fridge: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 6, unit: 'month' },
+        fridge: { value: 6, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통', '팩', '개'],
     synonyms: ['피넛소스', '월남쌈소스'],
@@ -5098,7 +6590,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 5 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 5, unit: 'day' },
+      },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '팩', '개'],
     synonyms: ['로제파스타소스', '로제떡볶이소스'],
@@ -5111,7 +6609,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 6, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '개'],
     synonyms: ['쯔유소스', '일본간장'],
@@ -5124,7 +6628,13 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365, fridge: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 1, unit: 'year' },
+        fridge: { value: 6, unit: 'month' },
+      },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통', '개'],
     synonyms: ['홀그레인 머스타드', '머스타드'],
@@ -5138,7 +6648,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병'],
   },
@@ -5151,7 +6664,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통'],
   },
@@ -5164,7 +6680,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
   },
@@ -5177,7 +6696,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
     synonyms: ['맛소금'],
@@ -5191,7 +6713,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통'],
     synonyms: [],
@@ -5205,7 +6730,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -5218,7 +6746,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '통',
     unitOptions: ['통', '봉'],
   },
@@ -5231,7 +6762,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
   },
@@ -5244,7 +6778,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -5257,7 +6794,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '병',
     unitOptions: ['병', '통'],
     synonyms: ['양조식초', '사과식초'],
@@ -5272,7 +6812,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '통',
     unitOptions: ['통', '봉'],
   },
@@ -5285,7 +6828,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'fridge',
-    expirationDays: { fridge: 14 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { fridge: { value: 2, unit: 'week' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
@@ -5298,7 +6844,10 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
     synonyms: ['코인육수'],
@@ -5312,13 +6861,16 @@ export const seasoningObj = {
     recommendLevel: 'general',
     category: 'seasoning',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
   },
 } as const;
 
-export const powderObj = {
+export const powderObj: { [key in string]: Ingredient } = {
   green_tea_powder: {
     id: 'green_tea_powder',
     label: '녹차가루',
@@ -5327,7 +6879,10 @@ export const powderObj = {
     recommendLevel: 'general',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '병'],
     synonyms: ['말차가루'],
@@ -5341,7 +6896,10 @@ export const powderObj = {
     recommendLevel: 'general',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
   },
@@ -5353,7 +6911,10 @@ export const powderObj = {
     recommendLevel: 'general',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
   },
@@ -5365,7 +6926,10 @@ export const powderObj = {
     recommendLevel: 'general',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
   },
@@ -5377,7 +6941,10 @@ export const powderObj = {
     recommendLevel: 'general',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
   },
@@ -5389,7 +6956,10 @@ export const powderObj = {
     recommendLevel: 'general',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
   },
@@ -5401,7 +6971,10 @@ export const powderObj = {
     recommendLevel: 'general',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
     synonyms: ['찹쌀가루', '통밀가루'],
@@ -5414,7 +6987,10 @@ export const powderObj = {
     recommendLevel: 'general',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
     synonyms: ['부침가루'],
@@ -5428,7 +7004,10 @@ export const powderObj = {
     recommendLevel: 'general',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
   },
@@ -5440,7 +7019,10 @@ export const powderObj = {
     recommendLevel: 'general',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 6, unit: 'month' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
     imageName: 'baking_powder',
@@ -5453,10 +7035,12 @@ export const powderObj = {
     label: '감자전분',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
-    packageWeight: { amount: 500, unit: 'g' },
     imageName: 'baking_powder',
   },
 
@@ -5468,10 +7052,15 @@ export const powderObj = {
     label: '통밀가루',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180, freezer: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 6, unit: 'month' },
+        freezer: { value: 1, unit: 'year' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
-    packageWeight: { amount: 1000, unit: 'g' },
     imageName: 'memil_garu',
   },
 
@@ -5483,10 +7072,16 @@ export const powderObj = {
     label: '찹쌀가루',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 180, freezer: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: {
+        pantry: { value: 6, unit: 'month' },
+        freezer: { value: 1, unit: 'year' },
+      },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
-    packageWeight: { amount: 500, unit: 'g' },
+
     imageName: 'baking_powder',
   },
 
@@ -5498,10 +7093,12 @@ export const powderObj = {
     label: '부침가루',
     category: 'powder',
     defaultStorage: 'pantry',
-    expirationDays: { pantry: 365 },
+    expiration: {
+      mode: 'recommended',
+      recommendedDurations: { pantry: { value: 1, unit: 'year' } },
+    },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
-    packageWeight: { amount: 500, unit: 'g' },
     imageName: 'milgaru',
   },
 } as const;
@@ -5524,11 +7121,19 @@ export const allIngredientList: Ingredient[] = Object.values(ingredientObj).flat
 );
 
 /** Initial 커스텀 Ingredient  */ // NOTE: 여기 타입 설정하기
-export const initialCustomIngredient = {
-  kind: 'custom',
-  id: nanoid(),
+export const initialCustomIngredient: Ingredient = {
+  isActive: true,
+  kind: 'ingredient',
+  id: `custom:ingredient:`,
   label: '',
-  category: 'no_category',
+  category: 'can',
+  recommendLevel: 'general',
   defaultStorage: 'fridge',
-  expirationDays: { fridge: DEFAULT_EXPIRATION_DAYS },
+  expiration: {
+    mode: 'recommended',
+    recommendedDurations: {
+      fridge: { value: DEFAULT_EXPIRATION_DAYS, unit: 'day' },
+    },
+  },
+  defaultUnitLabel: '개',
 };

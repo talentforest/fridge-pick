@@ -11,7 +11,7 @@ export const shadowStyle: { elevation: number } = {
   elevation: 10,
 };
 
-export const horizontalInset = 20;
+export const horizontalInset = 24;
 
 export const HEX_OPACITY = {
   10: '1A',

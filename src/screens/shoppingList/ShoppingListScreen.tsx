@@ -11,18 +11,16 @@ import {
 import { image_empty_basket } from '@/constants';
 import {
   filterRecommendableCandidates,
-  getCompletableMenuListBySelectableItem,
-  getShoppingMenuExpansionCandidates,
-  searchIngredientAndMeal,
+  getCompletableFoodListBySelectableItem,
+  getShoppingFoodExpansionCandidates,
+  searchSelectableItem,
 } from '@/utils';
-import { StackNavProp } from '@/types/RootStackParamList';
-import { ShoppingItem as ShoppingItemType } from '@/types/shoppingList';
-import { useNavigation } from '@react-navigation/native';
+import { ShoppingItem as ShoppingItemType } from '@/types/shoppingItem';
 import { useAtomValue, useSetAtom } from 'jotai';
-import React, { useMemo, useRef, useState } from 'react';
 import { Image, ScrollView, View } from 'react-native';
-import { useErrorHandler, useOverlay } from '@/hooks';
+import { useErrorHandler, useOverlay, useHandleNavigate } from '@/hooks';
 import { allStorageItemListAtom } from '@/atom/storageAtom';
+import React, { useMemo, useRef, useState } from 'react';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import ShoppingItem from '@/components/trackedItem/shoppingList/ShoppingItem';
@@ -40,11 +38,12 @@ import SquareBtn from '@/components/common/SquareBtn';
 import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import TextInput from '@/components/common/ui/TextInput';
+import SectionContainer from '@/components/common/container/SectionContainer';
 
 export default function ShoppingListScreen() {
   const [inputValue, setInputValue] = useState<string>('');
   const [shoppingListY, setShoppingListY] = useState(0);
-  const [isInputFocused, setIsInputFocused] = useState(false);
+  // const [isInputFocused, setIsInputFocused] = useState(false);
 
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -52,7 +51,7 @@ export default function ShoppingListScreen() {
 
   const { alert } = useOverlay();
 
-  const navigation = useNavigation<StackNavProp>();
+  const { goNavigate } = useHandleNavigate();
 
   const isNotInStorageFavoriteList = useAtomValue(isNotInStorageFavoriteListAtom);
 
@@ -67,7 +66,7 @@ export default function ShoppingListScreen() {
   const toggleAllPurchased = useSetAtom(toggleAllPurchasedAtom);
 
   const recommendedIngredientList = useMemo(() => {
-    const searchedIngredientList = searchIngredientAndMeal(inputValue || '', 6);
+    const searchedIngredientList = searchSelectableItem(inputValue || '', [], 6);
 
     const result = searchedIngredientList.filter(
       ({ id }) =>
@@ -76,13 +75,7 @@ export default function ShoppingListScreen() {
             if (item.type === 'ingredient') {
               return item.ingredientId;
             }
-            if (item.type === 'meal') {
-              return item.mealId;
-            }
-            if (item.type === 'preparedFood') {
-              return item.preparedFoodId;
-            }
-            return item.customLabel;
+            return item.foodId;
           })
           .includes(id),
     );
@@ -104,7 +97,7 @@ export default function ShoppingListScreen() {
         message: '냉장고에 이미 존재하는 식재료는 추가할수 없어요.',
       });
 
-    navigation.navigate('AddShoppingListScreen');
+    goNavigate('AddShoppingListScreen');
   };
 
   const onChangeText = (text: string) => {
@@ -138,17 +131,17 @@ export default function ShoppingListScreen() {
     // ✅ 나의 픽 식재료가 없을 떄 완성
     const hasNotMyPickList = isNotInStorageFavoriteList.map((item) => ({
       type: 'myPick' as const,
-      menuList: [],
+      foodList: [],
       selectableItem: item,
     }));
 
     // ✅ 메뉴에서 식재료 하나가 부족할 때
-    const recommendedShoppingListForMenu = filterRecommendableCandidates(
-      getShoppingMenuExpansionCandidates(allStorageItemList),
+    const recommendedShoppingListForFood = filterRecommendableCandidates(
+      getShoppingFoodExpansionCandidates(allStorageItemList),
     );
 
     const result = [
-      ...recommendedShoppingListForMenu.slice(0, 5),
+      ...recommendedShoppingListForFood.slice(0, 5),
       ...hasNotMyPickList.slice(0, 4),
     ];
 
@@ -172,17 +165,15 @@ export default function ShoppingListScreen() {
     return prioritizeMyPick(result);
   }, [allStorageItemList, isNotInStorageFavoriteList]);
 
-  const canAvailableMenuList = shoppingList
+  const canAvailableFoodList = shoppingList
     .map((item) => {
-      return getCompletableMenuListBySelectableItem(
+      return getCompletableFoodListBySelectableItem(
         allStorageItemList,
         item.type === 'ingredient'
           ? item.ingredient
-          : item.type === 'meal'
-            ? item.meal
-            : item.type === 'preparedFood'
-              ? item.preparedFood
-              : undefined,
+          : item.type === 'food'
+            ? item.food
+            : undefined,
       );
     })
     .flat();
@@ -193,34 +184,32 @@ export default function ShoppingListScreen() {
         <ScreenHeader title="장보기" isDetailPage={false} />
         <ScrollViewContainer
           ref={scrollViewRef}
-          contentContainerClassName="!gap-y-10 !pb-40"
+          contentContainerClassName="!gap-y-10 pt-2 !pb-40"
         >
           {recommendShoppingList ? (
-            <View className="mt-2">
-              <SectionTitle title="장보기 추천" icon="Sparkles" />
-              <View className="pl-[20px]">
-                <CarouselContainer
-                  data={recommendShoppingList}
-                  initialIndex={recommendShoppingList.length}
-                  itemWidth={0.29}
-                  hasNavigation
-                  spacing={10}
-                  requiredMinimum={3}
-                  keyExtractor={(_, index) => `${index}`}
-                  renderItem={({ item }) => (
-                    <RecommendedShoppingItem key={item.selectableItem.id} item={item} />
-                  )}
-                />
-              </View>
-            </View>
+            <SectionContainer>
+              <SectionTitle title="장보기 추천" />
+              <CarouselContainer
+                data={recommendShoppingList}
+                initialIndex={recommendShoppingList.length}
+                itemWidth={0.29}
+                hasNavigation
+                spacing={10}
+                requiredMinimum={3}
+                keyExtractor={(_, index) => `${index}`}
+                renderItem={({ item }) => (
+                  <RecommendedShoppingItem key={item.selectableItem.id} item={item} />
+                )}
+              />
+            </SectionContainer>
           ) : (
             <></>
           )}
 
-          <View className="gap-y-2">
-            <SectionTitle title="장보기 목록" icon="ShoppingBasket" />
+          <SectionContainer>
+            <SectionTitle title="장보기 목록" />
 
-            {canAvailableMenuList.length > 0 ? (
+            {canAvailableFoodList.length > 0 ? (
               <Card className="flex-row gap-x-4 !bg-indigo-1 !px-5">
                 <Icon name="TrendingUp" color="indigo" />
                 <View className="gap-y-2">
@@ -230,7 +219,7 @@ export default function ShoppingListScreen() {
                   <Text className="font-extrabold text-blue-7">
                     만들 수 있는 메뉴가{' '}
                     <Text className="font-extrabold text-blue-9">
-                      {canAvailableMenuList.length}개
+                      {canAvailableFoodList.length}개
                     </Text>{' '}
                     늘어나요!
                   </Text>
@@ -298,11 +287,11 @@ export default function ShoppingListScreen() {
                 </View>
               )}
             </Card>
-          </View>
+          </SectionContainer>
         </ScrollViewContainer>
 
         {/* 아래 컨트롤 버튼: 체크표시된게 있을 때 + 인풋이 포커스 안됐을 때 */}
-        <View className="absolute bottom-4 w-full gap-y-2 px-[28px]">
+        <View className="absolute bottom-4 w-full gap-y-2 px-[24px]">
           {purchasedCount > 0 && ( //&& !isInputFocused
             <View className="flex-row items-start gap-x-2">
               <SquareBtn
@@ -366,13 +355,13 @@ export default function ShoppingListScreen() {
               className="!rounded-full !border-blue-3 !pl-6 pr-12"
               onChangeText={onChangeText}
               onFocus={() => {
-                setIsInputFocused(true);
+                // setIsInputFocused(true);
                 scrollViewRef.current?.scrollTo({
                   y: shoppingListY + 160,
                   animated: true,
                 });
               }}
-              onBlur={() => setIsInputFocused(false)}
+              // onBlur={() => setIsInputFocused(false)}
               placeholder="장볼 식재료가 작성해주세요"
             />
             <Icon

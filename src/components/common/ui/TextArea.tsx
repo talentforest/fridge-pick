@@ -7,8 +7,8 @@ export default function TextArea({
 }: { isSheetInput?: boolean } & TextInputProps) {
   const hasTextSize = props.className?.match(/text-(xs|sm|md|base|lg|xl|2xl)/);
 
-  const style =
-    'min-h-20 w-full rounded-2xl border border-border bg-card px-4 pt-3.5 pb-5 font-bold leading-[20px] tracking-tightest text-text placeholder:text-inactive-text';
+  const commonClassName =
+    'min-h-[80px] w-full rounded-2xl border border-border bg-card px-5 pt-4 pb-6 font-bold leading-[20px] tracking-tightest text-text placeholder:text-inactive-text';
 
   return isSheetInput ? (
     <BottomSheetTextInput
@@ -19,7 +19,7 @@ export default function TextArea({
       autoFocus={false}
       maxLength={100}
       {...props}
-      className={`${style} ${hasTextSize ? props.className : `${props.className ?? ''}`}`}
+      className={`${commonClassName} ${hasTextSize ? props.className : `${props.className ?? ''}`}`}
     />
   ) : (
     <TextInput
@@ -30,7 +30,7 @@ export default function TextArea({
       autoFocus={false}
       maxLength={50}
       {...props}
-      className={`${style} ${hasTextSize ? props.className : `${props.className ?? ''}`}`}
+      className={`${commonClassName} ${hasTextSize ? props.className : `${props.className ?? ''}`}`}
     />
   );
 }

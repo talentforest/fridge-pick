@@ -11,7 +11,7 @@ const ScrollViewContainer = forwardRef<ScrollView, ScrollViewProps>(
         automaticallyAdjustContentInsets={false}
         automaticallyAdjustKeyboardInsets={false}
         {...props}
-        contentContainerClassName={`px-[20px] pb-32 gap-y-20 ${contentContainerClassName ?? ''}`}
+        contentContainerClassName={`px-[24px] pb-32 gap-y-14 ${contentContainerClassName ?? ''}`}
       >
         {children}
       </ScrollView>

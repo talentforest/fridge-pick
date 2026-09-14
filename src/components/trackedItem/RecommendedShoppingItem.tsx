@@ -49,16 +49,16 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
     }
   };
 
-  const menuLabels = item.menuList
+  const foodLabels = item.foodList
     .slice(0, 2)
     .map((item) => item.label)
     .join(', ');
 
   const dataObj = {
-    menu: {
+    food: {
       filterName: '마지막재료',
       color: 'blue',
-      description: `만 있으면-<${item.menuList.length > 2 ? `${menuLabels} 등 ${item.menuList.length - 2}개` : menuLabels}>-재료 완성!`,
+      description: `만 있으면-<${item.foodList.length > 2 ? `${foodLabels} 등 ${item.foodList.length - 2}개` : foodLabels}>-재료 완성!`,
       textColor: 'text-blue-5',
     },
     myPick: {
@@ -70,7 +70,7 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
   } as const;
 
   return (
-    <Card className={`mt-3 !p-2 ${!!isInShoppingListItem ? 'opacity-90' : ''}`}>
+    <Card className={`!p-2 ${!!isInShoppingListItem ? 'opacity-90' : ''}`}>
       <FilterTag
         name={dataObj[item.type].filterName}
         color={dataObj[item.type].color}
@@ -94,7 +94,7 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
           {dataObj[item.type].description.split('-').map((text, index) => (
             <Text
               key={text}
-              className={`${index === 1 && item.type === 'menu' ? 'mt-1.5 font-extrabold text-sm text-text' : 'text-sm text-neutral-7'}`}
+              className={`${index === 1 && item.type === 'food' ? 'mt-1.5 font-extrabold text-sm text-text' : 'text-sm text-neutral-7'}`}
             >
               {text}
             </Text>
@@ -106,7 +106,7 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
           className="!rounded-md !bg-transparent !py-2"
           textClassName="text-sm"
           color={
-            !!isInShoppingListItem ? 'lightGreen' : item.type === 'menu' ? 'blue' : 'red'
+            !!isInShoppingListItem ? 'lightGreen' : item.type === 'food' ? 'blue' : 'red'
           }
           iconName={!!isInShoppingListItem ? 'CheckCircle2' : 'Plus'}
           iconSize={13}

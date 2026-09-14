@@ -12,14 +12,14 @@ import Text from '@/components/common/ui/Text';
 
 interface CautionStorageItemProps {
   cautionStorageItem: StorageItemWithExpiration;
-  isCurrIndex?: boolean;
+  className?: string;
   index?: number;
   isFlexCol?: boolean;
 }
 
 export default function CautionStorageItem({
   cautionStorageItem,
-  isCurrIndex,
+  className,
   index,
   isFlexCol = false,
 }: CautionStorageItemProps) {
@@ -34,14 +34,20 @@ export default function CautionStorageItem({
   return (
     <Card
       style={{ ...iosShadowStyle }}
-      className={`relative items-center  overflow-hidden !p-2.5 ${isFlexCol ? 'gap-y-2.5' : 'flex-row gap-x-2.5'} ${isCurrIndex ? '!border-yellow-5' : ''}`}
+      className={`relative items-center overflow-hidden ${isFlexCol ? 'gap-y-1.5 !px-1.5 !pb-3 !pt-2' : 'flex-row gap-x-2.5 !px-2.5 !py-3'} ${className}`}
     >
-      <View className="rounded-xl bg-neutral-1 p-1.5">
-        <FoodImage trackedItem={storageItem} imageSize={50} />
+      <View className="rounded-full">
+        <FoodImage
+          trackedItem={storageItem}
+          className="p-1.5"
+          imageSize={45}
+          iconSize={12}
+          iconClassName="!p-1.5 -right-1 -top-1"
+        />
       </View>
 
       {index && index <= 4 ? (
-        <View className="absolute left-0 top-0 h-8 w-7 items-center justify-center rounded-br-lg bg-orange-7">
+        <View className="absolute left-0 top-0 h-8 w-7 items-center justify-center rounded-br-md bg-red-5">
           <Text className="font-heavy text-white">{index}</Text>
         </View>
       ) : (
@@ -49,12 +55,14 @@ export default function CautionStorageItem({
       )}
 
       <View
-        className={`flex-1 gap-y-3 ${isFlexCol ? 'items-center justify-center' : ''}`}
+        className={`w-full gap-y-1 ${isFlexCol ? 'items-center justify-center' : ''}`}
       >
-        <Text className="!text-[13px]">{label}</Text>
+        <Text className={`${isFlexCol ? 'text-center' : ''} !text-sm leading-5`}>
+          {label}
+        </Text>
 
         {/* 남은 일수 */}
-        <Text className={`font-heavy text-base ${expirationStatusObj[status].textColor}`}>
+        <Text className={`mt-auto font-heavy ${expirationStatusObj[status].textColor}`}>
           {days}
         </Text>
       </View>

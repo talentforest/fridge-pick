@@ -1,13 +1,13 @@
-import { allMealList, allPreparedFoodList } from '@/constants';
-import { ConsumableFood, SelectableItem } from '@/types/selectableItem';
-import { EnrichedShoppingItem } from '@/types/shoppingList';
+import { allFoodList } from '@/constants';
+import { Food, SelectableItem } from '@/types/selectableItem';
+import { EnrichedShoppingItem } from '@/types/shoppingItem';
 import { EnrichedStorageItem } from '@/types/storage';
 import { findSelectableItem, SelectableItemRef } from '@/utils/findItem';
 
 export type ShoppingInsightResult = {
-  type: 'menu' | 'myPick';
+  type: 'food' | 'myPick';
   selectableItem: SelectableItem;
-  menuList: ConsumableFood[];
+  foodList: Food[];
 };
 
 const getSelectableItemKey = ({ kind, id }: SelectableItemRef) => `${kind}:${id}`;
@@ -22,16 +22,10 @@ const getStorageItemRef = (
         id: item.ingredientId,
       };
 
-    case 'preparedFood':
+    case 'food':
       return {
-        kind: 'preparedFood',
-        id: item.preparedFoodId,
-      };
-
-    case 'meal':
-      return {
-        kind: 'meal',
-        id: item.mealId,
+        kind: 'food',
+        id: item.foodId,
       };
 
     default:
@@ -41,19 +35,18 @@ const getStorageItemRef = (
 
 /**
  * 메뉴중 딱 1개 식재료가 부족한 걸 식재료 별로 묶어서, 가장 많은 메뉴를 완성시키는 식재료 하나를 찾는 함수
- * @param allMenuList
+ * @param allFoodList
  * @param allStorageItemList
  * @returns
  */
-export const getShoppingMenuExpansionCandidates = (
+export const getShoppingFoodExpansionCandidates = (
   allStorageItemList: (EnrichedStorageItem | EnrichedShoppingItem)[],
 ): ShoppingInsightResult[] => {
   /**
    * 현재 보유하고 있는 항목
    *
    * ingredient:chicken_breast
-   * preparedFood:kimchi
-   * meal:yukgaejang
+   * food:yukgaejang
    */
   const possessedItemKeySet = new Set(
     allStorageItemList
@@ -68,18 +61,16 @@ export const getShoppingMenuExpansionCandidates = (
    */
   const candidateMap = new Map<string, ShoppingInsightResult>();
 
-  const allMenuList = [...allMealList, ...allPreparedFoodList];
-
-  for (const menu of allMenuList) {
-    if (!menu.foodStructure) continue;
+  for (const food of allFoodList) {
+    if (!food.foodStructure) continue;
     /**
      * 우선 essential + common + seasoning만 완성 조건으로 사용
      * optional만 제외
      */
     const requiredItemList: SelectableItemRef[] = [
-      ...menu.foodStructure.essential,
-      ...menu.foodStructure.common,
-      ...menu.foodStructure.seasoning,
+      ...food.foodStructure.essential,
+      ...food.foodStructure.common,
+      ...food.foodStructure.seasoning,
     ];
 
     /**
@@ -106,12 +97,12 @@ export const getShoppingMenuExpansionCandidates = (
 
     const selectableItem = findSelectableItem(missingItemRef);
 
-    const current = candidateMap.get(selectableItem.id);
+    const current = candidateMap.get(selectableItem!.id);
 
-    candidateMap.set(selectableItem.id, {
-      type: 'menu',
-      selectableItem,
-      menuList: [...(current?.menuList ?? []), menu],
+    candidateMap.set(selectableItem!.id, {
+      type: 'food',
+      selectableItem: selectableItem!,
+      foodList: [...(current?.foodList ?? []), food],
     });
   }
 
@@ -119,7 +110,7 @@ export const getShoppingMenuExpansionCandidates = (
    * 가장 많은 메뉴를 새롭게 만들 수 있는 항목
    */
   return (
-    [...candidateMap.values()].sort((a, b) => b.menuList.length - a.menuList.length) ??
+    [...candidateMap.values()].sort((a, b) => b.foodList.length - a.foodList.length) ??
     null
   );
 };
@@ -138,22 +129,22 @@ export const filterRecommendableCandidates = (
         return true;
 
       case 'preference':
-        return canRecommendPreferenceItem(selectableItem);
+        return false; // canRecommendPreferenceItem(selectableItem);
     }
   });
 };
 
-const canRecommendPreferenceItem = (item: SelectableItem): boolean => {
-  return false;
-};
+// const canRecommendPreferenceItem = (item: SelectableItem): boolean => {
+//   return false;
+// };
 
 /**
  * 특정 식재료(또는 간편식/식사)가 생기면 새롭게 만들 수 있는 메뉴 목록
  */
-export const getCompletableMenuListBySelectableItem = (
+export const getCompletableFoodListBySelectableItem = (
   allStorageItemList: (EnrichedStorageItem | EnrichedShoppingItem)[],
   selectableItem?: SelectableItem,
-): ConsumableFood[] => {
+): Food[] => {
   if (!selectableItem) return [];
   const possessedItemKeySet = new Set(
     allStorageItemList
@@ -164,15 +155,13 @@ export const getCompletableMenuListBySelectableItem = (
 
   const selectableItemKey = getSelectableItemKey(selectableItem);
 
-  const allMenuList = [...allMealList, ...allPreparedFoodList];
-
-  return allMenuList.filter((menu) => {
-    if (!menu.foodStructure) return false;
+  return allFoodList.filter((food) => {
+    if (!food.foodStructure) return false;
 
     const requiredItemList: SelectableItemRef[] = [
-      ...menu.foodStructure.essential,
-      ...menu.foodStructure.common,
-      ...menu.foodStructure.seasoning,
+      ...food.foodStructure.essential,
+      ...food.foodStructure.common,
+      ...food.foodStructure.seasoning,
     ];
 
     const missingItemList = requiredItemList.filter(

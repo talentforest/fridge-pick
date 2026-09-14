@@ -1,90 +1,90 @@
+import CategoryImage from '@/components/common/ui/CategoryImage';
+import { image_empty_basket, ingredientImageObj, foodImageObj } from '@/constants';
+import { CategoryKey } from '@/types/category';
 import {
-  image_empty_basket,
-  image_shopping_basket,
-  ingredientCategoryImagesObj,
-  mealCategoryImagesObj,
-  preparedFoodCategoryImagesObj,
-} from '@/constants';
-import {
-  ConsumableFood,
-  ConsumableFoodWithEnrichedFoodStructure,
-  MealKey,
-  PreparedFoodKey,
+  Food,
+  FoodWithEnrichedFoodStructure,
+  FoodKey,
   SelectableItem,
 } from '@/types/selectableItem';
-import { EnrichedShoppingItem } from '@/types/shoppingList';
+import { EnrichedShoppingItem } from '@/types/shoppingItem';
 import { EnrichedStorageItem } from '@/types/storage';
-import { Image } from 'react-native';
+import { Image, ImageSourcePropType, View } from 'react-native';
 
 type SelectableItemProps = {
   selectableItem: SelectableItem;
   trackedItem?: never;
-  consumableFood?: never;
+  food?: never;
 };
 
 type TrackedItemProps = {
   trackedItem: EnrichedShoppingItem | EnrichedStorageItem;
   selectableItem?: never;
-  consumableFood?: never;
+  food?: never;
 };
 
-type ConsumableFoodProps = {
-  consumableFood?: ConsumableFood | ConsumableFoodWithEnrichedFoodStructure;
+type FoodProps = {
+  food?: Food | FoodWithEnrichedFoodStructure;
   selectableItem?: never;
   trackedItem?: never;
 };
 
 type FoodImageProps = {
   imageSize?: number;
-} & (SelectableItemProps | TrackedItemProps | ConsumableFoodProps);
+  iconSize?: number;
+  className?: string;
+  iconClassName?: string;
+} & (SelectableItemProps | TrackedItemProps | FoodProps);
+
+type Result = { source: ImageSourcePropType } | { categoryKey?: CategoryKey };
 
 export default function FoodImage({
   selectableItem,
   trackedItem,
-  consumableFood,
+  food,
   imageSize = 55,
+  iconSize = 16,
+  className = '',
+  iconClassName = '',
 }: FoodImageProps) {
-  const getSelectableItemImage = (item: SelectableItem) => {
+  /** 만약 사고로 이미지가 없는 경우 */
+  const getFoodImageByKind = (
+    item: SelectableItem | FoodWithEnrichedFoodStructure,
+  ): Result => {
     const key = item?.imageName || item.id;
 
-    switch (item.kind) {
-      case 'meal':
-        return mealCategoryImagesObj[key as MealKey];
+    const categoryKey = { categoryKey: item.category };
 
-      case 'preparedFood':
-        return preparedFoodCategoryImagesObj[key as PreparedFoodKey];
+    if (item.id.includes('custom:')) {
+      return categoryKey;
+    }
+
+    switch (item.kind) {
+      case 'food':
+        const foodSource = foodImageObj[key as FoodKey];
+        return foodSource ? { source: foodSource } : categoryKey;
 
       case 'ingredient':
-        return ingredientCategoryImagesObj[item.category][key];
+        const ingredientSource = ingredientImageObj[item.category][key];
+        return ingredientSource ? { source: ingredientSource } : categoryKey;
     }
   };
 
-  const getTrackedItemImage = (item: EnrichedShoppingItem | EnrichedStorageItem) => {
+  const getSelectableItemImage = (
+    item: SelectableItem | FoodWithEnrichedFoodStructure,
+  ): Result => {
+    return getFoodImageByKind(item);
+  };
+
+  const getTrackedItemImage = (
+    item: EnrichedShoppingItem | EnrichedStorageItem,
+  ): Result => {
     switch (item.type) {
-      case 'meal':
-        return mealCategoryImagesObj[(item?.meal?.imageName || item.meal.id) as MealKey];
-
-      case 'preparedFood':
-        return preparedFoodCategoryImagesObj[
-          (item?.preparedFood?.imageName || item.preparedFood.id) as PreparedFoodKey
-        ];
+      case 'food':
+        return getFoodImageByKind(item.food);
 
       case 'ingredient':
-        return ingredientCategoryImagesObj[item.ingredient.category][
-          item?.ingredient.imageName || item.ingredientId
-        ];
-    }
-  };
-
-  const getConsumableFoodImage = (
-    item: ConsumableFood | ConsumableFoodWithEnrichedFoodStructure,
-  ) => {
-    switch (item.kind) {
-      case 'meal':
-        return mealCategoryImagesObj[item.id];
-
-      case 'preparedFood':
-        return preparedFoodCategoryImagesObj[item.id];
+        return getFoodImageByKind(item.ingredient);
     }
   };
 
@@ -93,16 +93,28 @@ export default function FoodImage({
 
     if (selectableItem) return getSelectableItemImage(selectableItem);
 
-    if (consumableFood) return getConsumableFoodImage(consumableFood);
+    if (food) return getSelectableItemImage(food);
 
     return image_empty_basket;
   };
 
-  return (
-    <Image
-      source={getSource() || image_shopping_basket}
-      style={{ width: imageSize, height: imageSize }}
-      className="aspect-square"
+  const { source, categoryKey } = getSource();
+
+  return categoryKey ? (
+    <CategoryImage
+      categoryKey={categoryKey}
+      imageSize={imageSize}
+      iconSize={iconSize}
+      className={className}
+      iconClassName={iconClassName}
     />
+  ) : (
+    <View className={className}>
+      <Image
+        source={source}
+        style={{ width: imageSize, height: imageSize }}
+        className={`aspect-square`}
+      />
+    </View>
   );
 }

@@ -12,19 +12,23 @@ import Icon from '@/components/common/ui/Icon';
 import { useOverlay } from '@/hooks';
 
 interface FavoriteBtnProps {
+  isFavorite?: boolean;
   storageItem?: EnrichedStorageItem;
   selectableItem?: SelectableItem;
   className?: string;
   size?: number;
   hasShadow?: boolean;
+  onBtnPress?: () => void;
 }
 
 export default function FavoriteBtn({
+  isFavorite,
   storageItem,
   selectableItem,
   className,
   size = 22,
   hasShadow,
+  onBtnPress,
 }: FavoriteBtnProps) {
   const addFavoriteStorageItem = useSetAtom(addFavoriteStorageItemAtom);
   const addFavoriteSelectableItem = useSetAtom(addFavoriteSelectableItemAtom);
@@ -39,6 +43,10 @@ export default function FavoriteBtn({
   const { showToast } = useOverlay();
 
   const onPress = () => {
+    if (onBtnPress) {
+      return onBtnPress();
+    }
+
     if (!favoriteItem) {
       if (storageItem) addFavoriteStorageItem(storageItem);
 
@@ -56,24 +64,27 @@ export default function FavoriteBtn({
     });
   };
 
-  return hasShadow ? (
+  const isFavoriteItem = isFavorite !== undefined ? isFavorite : favoriteItem;
+
+  return isFavoriteItem ? (
     <Icon
       name="Heart"
-      size={size}
-      hasFill={!!favoriteItem}
-      color={!!favoriteItem ? 'red' : 'inactive'}
-      className={`${className}`}
+      hasFill
+      color="red"
       onPress={onPress}
-      hasShadow
+      size={size}
+      className={className}
+      hasShadow={hasShadow}
     />
   ) : (
     <Icon
       name="Heart"
-      size={size}
-      hasFill={!!favoriteItem}
-      color={!!favoriteItem ? 'red' : 'inactive'}
-      className={`${className}`}
+      hasFill={false}
+      color="inactive"
       onPress={onPress}
+      size={size}
+      className={className}
+      hasShadow={hasShadow}
     />
   );
 }

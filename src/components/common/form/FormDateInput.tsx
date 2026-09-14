@@ -1,8 +1,5 @@
 import Text from '@/components/common/ui/Text';
-import ModalHeader from '@/components/common/header/ModalHeader';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import LabelContainer from '@/components/common/container/LabelContainer';
-import { useOverlay } from '@/hooks';
 import { formatDateString, getRemainingDays } from '@/utils';
 import { View } from 'react-native';
 import { EditableStorageItem, StorageTypeId } from '@/types/storage';
@@ -11,6 +8,7 @@ import { storageObj } from '@/constants';
 import { useAtomValue } from 'jotai';
 import { findStorageItemById } from '@/atom/storageAtom';
 import DateInputWithQuickBtn from '@/components/common/DateInputWithQuickBtn';
+import { StorageDurations } from '@/types/selectableItem';
 
 type InitialDateProps = {
   initialDate: string;
@@ -27,11 +25,7 @@ type FormDateInputProps = (InitialDateProps | StorageItemProps) & {
   defaultExpirationDays?: number;
   hasLabel?: boolean;
   currStorageType?: StorageTypeId;
-  ingredientExpirationDays?: {
-    fridge?: number;
-    freezer?: number;
-    pantry?: number;
-  };
+  expirationPeriods?: StorageDurations;
 };
 
 export default function FormDateInput({
@@ -40,11 +34,9 @@ export default function FormDateInput({
   onItemChange,
   hasLabel,
   currStorageType,
-  ingredientExpirationDays,
+  expirationPeriods,
 }: FormDateInputProps) {
   const currStorageItem = useAtomValue(findStorageItemById(storageItemId));
-
-  const { openDatePicker } = useOverlay();
 
   const onChangeDate = (date: Date) => {
     const expiresAt = formatDateString(date, 'yyyy-MM-dd');
@@ -55,32 +47,8 @@ export default function FormDateInput({
 
   if (!currDate) return null;
 
-  const onEditDatePickerPress = () => {
-    const onChange = (_: any, selectedDate?: Date) => {
-      if (selectedDate) {
-        onChangeDate(selectedDate);
-      }
-    };
-
-    openDatePicker({
-      render: () => (
-        <View>
-          <ModalHeader title="소비기한 직접 변경" isDatePicker hasX />
-          <DateTimePicker
-            minimumDate={new Date()}
-            value={new Date(currDate)}
-            mode="date"
-            display="spinner"
-            onChange={onChange}
-            locale="ko-KR"
-          />
-        </View>
-      ),
-    });
-  };
-
   const expirationDaysByStorage = currStorageType
-    ? ingredientExpirationDays?.[currStorageType]
+    ? expirationPeriods?.[currStorageType]?.value
     : null;
 
   const remainingDays = getRemainingDays(currDate);
@@ -107,7 +75,6 @@ export default function FormDateInput({
           hasDateInput
           initialDate={currDate}
           onChangeDate={onChangeDate}
-          openDatePicker={onEditDatePickerPress}
         />
       </View>
     </LabelContainer>

@@ -3,17 +3,12 @@ import { View } from 'react-native';
 import { useState } from 'react';
 import { useSetAtom } from 'jotai';
 import { changeStorageItemAtom } from '@/atom/storageAtom';
-import { getTrackedItemData } from '@/utils';
 
-import Text from '@/components/common/ui/Text';
-import QuickActionBtnList from '@/components/trackedItem/storage/QuickActionBtnList';
-import AvailableMenuList from '@/components/trackedItem/storage/AvailableMenuList';
-import SectionTitle from '@/components/common/header/SectionTitle';
 import FormIngredient from '@/components/common/form/FormIngredient';
-import StorageItemDetailCard from '@/components/selectableItem/StorageItemDetailCard';
 import SquareBtn from '@/components/common/SquareBtn';
-import Card from '@/components/common/ui/Card';
-import FoodImage from '@/components/common/FoodImage';
+import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
+import StorageItemDetail from '@/components/trackedItem/storage/StorageItemDetail';
+import ModalHeader from '@/components/common/header/ModalHeader';
 
 interface StorageItemSheetProps {
   storageItem: EnrichedStorageItem;
@@ -29,13 +24,7 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
 
   const onItemChange = (newData: EditableStorageItem) => {
     setCurrStorageItem((prev) => {
-      if (prev.type === 'custom') {
-        return { ...prev, ...newData };
-      }
-
-      const { customLabel: _, ...rest } = newData;
-
-      return { ...prev, ...rest };
+      return { ...prev, ...newData };
     });
   };
 
@@ -43,60 +32,37 @@ export default function StorageItemSheet({ storageItem }: StorageItemSheetProps)
 
   if (!storageItem) return;
 
-  const { label, categoryLabel } = getTrackedItemData(storageItem);
-
   return (
-    <View className="gap-y-8 py-2">
+    <View className="gap-y-3 pb-3">
       {!isEditing ? (
-        <>
-          <StorageItemDetailCard storageItem={currStorageItem} />
+        <StorageItemDetail
+          storageItem={currStorageItem}
+          toggleEditPress={toggleEditPress}
+        />
+      ) : (
+        <View className="gap-y-4">
+          <ModalHeader title="식재료 정보 수정" />
 
-          <View className="gap-y-3">
-            <View className="flex-row items-end gap-x-1">
-              <SectionTitle icon="Zap" type="sub" title="빠른관리" />
-              <Text className="!text-[13px] text-neutral-5">
-                식재료 상태를 빠르게 변경해보세요
-              </Text>
-            </View>
+          <View className="gap-y-6">
+            <TrackedItemImageLabel item={currStorageItem} textClassName="text-lg" />
 
-            <QuickActionBtnList
-              storageItemId={currStorageItem.id}
-              toggleEditPress={toggleEditPress}
+            <FormIngredient
+              currStorageItem={currStorageItem}
+              onItemChange={onItemChange}
+              isSheetInput={true}
+            />
+
+            <SquareBtn
+              name="수정완료"
+              iconName="CheckCircle2"
+              iconSize={16}
+              onPress={() => {
+                changeStorageItem({ id: currStorageItem.id, newData: currStorageItem });
+                toggleEditPress();
+              }}
             />
           </View>
-
-          <AvailableMenuList type="accordion" storageItem={currStorageItem} />
-        </>
-      ) : (
-        <>
-          <View className="w-full flex-row items-center gap-x-2">
-            <Card className="items-center justify-center !bg-border !px-1 !py-0">
-              <FoodImage trackedItem={currStorageItem} imageSize={70} />
-            </Card>
-
-            <View className="gap-y-2.5">
-              <Text className={`font-extrabold text-xl leading-7`}>{label}</Text>
-              {/* 카테고리 */}
-              <Text className="mb-0.5 text-neutral-5">{categoryLabel}</Text>
-            </View>
-          </View>
-
-          <FormIngredient
-            currStorageItem={currStorageItem}
-            onItemChange={onItemChange}
-            isSheetInput={true}
-          />
-
-          <SquareBtn
-            name="수정완료"
-            iconName="CheckCircle2"
-            iconSize={16}
-            onPress={() => {
-              changeStorageItem({ id: currStorageItem.id, newData: currStorageItem });
-              toggleEditPress();
-            }}
-          />
-        </>
+        </View>
       )}
     </View>
   );

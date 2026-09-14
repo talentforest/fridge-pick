@@ -1,5 +1,5 @@
 import { image_empty_basket } from '@/constants';
-import { useStorageItemList } from '@/hooks';
+import { useCurrStorageItemList } from '@/hooks';
 import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
 import { Image, ScrollView, View } from 'react-native';
 import Card from '@/components/common/ui/Card';
@@ -12,16 +12,16 @@ interface StorageProps {
 }
 
 export default function Storage({ storageType, openItemPress }: StorageProps) {
-  const storage = {
+  const currStorage = {
     type: storageType,
     side: 'inner',
     section: '1',
   } as const;
 
-  const { storageItemListByCategory } = useStorageItemList({ storage });
+  const { storageItemListByCategory } = useCurrStorageItemList({ currStorage });
 
   return (
-    <Card className={`min-h-[60vh] gap-y-6 overflow-hidden border-0 !p-0`}>
+    <Card className={`min-h-[55vh] gap-y-6 overflow-hidden border-0 !p-0`}>
       {storageItemListByCategory.length !== 0 ? (
         <ScrollView
           nestedScrollEnabled

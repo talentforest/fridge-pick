@@ -1,8 +1,12 @@
 import Card from '@/components/common/ui/Card';
-import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import { getInsightData, InsightDataProps } from '@/utils';
-import { View } from 'react-native';
+import { allFoodList } from '@/constants';
+import { useStorageItemList } from '@/hooks';
+import { getInsightData, getTopInsight } from '@/utils';
+import { Image, useColorScheme, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { colorTokens } from '@/theme/color';
+import SquareBtn from '@/components/common/SquareBtn';
 
 /** 
   🚨 긴급 관리
@@ -28,27 +32,84 @@ import { View } from 'react-native';
   - 연속 소비 기록
 */
 
-export default function InsightCard(props: InsightDataProps) {
-  const bgColorMap = {
-    red: '!bg-red-1',
-    green: '!bg-green-1',
-    yellow: '!bg-orange-1',
-    indigo: '!bg-indigo-1',
-    blue: '!bg-blue-1',
-  };
+export default function InsightCard() {
+  const { allStorageItemList, expiredStorageItemList } = useStorageItemList();
 
-  const { icon, title, color, description } = getInsightData(props);
+  const insightProps = getTopInsight({
+    expiredCount: expiredStorageItemList.length,
+    allFoodList,
+    allStorageItemList,
+  });
+
+  const textColorMap = {
+    red: '!text-red-7',
+    green: '!text-green-7',
+    yellow: '!text-orange-7',
+    indigo: '!text-indigo-7',
+    blue: '!text-blue-7',
+    neutral: '!text-neutral-5',
+  } as const;
+
+  const { title, color, btn, description, image, isReverse } =
+    getInsightData(insightProps);
+
+  const colorScheme = useColorScheme();
 
   return (
-    <Card className={`flex-row items-center !px-5 !py-5 ${bgColorMap[color]}`}>
-      <Icon name={icon} color={color} size={22} />
+    <LinearGradient
+      colors={[
+        colorTokens[colorScheme ?? 'light']['neutral'][3],
+        colorTokens[colorScheme ?? 'light'][color][1],
+      ]}
+      start={{ x: 0, y: 0 }}
+      style={{ borderRadius: 20 }}
+      end={{ x: 1, y: 0 }}
+    >
+      <Card
+        className={`items-center gap-x-1 !bg-transparent !py-6 ${isReverse ? 'flex-row-reverse !pr-7' : 'flex-row !pl-7'}`}
+      >
+        <View className="flex-1 items-start justify-center gap-y-3">
+          <View className="gap-y-3">
+            <View className="gap-y-1.5">
+              {title.map(({ text, highlight }) => (
+                <Text
+                  key={text}
+                  className={`!text-[17px] ${highlight ? `font-heavy ${textColorMap[color]}` : 'font-extrabold'}`}
+                >
+                  {text}{' '}
+                </Text>
+              ))}
+            </View>
 
-      <View className="ml-3.5 flex-1 gap-y-2">
-        <Text className="font-extrabold">{title}</Text>
-        <Text className="text-sm">{description}</Text>
-      </View>
+            <View className="flex-row flex-wrap gap-y-1.5">
+              {description.map(({ text, highlight }) => (
+                <Text
+                  key={text}
+                  className={`!text-[13px] leading-4 text-neutral-7 ${highlight ? 'font-extrabold' : ''}`}
+                >
+                  {text}{' '}
+                </Text>
+              ))}
+            </View>
+          </View>
 
-      <Icon name="ChevronRight" size={20} />
-    </Card>
+          {btn?.name ? (
+            <SquareBtn
+              name={btn.name}
+              tailIconName="ChevronRight"
+              iconSize={16}
+              bgColor={color}
+              className="mt-2 !rounded-full !py-3"
+              textClassName="!text-[13px] ml-1"
+              onPress={() => {}}
+            />
+          ) : (
+            <></>
+          )}
+        </View>
+
+        <Image source={image} className="size-40" />
+      </Card>
+    </LinearGradient>
   );
 }

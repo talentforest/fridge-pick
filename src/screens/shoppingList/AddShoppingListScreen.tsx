@@ -3,9 +3,7 @@ import {
   convertedStorageItemListAtom,
   deleteShoppingItemListAtom,
 } from '@/atom/shoppingListAtom';
-import { useOverlay } from '@/hooks';
-import { StackNavProp } from '@/types/RootStackParamList';
-import { useNavigation } from '@react-navigation/native';
+import { useOverlay, useHandleNavigate } from '@/hooks';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import { FlatList } from 'react-native';
@@ -22,7 +20,7 @@ export default function AddShoppingListScreen() {
 
   const { closeModal, alert } = useOverlay();
 
-  const navigation = useNavigation<StackNavProp>();
+  const { goBack } = useHandleNavigate();
 
   const addToStorage = useSetAtom(addShoppingListToStorageAtom);
   const deleteItemList = useSetAtom(deleteShoppingItemListAtom);
@@ -34,7 +32,7 @@ export default function AddShoppingListScreen() {
 
     closeModal();
 
-    navigation.goBack();
+    goBack();
 
     alert({ message: '각각 보관함으로 추가되었습니다.' });
   };

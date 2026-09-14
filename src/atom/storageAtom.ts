@@ -48,7 +48,7 @@ export const findStorageItemById = atomFamily((storageItemId?: string) =>
 );
 
 /** ingredientId나 customLabel로 보관함 속 특정 식재료 아이템 찾기
- * @param key `${ingredientId}|${customLabel}|${mealId}` 형식
+ * @param key `${ingredientId}|${foodId}|${customLabel}` 형식
  */
 export const findStorageItemWithKeyAtom = atomFamily((key: string) =>
   atom((get) => {
@@ -144,17 +144,7 @@ export const changeStorageItemAtom = atom(null, (get, set, { id, newData }: Prop
   const list = get(allStorageItemListAtom);
 
   const changedList = list.map((item) => {
-    if (item.id === id) {
-      if (item.type === 'custom') {
-        return { ...item, ...newData };
-      }
-
-      const { customLabel: _, ...rest } = newData;
-
-      return { ...item, ...rest };
-    } else {
-      return item;
-    }
+    return item.id === id ? { ...item, ...newData } : item;
   });
 
   set(allStorageItemListAtom, changedList);

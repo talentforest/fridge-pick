@@ -21,7 +21,7 @@ const toastConfig = {
     props: { bgColor },
   }: ToastConfigParams<{ bgColor: ToastBgColor }>) => (
     <View style={iosShadowStyle} className={getContainerCommonClassName({ bgColor })}>
-      <Text className="!text-neutral-1">{text1}</Text>
+      <Text className="font-extrabold leading-6 !text-neutral-1">{text1}</Text>
     </View>
   ),
 
@@ -33,11 +33,11 @@ const toastConfig = {
       style={iosShadowStyle}
       className={`${getContainerCommonClassName({ bgColor })} items-center !pb-3`}
     >
-      <Text className="!text-neutral-1">{text1}</Text>
+      <Text className="font-extrabold leading-6 !text-neutral-1">{text1}</Text>
 
       <Pressable onPress={onUndo} className="flex-row items-center gap-x-0.5 px-2 py-3">
         <Icon name="RotateCcw" size={12} color="lightYellow" strokeWidth={3} />
-        <Text className="font-extrabold !text-[12px] text-yellow-3">되돌리기</Text>
+        <Text className="font-extrabold text-sm text-yellow-3">되돌리기</Text>
       </Pressable>
     </View>
   ),

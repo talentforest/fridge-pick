@@ -1,78 +1,47 @@
-import {
-  storageItemListByExpirationStatusAtom,
-  itemListByStorageAtom,
-} from '@/atom/storageAtom';
-import {
-  allMealList,
-  allPreparedFoodList,
-  image_fridge,
-  image_fridge_dark,
-  storageObj,
-} from '@/constants';
-import { StackNavProp } from '@/types/RootStackParamList';
-import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
-import { getAddedFormatLabel, getRemainingDays, getTopInsight } from '@/utils';
-import { useNavigation } from '@react-navigation/native';
-import { useAtomValue } from 'jotai';
+import { image_fridge, image_fridge_dark, storageObj } from '@/constants';
+import { getAddedFormatLabel } from '@/utils';
 import { Image, useColorScheme, View } from 'react-native';
 import { Fragment } from 'react';
+import { useStorageItemList, useHandleNavigate } from '@/hooks';
 import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
-import InsightCard from '@/components/home/InsightCard';
 
 export default function SpaceGrid() {
-  const freezerItemList = useAtomValue(itemListByStorageAtom('freezer'));
-  const fridgeItemList = useAtomValue(itemListByStorageAtom('fridge'));
-  const pantryItemList = useAtomValue(itemListByStorageAtom('pantry'));
-
-  const allStorageItemList = [...freezerItemList, ...fridgeItemList, ...pantryItemList];
-
-  const expiredStorageItemList = useAtomValue(
-    storageItemListByExpirationStatusAtom('expired'),
-  );
-  const expiredSoonStorageItemList = useAtomValue(
-    storageItemListByExpirationStatusAtom('expiredSoon'),
-  );
-  const goodStorageItemList = useAtomValue(storageItemListByExpirationStatusAtom('safe'));
-
-  const getExpiredItemList = (storageType: StorageTypeId) => {
-    return expiredStorageItemList.filter(
-      ({ storageItem }) => storageItem.storage.type === storageType,
-    );
-  };
-
-  const allMenuList = [...allMealList, ...allPreparedFoodList];
-
-  const getRecentlyUpdate = (itemList: EnrichedStorageItem[]): number => {
-    if (itemList.length === 0) return 0;
-
-    const purchasedAtList = itemList.map((item) => getRemainingDays(item.purchasedAt));
-    return Math.max(...purchasedAtList);
-  };
+  const {
+    allStorageItemList,
+    freezerItemList,
+    fridgeItemList,
+    pantryItemList,
+    expiredSoonStorageItemList,
+    expiredStorageItemList,
+    safeStorageItemList,
+    getExpiredItemListByStorage,
+    getRecentlyUpdateByStorage,
+  } = useStorageItemList();
 
   const storageList = [
     {
       id: 'freezer' as const,
       label: '냉동실',
       total: freezerItemList.length,
-      expiredItemNum: getExpiredItemList('freezer').length,
-      recentlyUpdateDays: getRecentlyUpdate(freezerItemList), // purchasedAt 시점 기준으로 하면 되겠다.
+      expiredItemNum: getExpiredItemListByStorage('freezer').length,
+      recentlyUpdateDays: getRecentlyUpdateByStorage(freezerItemList), // storedAt 시점 기준으로 하면 되겠다.
     },
     {
       id: 'fridge' as const,
       label: '냉장실',
       total: fridgeItemList.length,
-      expiredItemNum: getExpiredItemList('fridge').length,
-      recentlyUpdateDays: getRecentlyUpdate(fridgeItemList),
+      expiredItemNum: getExpiredItemListByStorage('fridge').length,
+      recentlyUpdateDays: getRecentlyUpdateByStorage(fridgeItemList),
     },
     {
       id: 'pantry' as const,
       label: '실온',
       total: pantryItemList.length,
-      expiredItemNum: getExpiredItemList('pantry').length,
-      recentlyUpdateDays: getRecentlyUpdate(pantryItemList),
+      expiredItemNum: getExpiredItemListByStorage('pantry').length,
+      recentlyUpdateDays: getRecentlyUpdateByStorage(pantryItemList),
     },
   ];
 
@@ -91,24 +60,16 @@ export default function SpaceGrid() {
     },
     {
       label: '여유 식재료',
-      data: goodStorageItemList.length,
+      data: safeStorageItemList.length,
       icon: 'LeafyGreen',
       color: 'green',
     },
   ] as const;
 
-  const insightProps = getTopInsight({
-    expiredCount: expiredStorageItemList.length,
-    allMenuList,
-    allStorageItemList,
-  });
-
   const scheme = useColorScheme();
 
   return (
     <View className="gap-y-[10px]">
-      <InsightCard {...insightProps} />
-
       {/* 나의 냉장고 */}
       <Card className="w-full !p-3">
         <View className="mx-4 flex-row items-center justify-between pt-4">
@@ -155,7 +116,7 @@ export default function SpaceGrid() {
                     >
                       {item.label}
                     </Text>
-                    <Text className="font-extrabold text-xl">
+                    <Text className="font-heavy text-xl">
                       {item.data}
                       <Text className="text-neutral-5">개</Text>
                     </Text>
@@ -197,12 +158,12 @@ const TouchableSpaceCard = ({
     hasNotAllFavorites?: boolean;
   };
 }) => {
-  const navigation = useNavigation<StackNavProp>();
+  const { goNavigate } = useHandleNavigate();
 
   return (
     <TouchableOpacity
       className={`h-[122px] w-[33%] gap-y-3.5 px-4 py-5`}
-      onPress={() => navigation.navigate('StorageDetailScreen', { id })}
+      onPress={() => goNavigate('StorageDetailScreen', { id })}
     >
       <View className={`flex-row items-center gap-x-1`}>
         <Icon name={storageObj[id].icon} color={storageObj[id].color} size={14} />
@@ -215,7 +176,7 @@ const TouchableSpaceCard = ({
 
       <View className="flex-1">
         <Text
-          className={`pl-0.5 font-extrabold !text-2xl ${id === 'pantry' ? 'text-yellow-7' : id === 'freezer' ? 'text-ice-7' : 'text-blue-7'}`}
+          className={`pl-0.5 font-heavy !text-2xl ${id === 'pantry' ? 'text-yellow-7' : id === 'freezer' ? 'text-ice-7' : 'text-blue-7'}`}
         >
           {total}
           <Text className="text-neutral-5">개</Text>

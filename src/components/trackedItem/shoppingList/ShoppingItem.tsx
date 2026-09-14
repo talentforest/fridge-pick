@@ -1,14 +1,13 @@
 import { togglePurchasedAtom } from '@/atom/shoppingListAtom';
 import { findStorageItemWithKeyAtom } from '@/atom/storageAtom';
-import { EnrichedShoppingItem } from '@/types/shoppingList';
+import { EnrichedShoppingItem } from '@/types/shoppingItem';
 import { createTrackedItemKey, getTrackedItemData } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Pressable, View } from 'react-native';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import NavigateToStorageBtn from '@/components/common/NavigateToStorageBtn';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavProp } from '@/types/RootStackParamList';
+import { useHandleNavigate } from '@/hooks';
 
 interface ShoppingItemProps {
   shoppingItem: EnrichedShoppingItem;
@@ -24,7 +23,7 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
 
   const isInStorageShoppingItem = useAtomValue(findStorageItemWithKeyAtom(key));
 
-  const navigation = useNavigation<StackNavProp>();
+  const { goNavigate } = useHandleNavigate();
 
   return (
     <Pressable
@@ -47,7 +46,7 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
         {isInStorageShoppingItem && (
           <NavigateToStorageBtn
             onPress={() =>
-              navigation.navigate('StorageDetailScreen', {
+              goNavigate('StorageDetailScreen', {
                 id: isInStorageShoppingItem.storage.type,
               })
             }

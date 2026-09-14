@@ -1,5 +1,5 @@
 import BottomTabNavigator from '@/navigation/BottomTabNavigator';
-import AllConsumableFoodListScreen from '@/screens/consumableFood/AllConsumableFoodListScreen';
+import AllFoodListScreen from '@/screens/food/AllFoodListScreen';
 import MyPickScreen from '@/screens/MyPickScreen';
 
 import AddShoppingListScreen from '@/screens/shoppingList/AddShoppingListScreen';
@@ -34,10 +34,7 @@ export default function RootNavigator() {
           <Stack.Screen name="AddShoppingListScreen" component={AddShoppingListScreen} />
           <Stack.Screen name="AddStorageItemScreen" component={AddStorageItemScreen} />
           <Stack.Screen name="MyPickScreen" component={MyPickScreen} />
-          <Stack.Screen
-            name="AllConsumableFoodListScreen"
-            component={AllConsumableFoodListScreen}
-          />
+          <Stack.Screen name="AllFoodListScreen" component={AllFoodListScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

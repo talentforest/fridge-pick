@@ -42,17 +42,11 @@ export default function CarouselContainer<T>({
 }: CarouselContainerProps<T>) {
   const listRef = useRef<FlatList<T>>(null);
 
-  /**
-   * pagination을 사용하는 carousel만 infinite scroll 사용
-   *
-   * infinite:
-   * [data][data][data]
-   *        ↑
-   *   가운데 배열에서 시작
-   */
   const isInfinite = hasPagination === true;
 
-  const startIndex = isInfinite ? data.length : (initialIndex ?? 0);
+  const startIndex = isInfinite
+    ? data.length
+    : Math.min(initialIndex ?? 0, Math.max(data.length - 1, 0));
 
   const [isScrolling, setIsScrolling] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(startIndex);
@@ -153,7 +147,7 @@ export default function CarouselContainer<T>({
    */
   return data.length > requiredMinimum ? (
     <View>
-      <View className={`${centerFocus ? '-mx-[20px]' : ''}`}>
+      <View className={`${centerFocus ? '-mx-[24px]' : ''}`}>
         <FlatList
           ref={listRef}
           data={flatListData}
@@ -216,6 +210,12 @@ export default function CarouselContainer<T>({
         )}
       </View>
 
+      {children && focusedItem ? (
+        <View className={`${centerFocus ? 'px-[24px]' : ''}`}>
+          {children(focusedItem)}
+        </View>
+      ) : null}
+
       {/* Pagination Dot */}
       {hasPagination && (
         <View className="mx-auto mt-4 flex-row gap-x-2.5">
@@ -229,12 +229,6 @@ export default function CarouselContainer<T>({
           ))}
         </View>
       )}
-
-      {children && focusedItem ? (
-        <View className={`pt-3 ${centerFocus ? 'px-[20px]' : ''}`}>
-          {children(focusedItem)}
-        </View>
-      ) : null}
     </View>
   ) : (
     /**

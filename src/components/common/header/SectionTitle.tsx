@@ -8,7 +8,7 @@ interface SectionTitleProps {
   title: string;
   className?: string;
   icon?: IconName;
-  color?: 'yellow' | 'red';
+  color?: 'yellow' | 'red' | 'neutral';
   children?: ReactNode;
   highlight?: string;
   type?: 'main' | 'sub';
@@ -19,7 +19,7 @@ interface SectionTitleProps {
 export default function SectionTitle({
   title,
   icon,
-  color = 'yellow',
+  color = 'neutral',
   className = '',
   children,
   highlight,
@@ -28,6 +28,7 @@ export default function SectionTitle({
   onShowAllPress,
 }: SectionTitleProps) {
   const colorObj = {
+    neutral: 'text-neutral-9',
     yellow: 'text-yellow-7',
     red: 'text-red-5',
   };

@@ -17,10 +17,10 @@ export type RootStackParamList = {
   AddShoppingListScreen: undefined;
 
   /** 전체 식사메뉴 스크린 */
-  AllConsumableFoodListScreen: undefined;
+  AllFoodListScreen: undefined;
 
   /** 나의 픽 전체보기 스크린 */
-  MyPickScreen: undefined;
+  MyPickScreen: { type: 'ingredient' | 'food' };
 };
 
 export type StackNavProp = NativeStackNavigationProp<RootStackParamList>;

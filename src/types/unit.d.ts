@@ -1,22 +1,9 @@
 import { IngredientCategoryKey } from '@/types/category';
 
-type Unit = {
-  /** optional, 기본 표시 단위 */
-  defaultUnitLabel?: StockUnit;
-
-  /** optional, 선택 가능한 단위 (없으면 default만 사용) */
-  unitOptions?: readonly StockUnit[];
-
-  /** optional */
-  packageWeight?: {
-    amount: number;
-    unit: WeightUnit | VolumeUnit;
-  };
-};
+export type Unit = StockUnit | WeightUnit | VolumeUnit;
 
 export type WeightUnit = 'g' | 'kg';
 export type VolumeUnit = 'ml' | 'L';
-
 export type StockUnit =
   | '개'
   | '마리'
@@ -37,7 +24,7 @@ export type StockUnit =
   | '알'
   | '장'
   | '스틱'
-  | 'g'
+  | '모'
   | '송이';
 
 export const categoryUnitMap: Record<IngredientCategoryKey, StockUnit[]> = {

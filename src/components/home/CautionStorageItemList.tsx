@@ -1,7 +1,6 @@
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import CautionStorageItem from '@/components/trackedItem/storage/CautionStorageItem';
-import MenuListByExpiredSoonFood from '@/components/selectableItem/consumableFood/MenuListByExpiredSoonFood';
-import SectionTitle from '@/components/common/header/SectionTitle';
+import FoodListByExpiredSoonFood from '@/components/selectableItem/FoodListByExpiredSoonFood';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import GridContainer from '@/components/common/container/GridContainer';
 import { storageItemListByExpirationStatusAtom } from '@/atom/storageAtom';
@@ -10,27 +9,27 @@ import { View } from 'react-native';
 import { StorageTypeId } from '@/types/storage';
 import { StorageItemWithExpiration } from '@/utils';
 import { useMemo } from 'react';
+import { useOverlay } from '@/hooks';
+import StorageItemSheet from '@/components/trackedItem/storage/StorageItemSheet';
 
 interface CautionStorageItemListProps {
-  title?: string;
   storageType?: StorageTypeId;
-  onItemPress?: (item: StorageItemWithExpiration) => void;
   isGridType?: boolean;
   type?: 'expiredSoon' | 'expired' | 'caution';
-  hasCautionStorageItem?: boolean;
+  hasFoodListByExpiredSoonFood?: boolean;
 }
 
 export default function CautionStorageItemList({
-  title,
-  hasCautionStorageItem,
   storageType,
-  onItemPress,
-  isGridType,
   type = 'caution',
+  isGridType,
+  hasFoodListByExpiredSoonFood,
 }: CautionStorageItemListProps) {
   const storageItemListByStatus = useAtomValue(
     storageItemListByExpirationStatusAtom(type),
   );
+
+  const { openSheet } = useOverlay();
 
   const storageItemListByStorage = useMemo(() => {
     if (!storageType) return storageItemListByStatus;
@@ -40,26 +39,29 @@ export default function CautionStorageItemList({
     );
   }, [storageItemListByStatus, storageType]);
 
-  return storageItemListByStorage.length > 0 ? (
-    <View className={`${hasCautionStorageItem ? 'h-[540px]' : ''} gap-y-3`}>
-      <SectionTitle
-        title={title || '빨리 먹어야하는 식재료가 있어요'}
-        icon="ClockAlert"
-      />
+  const onCautionItemPress = ({ storageItem }: StorageItemWithExpiration) => {
+    openSheet({
+      keyboardBehavior: 'extend',
+      render: () => <StorageItemSheet storageItem={storageItem} />,
+    });
+  };
 
+  return storageItemListByStorage.length > 0 ? (
+    <>
       {isGridType ? (
-        <GridContainer columns={4} gap={8}>
+        <GridContainer columns={4} gap={8} horizontalInset={24}>
           {storageItemListByStorage.map((item, index) => (
             <TouchableOpacity
               key={item.storageItem.id}
               onPress={() => {
-                if (onItemPress) return onItemPress(item);
+                if (onCautionItemPress) return onCautionItemPress(item);
               }}
             >
               <CautionStorageItem
                 isFlexCol={isGridType}
                 index={index + 1}
                 cautionStorageItem={item}
+                className="!rounded-xl "
               />
             </TouchableOpacity>
           ))}
@@ -68,37 +70,46 @@ export default function CautionStorageItemList({
         <CarouselContainer
           data={storageItemListByStorage}
           initialIndex={storageItemListByStorage.length}
-          itemWidth={0.4}
+          itemWidth={0.35}
           hasNavigation
-          spacing={10}
           centerFocus
           hasPagination
-          requiredMinimum={3}
+          requiredMinimum={2}
           keyExtractor={(_, index) => `${index}`}
           renderItem={({ item, isCurrIndex, onPress }) =>
-            onItemPress || onPress ? (
+            !hasFoodListByExpiredSoonFood && (onCautionItemPress || onPress) ? (
               <TouchableOpacity
                 onPress={() => {
-                  if (onItemPress) return onItemPress(item);
-                  if (onPress) return onPress();
+                  if (onCautionItemPress) {
+                    return onCautionItemPress(item);
+                  }
+                  if (onPress) {
+                    return onPress();
+                  }
                 }}
+              >
+                <CautionStorageItem cautionStorageItem={item} />
+              </TouchableOpacity>
+            ) : (
+              <View
+                className={`${hasFoodListByExpiredSoonFood && isCurrIndex ? 'rounded-t-xl bg-indigo-1' : ''} `}
               >
                 <CautionStorageItem
                   cautionStorageItem={item}
-                  isCurrIndex={
-                    storageItemListByStorage.length > 3 ? isCurrIndex : undefined
+                  className={
+                    isCurrIndex
+                      ? '!rounded-b-none !rounded-t-xl !border-0 !bg-transparent'
+                      : ''
                   }
                 />
-              </TouchableOpacity>
-            ) : (
-              <CautionStorageItem cautionStorageItem={item} isCurrIndex={isCurrIndex} />
+              </View>
             )
           }
         >
           {/* 식재료를 이용한 메뉴 리스트 */}
-          {hasCautionStorageItem
+          {hasFoodListByExpiredSoonFood
             ? ({ storageItem: focusedItem }) => (
-                <MenuListByExpiredSoonFood
+                <FoodListByExpiredSoonFood
                   key={focusedItem.id}
                   focusedItem={focusedItem}
                 />
@@ -106,7 +117,7 @@ export default function CautionStorageItemList({
             : undefined}
         </CarouselContainer>
       )}
-    </View>
+    </>
   ) : (
     <></>
   );

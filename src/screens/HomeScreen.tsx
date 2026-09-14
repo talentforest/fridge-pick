@@ -1,19 +1,18 @@
-import { useOverlay } from '@/hooks';
-import { StackNavProp } from '@/types/RootStackParamList';
-import { StorageItemWithExpiration } from '@/utils';
-import { useNavigation } from '@react-navigation/native';
+import { useHandleNavigate } from '@/hooks';
 import { View } from 'react-native';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
-import Icon from '@/components/common/ui/Icon';
 import CautionStorageItemList from '@/components/home/CautionStorageItemList';
 import HomeHeader from '@/components/home/HomeHeader';
-import RecommendedMenu from '@/components/home/RecommendedMenu';
-import TodayMenu from '@/components/home/TodayMenu';
-import CautionStorageItemSheet from '@/components/trackedItem/storage/CautionStorageItemSheet';
-import QuickAddStorageItemSheet from '@/components/trackedItem/storage/QuickAddStorageItemSheet';
 import MyPickList from '@/components/home/MyPickList';
 import SpaceGrid from '@/components/home/SpaceGrid';
+import SectionTitle from '@/components/common/header/SectionTitle';
+import ThisMonthRecord from '@/components/home/ThisMonthRecord';
+import InsightCard from '@/components/home/InsightCard';
+import SectionContainer from '@/components/common/container/SectionContainer';
+import QuickAddFoodBtn from '@/components/home/QuickAddFoodBtn';
+import { useAtomValue } from 'jotai';
+import { storageItemListByExpirationStatusAtom } from '@/atom/storageAtom';
 
 // ① 나의 보관함 — 전체 상태
 // ② 관리가 필요한 식재료 — 지금 처리할 것
@@ -22,66 +21,45 @@ import SpaceGrid from '@/components/home/SpaceGrid';
 // ⑤ 이번 달 기록 — 소비/폐기/식사 + 의미 있는 변화 한 줄
 
 export default function HomeScreen() {
-  const { openSheet, closeSheet } = useOverlay();
+  const { goNavigate } = useHandleNavigate();
 
-  const navigation = useNavigation<StackNavProp>();
+  const storageItemListByStatus = useAtomValue(
+    storageItemListByExpirationStatusAtom('expiredSoon'),
+  );
 
-  const onCautionStorageItemPress = (storageItem: StorageItemWithExpiration) => {
-    const id = storageItem.storageItem.storage.type;
-
-    openSheet({
-      render: () => (
-        <CautionStorageItemSheet
-          storageItemId={storageItem.storageItem.id}
-          onNavigatePress={() => {
-            closeSheet();
-            navigation.navigate('StorageDetailScreen', { id });
-          }}
-        />
-      ),
-    });
-  };
-
-  const onPlusPress = () => {
-    openSheet({
-      enableDynamicSizing: false,
-      snapPoints: [520],
-      keyboardBehavior: 'extend',
-      render: () => <QuickAddStorageItemSheet />,
-    });
-  };
+  const goMyPickScreen = () => goNavigate('MyPickScreen', { type: 'ingredient' });
 
   return (
     <SafeAreaViewContainer edges={['top']}>
       <ScrollViewContainer>
         <View>
           <HomeHeader />
-          {/* TODO: 현재 상태 자체가 아니라 데이터를 해석해서 얻은 정보 */}
           <SpaceGrid />
         </View>
 
-        <CautionStorageItemList
-          type="expiredSoon"
-          onItemPress={onCautionStorageItemPress}
-        />
+        {storageItemListByStatus.length > 0 ? (
+          <SectionContainer>
+            <SectionTitle title="소비기한이 임박했어요!" />
+            <CautionStorageItemList type="expiredSoon" />
+          </SectionContainer>
+        ) : (
+          <></>
+        )}
 
-        <MyPickList />
+        <InsightCard />
 
-        {/* TODO: 오늘 먹을 메뉴 "요약" 정말 간단하게 요약된걸로 */}
-        <TodayMenu hasHeader />
+        <SectionContainer>
+          <SectionTitle title="나의픽" hasShowAllBtn onShowAllPress={goMyPickScreen} />
+          <MyPickList />
+        </SectionContainer>
 
-        <RecommendedMenu />
+        <SectionContainer>
+          <SectionTitle title="이번달 기록" />
+          <ThisMonthRecord />
+        </SectionContainer>
       </ScrollViewContainer>
 
-      <Icon
-        name="Plus"
-        hasBgColor
-        strokeWidth={2.8}
-        color="lightestGray"
-        onPress={onPlusPress}
-        size={28}
-        className="absolute bottom-6 right-6 !rounded-full !bg-blue-7 p-4"
-      />
+      <QuickAddFoodBtn />
     </SafeAreaViewContainer>
   );
 }

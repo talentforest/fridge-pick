@@ -5,13 +5,11 @@ export * from '@/constants/selectableItem/ingredient/expirationStatus';
 export * from '@/constants/selectableItem/ingredient/ingredientVariant';
 export * from '@/constants/selectableItem/ingredient/ingredient';
 
-/** meal */
-export * from '@/constants/selectableItem/consumableFood/meal';
-export * from '@/constants/selectableItem/consumableFood/difficultyObj';
-export * from '@/constants/selectableItem/consumableFood/filter';
-export * from '@/constants/selectableItem/consumableFood/foodSourceObj';
-export * from '@/constants/selectableItem/consumableFood/servingTemperatureObj';
-export * from '@/constants/selectableItem/consumableFood/preparedFood';
+/** food */
+export * from '@/constants/selectableItem/food/food';
+export * from '@/constants/selectableItem/food/difficultyObj';
+export * from '@/constants/selectableItem/food/filter';
+export * from '@/constants/selectableItem/food/servingTemperatureObj';
 
 /** shoppingList */
 export * from '@/constants/shoppingList/mockShoppingList';

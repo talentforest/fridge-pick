@@ -1,122 +1,63 @@
-import {
-  ingredientObj,
-  ingredientVariantsObj,
-  mealObj,
-  preparedFoodObj,
-} from '@/constants';
-import {
-  IngredientCategoryKey,
-  MealCategoryKey,
-  PreparedFoodCategoryKey,
-} from '@/types/category';
-import { StorageTypeId } from '@/types/storage';
-import { StockUnit } from '@/types/unit';
+import type { ingredientObj, ingredientVariantsObj, foodObj } from '@/constants';
+import type { FoodCategoryKey, IngredientCategoryKey } from '@/types/category';
+import type { StorageTypeId } from '@/types/storage';
+import type { Unit } from '@/types/unit';
 
 /** 선택 가능한 것 */
-export type SelectableItem = Ingredient | PreparedFood | Meal;
+export type SelectableItem = Ingredient | Food;
 
 /* -------------------------------------------------------------------------- */
 /*                                 Food Model                                 */
 /* -------------------------------------------------------------------------- */
 
 /**
- * Food → 원본 데이터
- * SelectableItem → UI에서 선택할 대상
- * PurchasableFood → 구매 가능한 음식
- * ConsumableFood → 먹을 수 있는 음식
- * TrackedItem → 사용자가 관리하는 데이터
+ * ------------------------------------
+ *       # 원본 데이터
+ * ------------------------------------
  *
- * Food Model
- *
- * Ingredient ─────────► PreparedFood ─────────► Meal
- *                        [중간단계]
- *
- * 원본 데이터 (Master Data)
- * ────────────────────────────────────
- * SelectableItem
- * ├─ Ingredient
- * ├─ PreparedFood
- * └─ Meal
- *
- * PurchasableFood
- * ├─ Ingredient
- * └─ PreparedFood
- *
- * ConsumableFood
- * ├─ PreparedFood
- * └─ Meal
- *
- * ────────────────────────────────────
- * Ingredient
- * ├─ BaseFood
- * └─ StorableFood
- *
- * PreparedFood
- * ├─ BaseFood
- * ├─ StorableFood
- * ├─ Partial<Consumable>
- * └─ Partial<Cookable>
- *
- * Meal
- * ├─ BaseFood
- * ├─ Consumable
- * └─ Partial<Cookable>
+ * Ingredient ────────► Food
  *
  * ────────────────────────────────────
  * 1. [Ingredient]
- * 요리나 식사 구성을 위해 사용하는 식재료.
- * 다른 음식을 만들기 위한 재료 역할이 중심이다.
+ * - Food의 구성 식재료
  *
  * 예)
  * 양파, 감자, 돼지고기, 두부, 계란,
  * 참치캔, 햄, 베이컨, 밀가루
  *
  * ────────────────────────────────────
- * 2. [PreparedFood]
- * 이미 먹을 수 있는 상태의 음식.
- * Ingredient와 Meal 사이의 중간 계층으로,
- * 식사에 곁들이거나 간단히 먹거나,
- * 일부는 다른 Meal의 재료로도 활용된다.
- *
- * 예)
- * 김치, 멸치볶음, 장조림, 감자샐러드,
- * 훈제란, 식빵, 요거트, 조미김
- *
- * ────────────────────────────────────
- * 3. [Meal]
- * 하나의 완성된 식사(메뉴).
- * 추천 메뉴의 핵심 대상이며,
- * 직접 조리, 간편식, 배달/포장 등 다양한 형태로 존재할 수 있다.
+ * 2. [Food]
+ * - 하나의 완성된 음식.
+ * - 추천 메뉴의 핵심 대상.
+ * - 그러나, Food 자체도 Food의 구성재료가 될 수 있음.
  *
  * 예)
  * 김치찌개, 제육볶음, 불고기,
  * 비빔밥, 파스타, 샌드위치, 치킨
+ * ────────────────────────────────────
+ *
+ * 기본 데이터와 사용자 생성 커스텀 데이터는 동일한 모델을 사용한다.
+ * ID 형식으로 데이터 출처를 구분한다.
+ *
+ * 기본 Ingredient ID: IngredientKey
+ * 커스텀 Ingredient ID: custom:ingredient:${string}
+ *
+ * 기본 Food ID: FoodKey
+ * 커스텀 Food ID: custom:food:${string}
  */
 
 /* -------------------------------------------------------------------------- */
 /*                              Common Property                               */
 /* -------------------------------------------------------------------------- */
 
-/** 음식 자체의 종류
- * - Ingredient: 식재료
- * - PreparedFood: 반찬, 간식, 보조식
- * - Meal: 식사 */
-export type FoodKind = 'ingredient' | 'preparedFood' | 'meal';
-
-/** 음식이 어떤 형태로 존재/추가될 수 있는지
- * - homemade: 직접 조리
- * - convenience: 간편식/완제품
- * - takeout: 포장, 배달 */
-export type FoodSource = 'homemade' | 'convenience' | 'takeout';
-
 export type UnitMeta = {
   /** 기본 표시 단위 */
-  defaultUnitLabel: StockUnit;
+  defaultUnitLabel: Unit;
   /** 선택 가능한 단위 */
-  unitOptions?: readonly StockUnit[];
+  unitOptions?: readonly Unit[];
 };
 
-type BaseFood = {
+type ItemBase = {
   /** soft delete 용 */
   isActive: boolean;
 
@@ -128,46 +69,62 @@ type BaseFood = {
   /** 동일 이미지 재사용 시 */
   imageName?: string;
 
+  defaultStorage?: StorageTypeId;
+
   /** 검색용 동의어 */
   synonyms?: readonly string[];
 } & UnitMeta;
 
-/** Ingredient & PreparedFood 공통 속성: '보관 및 재고 관리가 필요한 음식' */
-type StorableFood = {
-  /** 기본 보관 위치 */
-  defaultStorage: StorageTypeId;
-  /** 소비기한 (일 단위) */
-  expirationDays: {
-    fridge?: number;
-    freezer?: number;
-    pantry?: number;
-  };
+export type DurationUnit = 'day' | 'week' | 'month' | 'year';
+
+export type ExpirationDuration = {
+  value: number;
+  unit: DurationUnit;
 };
 
-/** PreparedFood & Meal 공통 속성: 직접 조리 가능한 음식의 정보 */
-type Cookable = {
-  /** 난이도 기준
-   * easy - 0 ~ 15min
-   * medium - 15min ~ 40min
-   * hard - 40min ~ */
-  difficulty: 'easy' | 'medium' | 'hard';
-  foodStructure: FoodStructure;
+export type StorageDurations = {
+  freezer?: ExpirationDuration;
+  fridge?: ExpirationDuration;
+  pantry?: ExpirationDuration;
 };
 
-/** PreparedFood & Meal 공통 속성: 아이템으로 식사가 가능한가? */
-type Consumable = {
-  servingTemperature: 'hot' | 'warm' | 'cold' | 'either';
-  /**
-   * 이 식사가 일반적으로 어떤 형태로 존재할 수 있는지
-   * - homemade: 직접 조리 가능
-   * - convenience: 냉동/밀키트/레토르트/편의점 등
-   * - takeout: 배달/포장
-   */
-  availableFoodSources?: readonly FoodSource[];
+type ExpirationMeta = {
+  expiration:
+    | {
+        /** 소비기한 표시 여부
+         * - printed: 특정 소비기한이 표시된 제품
+         */
+        mode: 'printed';
+        /** 직접 만든 형태로 사용할 가능성을 위해 존재할 수 있지만 필수는 아님 */
+        recommendedDurations?: StorageDurations;
+      }
+    | {
+        /** 소비기한 표시 여부
+         * - recommended: 원물이거나 음식으로 특정 소비기한 없는 SelectableItem
+         */
+        mode: 'recommended';
+        /** 권장 기간 방식에서는 필수 */
+        recommendedDurations: StorageDurations;
+      };
 };
 
 /* -------------------------------------------------------------------------- */
-/*                              Ingredient Type                               */
+/*                                 Ingredient                                 */
+/* -------------------------------------------------------------------------- */
+export type Ingredient = ItemBase & {
+  kind: 'ingredient';
+  id: IngredientId;
+  category: IngredientCategoryKey;
+
+  /** 예: 수육용, 불고기용 */
+  variants?: readonly IngredientVariantKey[];
+} & ExpirationMeta;
+
+export type CustomIngredientId = `custom:ingredient:${string}`;
+export type IngredientId = IngredientKey | CustomIngredientId;
+
+/* -------------------------------------------------------------------------- */
+/*                            Ingredient Property                             */
 /* -------------------------------------------------------------------------- */
 type IngredientMap = typeof ingredientObj;
 
@@ -178,102 +135,66 @@ export type IngredientKey = {
 /** ingredient variants 예) 수육용, 불고기용, 식단용... */
 export type IngredientVariantKey = keyof typeof ingredientVariantsObj;
 
-/** 식재료
- * - 요리나 식사 구성을 위해 사용하는 재료.
- * - 직접 먹을 수 있더라도, 앱에서 다른 meal을 만들기 위한 재료로 쓰이는 성격이 강하면 ingredient.
- */
-export type Ingredient = BaseFood & {
-  kind: 'ingredient';
-
-  id: IngredientKey;
-
-  /** UI 분류 */
-  category: IngredientCategoryKey;
-
-  /** 예: 수육용, 불고기용 */
-  variants?: {
-    [key in IngredientVariantKey]: {
-      label: string;
-      imageName: string;
-    };
-  };
-} & StorableFood;
-
 /* -------------------------------------------------------------------------- */
-/*                            PreparedFood Type                               */
+/*                                    Food                                    */
 /* -------------------------------------------------------------------------- */
-type PreparedFoodMap = typeof preparedFoodObj;
+export type FoodVariantId = string;
 
-export type PreparedFoodKey = keyof PreparedFoodMap;
+export type Food = ItemBase & {
+  kind: 'food';
+  id: FoodId;
+  category: FoodCategoryKey;
 
-export type PreparedFoodWithEnrichFoodStructure = Omit<PreparedFood, 'foodStructure'> & {
-  foodStructure?: EnrichedFoodStructure;
-};
-
-/** 반찬/간식/보조식
- * 직접 조리 없이 바로 먹을 수 있는 상태의 음식.
- * 완결된 한 끼 식사 meal은 아니지만, 식사에 곁들이거나 간단히 먹거나 일부 경우 재료처럼 활용될 수 있는 중간층.
- * 하지만 보통 단독으로 “오늘 먹을 메뉴” 메인 후보는 아님
- */
-export type PreparedFood = {
-  kind: 'preparedFood';
-
-  id: PreparedFoodKey;
-
-  /** 반찬 / 간식 / 베이커리 / 보조식 / 음료 */
-  category: PreparedFoodCategoryKey;
-} & BaseFood &
-  StorableFood &
-  Partial<Cookable> &
-  Partial<Consumable>;
-
-/* -------------------------------------------------------------------------- */
-/*                                    Meal                                    */
-/* -------------------------------------------------------------------------- */
-export type MealKey = keyof typeof mealObj;
-
-export type MealWithEnrichFoodStructure = Omit<Meal, 'foodStructure'> & {
-  foodStructure?: EnrichedFoodStructure;
-};
-
-/** 식사
- * 그 자체로 한 끼 식사로 소비되는 음식/메뉴.
- * 추천 메뉴의 핵심 대상.
- */
-export type Meal = {
-  kind: 'meal';
-
-  id: MealKey;
-
-  /** 식사 대분류 */
-  category: MealCategoryKey;
+  difficulty?: Difficulty;
+  servingTemperature?: ServingTemperature;
+  availableFoodForm?: readonly FoodForm[];
+  foodStructure?: FoodStructure;
 
   /** 같은 음식의 분화형
    * 예: 감자국 -> 계란 감자국 / 소고기 감자국 */
   variants?: readonly {
+    id: FoodVariantId;
     label: string;
     essential: readonly FoodComponentItem[];
   }[];
-} & BaseFood &
-  Partial<Cookable> &
-  Consumable;
+} & Partial<ExpirationMeta>;
 
-/** 앱 내부 데이터 출처 느낌 */
-export type ItemSource = 'preset' | 'custom'; // 이건 StorageItem에서만 붙여야하는 속성인거구나...
+export type CustomFoodId = `custom:food:${string}`;
+export type FoodId = FoodKey | CustomFoodId;
+
+/* -------------------------------------------------------------------------- */
+/*                               Food Property                                */
+/* -------------------------------------------------------------------------- */
+type FoodMap = typeof foodObj;
+
+export type FoodKey = keyof FoodMap;
+
+/** 난이도 기준
+ * - easy - 0 ~ 15min
+ * - medium - 15min ~ 40min
+ * - hard - 40min ~ */
+export type Difficulty = 'easy' | 'medium' | 'hard';
+
+export type ServingTemperature = 'hot' | 'warm' | 'cold' | 'room_temperature' | 'either';
+
+/** 음식이 어떤 형태인지
+ * - meal_kit
+ *   신선편의식품: 손질 된 식재료와 레시피가 동봉되어 있어 조리하기 쉽게 만든 제품입니다.
+ *
+ * - frozen
+ *   반조리식품: 간단한 조리 과정을 거친 후 섭취 가능한 음식으로 냉동만두, 냉동돈까스 등이 있습니다.
+ *
+ * - ready_to_heat
+ *   완조리식품: 전자레인지나 뜨거운 물에 단시간 데운 후 섭취하는 음식으로 햇반, 즉석죽, 짜장, 카레 등이 있습니다.
+ *
+ * - ready_to_eat
+ *   즉석섭취식품: 별도의 조리 없이 바로 섭취 가능한 음식으로 도시락, 김밥, 샌드위치가 있습니다.
+ */
+export type FoodForm = 'meal_kit' | 'frozen' | 'ready_to_heat' | 'ready_to_eat';
 
 /* -------------------------------------------------------------------------- */
 /*                               Food Structure                               */
 /* -------------------------------------------------------------------------- */
-export type FoodComponentItem =
-  | { kind: 'meal'; id: MealKey }
-  | { kind: 'preparedFood'; id: PreparedFoodKey }
-  | { kind: 'ingredient'; id: IngredientKey };
-
-export type SeasoningComponentItem = {
-  kind: 'ingredient';
-  id: keyof IngredientMap['seasoning'];
-};
-
 /** 요리의 원재료 구조 (추천엔진 핵심) */
 export type FoodStructure = {
   /**
@@ -298,26 +219,21 @@ export type FoodStructure = {
   readonly optional: readonly (SeasoningComponentItem | FoodComponentItem)[];
 };
 
-export type EnrichedFoodStructure = {
-  readonly essential: readonly (Ingredient | PreparedFood | Meal)[];
-  readonly common: readonly (Ingredient | PreparedFood | Meal)[];
-  readonly seasoning: readonly Ingredient[];
-  readonly optional: readonly (Ingredient | PreparedFood | Meal)[];
+export type FoodComponentItem =
+  { kind: 'food'; id: FoodId } | { kind: 'ingredient'; id: IngredientId };
+
+export type SeasoningComponentItem = {
+  kind: 'ingredient';
+  id: keyof IngredientMap['seasoning'] | CustomIngredientId;
 };
 
-/* -------------------------------------------------------------------------- */
-/*                             Purchasable Food                               */
-/*                       = Ingredient & PreparedFood                          */
-/* -------------------------------------------------------------------------- */
-export type PurchasableFood = Ingredient | PreparedFood;
+export type EnrichedFoodStructure = {
+  readonly essential: readonly SelectableItem[];
+  readonly common: readonly SelectableItem[];
+  readonly seasoning: readonly Ingredient[];
+  readonly optional: readonly SelectableItem[];
+};
 
-/* -------------------------------------------------------------------------- */
-/*                              Consumable Food                               */
-/*                           = Meal & PreparedFood                            */
-/* -------------------------------------------------------------------------- */
-/** 식사가 가능한 음식 */
-export type ConsumableFood = Meal | PreparedFood;
-
-export type ConsumableFoodWithEnrichedFoodStructure =
-  | MealWithEnrichFoodStructure
-  | PreparedFoodWithEnrichFoodStructure;
+export type FoodWithEnrichedFoodStructure = Omit<Food, 'foodStructure'> & {
+  foodStructure?: EnrichedFoodStructure;
+};

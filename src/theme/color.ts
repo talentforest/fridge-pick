@@ -7,7 +7,7 @@ export const colorTokens = {
     bg: '#F8F8F8',
     card: '#FFFFFF',
     text: '#333333',
-    border: '#efefef',
+    border: '#f0f0f0',
     line: '#cdcdcd',
 
     inactive: {
@@ -19,7 +19,7 @@ export const colorTokens = {
       9: '#151515',
       7: '#4f4f4f',
       5: '#999999',
-      3: '#E9E9E9',
+      3: '#e1e1e1',
       1: '#F8F8F8',
       0: '#fff',
     },
@@ -78,7 +78,7 @@ export const colorTokens = {
       7: '#f17d10',
       5: '#ffa928',
       3: '#ffd1a7',
-      1: '#ffe6cf',
+      1: '#fff0e2',
     },
   },
 
@@ -122,7 +122,7 @@ export const colorTokens = {
     indigo: {
       5: '#d3cdff',
       3: '#6b56f2',
-      1: '#3420a2',
+      1: '#100330',
     },
 
     red: {
@@ -136,7 +136,7 @@ export const colorTokens = {
 
     yellow: {
       9: '#fff9c9',
-      7: '#eedda5',
+      7: '#f7dc81',
       5: '#fcd34d',
       3: '#d29000',
       1: '#5b501d',

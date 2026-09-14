@@ -1,136 +1,51 @@
-import { itemListByStorageAtom } from '@/atom/storageAtom';
 import {
-  ingredientCategoryObj,
-  mealCategoryObj,
-  noCategoryObj,
-  preparedFoodCategoryObj,
-  storageObj,
-} from '@/constants';
-import { FoodCategoryKey } from '@/types/category';
-import {
-  EnrichedStorageItem,
-  StorageSide,
-  StorageSideId,
-  StorageSpace,
-} from '@/types/storage';
-import { findIngredient, findMeal, findPreparedFood } from '@/utils';
+  allStorageItemListAtom,
+  itemListByStorageAtom,
+  storageItemListByExpirationStatusAtom,
+} from '@/atom/storageAtom';
+import { EnrichedStorageItem, StorageTypeId } from '@/types/storage';
+import { getRemainingDays } from '@/utils';
 import { useAtomValue } from 'jotai';
-import { useMemo } from 'react';
 
-interface useStorageItemListProps {
-  storage: StorageSpace;
-}
+export const useStorageItemList = () => {
+  const allStorageItemList = useAtomValue(allStorageItemListAtom);
 
-/**
- * 현재 보관위치 정보(StorageTypeId, SideKey, SectionKey) 파라미터 전달
- * 각 보관위치 정보에 맞는 아이템 전달
- *
- * MVP 버전에서는 SideKey와 SectionKey는 다루지 않음.
- * - side: 'inner;
- * - section: '1'
- * 로 값 넣기
- */
-export const useStorageItemList = ({ storage }: useStorageItemListProps) => {
-  const storageItemList = useAtomValue(itemListByStorageAtom(storage.type));
+  const freezerItemList = useAtomValue(itemListByStorageAtom('freezer'));
+  const fridgeItemList = useAtomValue(itemListByStorageAtom('fridge'));
+  const pantryItemList = useAtomValue(itemListByStorageAtom('pantry'));
 
-  const { side } = storageObj[storage.type];
-
-  const currentSideItems = useMemo(() => {
-    return storageItemList.filter((item) => item.storage.side === storage.side);
-  }, [storageItemList, storage.side]);
-
-  const storageItemCountBySide = useMemo(() => {
-    return storageItemList.reduce(
-      (acc, item) => {
-        if (!item.storage.side) return acc;
-        acc[item.storage.side] = (acc[item.storage.side] ?? 0) + 1;
-        return acc;
-      },
-      {} as Record<StorageSideId, number>,
-    );
-  }, [storageItemList]);
-
-  const hasSide = false; // TODO: 사용자가 문쪽 안쪽을 구분해서 사용하길 원하는 경우 처리
-
-  const storageItemListByCategory = useMemo(() => {
-    const grouped: Partial<Record<FoodCategoryKey, EnrichedStorageItem[]>> = {};
-
-    const currStorageItemList = hasSide ? currentSideItems : storageItemList;
-
-    currStorageItemList.forEach((storageItem) => {
-      let category: FoodCategoryKey = 'no_category';
-      let enrichedItem: EnrichedStorageItem = storageItem;
-
-      switch (storageItem.type) {
-        case 'ingredient': {
-          const ingredient = findIngredient(storageItem.ingredientId);
-          category = ingredient.category;
-          enrichedItem = {
-            ...storageItem,
-            ...(ingredient ? { ingredient } : {}),
-          };
-          break;
-        }
-
-        case 'preparedFood': {
-          const preparedFood = findPreparedFood(storageItem.preparedFoodId);
-          category = preparedFood.category;
-          enrichedItem = {
-            ...storageItem,
-            ...(preparedFood ? { preparedFood } : {}),
-          };
-          break;
-        }
-
-        case 'meal': {
-          const meal = findMeal(storageItem.mealId);
-          category = meal.category;
-          enrichedItem = {
-            ...storageItem,
-            ...(meal ? { meal } : {}),
-          };
-          break;
-        }
-
-        case 'custom': {
-          category = 'no_category';
-          enrichedItem = storageItem;
-          break;
-        }
-      }
-
-      if (!grouped[category]) {
-        grouped[category] = [];
-      }
-
-      grouped[category]!.push(enrichedItem);
-    });
-
-    return Object.values({
-      ...ingredientCategoryObj,
-      ...mealCategoryObj,
-      ...preparedFoodCategoryObj,
-      ...noCategoryObj,
-    })
-      .map((category) => ({
-        category,
-        itemList:
-          grouped[category.id]?.sort(
-            (a, b) =>
-              new Date(a.purchasedAt).getTime() - new Date(b.purchasedAt).getTime(),
-          ) ?? [],
-      }))
-      .filter((group) => group.itemList.length > 0);
-  }, [currentSideItems, storageItemList, hasSide]);
-
-  const sideList = useMemo(
-    () => Object.values(side) as StorageSide[keyof StorageSide][],
-    [side],
+  const expiredStorageItemList = useAtomValue(
+    storageItemListByExpirationStatusAtom('expired'),
   );
 
+  const expiredSoonStorageItemList = useAtomValue(
+    storageItemListByExpirationStatusAtom('expiredSoon'),
+  );
+
+  const safeStorageItemList = useAtomValue(storageItemListByExpirationStatusAtom('safe'));
+
+  const getExpiredItemListByStorage = (storageType: StorageTypeId) => {
+    return expiredStorageItemList.filter(
+      ({ storageItem }) => storageItem.storage.type === storageType,
+    );
+  };
+
+  const getRecentlyUpdateByStorage = (itemList: EnrichedStorageItem[]): number => {
+    if (itemList.length === 0) return 0;
+
+    const purchasedAtList = itemList.map((item) => getRemainingDays(item.storedAt));
+    return Math.max(...purchasedAtList);
+  };
+
   return {
-    sideList,
-    storageItemCountBySide,
-    storageItemListByCategory,
+    allStorageItemList,
+    freezerItemList,
+    fridgeItemList,
+    pantryItemList,
+    expiredStorageItemList,
+    expiredSoonStorageItemList,
+    safeStorageItemList,
+    getExpiredItemListByStorage,
+    getRecentlyUpdateByStorage,
   };
 };

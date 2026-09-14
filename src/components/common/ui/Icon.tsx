@@ -1,6 +1,15 @@
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import { colorTokens } from '@/theme/color';
 import {
+  CalendarCheck,
+  CalendarX,
+  Check,
+  Sun,
+  Citrus,
+  PaperBag,
+  Utensils,
+  LayoutGrid,
+  Lightbulb,
   Sandwich,
   ArrowRightLeft,
   TrendingUp,
@@ -100,6 +109,15 @@ import {
 import { useColorScheme, View } from 'react-native';
 
 export type IconName =
+  | 'CalendarCheck'
+  | 'CalendarX'
+  | 'Check'
+  | 'Sun'
+  | 'Citrus'
+  | 'PaperBag'
+  | 'Utensils'
+  | 'LayoutGrid'
+  | 'Lightbulb'
   | 'Sandwich'
   | 'ArrowRightLeft'
   | 'TrendingUp'
@@ -241,7 +259,7 @@ export default function Icon({
 
   const colorMap = {
     white: '#fff',
-    black: '#000',
+    black: scheme.neutral[9],
     text: scheme.text,
     red: scheme.red[5],
     orange: scheme.orange[7],
@@ -286,6 +304,14 @@ export default function Icon({
   };
 
   const iconObj: { [key in IconName]: LucideIcon } = {
+    CalendarCheck,
+    CalendarX,
+    Sun,
+    Citrus,
+    PaperBag,
+    Utensils,
+    LayoutGrid,
+    Lightbulb,
     Sandwich,
     ArrowRightLeft,
     TrendingUp,
@@ -324,6 +350,7 @@ export default function Icon({
     HandPlatter,
     CalendarDays,
     Siren,
+    Check,
     CheckCircle2,
     RefreshCcw,
     Circle,
@@ -397,7 +424,7 @@ export default function Icon({
       onPress={props.onPress}
     >
       <Component
-        strokeWidth={2.2}
+        strokeWidth={2.5}
         {...props}
         stroke={colorMap[color]}
         fill={hasFill ? colorMap[color] : 'transparent'}
@@ -410,7 +437,7 @@ export default function Icon({
       className={`${hasBgColor ? `${bgColorMap[color]} rounded-lg p-1.5` : ''} items-center justify-center ${props.className}`}
     >
       <Component
-        strokeWidth={2.2}
+        strokeWidth={2.5}
         {...props}
         stroke={colorMap[color]}
         fill={hasFill ? colorMap[color] : 'transparent'}

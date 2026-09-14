@@ -1,5 +1,10 @@
 import { expirationStatusObj, storageObj } from '@/constants';
-import { EditableStorageItem, EnrichedStorageItem, StorageTypeId } from '@/types/storage';
+import {
+  EditableStorageItem,
+  EnrichedStorageItem,
+  StorageItem,
+  StorageTypeId,
+} from '@/types/storage';
 import {
   formatDateString,
   formatRemainingDays,
@@ -17,10 +22,11 @@ import IconWithText from '@/components/common/IconWithText';
 import Text from '@/components/common/ui/Text';
 import Icon from '@/components/common/ui/Icon';
 import SearchAddStorageItem from '@/components/trackedItem/storage/SearchAddStorageItem';
-import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 import SquareBtn from '@/components/common/SquareBtn';
 import Card from '@/components/common/ui/Card';
 import SelectBtn from '@/components/common/SelectBtn';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import ConvenienceFoodTag from '@/components/common/ConvenienceFoodTag';
 
 export default function QuickAddStorageItemSheet() {
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -29,13 +35,15 @@ export default function QuickAddStorageItemSheet() {
     null,
   );
 
+  const addStorageItem = useSetAtom(addStorageItemAtom);
+
   const remainingDays = getRemainingDays(currStorageItem?.expiresAt || '2023-02-01');
 
   const status = getExpirationStatus(remainingDays);
 
   const { clearError } = useErrorHandler();
 
-  const { showToast, closeSheet } = useOverlay();
+  const { showToast, closeSheet, openDatePicker } = useOverlay();
 
   const initializeStorageItem = () => {
     setSearchKeyword('');
@@ -43,19 +51,10 @@ export default function QuickAddStorageItemSheet() {
     clearError();
   };
 
-  const addStorageItem = useSetAtom(addStorageItemAtom);
-
   const onItemChange = (newData: EditableStorageItem) => {
     setCurrStorageItem((prev) => {
       if (prev === null) return prev;
-
-      if (prev.type === 'custom') {
-        return { ...prev, ...newData };
-      }
-
-      const { customLabel: _, ...rest } = newData;
-
-      return { ...prev, ...rest };
+      return { ...prev, ...newData };
     });
   };
 
@@ -63,6 +62,7 @@ export default function QuickAddStorageItemSheet() {
     {
       id: 'fridge',
       label: '냉장실',
+      color: 'blue',
       onPress: () => {
         onItemChange({ storage: { type: 'fridge' } });
       },
@@ -70,6 +70,7 @@ export default function QuickAddStorageItemSheet() {
     {
       id: 'freezer',
       label: '냉동실',
+      color: 'ice',
       onPress: () => {
         onItemChange({ storage: { type: 'freezer' } });
       },
@@ -77,11 +78,12 @@ export default function QuickAddStorageItemSheet() {
     {
       id: 'pantry',
       label: '실온',
+      color: 'yellow',
       onPress: () => {
         onItemChange({ storage: { type: 'pantry' } });
       },
     },
-  ];
+  ] as const;
 
   const propertyList = currStorageItem
     ? ([
@@ -97,12 +99,13 @@ export default function QuickAddStorageItemSheet() {
         {
           label: '현재 소비기한',
           icon: 'CalendarDays',
-          color: 'yellow',
+          color: 'red',
           currData: formatDateString(new Date(currStorageItem.expiresAt), 'yy년 M월 d일'),
           quickBtnList: [
             {
               id: '-1일',
               label: '-1일',
+              color: 'red',
               onPress: () => {
                 const date = subDays(currStorageItem.expiresAt, 1);
                 const expiresAt = formatDateString(date, 'yyyy-MM-dd');
@@ -112,6 +115,7 @@ export default function QuickAddStorageItemSheet() {
             {
               id: '1일',
               label: '+1일',
+              color: 'green',
               onPress: () => {
                 const date = addDays(currStorageItem.expiresAt, 1);
                 const expiresAt = formatDateString(date, 'yyyy-MM-dd');
@@ -121,6 +125,7 @@ export default function QuickAddStorageItemSheet() {
             {
               id: '7일',
               label: '+7일',
+              color: 'green',
               onPress: () => {
                 const date = addDays(currStorageItem.expiresAt, 7);
                 const expiresAt = formatDateString(date, 'yyyy-MM-dd');
@@ -132,16 +137,51 @@ export default function QuickAddStorageItemSheet() {
       ] as const)
     : [];
 
-  const defaultStorage =
-    currStorageItem?.type === 'ingredient'
-      ? currStorageItem.ingredient.defaultStorage
-      : 'fridge';
+  const defaultStorage = 'fridge';
+  // currStorageItem?.type === 'ingredient'
+  //   ? currStorageItem.ingredient.defaultStorage
+  //   : 'fridge';
+
+  const onEditDatePickerPress = () => {
+    if (!currStorageItem) return null;
+
+    const onChange = (_: any, selectedDate?: Date) => {
+      if (selectedDate) {
+        setCurrStorageItem((prev) => {
+          if (prev === null) return null;
+          return {
+            ...prev,
+            expiresAt: formatDateString(selectedDate, 'yyyy-MM-dd'),
+          };
+        });
+      }
+    };
+
+    openDatePicker({
+      render: () => (
+        <View>
+          <ModalHeader title="소비기한 직접 변경" isDatePicker hasX />
+
+          <View className="mx-auto mt-3">
+            <DateTimePicker
+              minimumDate={new Date()}
+              value={new Date(currStorageItem.expiresAt)}
+              mode="date"
+              display="spinner"
+              onChange={onChange}
+              locale="ko-KR"
+            />
+          </View>
+        </View>
+      ),
+    });
+  };
 
   return (
-    <View>
+    <View className="">
       <ModalHeader title="빠른 식재료 추가" />
 
-      <Text className="my-2 ml-1 text-sm text-neutral-7">
+      <Text className="my-2 text-sm text-neutral-7">
         식재료 기본 정보로 빠르게 추가해요!
       </Text>
 
@@ -156,29 +196,37 @@ export default function QuickAddStorageItemSheet() {
             maxLength={8}
           />
         ) : (
-          <View className="flex-1">
-            <View className="flex-row items-center justify-between">
-              <TrackedItemImageLabel
-                item={currStorageItem}
-                imageSize={95}
-                hasCategory
-                isHorizontal
-                textClassName="text-lg"
-              />
-              {/* 초기화버튼 */}
-              <View className="items-center justify-center gap-y-2">
-                <Icon
-                  name="RotateCcw"
-                  size={18}
-                  className="h-10 w-10 items-center justify-center rounded-xl bg-neutral-3"
-                  color="text"
-                  onPress={initializeStorageItem}
-                />
-                <Text className="!text-[11px] text-neutral-9">다시선택</Text>
+          <View className="mt-3 gap-y-3">
+            <View className="flex-row items-start justify-between">
+              <View className="flex-1 flex-row items-center gap-x-3">
+                <Card className="items-center justify-center !bg-border !p-1">
+                  {/* <FoodImage trackedItem={currStorageItem} imageSize={80} /> */}
+                </Card>
+
+                <View className="flex-1 items-start gap-y-2.5 py-1">
+                  {currStorageItem.type !== 'ingredient' ? <ConvenienceFoodTag /> : <></>}
+
+                  {/* <Text className={`line-clamp-1 font-extrabold text-lg`}>
+                    {getTrackedItemData(currStorageItem).label}
+                  </Text>
+
+                  <Text className="text-neutral-5">
+                    {getTrackedItemData(currStorageItem).categoryLabel}
+                  </Text> */}
+                </View>
               </View>
+
+              {/* 초기화버튼 */}
+              <Icon
+                name="RotateCcw"
+                size={16}
+                className="m-1 h-10 w-10 items-center justify-center rounded-xl bg-neutral-3"
+                color="text"
+                onPress={initializeStorageItem}
+              />
             </View>
 
-            <View className="gap-y-3">
+            <View className="gap-y-3 border">
               <View className="flex-1 flex-row justify-between gap-x-0">
                 {propertyList.map((item) => (
                   <Card
@@ -186,7 +234,15 @@ export default function QuickAddStorageItemSheet() {
                     className="w-[48.5%] gap-y-5 overflow-hidden !px-0 !pb-0"
                   >
                     <View className="flex-row items-center gap-x-2 px-3">
-                      <Text className={`ml-1 text-sm text-neutral-9`}>{item.label}</Text>
+                      <Text className={`ml-1 text-sm text-neutral-7`}>{item.label}</Text>
+                      {item.label === '현재 소비기한' && (
+                        <Icon
+                          name="Edit3"
+                          size={12}
+                          className="absolute right-0 mr-1.5 p-2.5"
+                          onPress={onEditDatePickerPress}
+                        />
+                      )}
                     </View>
 
                     <View className="flex-row items-center gap-x-2 px-4">
@@ -213,7 +269,7 @@ export default function QuickAddStorageItemSheet() {
                               </Text>
                             </View>
 
-                            <Text className="text-neutral-7혀 text-sm">
+                            <Text className="text-sm text-neutral-7">
                               {item.currData === defaultStorage ? '권장' : '변경된'}{' '}
                               보관위치
                             </Text>
@@ -227,7 +283,7 @@ export default function QuickAddStorageItemSheet() {
                                 getRemainingDays(currStorageItem.expiresAt),
                               )}
                             </Text>
-                            <Text className="font-extrabold text-sm text-neutral-7">
+                            <Text className="text-sm text-neutral-7">
                               {item.currData}
                             </Text>
                           </View>
@@ -235,7 +291,7 @@ export default function QuickAddStorageItemSheet() {
                       </View>
                     </View>
 
-                    <View className="mt-1 flex-1 gap-y-2 bg-indigo-1 px-2.5 pb-3 pt-4">
+                    <View className="mt-1 flex-1 gap-y-2.5 bg-border px-3 pb-5 pt-5">
                       <IconWithText
                         text="빠른변경"
                         icon="Zap"
@@ -243,7 +299,7 @@ export default function QuickAddStorageItemSheet() {
                         textClassName="!text-[11px] text-yellow-7"
                         iconSize={11}
                       />
-                      <View className="flex-row flex-wrap gap-1.5">
+                      <View className="flex-row flex-wrap gap-1">
                         {item.quickBtnList.map((btn) => (
                           <SelectBtn
                             key={btn.id}
@@ -253,7 +309,7 @@ export default function QuickAddStorageItemSheet() {
                                 ? storageObj[btn.id as StorageTypeId].label
                                 : btn.label
                             }
-                            color="neutral"
+                            color={btn.color}
                             iconName={
                               item.label === '현재 보관위치'
                                 ? 'ArrowRightLeft'
@@ -261,7 +317,7 @@ export default function QuickAddStorageItemSheet() {
                             }
                             iconSize={11}
                             textClassName="!text-[11px] font-extrabold"
-                            className="!px-2.5 !py-3"
+                            className="!bg-neutral-0 !px-3 !py-2.5"
                           />
                         ))}
                       </View>
@@ -276,6 +332,16 @@ export default function QuickAddStorageItemSheet() {
                 className="mt-6"
                 onPress={() => {
                   const result = addStorageItem(currStorageItem);
+
+                  if (result.type === 'duplicate') {
+                    showToast({
+                      type: 'normal',
+                      text1: `⚠️ ${storageObj[(result.item as StorageItem).storage.type].label}에 이미 보유하고 있습니다.`,
+                      props: {
+                        bgColor: 'red',
+                      },
+                    });
+                  }
 
                   if (result.type === 'success') {
                     closeSheet();

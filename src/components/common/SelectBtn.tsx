@@ -31,7 +31,7 @@ export default function SelectBtn({
   iconStrokeWidth = 2.5,
   iconSize = 16,
   textClassName = '',
-  color = 'indigo',
+  color = 'black',
   ...props
 }: SelectBtnProps & TouchableOpacityProps) {
   const bgColorStyle = {
@@ -57,7 +57,7 @@ export default function SelectBtn({
     yellow: 'text-yellow-7',
     indigo: 'text-indigo-5',
     inActive: 'text-neutral-5',
-    neutral: 'text-neutral-7',
+    neutral: 'text-neutral-5',
     transparent: 'border border-neutral-9 bg-white',
     black: 'text-neutral-9',
   };

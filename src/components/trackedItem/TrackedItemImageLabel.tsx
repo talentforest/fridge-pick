@@ -1,69 +1,45 @@
 import Text from '@/components/common/ui/Text';
-import { EnrichedShoppingItem } from '@/types/shoppingList';
 import { EnrichedStorageItem } from '@/types/storage';
 import { View } from 'react-native';
 import { getTrackedItemData } from '@/utils';
 import FoodImage from '@/components/common/FoodImage';
-import Card from '@/components/common/ui/Card';
+import ConvenienceFoodTag from '@/components/common/ConvenienceFoodTag';
+import { EnrichedShoppingItem } from '@/types/shoppingItem';
 
 interface TrackedItemImageLabelProps {
   item: EnrichedStorageItem | EnrichedShoppingItem;
   imageSize?: number;
   className?: string;
   textClassName?: string;
-  hasCategory?: boolean;
-  isHorizontal?: boolean;
-  hasImageBox?: boolean;
 }
 
 export default function TrackedItemImageLabel({
   item,
-  imageSize = 55,
+  imageSize = 70,
   className = '',
   textClassName = '',
-  hasCategory = false,
-  isHorizontal = false,
-  hasImageBox = false,
 }: TrackedItemImageLabelProps) {
-  const layoutClassName = isHorizontal ? 'flex-row gap-x-2' : 'gap-y-1';
-
   return (
-    <View className={`items-center ${layoutClassName} ${className}`}>
-      {hasImageBox ? (
-        <>
-          <Card className="h-[82px] w-[82px] items-center justify-center px-2 py-2">
-            <FoodImage trackedItem={item} imageSize={imageSize} />
-          </Card>
+    <View className={`flex-row items-center gap-x-2.5 ${className}`}>
+      <FoodImage
+        trackedItem={item}
+        imageSize={imageSize}
+        className="p-2.5"
+        iconSize={14}
+        iconClassName="-right-0 top-0"
+      />
 
-          <Card className="h-[82px] flex-1 justify-center gap-y-3">
-            <Text className={`line-clamp-1 ${textClassName}`}>
-              {getTrackedItemData(item).label}
-            </Text>
+      <View className="gap-y-2.5">
+        {item.type !== 'ingredient' ? <ConvenienceFoodTag /> : <></>}
 
-            {hasCategory && (
-              <Text className="text-neutral-5">
-                {getTrackedItemData(item).categoryLabel}
-              </Text>
-            )}
-          </Card>
-        </>
-      ) : (
-        <>
-          <FoodImage trackedItem={item} imageSize={imageSize} />
+        <Text className={`mt-1 line-clamp-1 font-extrabold text-base ${textClassName}`}>
+          {getTrackedItemData(item).label}
+        </Text>
 
-          <View className="gap-y-2">
-            <Text className={`line-clamp-1 ${textClassName}`}>
-              {getTrackedItemData(item).label}
-            </Text>
-
-            {hasCategory && (
-              <Text className="text-neutral-5">
-                {getTrackedItemData(item).categoryLabel}
-              </Text>
-            )}
-          </View>
-        </>
-      )}
+        <Text className="!text-[13px] text-neutral-5">
+          {getTrackedItemData(item).categoryLabel}
+        </Text>
+      </View>
     </View>
   );
 }

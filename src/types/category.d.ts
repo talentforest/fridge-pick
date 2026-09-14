@@ -1,32 +1,19 @@
-import {
-  ingredientCategoryObj,
-  preparedFoodCategoryObj,
-  mealCategoryObj,
-  noCategoryObj,
-} from '@/constants';
+import { ingredientCategoryObj, foodCategoryObj, noCategoryObj } from '@/constants';
 
 type IngredientCategoryMap = typeof ingredientCategoryObj;
 export type IngredientCategoryItem = IngredientCategoryMap[IngredientCategoryKey];
 export type IngredientCategoryKey = keyof IngredientCategoryMap;
 export type IngredientCategoryLabel = IngredientCategoryItem['label'];
 
-type PreparedFoodCategoryMap = typeof preparedFoodCategoryObj;
-export type PreparedFoodCategoryItem = PreparedFoodCategoryMap[PreparedFoodCategoryKey];
-export type PreparedFoodCategoryKey = keyof PreparedFoodCategoryMap;
-export type PreparedFoodCategoryLabel = PreparedFoodCategoryItem['label'];
-
-type MealCategoryMap = typeof mealCategoryObj;
-export type MealCategoryItem = MealCategoryMap[MealCategoryKey];
-export type MealCategoryKey = keyof MealCategoryMap;
-export type MealCategoryLabel = MealCategoryItem['label'];
+type FoodCategoryMap = typeof foodCategoryObj;
+export type FoodCategoryItem = FoodCategoryMap[FoodCategoryKey];
+export type FoodCategoryKey = keyof FoodCategoryMap;
+export type FoodCategoryLabel = FoodCategoryItem['label'];
 
 type NoCategoryMap = typeof noCategoryObj;
 export type NoCategoryItem = NoCategoryMap[NoCategoryKey];
 export type NoCategoryKey = keyof NoCategoryMap;
 export type NoCategoryLabel = NoCategoryItem['label'];
 
-export type FoodCategoryKey =
-  | IngredientCategoryKey
-  | MealCategoryKey
-  | PreparedFoodCategoryKey
-  | 'no_category';
+export type CategoryKey = IngredientCategoryKey | FoodCategoryKey;
+export type Category = IngredientCategoryItem | FoodCategoryItem;
