@@ -21,12 +21,12 @@ export const convertIngredientToStorageItem = (
     storedAt: formatDateString(now, 'yyyy-MM-dd'),
   } as const;
 
-  const { id, defaultStorage, recommendedDurations } = ingredient;
+  const { id, defaultStorage, expiration } = ingredient;
 
   const storage = currStorage ?? defaultStorage;
 
-  const expiresAtValue = recommendedDurations
-    ? recommendedDurations[storage]?.value || DEFAULT_EXPIRATION_DAYS
+  const expiresAtValue = expiration.recommendedDurations
+    ? expiration.recommendedDurations[storage]?.value || DEFAULT_EXPIRATION_DAYS
     : DEFAULT_EXPIRATION_DAYS;
 
   return {

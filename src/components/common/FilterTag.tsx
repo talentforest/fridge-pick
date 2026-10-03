@@ -26,14 +26,14 @@ export default function FilterTag({
   iconSize = 15,
 }: FilterProps) {
   const bgColor = {
-    green: 'bg-green-1',
-    red: 'bg-red-1',
-    blue: 'bg-blue-1',
-    orange: 'bg-orange-1',
-    yellow: 'bg-yellow-1',
-    neutral: 'bg-neutral-3',
-    indigo: 'bg-indigo-1',
-    ice: 'bg-ice-1',
+    green: 'bg-green-1 border-green-3',
+    red: 'bg-red-1 border-red-3',
+    blue: 'bg-blue-1 border-blue-3',
+    orange: 'bg-orange-1 border-orange-3',
+    yellow: 'bg-yellow-1 border-yellow-3',
+    neutral: 'bg-neutral-3 border-neutral-5',
+    indigo: 'bg-indigo-1 border-indigo-3',
+    ice: 'bg-ice-1 border-ice-3',
   };
 
   const textColorObj = {
@@ -48,8 +48,8 @@ export default function FilterTag({
   };
 
   const inActiveObj = {
-    bgColor: 'bg-inactive-bg',
-    textColor: 'text-inactive-text',
+    bgColor: 'bg-border border-neutral-3',
+    textColor: 'text-text',
   };
 
   const commonClassName = 'rounded-lg px-3 py-3';
@@ -63,7 +63,7 @@ export default function FilterTag({
   return onPress ? (
     <TouchableOpacity
       onPress={onPress}
-      className={`${commonClassName} flex-row items-center justify-center gap-x-0.5 ${currBgColor} ${className}`}
+      className={`${commonClassName} flex-row items-center justify-center gap-x-0.5 border ${currBgColor} ${className}`}
     >
       {icon && (
         <Icon

@@ -134,10 +134,6 @@ export const filterRecommendableCandidates = (
   });
 };
 
-// const canRecommendPreferenceItem = (item: SelectableItem): boolean => {
-//   return false;
-// };
-
 /**
  * 특정 식재료(또는 간편식/식사)가 생기면 새롭게 만들 수 있는 메뉴 목록
  */
@@ -175,5 +171,36 @@ export const getCompletableFoodListBySelectableItem = (
 
     // 부족한 하나가 바로 이 아이템인지 확인
     return getSelectableItemKey(missingItemList[0]) === selectableItemKey;
+  });
+};
+
+/**
+ * 현재 보관함에 있는 항목만으로 만들 수 있는 음식 목록
+ *
+ * essential + common + seasoning을 모두 보유해야 만들 수 있다고 판단한다.
+ * optional은 완성 조건에서 제외한다.
+ */
+export const getCurrentlyCompletableFoodList = (
+  allStorageItemList: EnrichedStorageItem[],
+): Food[] => {
+  const possessedItemKeySet = new Set(
+    allStorageItemList
+      .map(getStorageItemRef)
+      .filter((item): item is SelectableItemRef => item !== null)
+      .map(getSelectableItemKey),
+  );
+
+  return allFoodList.filter((food) => {
+    if (!food.foodStructure) return false;
+
+    const requiredItemList: SelectableItemRef[] = [
+      ...food.foodStructure.essential,
+      ...food.foodStructure.common,
+      ...food.foodStructure.seasoning,
+    ];
+
+    return requiredItemList.every((item) =>
+      possessedItemKeySet.has(getSelectableItemKey(item)),
+    );
   });
 };

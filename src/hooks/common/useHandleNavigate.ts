@@ -13,8 +13,16 @@ export const useHandleNavigate = () => {
 
   const goBack = () => navigation.goBack();
 
+  const replaceNavigate = (
+    stack: keyof RootStackParamList,
+    props?: RootStackParamList[keyof RootStackParamList],
+  ) => {
+    navigation.replace(stack, props);
+  };
+
   return {
     goNavigate,
     goBack,
+    replaceNavigate,
   };
 };

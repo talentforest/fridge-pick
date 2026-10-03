@@ -6,7 +6,7 @@ export default function Card({ ...props }: ViewProps) {
     <View
       {...props}
       style={iosShadowStyle}
-      className={`rounded-2xl border border-border bg-card p-4 ${props.className}`}
+      className={`rounded-2xl border border-border bg-card px-4 pb-4 pt-4 ${props.className}`}
     >
       {props.children}
     </View>

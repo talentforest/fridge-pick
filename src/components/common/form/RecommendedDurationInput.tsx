@@ -3,7 +3,7 @@ import IconWithText from '@/components/common/IconWithText';
 import SelectBtn from '@/components/common/SelectBtn';
 import SquareBtn from '@/components/common/SquareBtn';
 import Icon from '@/components/common/ui/Icon';
-import { storageObj } from '@/constants';
+import { storageObj, durationUnitObj } from '@/constants';
 import { DurationUnit, Food, Ingredient, SelectableItem } from '@/types/selectableItem';
 import { StorageTypeId } from '@/types/storage';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
@@ -30,13 +30,6 @@ export default function RecommendedDurationInput({
     show: false,
     storage: storageType,
   });
-
-  const durationUnitObj = {
-    day: '일',
-    week: '주',
-    month: '개월',
-    year: '년',
-  } as const;
 
   type Duration = {
     value: number;

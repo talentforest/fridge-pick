@@ -1,4 +1,4 @@
-import { DEFAULT_EXPIRATION_DAYS } from '@/constants';
+import { ExpirationDuration } from '@/types/selectableItem';
 import { ExpirationStatus } from '@/types/storage';
 import { formatDateString } from '@/utils/formatDate';
 import {
@@ -10,6 +10,9 @@ import {
   formatDistanceStrict,
   parseISO,
   isValid,
+  addWeeks,
+  addMonths,
+  addYears,
 } from 'date-fns';
 
 import { ko } from 'date-fns/locale';
@@ -20,12 +23,19 @@ export function calculateExpiresAt(storedAt: Date, recommendedDurations: number)
 
 /** "오늘부터" 소비일수를 통해 "소비기한 날짜"를 구하는 함수  */
 export function getExpirationDate(
-  recommendedDurations?: number,
-  formatStr?: 'yy.MM.dd',
-): Date | string {
-  const result = addDays(new Date(), recommendedDurations || DEFAULT_EXPIRATION_DAYS);
+  recommendedDurations: ExpirationDuration,
+  formatStr?: 'yy.MM.dd' | 'yy년 M월 d일',
+): string {
+  const { unit, value } = recommendedDurations;
 
-  return formatStr ? format(result, formatStr) : result;
+  const durationObj = {
+    day: addDays(new Date(), value),
+    week: addWeeks(new Date(), value),
+    month: addMonths(new Date(), value),
+    year: addYears(new Date(), value),
+  };
+
+  return format(durationObj[unit], formatStr || 'yy.MM.dd');
 }
 
 export function getRemainingDays(expirationDate: Date | string) {

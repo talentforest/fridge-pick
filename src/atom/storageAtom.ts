@@ -1,4 +1,4 @@
-import { mockStorageItemList, storageObj } from '@/constants';
+import { storageObj } from '@/constants';
 import { AppError, AppSuccess } from '@/hooks';
 import { Ingredient } from '@/types/selectableItem';
 import {
@@ -9,8 +9,8 @@ import {
   StorageTypeId,
 } from '@/types/storage';
 import {
+  convertIngredientToStorageItem,
   createTrackedItemKey,
-  enrichTrackedItem,
   findTrackedItemWithKey,
   getStorageItemListByExpirationStatus,
 } from '@/utils';
@@ -18,10 +18,8 @@ import { atom } from 'jotai';
 import { atomFamily } from 'jotai-family';
 import { nanoid } from 'nanoid/non-secure';
 
-const enrichStorageItemList = mockStorageItemList.map((item) => enrichTrackedItem(item));
-
 /** Basic */
-export const allStorageItemListAtom = atom<EnrichedStorageItem[]>(enrichStorageItemList); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
+export const allStorageItemListAtom = atom<EnrichedStorageItem[]>([]); // TODO: 첫사용에만 가짜배열, 이후에 사용자 정보로 등록
 
 export const searchKeywordAtom = atom<string>('');
 
@@ -115,6 +113,40 @@ export const addStorageItemAtom = atom(
     set(allStorageItemListAtom, [...list, newStorageItem]);
 
     return { type: 'success', item: newStorageItem };
+  },
+);
+
+/**
+ * 식재료 아이템 리스트 일괄 추가.
+ * - ingredientId와 customLabel 기준으로 중복 검사
+ * - 중복 시 duplicate 결과 반환
+ */
+export const addIngredientListToStorageAtom = atom(
+  null,
+  (get, set, itemList: Ingredient[]): AppError<Ingredient[]> | AppSuccess => {
+    const storageItemList = get(allStorageItemListAtom);
+
+    // 보관함에 있는지 검사
+    const storageIds = new Set(storageItemList.map(({ id }) => id));
+
+    const duplicateItemList = itemList.filter((item) => storageIds.has(item.id));
+
+    if (duplicateItemList.length > 0) {
+      return {
+        type: 'duplicate',
+        item: duplicateItemList,
+        message: '이미 보관함에 존재해요',
+      };
+    }
+
+    const newItemList = itemList.map((item) => convertIngredientToStorageItem(item));
+
+    set(allStorageItemListAtom, [...newItemList, ...storageItemList]);
+
+    return {
+      type: 'success',
+      item: newItemList,
+    };
   },
 );
 

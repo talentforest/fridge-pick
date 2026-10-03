@@ -1,7 +1,10 @@
 import { StorageTypeId } from '@/types/storage';
 
 export type RootStackParamList = {
-  OnBoarding: undefined;
+  OnboardingIntroScreen: undefined;
+  OnboardingIngredientScreen: undefined;
+  OnboardingResultScreen: undefined;
+
   Main: undefined;
 
   HomeScreen: undefined;

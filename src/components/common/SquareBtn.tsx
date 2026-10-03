@@ -11,6 +11,7 @@ interface SquareBtnProps {
   textClassName?: string;
   bgColor?:
     | 'red'
+    | 'orange'
     | 'blue'
     | 'green'
     | 'yellow'
@@ -37,6 +38,7 @@ export default function SquareBtn({
     ice: 'bg-ice-5',
     green: 'bg-green-700',
     yellow: 'bg-amber-600',
+    orange: 'bg-orange-7',
     indigo: 'bg-indigo-600',
     inActive: 'bg-inactive-bg',
     neutral: 'bg-neutral-3',

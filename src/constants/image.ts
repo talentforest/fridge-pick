@@ -19,6 +19,11 @@ export const image_frozen = require('../../assets/images/frozen.png');
 export const image_instant = require('../../assets/images/instant.png');
 export const image_ready_to_eat = require('../../assets/images/ready_to_eat.png');
 
+export const image_onboarding_check = require('../../assets/images/onboarding/check.png');
+export const image_onboarding1 = require('../../assets/images/onboarding/onboarding1.png');
+export const image_onboarding2 = require('../../assets/images/onboarding/onboarding2.png');
+export const image_onboarding3 = require('../../assets/images/onboarding/onboarding3.png');
+
 export const categoryImageObj = {
   /** 식재료 카테고리 Ingredient Category */
   ingredient: {

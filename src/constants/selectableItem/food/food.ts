@@ -5158,7 +5158,7 @@ export const preparedFoodObj = {
     servingTemperature: 'either',
 
     foodStructure: {
-      essential: [],
+      essential: [{ kind: 'food', id: 'frozen_mandu' }],
       common: [],
       seasoning: [],
       optional: [],

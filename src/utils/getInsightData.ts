@@ -127,7 +127,7 @@ export const getInsightData = (props: InsightDataProps): InsightData => {
           { text: `만들 수 있는 메뉴가` },
           { text: `${props.foodCount}개 늘어나요`, highlight: true },
         ],
-        description: [{ text: '식재료를 더 채워봐요!' }],
+        description: [{ text: '식재료를 더 채워볼까요?' }],
         image: image_food_fridge,
       };
 

@@ -18,7 +18,7 @@ export default function ModalHeader({
 
   return (
     <View className="flex-row items-center justify-between">
-      <Text className="text-xl">{title}</Text>
+      <Text className="font-extrabold text-xl">{title}</Text>
 
       {hasX && (
         <Icon

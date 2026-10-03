@@ -424,7 +424,7 @@ export default function Icon({
       onPress={props.onPress}
     >
       <Component
-        strokeWidth={2.5}
+        strokeWidth={2.8}
         {...props}
         stroke={colorMap[color]}
         fill={hasFill ? colorMap[color] : 'transparent'}
@@ -437,7 +437,7 @@ export default function Icon({
       className={`${hasBgColor ? `${bgColorMap[color]} rounded-lg p-1.5` : ''} items-center justify-center ${props.className}`}
     >
       <Component
-        strokeWidth={2.5}
+        strokeWidth={2.8}
         {...props}
         stroke={colorMap[color]}
         fill={hasFill ? colorMap[color] : 'transparent'}

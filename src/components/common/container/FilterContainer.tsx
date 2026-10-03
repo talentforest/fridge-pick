@@ -1,22 +1,13 @@
-import FilterTag from '@/components/common/FilterTag';
 import Text from '@/components/common/ui/Text';
 import GridContainer from '@/components/common/container/GridContainer';
 import Card from '@/components/common/ui/Card';
-import { FilterColor } from '@/types/filter';
-import { IconName } from '@/components/common/ui/Icon';
 import { ReactElement } from 'react';
 import { FlatList, View } from 'react-native';
+import FilterList, { FilterItem } from '@/components/common/FilterList';
 
 type HasFilter<K> = {
   id: string;
   filterList: readonly K[];
-};
-
-type FilterItem<K> = {
-  name: K;
-  label: string;
-  color: FilterColor;
-  icon: IconName;
 };
 
 interface FilterContainerProps<T extends HasFilter<K>, K> {
@@ -59,7 +50,7 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
               <FilterList
                 filterList={filterList}
                 activeFilter={activeFilter}
-                setActiveFilter={changeActiveFilter}
+                changeActiveFilter={changeActiveFilter}
               />
             </>
           }
@@ -75,7 +66,7 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
           <FilterList
             filterList={filterList}
             activeFilter={activeFilter}
-            setActiveFilter={changeActiveFilter}
+            changeActiveFilter={changeActiveFilter}
           />
 
           <View className="mt-2 flex-row items-center justify-between pl-1">
@@ -96,32 +87,5 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
         </View>
       )}
     </>
-  );
-}
-
-interface FilterListProps<K> {
-  filterList: FilterItem<K>[];
-  activeFilter: any;
-  setActiveFilter: any;
-}
-
-function FilterList<K>({
-  filterList,
-  activeFilter,
-  setActiveFilter,
-}: FilterListProps<K>) {
-  return (
-    <View className="flex-row flex-wrap gap-2">
-      {filterList.map(({ name, label, icon, color }) => (
-        <FilterTag
-          key={String(name)}
-          name={label}
-          color={color}
-          icon={icon}
-          isActive={activeFilter === name}
-          onPress={() => setActiveFilter(name)}
-        />
-      ))}
-    </View>
   );
 }

@@ -17,13 +17,21 @@ interface CarouselContainerProps<T> {
   initialIndex?: number;
   renderItem: RenderItemWithIndex<T>;
   keyExtractor: (item: T, index: number) => string;
-  hasNavigation?: boolean;
   centerFocus?: boolean;
   spacing?: number;
+  hasNavigation?: boolean;
+  navigationBtnChildren?: (
+    handle: (direction: 'prev' | 'next') => void,
+    index: number,
+  ) => ReactNode;
   hasPagination?: boolean;
+  infinite?: boolean;
   requiredMinimum?: number;
   children?: (focusedItem: T) => ReactNode;
   horizontalInset?: number;
+  scrollEnabled?: boolean;
+  paginationDotSize?: 'sm' | 'md' | 'lg';
+  paginationDotColor?: 'blue' | 'indigo' | 'orange';
 }
 
 export default function CarouselContainer<T>({
@@ -36,13 +44,18 @@ export default function CarouselContainer<T>({
   centerFocus,
   requiredMinimum = 2,
   spacing = 10,
+  paginationDotSize = 'sm',
   hasPagination,
+  infinite = true,
   children,
   horizontalInset,
+  navigationBtnChildren,
+  scrollEnabled = true,
+  paginationDotColor = 'blue',
 }: CarouselContainerProps<T>) {
   const listRef = useRef<FlatList<T>>(null);
 
-  const isInfinite = hasPagination === true;
+  const isInfinite = infinite === true;
 
   const startIndex = isInfinite
     ? data.length
@@ -142,6 +155,12 @@ export default function CarouselContainer<T>({
     setCurrentIndex(index);
   };
 
+  const dotColor = {
+    blue: 'bg-blue-5',
+    indigo: 'bg-indigo-5',
+    orange: 'bg-orange-5',
+  };
+
   /**
    * Carousel을 사용하는 경우
    */
@@ -152,6 +171,7 @@ export default function CarouselContainer<T>({
           ref={listRef}
           data={flatListData}
           horizontal
+          pagingEnabled
           showsHorizontalScrollIndicator={false}
           initialScrollIndex={startIndex}
           ItemSeparatorComponent={() => <View style={{ width: spacing }} />}
@@ -163,6 +183,7 @@ export default function CarouselContainer<T>({
             offset: ITEM_SIZE * index,
             index,
           })}
+          scrollEnabled={scrollEnabled}
           onScrollBeginDrag={() => setIsScrolling(true)}
           onMomentumScrollBegin={() => setIsScrolling(true)}
           onMomentumScrollEnd={(e) => {
@@ -222,12 +243,20 @@ export default function CarouselContainer<T>({
           {data.map((_, index) => (
             <View
               key={index}
-              className={`aspect-square h-2.5 rounded-full ${
-                currentIndex % data.length === index ? 'bg-blue-5' : 'bg-inactive-bg'
+              className={`aspect-square ${paginationDotSize === 'sm' ? 'h-2.5' : paginationDotSize === 'md' ? 'h-3.5' : 'h-6'} rounded-full ${
+                currentIndex % data.length === index
+                  ? dotColor[paginationDotColor]
+                  : 'bg-inactive-bg'
               }`}
             />
           ))}
         </View>
+      )}
+
+      {navigationBtnChildren ? (
+        navigationBtnChildren(handleDirection, currentIndex)
+      ) : (
+        <></>
       )}
     </View>
   ) : (

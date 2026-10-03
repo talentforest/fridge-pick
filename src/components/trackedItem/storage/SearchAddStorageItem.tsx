@@ -21,7 +21,7 @@ import { useMemo } from 'react';
 import { useAtomValue } from 'jotai';
 import { allStorageItemListAtom } from '@/atom/storageAtom';
 import { useOverlay } from '@/hooks';
-import { DEFAULT_EXPIRATION_DAYS } from '@/constants';
+import { allFoodList, allIngredientList, DEFAULT_EXPIRATION_DAYS } from '@/constants';
 import { nanoid } from 'nanoid/non-secure';
 import GridContainer from '@/components/common/container/GridContainer';
 import IconWithText from '@/components/common/IconWithText';
@@ -56,7 +56,7 @@ export default function SearchAddStorageItem({
 
   const recommendedKeywordList = searchSelectableItem(
     searchKeyword || '',
-    customItemList,
+    [...allIngredientList, ...allFoodList, ...customItemList],
     maxLength,
   );
 

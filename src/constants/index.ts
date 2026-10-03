@@ -20,4 +20,6 @@ export * from '@/constants/storage/storageObj';
 
 export * from '@/constants/style';
 
+export * from '@/constants/date';
+
 export * from '@/constants/image';

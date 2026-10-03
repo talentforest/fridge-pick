@@ -8,7 +8,7 @@ import {
   shoppingListAtom,
   toggleAllPurchasedAtom,
 } from '@/atom/shoppingListAtom';
-import { image_empty_basket } from '@/constants';
+import { allFoodList, allIngredientList, image_empty_basket } from '@/constants';
 import {
   filterRecommendableCandidates,
   getCompletableFoodListBySelectableItem,
@@ -66,7 +66,11 @@ export default function ShoppingListScreen() {
   const toggleAllPurchased = useSetAtom(toggleAllPurchasedAtom);
 
   const recommendedIngredientList = useMemo(() => {
-    const searchedIngredientList = searchSelectableItem(inputValue || '', [], 6);
+    const searchedIngredientList = searchSelectableItem(
+      inputValue || '',
+      [...allIngredientList, ...allFoodList],
+      6,
+    );
 
     const result = searchedIngredientList.filter(
       ({ id }) =>

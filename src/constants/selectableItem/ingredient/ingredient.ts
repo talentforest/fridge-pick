@@ -263,6 +263,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 4,
   },
   piman: {
     id: 'piman',
@@ -416,6 +417,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 3,
   },
   cauliflower: {
     id: 'cauliflower',
@@ -581,6 +583,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 3,
   },
   dallae: {
     id: 'dallae',
@@ -666,6 +669,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 3,
   },
   paengi_beoseot: {
     id: 'paengi_beoseot',
@@ -684,6 +688,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 3,
   },
   eolgari: {
     id: 'eolgari',
@@ -714,6 +719,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 2,
   },
   maneuljjong: {
     id: 'maneuljjong',
@@ -783,6 +789,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '단'],
+    onboardingPriority: 2,
   },
   green_paprika: {
     id: 'green_paprika',
@@ -870,6 +877,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 3,
   },
   kohlrabi: {
     id: 'kohlrabi',
@@ -924,6 +932,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 3,
   },
   sangchu: {
     id: 'sangchu',
@@ -1066,6 +1075,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 2,
   },
   neutari_beoseot: {
     id: 'neutari_beoseot',
@@ -1114,6 +1124,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 3,
   },
   hobak_leaf: {
     id: 'hobak_leaf',
@@ -1147,6 +1158,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 3,
   },
   jeok_chae: {
     id: 'jeok_chae',
@@ -1214,6 +1226,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 3,
   },
   hong_gochu: {
     id: 'hong_gochu',
@@ -1298,6 +1311,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 3,
   },
   siraegi: {
     id: 'siraegi',
@@ -1358,6 +1372,7 @@ export const vegetableObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '봉'],
+    onboardingPriority: 3,
   },
   toran: {
     id: 'toran',
@@ -1488,6 +1503,7 @@ export const meatObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
+    onboardingPriority: 3,
   },
 
   beef_boneless_shank: {
@@ -1855,6 +1871,7 @@ export const meatObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
+    onboardingPriority: 3,
   },
 
   chicken_breast: {
@@ -1903,6 +1920,7 @@ export const meatObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
+    onboardingPriority: 3,
     // variants: {
     //   boneless: {
     //     label: '닭다리살정육',
@@ -2024,6 +2042,7 @@ export const meatObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '개',
     unitOptions: ['개', '판'],
     synonyms: ['달걀'],
+    onboardingPriority: 1,
   },
 
   ground_beef: {
@@ -2044,6 +2063,7 @@ export const meatObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     imageName: 'ground_meat',
+    onboardingPriority: 3,
   },
 
   ground_pork: {
@@ -2120,6 +2140,7 @@ export const meatObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
+    onboardingPriority: 3,
     // variants: {
     //   frozen: {
     //     label: '냉동',
@@ -2176,7 +2197,7 @@ export const meatObj: { [key in string]: Ingredient } = {
 
   pork_neck: {
     id: 'pork_neck',
-    label: '돼지고기목살',
+    label: '목살',
     isActive: true,
     kind: 'ingredient',
     recommendLevel: 'general',
@@ -2191,6 +2212,7 @@ export const meatObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', '팩'],
+    onboardingPriority: 3,
   },
 
   pork_picnic: {
@@ -2423,6 +2445,7 @@ export const meatObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '캔',
     unitOptions: ['캔'],
     synonyms: ['스팸'],
+    onboardingPriority: 2,
   },
 
   duck_slice_smoked: {
@@ -2518,6 +2541,7 @@ export const seafoodObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉'],
+    onboardingPriority: 3,
   },
 
   matsal: {
@@ -2537,6 +2561,7 @@ export const seafoodObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개'],
+    onboardingPriority: 3,
   },
 
   jeoneo: {
@@ -2876,6 +2901,7 @@ export const seafoodObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
     synonyms: ['김밥김'],
+    onboardingPriority: 2,
   },
 
   gulbi: {
@@ -3042,6 +3068,7 @@ export const seafoodObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
+    onboardingPriority: 2,
   },
 
   maesaengi: {
@@ -3099,6 +3126,7 @@ export const seafoodObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
+    onboardingPriority: 3,
   },
 
   nakji: {
@@ -3271,6 +3299,7 @@ export const seafoodObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
+    onboardingPriority: 4,
   },
 
   sora: {
@@ -3382,6 +3411,7 @@ export const seafoodObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
+    onboardingPriority: 3,
   },
 
   daege: {
@@ -3477,6 +3507,7 @@ export const seafoodObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
+    onboardingPriority: 3,
   },
 
   bangeo: {
@@ -3623,6 +3654,7 @@ export const seafoodObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '팩',
     unitOptions: ['팩', 'g'],
     synonyms: ['연어사시미'],
+    onboardingPriority: 3,
   },
 
   domi: {
@@ -3822,6 +3854,7 @@ export const grainsObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 4,
   },
 
   brown_rice: {
@@ -3921,6 +3954,7 @@ export const grainsObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 4,
   },
 
   daedu: {
@@ -3992,6 +4026,7 @@ export const grainsObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '모',
     unitOptions: ['모'],
+    onboardingPriority: 2,
   },
 
   gangnang_kong: {
@@ -4056,6 +4091,7 @@ export const grainsObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 2,
   },
 
   jwinuni_kong: {
@@ -4108,6 +4144,7 @@ export const grainsObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 3,
   },
 
   muesli: {
@@ -4239,6 +4276,7 @@ export const grainsObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '모',
     unitOptions: ['모'],
+    onboardingPriority: 2,
   },
 
   susu: {
@@ -4439,6 +4477,7 @@ export const noodleObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
     imageName: 'oksusu_myeon',
+    onboardingPriority: 2,
   },
   fusilli: {
     id: 'fusilli',
@@ -4454,6 +4493,7 @@ export const noodleObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 2,
   },
   penne: {
     id: 'penne',
@@ -4469,6 +4509,7 @@ export const noodleObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 2,
   },
   jjolmyeon_sari: {
     id: 'jjolmyeon_sari',
@@ -4661,6 +4702,7 @@ export const noodleObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 2,
   },
   napjak_dangmyeon: {
     id: 'napjak_dangmyeon',
@@ -4676,6 +4718,7 @@ export const noodleObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 3,
   },
   gonyak_myeon: {
     id: 'gonyak_myeon',
@@ -4763,6 +4806,7 @@ export const fruitObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
+    onboardingPriority: 3,
   },
   apple_mango: {
     id: 'apple_mango',
@@ -4793,6 +4837,7 @@ export const fruitObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
+    onboardingPriority: 3,
   },
   banana: {
     id: 'banana',
@@ -4808,6 +4853,7 @@ export const fruitObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
+    onboardingPriority: 3,
   },
   blueberry: {
     id: 'blueberry',
@@ -4823,6 +4869,7 @@ export const fruitObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
+    onboardingPriority: 3,
   },
   brazil_nut: {
     id: 'brazil_nut',
@@ -5153,6 +5200,7 @@ export const fruitObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
+    onboardingPriority: 3,
   },
   bae: {
     id: 'bae',
@@ -5348,6 +5396,7 @@ export const fruitObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
+    onboardingPriority: 3,
   },
   tomato: {
     id: 'tomato',
@@ -5363,6 +5412,7 @@ export const fruitObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
+    onboardingPriority: 3,
   },
   walnut: {
     id: 'walnut',
@@ -5443,6 +5493,7 @@ export const dairyObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
+    onboardingPriority: 4,
   },
 
   cheddar_cheese: {
@@ -5459,6 +5510,7 @@ export const dairyObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
+    onboardingPriority: 3,
   },
 
   condensed_milk: {
@@ -5572,6 +5624,7 @@ export const dairyObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '병'],
+    onboardingPriority: 2,
   },
 
   mozzarella_cheese: {
@@ -5588,6 +5641,7 @@ export const dairyObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '팩',
     unitOptions: ['팩', '봉'],
+    onboardingPriority: 3,
   },
 
   parmesan_cheese: {
@@ -5770,6 +5824,7 @@ export const canObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['옥수수캔'],
+    onboardingPriority: 2,
   },
 
   pickled_olives: {
@@ -5821,6 +5876,7 @@ export const canObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['참치캔', '참치'],
+    onboardingPriority: 2,
   },
 
   canned_tomato: {
@@ -5906,6 +5962,7 @@ export const canObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '캔',
     unitOptions: ['캔', '병'],
     synonyms: ['황도'],
+    onboardingPriority: 2,
   },
 
   canned_golbaengi: {
@@ -5964,6 +6021,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '병',
     unitOptions: ['병', '개'],
     synonyms: ['멸치액', '액젓'],
+    onboardingPriority: 2,
   },
   peanut_butter: {
     id: 'peanut_butter',
@@ -6072,6 +6130,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: 'ml',
     unitOptions: ['ml', 'L'],
+    onboardingPriority: 4,
   },
 
   oligodang: {
@@ -6088,6 +6147,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g', 'ml'],
+    onboardingPriority: 1,
   },
 
   honey: {
@@ -6104,6 +6164,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: 'g',
     unitOptions: ['g'],
+    onboardingPriority: 2,
   },
 
   mulyeot: {
@@ -6180,6 +6241,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: 'ml',
     unitOptions: ['ml', 'L'],
     imageName: 'soy_sauce',
+    onboardingPriority: 3,
   },
 
   yangjo_ganjang: {
@@ -6248,6 +6310,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
+    onboardingPriority: 2,
   },
 
   black_sugar: {
@@ -6362,6 +6425,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '병',
     unitOptions: ['병', '통'],
     synonyms: ['오일'],
+    onboardingPriority: 1,
   },
 
   curry_block: {
@@ -6378,6 +6442,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
+    onboardingPriority: 3,
   },
 
   deulgireum: {
@@ -6426,6 +6491,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '통',
     unitOptions: ['통', '봉'],
+    onboardingPriority: 1,
   },
 
   gochugaru: {
@@ -6442,6 +6508,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
+    onboardingPriority: 2,
   },
 
   gochujang: {
@@ -6458,6 +6525,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '통',
     unitOptions: ['통', '봉'],
+    onboardingPriority: 1,
   },
 
   matsul: {
@@ -6490,6 +6558,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
+    onboardingPriority: 3,
   },
 
   ketchup: {
@@ -6506,6 +6575,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
+    onboardingPriority: 3,
   },
 
   minced_garlic: {
@@ -6525,6 +6595,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
+    onboardingPriority: 2,
   },
 
   minced_ginger: {
@@ -6561,6 +6632,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
+    onboardingPriority: 2,
   },
 
   peanut_sauce: {
@@ -6654,6 +6726,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '병',
     unitOptions: ['병'],
+    onboardingPriority: 2,
   },
 
   peperoncino: {
@@ -6693,7 +6766,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     label: '소금',
     isActive: true,
     kind: 'ingredient',
-    recommendLevel: 'general',
+    recommendLevel: 'preference',
     category: 'seasoning',
     defaultStorage: 'pantry',
     expiration: {
@@ -6703,6 +6776,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
     synonyms: ['맛소금'],
+    onboardingPriority: 1,
   },
 
   soy_sauce: {
@@ -6720,6 +6794,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '병',
     unitOptions: ['병', '통'],
     synonyms: [],
+    onboardingPriority: 1,
   },
 
   sriracha_sauce: {
@@ -6736,6 +6811,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
+    onboardingPriority: 4,
   },
 
   ssamjang: {
@@ -6752,6 +6828,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '통',
     unitOptions: ['통', '봉'],
+    onboardingPriority: 2,
   },
 
   sugar: {
@@ -6768,6 +6845,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
+    onboardingPriority: 1,
   },
 
   tomato_sauce: {
@@ -6784,6 +6862,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
+    onboardingPriority: 3,
   },
 
   vinegar: {
@@ -6802,6 +6881,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     unitOptions: ['병', '통'],
     synonyms: ['양조식초', '사과식초'],
     imageName: 'matsul',
+    onboardingPriority: 1,
   },
 
   wasabi: {
@@ -6834,6 +6914,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
+    onboardingPriority: 4,
   },
 
   yuksu_coin: {
@@ -6851,6 +6932,7 @@ export const seasoningObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '병'],
     synonyms: ['코인육수'],
+    onboardingPriority: 3,
   },
 
   yuksu_pack: {
@@ -6962,6 +7044,7 @@ export const powderObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
+    onboardingPriority: 2,
   },
   milgaru: {
     id: 'milgaru',
@@ -6995,6 +7078,7 @@ export const powderObj: { [key in string]: Ingredient } = {
     unitOptions: ['봉', '통'],
     synonyms: ['부침가루'],
     imageName: 'milgaru',
+    onboardingPriority: 3,
   },
   jajang_garu: {
     id: 'jajang_garu',
@@ -7026,6 +7110,7 @@ export const powderObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
     imageName: 'baking_powder',
+    onboardingPriority: 3,
   },
   gamja_jeonbun: {
     kind: 'ingredient',
@@ -7042,6 +7127,7 @@ export const powderObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
     imageName: 'baking_powder',
+    onboardingPriority: 3,
   },
 
   tongmilgaru: {
@@ -7081,7 +7167,6 @@ export const powderObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '통'],
-
     imageName: 'baking_powder',
   },
 

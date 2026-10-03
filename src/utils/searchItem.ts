@@ -59,7 +59,7 @@ function matchText(keyword: string, text: string) {
 
 export function searchSelectableItem(
   keyword: string,
-  customList: SelectableItem[],
+  allItemList: SelectableItem[],
   maxLength?: number,
 ): SelectableItem[] {
   const normalized = normalize(keyword);
@@ -67,9 +67,7 @@ export function searchSelectableItem(
 
   const isChosungSearch = /^[ㄱ-ㅎ]+$/.test(keyword);
 
-  const selectableItemList = [...allIngredientList, ...allFoodList, ...customList];
-
-  const results = selectableItemList
+  const results = allItemList
     .map((item) => {
       let score = 0;
 

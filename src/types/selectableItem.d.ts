@@ -69,7 +69,7 @@ type ItemBase = {
   /** 동일 이미지 재사용 시 */
   imageName?: string;
 
-  defaultStorage?: StorageTypeId;
+  defaultStorage: StorageTypeId;
 
   /** 검색용 동의어 */
   synonyms?: readonly string[];
@@ -83,9 +83,9 @@ export type ExpirationDuration = {
 };
 
 export type StorageDurations = {
-  freezer?: ExpirationDuration;
-  fridge?: ExpirationDuration;
-  pantry?: ExpirationDuration;
+  freezer: ExpirationDuration;
+  fridge: ExpirationDuration;
+  pantry: ExpirationDuration;
 };
 
 type ExpirationMeta = {
@@ -96,7 +96,7 @@ type ExpirationMeta = {
          */
         mode: 'printed';
         /** 직접 만든 형태로 사용할 가능성을 위해 존재할 수 있지만 필수는 아님 */
-        recommendedDurations?: StorageDurations;
+        recommendedDurations?: Partial<StorageDurations>;
       }
     | {
         /** 소비기한 표시 여부
@@ -104,7 +104,7 @@ type ExpirationMeta = {
          */
         mode: 'recommended';
         /** 권장 기간 방식에서는 필수 */
-        recommendedDurations: StorageDurations;
+        recommendedDurations: Partial<StorageDurations>;
       };
 };
 
@@ -118,6 +118,9 @@ export type Ingredient = ItemBase & {
 
   /** 예: 수육용, 불고기용 */
   variants?: readonly IngredientVariantKey[];
+
+  /** 온보딩 추천 식재료 노출 순서. 없으면 노출하지 않음, 낮을수록 추천 더 */
+  onboardingPriority?: number;
 } & ExpirationMeta;
 
 export type CustomIngredientId = `custom:ingredient:${string}`;
@@ -140,11 +143,11 @@ export type IngredientVariantKey = keyof typeof ingredientVariantsObj;
 /* -------------------------------------------------------------------------- */
 export type FoodVariantId = string;
 
-export type Food = ItemBase & {
+export type Food = Omit<ItemBase, 'defaultStorage'> & {
   kind: 'food';
   id: FoodId;
   category: FoodCategoryKey;
-
+  defaultStorage?: StorageTypeId;
   difficulty?: Difficulty;
   servingTemperature?: ServingTemperature;
   availableFoodForm?: readonly FoodForm[];
