@@ -49,8 +49,8 @@ export default function OnboardingResultScreen() {
 
           {currentlyCompletableFoodList.length >= 4 ? (
             <View className="w-full gap-y-2">
-              <Card className="gap-y-4 !rounded-3xl px-5 !pb-5 !pt-6">
-                <View className="flex-row justify-between gap-x-3 px-2">
+              <Card className="gap-y-4 !rounded-3xl px-5 !pb-4 !pt-6">
+                <View className="flex-row items-center justify-between gap-x-3 px-2">
                   <Text className="font-extrabold !text-[13px]">
                     🍳 지금 만들 수 있는 메뉴
                   </Text>

@@ -85,7 +85,7 @@ export default function AddIngredientInStockSheet({
             (item, index) => (
               <Card
                 key={item.id}
-                className="flex-row overflow-hidden !bg-blue-1 !px-3 !py-3"
+                className="flex-row overflow-hidden !bg-indigo-1 !px-3 !py-3"
               >
                 <View className="aspect-square w-20 items-center justify-center gap-y-1 rounded-2xl bg-card p-0">
                   <FoodImage selectableItem={item} imageSize={45} />
@@ -165,9 +165,9 @@ export default function AddIngredientInStockSheet({
           <SelectBtn
             name={isOpen ? '접기' : `그외 ${pickedItemList.length - MAX_LENGTH}개 더보기`}
             iconName={isOpen ? 'ChevronUp' : 'ChevronDown'}
-            className="w-full !rounded-lg border-0 !bg-inactive-bg !py-3"
-            iconSize={14}
-            textClassName="!text-[13px]"
+            className="w-full !rounded-lg border-0 !bg-inactive-bg !py-3.5"
+            iconSize={12}
+            textClassName="!text-sm"
             iconStrokeWidth={3}
             onPress={() => setIsOpen((prev) => !prev)}
           />

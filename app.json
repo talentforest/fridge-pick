@@ -1,39 +1,56 @@
 {
   "expo": {
-    "name": "fridgepick",
+    "name": "프리지픽",
     "slug": "fridgepick",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/shopping_basket.png",
+    "icon": "./assets/images/app/app_icon_256.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/images/fridge.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#f3f"
-    },
+
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ellie0501.fridgepick"
     },
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/fridge.png",
-        "backgroundColor": "#f3f"
+        "backgroundColor": "#FFF8EB"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
+
     "web": {
       "bundler": "metro",
       "favicon": "./assets/images/fridge.png"
     },
+
     "extra": {
       "eas": {
         "projectId": "ddca7827-4247-4576-9d4c-c43c324c612c"
       }
     },
+
     "owner": "fridge-pick",
-    "plugins": ["expo-font", "@react-native-community/datetimepicker"]
+
+    "plugins": [
+      "expo-font",
+      "@react-native-community/datetimepicker",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/app/app_icon_512.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#31f666",
+          "dark": {
+            "image": "./assets/images/fridge_dark.png",
+            "backgroundColor": "#242321"
+          }
+        }
+      ]
+    ]
   }
 }

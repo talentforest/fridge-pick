@@ -128,7 +128,7 @@ export default function OnboardingIngredientScreen() {
 
           <View className="mt-2 flex-1 gap-y-3">
             <View className="flex-row items-center gap-x-2">
-              <Text className="font-extrabold">
+              <Text className="pl-1 font-extrabold">
                 {activeFilter === 'recommended'
                   ? '자주 사용하는 식재료'
                   : ingredientCategoryObj[activeFilter].label}
@@ -140,7 +140,7 @@ export default function OnboardingIngredientScreen() {
               ref={scrollRef}
               showsVerticalScrollIndicator={false}
               className="flex-1"
-              contentContainerClassName="!pb-40 !px-0"
+              contentContainerClassName="!pb-60 !px-0"
             >
               <GridContainer columns={4} gap={8} horizontalInset={20}>
                 {ingredientListByCategory.map((ingredient) => (
@@ -186,7 +186,7 @@ export default function OnboardingIngredientScreen() {
             <Text className="font-heavy text-base text-orange-7">
               {pickedItemList.length}개
             </Text>
-            를 선택했어요
+            의 식재료를 선택했어요
           </Text>
 
           <SquareBtn

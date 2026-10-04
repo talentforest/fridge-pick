@@ -3854,7 +3854,6 @@ export const grainsObj: { [key in string]: Ingredient } = {
     },
     defaultUnitLabel: '봉',
     unitOptions: ['봉', '팩'],
-    onboardingPriority: 4,
   },
 
   brown_rice: {
