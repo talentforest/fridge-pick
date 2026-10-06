@@ -29,6 +29,7 @@ export default function FormMemo({
         className="border !p-5"
         isSheetInput={isSheetInput}
         value={currMemo}
+        maxLength={50}
         onChangeText={(text) => onItemChange({ memo: text })}
         placeholder="메모할 사항이 있다면 작성해주세요."
         autoFocus={autoFocus}

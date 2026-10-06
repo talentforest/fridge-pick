@@ -55,7 +55,7 @@ export default function MyPickItemCard({
   };
 
   return (
-    <View className={`items-center justify-center gap-y-1.5 !px-2 py-2 ${className}`}>
+    <View className={`items-center justify-center gap-y-1.5 py-2 ${className}`}>
       {/* 이미지 */}
       <Card className="aspect-square w-[90%] items-center justify-center rounded-full">
         <FoodImage selectableItem={item} imageSize={imageSize} />
@@ -63,7 +63,7 @@ export default function MyPickItemCard({
 
       {/* 라벨 */}
       <Text
-        className={`line-clamp-2 text-center !text-[13px] leading-5 ${textClassName}`}
+        className={`line-clamp-2 w-full px-1 text-center !text-[13px] leading-5 ${textClassName}`}
       >
         {item.label}
       </Text>
@@ -74,7 +74,7 @@ export default function MyPickItemCard({
             icon="CheckCircle2"
             iconColor="lightGreen"
             iconSize={12}
-            className="!px-2 !py-1.5"
+            className="!rounded-lg border-0 !px-2.5 !py-2"
             textClassName="!text-[11px] font-heavy text-green-3"
             text="보유"
           />
@@ -85,9 +85,9 @@ export default function MyPickItemCard({
             iconStrokeWidth={2.5}
             name={isShoppingItem ? '담김' : '담기'}
             disabled={!!isShoppingItem}
-            textClassName="!text-[11px] font-heavy"
-            className="!rounded-md border-0 !px-2 !py-1.5"
-            color={isShoppingItem ? 'inActive' : 'indigo'}
+            textClassName="!text-[11px] font-extrabold"
+            className="!rounded-lg border-0 !px-2.5 !py-2"
+            color={isShoppingItem ? 'inActive' : 'ice'}
             onPress={!isShoppingItem ? onAddShoppingItemPress : undefined}
           />
         )}

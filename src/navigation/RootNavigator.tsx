@@ -20,7 +20,7 @@ export default function RootNavigator() {
   const colorScheme = Appearance.getColorScheme() ?? 'light';
 
   // const isLoggedIn = true; => LoginScreen
-  const isOnboardingCompleted = false;
+  const isOnboardingCompleted = true;
 
   const initialRouteName: keyof RootStackParamList = !isOnboardingCompleted
     ? 'OnboardingIntroScreen'

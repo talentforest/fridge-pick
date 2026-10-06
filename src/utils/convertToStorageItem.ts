@@ -1,4 +1,4 @@
-import { DEFAULT_EXPIRATION_DAYS } from '@/constants';
+import { DEFAULT_EXPIRATION_DURATION } from '@/constants';
 import { Ingredient, Food, FoodKey } from '@/types/selectableItem';
 
 import { IngredientStorageItem, FoodStorageItem, StorageTypeId } from '@/types/storage';
@@ -25,14 +25,13 @@ export const convertIngredientToStorageItem = (
 
   const storage = currStorage ?? defaultStorage;
 
-  const expiresAtValue = expiration.recommendedDurations
-    ? expiration.recommendedDurations[storage]?.value || DEFAULT_EXPIRATION_DAYS
-    : DEFAULT_EXPIRATION_DAYS;
+  const duration =
+    expiration.recommendedDurations?.[storage] ?? DEFAULT_EXPIRATION_DURATION;
 
   return {
     ...baseData,
     storage: { type: storage },
-    expiresAt: calculateExpiresAt(now, expiresAtValue),
+    expiresAt: calculateExpiresAt(now, duration),
     ingredientId: id,
     ingredient,
   };
@@ -47,11 +46,11 @@ export const convertFoodToStorageItem = (
   const { id } = food;
 
   // 보관위치별 소비기한 설정
-  const convenienceExpirationDays = {
-    freezer: 365,
-    fridge: 7,
-    pantry: 365,
-  };
+  const convenienceDuration = {
+    freezer: { value: 1, unit: 'year' },
+    fridge: { value: 1, unit: 'week' },
+    pantry: { value: 1, unit: 'year' },
+  } as const;
 
   const storage = currStorage || 'fridge';
 
@@ -60,7 +59,7 @@ export const convertFoodToStorageItem = (
     id: nanoid(),
     foodId: id as FoodKey,
     storage: { type: storage },
-    expiresAt: calculateExpiresAt(now, convenienceExpirationDays[storage]),
+    expiresAt: calculateExpiresAt(now, convenienceDuration[storage]),
     storedAt: formatDateString(now, 'yyyy-MM-dd'),
     food,
   };

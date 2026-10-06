@@ -70,7 +70,7 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
   } as const;
 
   return (
-    <Card className={`!p-2 ${!!isInShoppingListItem ? 'opacity-90' : ''}`}>
+    <Card className={`!px-2 !py-2 ${!!isInShoppingListItem ? 'opacity-90' : ''}`}>
       <FilterTag
         name={dataObj[item.type].filterName}
         color={dataObj[item.type].color}

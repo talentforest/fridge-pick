@@ -20,7 +20,7 @@ export default function StorageBoxByCategory({
   openItemPress,
 }: StorageBoxByCategoryProps) {
   return (
-    <View key={category.id} className={`flex-1 bg-card px-[16px] pb-4`}>
+    <View key={category.id} className={`flex-1 bg-card px-[16px] pb-5`}>
       <View className="h-12 flex-row items-center gap-x-1">
         {category.icon && <Icon name={category.icon} size={12} color={category.color} />}
 

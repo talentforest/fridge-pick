@@ -2,7 +2,7 @@ import GridContainer from '@/components/common/container/GridContainer';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import Text from '@/components/common/ui/Text';
 import { View } from 'react-native';
-import { DEFAULT_EXPIRATION_DAYS } from '@/constants';
+import { DEFAULT_EXPIRATION_DURATION } from '@/constants';
 import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import { Food, Ingredient, SelectableItem } from '@/types/selectableItem';
@@ -64,10 +64,7 @@ export default function FormExpirationType({
                   expiration: {
                     mode: 'recommended',
                     recommendedDurations: {
-                      fridge: {
-                        value: DEFAULT_EXPIRATION_DAYS,
-                        unit: 'day',
-                      },
+                      fridge: DEFAULT_EXPIRATION_DURATION,
                     },
                   },
                 } as const;

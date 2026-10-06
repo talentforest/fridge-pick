@@ -38,10 +38,11 @@ export default function FoodScreen() {
       <ScrollViewContainer contentContainerClassName="mt-3">
         <TodayFood type="list" hasHeader />
 
-        <SectionContainer>
-          <SectionTitle title="소비기한 임박 식재료를 활용한 메뉴" />
-          <CautionStorageItemList type="expiredSoon" hasFoodListByExpiredSoonFood />
-        </SectionContainer>
+        <CautionStorageItemList
+          title="소비기한 임박 식재료를 활용한 메뉴"
+          type="expiredSoon"
+          hasFoodListByExpiredSoonFood
+        />
 
         {/* 메뉴 검색바 */}
         <SectionContainer className="min-h-[800px]">

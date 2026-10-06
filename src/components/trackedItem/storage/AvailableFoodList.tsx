@@ -36,7 +36,7 @@ export default function AvailableFoodList({
       {foodListHasStorageItem.length > 0 ? (
         <>
           {type === 'accordion' ? (
-            <Card className={`!border-0 !bg-red-1 !p-0`}>
+            <Card className={`!border-0 !bg-border !px-0 !py-0`}>
               <TouchableOpacity
                 className="flex-row items-center gap-x-3 px-5 py-7"
                 onPress={() => setIsExpanded((prev) => !prev)}
@@ -67,8 +67,9 @@ export default function AvailableFoodList({
                   {foodListHasStorageItem.length > 4 ? (
                     <SelectBtn
                       name={`${label} 활용 메뉴 ${foodListHasStorageItem.length}개 모두 보기`}
-                      className="mt-4 "
-                      color="neutral"
+                      className="mt-4 border-0 !py-3"
+                      textClassName="!text-[13px]"
+                      color="black"
                       tailIconName="ChevronRight"
                     />
                   ) : (
@@ -83,8 +84,8 @@ export default function AvailableFoodList({
 
           {type === 'carousel' ? (
             <View className="gap-y-3">
-              <Text className="font-extrabold text-base">
-                {josa(label, '으로/로')} 뭐 해먹을까?
+              <Text className="font-extrabold !text-[15px]">
+                {josa(label, '으로/로')} 뭐 해먹을까???
               </Text>
               <CarouselContainer
                 data={list}

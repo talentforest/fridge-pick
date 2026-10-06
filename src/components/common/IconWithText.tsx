@@ -27,7 +27,13 @@ export default function IconWithText({
       className={`flex-row items-center gap-x-1 ${props.className}`}
     >
       {icon ? (
-        <Icon name={icon} size={iconSize} color={iconColor} strokeWidth={2.5} />
+        <Icon
+          name={icon}
+          size={iconSize}
+          color={iconColor}
+          strokeWidth={2.5}
+          pointerEvents="none"
+        />
       ) : (
         <></>
       )}

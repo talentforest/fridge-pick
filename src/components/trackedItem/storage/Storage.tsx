@@ -21,7 +21,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
   const { storageItemListByCategory } = useCurrStorageItemList({ currStorage });
 
   return (
-    <Card className={`min-h-[55vh] gap-y-6 overflow-hidden border-0 !p-0`}>
+    <Card className={`gap-y-6 overflow-hidden border-0 !px-0 !py-0`}>
       {storageItemListByCategory.length !== 0 ? (
         <ScrollView
           nestedScrollEnabled
@@ -39,12 +39,12 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
           ))}
         </ScrollView>
       ) : (
-        <View className="flex-1 items-center justify-center">
+        <View className="min-h-[75vh] flex-1 items-center justify-center">
           <Image
             source={image_empty_basket}
-            className="aspect-square size-1/4 opacity-60"
+            className="aspect-square size-1/5 opacity-60"
           />
-          <Text className="mb-12 text-inactive-text">갖고있는 식재료가 없어요.</Text>
+          <Text className="mb-16 text-inactive-text">갖고있는 식재료가 없어요.</Text>
         </View>
       )}
     </Card>

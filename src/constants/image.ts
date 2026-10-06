@@ -10,7 +10,7 @@ export const image_mypick = require('../../assets/images/mypick.png');
 export const image_expired = require('../../assets/images/expired.png');
 export const image_clean_fridge = require('../../assets/images/clean_fridge.png');
 export const image_food_fridge = require('../../assets/images/food_fridge.png');
-export const image_empty_today_food = require('../../assets/images/empty_today_food.png');
+// export const image_empty_today_food = require('../../assets/images/empty_today_food.png');
 
 export const image_empty_plate = require('../../assets/images/empty_plate.png');
 

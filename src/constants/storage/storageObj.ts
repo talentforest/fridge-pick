@@ -1,5 +1,7 @@
 export const DEFAULT_EXPIRATION_DAYS = 7;
 
+export const DEFAULT_EXPIRATION_DURATION = { value: 1, unit: 'week' } as const;
+
 export const DEFAULT_STORAGE = 'fridge' as const;
 
 export const storageObj = {

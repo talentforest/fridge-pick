@@ -105,7 +105,7 @@ export default function FoodCompactCard({
       </View>
     </TouchableOpacity>
   ) : (
-    <Card className={`relative flex-1 overflow-hidden !p-0 ${className}`}>
+    <Card className={`relative flex-1 overflow-hidden !px-0 !py-0 ${className}`}>
       {isTodayFood && (
         <Icon name="CheckCircle2" className="absolute right-3 top-3 z-10" color="green" />
       )}

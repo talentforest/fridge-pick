@@ -1,5 +1,5 @@
 import { Ingredient } from '@/types/selectableItem';
-import { DEFAULT_EXPIRATION_DAYS } from '@/constants/storage/storageObj';
+import { DEFAULT_EXPIRATION_DURATION } from '@/constants/storage/storageObj';
 
 export const vegetableObj: { [key in string]: Ingredient } = {
   chonggak_mu: {
@@ -7216,7 +7216,7 @@ export const initialCustomIngredient: Ingredient = {
   expiration: {
     mode: 'recommended',
     recommendedDurations: {
-      fridge: { value: DEFAULT_EXPIRATION_DAYS, unit: 'day' },
+      fridge: DEFAULT_EXPIRATION_DURATION,
     },
   },
   defaultUnitLabel: '개',

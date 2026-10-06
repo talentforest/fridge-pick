@@ -54,7 +54,6 @@ import {
   SquircleDashed,
   CalendarDays,
   CalendarClock,
-  CheckCircle,
   CheckCircle2,
   ChefHat,
   ChevronLeft,
@@ -169,7 +168,6 @@ export type IconName =
   | 'SquircleDashed'
   | 'PlusCircle'
   | 'CheckCircle2'
-  | 'CheckCircle'
   | 'ArrowUp'
   | 'ArrowDown'
   | 'ArrowLeft'
@@ -381,7 +379,6 @@ export default function Icon({
     ChevronUp,
     ChevronDown,
     CalendarClock,
-    CheckCircle,
     ClockAlert,
     Beef,
     Fish,
@@ -428,7 +425,7 @@ export default function Icon({
         {...props}
         stroke={colorMap[color]}
         fill={hasFill ? colorMap[color] : 'transparent'}
-        onPress={undefined}
+        pointerEvents="none"
       />
     </TouchableOpacity>
   ) : (
@@ -441,6 +438,7 @@ export default function Icon({
         {...props}
         stroke={colorMap[color]}
         fill={hasFill ? colorMap[color] : 'transparent'}
+        pointerEvents="none"
       />
     </View>
   );

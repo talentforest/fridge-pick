@@ -1,6 +1,10 @@
 import { Image, View } from 'react-native';
-import { useAtomValue } from 'jotai';
-import { favoriteFoodListAtom, favoriteIngredientListAtom } from '@/atom/favoritesAtom';
+import { useAtom, useAtomValue } from 'jotai';
+import {
+  favoriteFoodListAtom,
+  favoriteIngredientListAtom,
+  favoriteItemListAtom,
+} from '@/atom/favoritesAtom';
 import { useCallback, useState } from 'react';
 import { allStorageItemListAtom } from '@/atom/storageAtom';
 import { createSelectableItemKey, findTrackedItemWithKey } from '@/utils';
@@ -19,69 +23,75 @@ import Tab from '@/components/common/Tab';
 import FilterTag from '@/components/common/FilterTag';
 import FavoriteBtn from '@/components/common/FavoriteBtn';
 
-type MyPickLabel = '식재료' | '메뉴';
-type MyPickFilter = '전체' | '보유' | '미보유';
-type MyPickPosition = {
-  label: MyPickLabel;
-  filter: MyPickFilter;
+type MyPickItemLocation = {
+  tab: 'ingredient' | 'food';
+  filter: '전체' | '보유' | '미보유';
 };
 
 type DetailRouteProp = RouteProp<RootStackParamList, 'MyPickScreen'>;
+
+const myPickFilterList = ['전체', '보유', '미보유'] as const;
+
+const myPickTabObj = {
+  ingredient: {
+    id: 'ingredient',
+    label: '식재료',
+  },
+  food: {
+    id: 'food',
+    label: '메뉴',
+  },
+} as const;
 
 export default function MyPickScreen() {
   const {
     params: { type },
   } = useRoute<DetailRouteProp>();
 
+  const [allFavoriteItemList, setFavoriteItemList] = useAtom(favoriteItemListAtom);
+
   const storageItemList = useAtomValue(allStorageItemListAtom);
   const favoriteFoodList = useAtomValue(favoriteFoodListAtom);
   const favoriteIngredientList = useAtomValue(favoriteIngredientListAtom);
 
-  const myPickTabObj = {
-    ingredient: {
-      label: '식재료',
-      list: favoriteIngredientList,
-    },
-    food: {
-      label: '메뉴',
-      list: favoriteFoodList,
-    },
-  } as const;
-
   const myPickTabList = Object.values(myPickTabObj);
 
-  const [currLabelAndFilter, setCurrLabelAndFilter] = useState<MyPickPosition>({
-    label: myPickTabObj[type].label,
+  const [currTabAndFilter, setCurrTabAndFilter] = useState<MyPickItemLocation>({
+    tab: type || 'ingredient',
     filter: '전체',
   });
 
-  const [currList, setCurrList] = useState({
-    isEditing: false,
-    favoriteList: myPickTabObj[type].list.map((myPickItem) => ({
-      ...myPickItem,
-      isFavorite: true,
-    })),
-  });
+  const [editCurrList, setEditCurrList] = useState<{
+    isEditing: boolean;
+    list: string[];
+  }>({ isEditing: false, list: [] });
 
   const toggleEditing = () => {
-    if (currList.isEditing) {
-      // 변경
+    if (editCurrList.isEditing) {
+      setFavoriteItemList((prev) =>
+        prev.filter((item) => editCurrList.list.includes(item.id)),
+      );
     }
-    setCurrList((prev) => ({ ...prev, isEditing: !prev.isEditing }));
+
+    setEditCurrList((prev) => ({
+      isEditing: !prev.isEditing,
+      list: allFavoriteItemList.map((item) => item.id),
+    }));
   };
 
-  const myPickFilterList = ['전체', '보유', '미보유'] as const;
-
+  /** Tab이 아니고 Filter만 적용 */
   const getFilteredList = useCallback(
-    (position: MyPickPosition) => {
-      const { label, filter } = position;
-
-      const list = currList.favoriteList;
+    ({ tab, filter }: MyPickItemLocation) => {
+      const myPickObj = {
+        food: favoriteFoodList,
+        ingredient: favoriteIngredientList,
+      };
+      const myPickList = myPickObj[currTabAndFilter.tab];
 
       const filteredList =
         filter === '전체'
-          ? list
-          : list.filter((selectableItem) => {
+          ? myPickList
+          : myPickList.filter((selectableItem) => {
               const key = createSelectableItemKey(selectableItem);
 
               const isOwned = storageItemList.some((storageItem) =>
@@ -91,7 +101,7 @@ export default function MyPickScreen() {
               return filter === '보유' ? isOwned : !isOwned;
             });
 
-      if (label === '식재료') {
+      if (tab === 'ingredient') {
         const categoryOrder = Object.keys(ingredientCategoryObj);
 
         return [...filteredList].sort(
@@ -101,15 +111,26 @@ export default function MyPickScreen() {
 
       return filteredList;
     },
-    [currList.favoriteList, storageItemList],
+    [currTabAndFilter.tab, favoriteFoodList, favoriteIngredientList, storageItemList],
   );
+
+  const onFavoriteBtnPress = (myPickItemId: string) => {
+    const isFavorite = editCurrList.list.includes(myPickItemId);
+
+    setEditCurrList((prev) => ({
+      ...prev,
+      list: isFavorite
+        ? prev.list.filter((itemId) => itemId !== myPickItemId)
+        : [...prev.list, myPickItemId],
+    }));
+  };
 
   return (
     <SafeAreaViewContainer edges={['top', 'bottom']}>
       <ScreenHeader
         title="나의 픽"
         right={{
-          icon: !currList.isEditing ? 'Edit' : 'CheckCircle',
+          icon: !editCurrList.isEditing ? 'Edit' : 'CheckCircle2',
           onRightPress: toggleEditing,
         }}
       />
@@ -117,13 +138,13 @@ export default function MyPickScreen() {
       <ScrollViewContainer contentContainerClassName="pt-1 gap-y-4">
         {/* Tab */}
         <View className="mx-1 flex-row">
-          {myPickTabList.map(({ label, list }) => (
+          {myPickTabList.map(({ id, label }) => (
             <Tab
               key={label}
+              subName={`${id === 'food' ? favoriteFoodList.length : favoriteIngredientList.length}개`}
               name={label}
-              subName={`${list.length}`}
-              isSelected={currLabelAndFilter.label === label}
-              onPress={() => setCurrLabelAndFilter((prev) => ({ ...prev, label }))}
+              isSelected={currTabAndFilter.tab === id}
+              onPress={() => setCurrTabAndFilter((prev) => ({ ...prev, tab: id }))}
             />
           ))}
         </View>
@@ -133,48 +154,32 @@ export default function MyPickScreen() {
           {myPickFilterList.map((filter) => (
             <FilterTag
               key={filter}
-              isActive={filter === currLabelAndFilter.filter}
-              name={`${filter} ${getFilteredList({ label: currLabelAndFilter.label, filter }).length}`}
+              isActive={filter === currTabAndFilter.filter}
+              name={`${filter} ${getFilteredList({ tab: currTabAndFilter.tab, filter }).length}`}
               color="indigo"
               textClassName="!text-[13px]"
               className="!rounded-full px-4"
-              onPress={() => setCurrLabelAndFilter((prev) => ({ ...prev, filter }))}
+              onPress={() => setCurrTabAndFilter((prev) => ({ ...prev, filter }))}
             />
           ))}
         </View>
 
-        {getFilteredList(currLabelAndFilter).length > 0 ? (
-          <GridContainer columns={4} gap={2}>
-            {getFilteredList(currLabelAndFilter).map((myPickItem) => (
+        {/* PickItemList */}
+        {getFilteredList(currTabAndFilter).length > 0 ? (
+          <GridContainer columns={4} gap={8} horizontalInset={24}>
+            {getFilteredList(currTabAndFilter).map((myPickItem) => (
               <View key={myPickItem.id}>
                 <MyPickItemCard item={myPickItem} imageSize={55} />
 
-                {currList.isEditing ? (
+                {editCurrList.isEditing ? (
                   // TODO: 흔들리며 나타나는 애니메이션 적용
                   <FavoriteBtn
-                    isFavorite={myPickItem.isFavorite}
+                    isFavorite={editCurrList.list.includes(myPickItem.id)}
                     selectableItem={myPickItem}
                     className="absolute right-2.5 top-1.5 rounded-full bg-neutral-1 p-1.5"
                     size={15}
                     hasShadow
-                    onBtnPress={() => {
-                      setCurrList((prev) => ({
-                        ...prev,
-                        favoriteList: prev.favoriteList.map((item) => {
-                          if (myPickItem.isFavorite) {
-                            if (item.id === myPickItem.id) {
-                              return { ...item, isFavorite: false };
-                            }
-                            return item;
-                          }
-
-                          if (item.id === myPickItem.id) {
-                            return { ...item, isFavorite: true };
-                          }
-                          return item;
-                        }),
-                      }));
-                    }}
+                    onBtnPress={() => onFavoriteBtnPress(myPickItem.id)}
                   />
                 ) : (
                   <></>
@@ -187,7 +192,8 @@ export default function MyPickScreen() {
             <Image source={image_mypick} className="aspect-[1.45/1.2] h-20 opacity-50" />
 
             <Text className="text-neutral-5">
-              나의 픽 {josa(currLabelAndFilter.label, '이/가')} 아직 없어요
+              나의 픽 {josa(myPickTabObj[currTabAndFilter.tab].label, '이/가')} 아직
+              없어요
             </Text>
           </Card>
         )}

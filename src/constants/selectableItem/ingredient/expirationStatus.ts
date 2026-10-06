@@ -31,7 +31,7 @@ export const expirationStatusObj = {
     bgColor: 'bg-green-1',
     filterColor: 'bg-green-1',
     priority: 4,
-    icon: 'CheckCircle',
+    icon: 'CheckCircle2',
     isExpired: false,
   },
 

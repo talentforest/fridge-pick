@@ -53,7 +53,7 @@ export default function FoodCard({ food, filterList, className = '' }: FoodCardP
   // 🕒 오랜만에 만들어보세요
 
   return (
-    <Card className={`!p-0 ${className}`}>
+    <Card className={`!px-0 !py-0 ${className}`}>
       <TouchableOpacity onPress={onPress} className="">
         <View className="flex-row items-start justify-between">
           <View className="flex-1 items-center rounded-t-2xl bg-border py-3">
@@ -105,7 +105,7 @@ export default function FoodCard({ food, filterList, className = '' }: FoodCardP
             // NOTE: 보유율 100%
             <View className="flex-row items-center gap-x-1.5">
               <View className="size-2 rounded-full bg-green-3" />
-              <Text className="!text-[11px] text-green-7">바로 만들수 있어요!</Text>
+              <Text className="!text-[11px] text-green-7">바로 만들 수 있어요!</Text>
             </View>
           )}
 
@@ -178,8 +178,8 @@ export default function FoodCard({ food, filterList, className = '' }: FoodCardP
         </View>
 
         {isTodayFood ? (
-          <View className="absolute left-2 top-2 flex-row gap-x-2.5 rounded-lg bg-neutral-9 p-2">
-            <Icon name="Utensils" color="white" size={14} />
+          <View className="absolute left-2 top-2 flex-row gap-x-2.5 rounded-lg bg-green-7 p-1.5">
+            <Icon name="Utensils" color="white" size={13} />
           </View>
         ) : (
           <></>

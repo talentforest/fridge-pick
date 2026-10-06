@@ -26,7 +26,7 @@ import SquareBtn from '@/components/common/SquareBtn';
 import Card from '@/components/common/ui/Card';
 import SelectBtn from '@/components/common/SelectBtn';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import ConvenienceFoodTag from '@/components/common/ConvenienceFoodTag';
+import TrackedItemImageLabel from '@/components/trackedItem/TrackedItemImageLabel';
 
 export default function QuickAddStorageItemSheet() {
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -37,7 +37,7 @@ export default function QuickAddStorageItemSheet() {
 
   const addStorageItem = useSetAtom(addStorageItemAtom);
 
-  const remainingDays = getRemainingDays(currStorageItem?.expiresAt || '2023-02-01');
+  const remainingDays = getRemainingDays(currStorageItem?.expiresAt || '2025-02-20');
 
   const status = getExpirationStatus(remainingDays);
 
@@ -137,11 +137,6 @@ export default function QuickAddStorageItemSheet() {
       ] as const)
     : [];
 
-  const defaultStorage = 'fridge';
-  // currStorageItem?.type === 'ingredient'
-  //   ? currStorageItem.ingredient.defaultStorage
-  //   : 'fridge';
-
   const onEditDatePickerPress = () => {
     if (!currStorageItem) return null;
 
@@ -189,7 +184,6 @@ export default function QuickAddStorageItemSheet() {
         {currStorageItem === null ? (
           <SearchAddStorageItem
             isSheetInput
-            currStorageType="fridge"
             searchKeyword={searchKeyword}
             setSearchKeyword={setSearchKeyword}
             setCurrStorageItem={setCurrStorageItem}
@@ -199,21 +193,7 @@ export default function QuickAddStorageItemSheet() {
           <View className="mt-3 gap-y-3">
             <View className="flex-row items-start justify-between">
               <View className="flex-1 flex-row items-center gap-x-3">
-                <Card className="items-center justify-center !bg-border !p-1">
-                  {/* <FoodImage trackedItem={currStorageItem} imageSize={80} /> */}
-                </Card>
-
-                <View className="flex-1 items-start gap-y-2.5 py-1">
-                  {currStorageItem.type !== 'ingredient' ? <ConvenienceFoodTag /> : <></>}
-
-                  {/* <Text className={`line-clamp-1 font-extrabold text-lg`}>
-                    {getTrackedItemData(currStorageItem).label}
-                  </Text>
-
-                  <Text className="text-neutral-5">
-                    {getTrackedItemData(currStorageItem).categoryLabel}
-                  </Text> */}
-                </View>
+                <TrackedItemImageLabel item={currStorageItem} />
               </View>
 
               {/* 초기화버튼 */}
@@ -226,7 +206,7 @@ export default function QuickAddStorageItemSheet() {
               />
             </View>
 
-            <View className="gap-y-3 border">
+            <View className="gap-y-3">
               <View className="flex-1 flex-row justify-between gap-x-0">
                 {propertyList.map((item) => (
                   <Card
@@ -270,7 +250,9 @@ export default function QuickAddStorageItemSheet() {
                             </View>
 
                             <Text className="text-sm text-neutral-7">
-                              {item.currData === defaultStorage ? '권장' : '변경된'}{' '}
+                              {item.currData === currStorageItem.storage.type
+                                ? '권장'
+                                : '변경된'}{' '}
                               보관위치
                             </Text>
                           </View>

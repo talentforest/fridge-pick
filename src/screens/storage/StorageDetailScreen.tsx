@@ -25,7 +25,7 @@ export default function StorageDetailScreen() {
 
   const { openSheet, closeSheet } = useOverlay();
 
-  const { goBack, goNavigate } = useHandleNavigate();
+  const { goNavigate } = useHandleNavigate();
 
   const isFocused = useIsFocused();
 
@@ -34,10 +34,6 @@ export default function StorageDetailScreen() {
       keyboardBehavior: 'extend',
       render: () => <StorageItemSheet storageItem={item} />,
     });
-  };
-
-  const headerLeftPress = () => {
-    goBack();
   };
 
   useEffect(() => {
@@ -52,14 +48,11 @@ export default function StorageDetailScreen() {
 
   return (
     <SafeAreaViewContainer>
-      <ScreenHeader title={storageLabel} onLeftPress={headerLeftPress} />
+      <ScreenHeader title={storageLabel} isDetailPage />
 
-      <ScrollViewContainer contentContainerClassName="pt-4">
+      <ScrollViewContainer contentContainerClassName="pt-4 !pb-0">
         {/* 소비기한 임박 */}
-        <SectionContainer>
-          <SectionTitle icon="ClockAlert" title="가장 먼저 관리해야해요" color="red" />
-          <CautionStorageItemList isGridType storageType={storageType} type="caution" />
-        </SectionContainer>
+        <CautionStorageItemList isGridType storageType={storageType} type="caution" />
 
         {/* 나의 공간 */}
         <SectionContainer>

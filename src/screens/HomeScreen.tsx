@@ -38,10 +38,7 @@ export default function HomeScreen() {
         </View>
 
         {storageItemListByStatus.length > 0 ? (
-          <SectionContainer>
-            <SectionTitle title="소비기한이 임박했어요!" />
-            <CautionStorageItemList type="expiredSoon" />
-          </SectionContainer>
+          <CautionStorageItemList title="소비기한이 임박했어요!" type="expiredSoon" />
         ) : (
           <></>
         )}

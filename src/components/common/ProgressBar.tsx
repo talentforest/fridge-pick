@@ -3,7 +3,7 @@ import { colorTokens } from '@/theme/color';
 import { getPossessionStatus, styleByPercentageObj } from '@/utils';
 import { ReactNode } from 'react';
 import { useColorScheme, View } from 'react-native';
-import CircularProgress from 'react-native-circular-progress-indicator';
+// import CircularProgress from 'react-native-circular-progress-indicator';
 
 interface ProgressBarProps {
   label?: string;
@@ -79,7 +79,7 @@ export default function ProgressBar({
 
       {type === 'circular' ? (
         <View>
-          <CircularProgress
+          {/* <CircularProgress
             value={percentage}
             radius={18}
             showProgressValue={false}
@@ -87,7 +87,7 @@ export default function ProgressBar({
             inActiveStrokeColor={scheme.neutral[3]}
             inActiveStrokeWidth={6}
             activeStrokeWidth={6}
-          />
+          /> */}
 
           <View className="absolute left-0 right-0 aspect-square flex-row items-center justify-center rounded-full">
             <Text

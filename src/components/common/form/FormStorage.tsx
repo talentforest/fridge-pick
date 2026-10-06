@@ -24,12 +24,12 @@ export default function FormStorage({
 }: FormStorageProps) {
   return (
     <LabelContainer label={label} labelColor="neutral">
-      <View className={`flex-row gap-x-2 ${containerClassName}`}>
+      <View className={`flex-row gap-x-2.5 ${containerClassName}`}>
         {Object.values(storageObj).map(({ id: storageType, label, icon, color }) => (
           <SelectBtn
             key={storageType}
             name={label}
-            className="flex flex-1 !py-3.5"
+            className="h-14 flex-1 !rounded-xl"
             iconName={icon}
             iconSize={16}
             color={currStorageType === storageType ? color : 'inActive'}

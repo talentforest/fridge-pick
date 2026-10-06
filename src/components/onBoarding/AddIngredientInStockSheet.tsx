@@ -77,7 +77,7 @@ export default function AddIngredientInStockSheet({
 
         <View className="gap-y-1.5 py-2">
           <Text>식재료에 대한 권장 보관 정보를 자동으로 설정했어요.</Text>
-          <Text>식재료 정보는 언제든지 수정 가능합니다.</Text>
+          <Text>보관 정보는 언제든지 수정 가능합니다.</Text>
         </View>
 
         <View className="gap-y-3">

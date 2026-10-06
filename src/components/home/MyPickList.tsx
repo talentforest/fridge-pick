@@ -140,11 +140,11 @@ export default function MyPickList() {
   return (
     <>
       {myPickIngredientList.length > 0 ? (
-        <View className="w-full flex-row gap-x-3 border-0 !p-0">
+        <View className="w-full flex-row gap-x-4 !px-0 !py-0">
           {Object.values(dataObj).map((item) => (
             <TouchableOpacity
               key={item.label}
-              className={`h-40 w-[48%] justify-between`}
+              className={`h-40 flex-1 justify-between`}
               onPress={() => goNavigate('MyPickScreen', { type: item.id })}
             >
               <Card className="flex-1 !py-5">
@@ -201,21 +201,17 @@ export default function MyPickList() {
           ))}
         </View>
       ) : (
-        <Card className="flex-row items-center gap-x-4 !py-8">
-          <View className="aspect-square items-center justify-center gap-y-3 rounded-full bg-neutral-1 p-4">
-            <Image source={image_mypick} className="aspect-[1.45/1.2] h-12 opacity-80" />
-          </View>
+        <Card className="items-center gap-y-6 !py-8">
+          <Image source={image_mypick} className="aspect-[1.45/1.2] h-24 opacity-50" />
 
-          <View className="gap-y-3">
+          <View className="items-center gap-y-4">
             <Text className="font-extrabold text-neutral-7">
               아직 나의픽 식재료가 없어요
             </Text>
 
-            <View className="gap-y-1">
-              <Text className="text-sm text-neutral-7">나의 픽을 등록하고</Text>
-              <Text className="text-sm text-neutral-7">
-                냉장고 맞춤 정보를 받아보세요
-              </Text>
+            <View className="items-center gap-y-1.5">
+              <Text className="text-sm text-neutral-7">나의픽 아이템을 등록하고</Text>
+              <Text className="text-sm text-neutral-7">냉장고 맞춤정보를 받아보세요</Text>
             </View>
           </View>
         </Card>

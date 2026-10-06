@@ -2,7 +2,7 @@ import IconWithText from '@/components/common/IconWithText';
 import SelectBtn from '@/components/common/SelectBtn';
 import RecommendedDurationInput from '@/components/common/form/RecommendedDurationInput';
 import Text from '@/components/common/ui/Text';
-import { DEFAULT_EXPIRATION_DAYS, storageObj } from '@/constants';
+import { DEFAULT_EXPIRATION_DURATION, storageObj } from '@/constants';
 import { View } from 'react-native';
 import { Food, Ingredient, SelectableItem } from '@/types/selectableItem';
 import { josa } from 'es-hangul';
@@ -58,10 +58,7 @@ export default function FormRecommendedDuration({
                   expiration: {
                     mode: 'recommended',
                     recommendedDurations: {
-                      [item.id]: {
-                        value: DEFAULT_EXPIRATION_DAYS,
-                        unit: 'day',
-                      },
+                      [item.id]: DEFAULT_EXPIRATION_DURATION,
                     },
                   },
                 })

@@ -21,7 +21,9 @@ export default function SelectableItemCard({
   if (!item) return null;
 
   return (
-    <Card className={`items-center justify-center gap-y-0.5 ${className}`}>
+    <Card
+      className={`!pb- items-center justify-center gap-y-0.5 !px-1 !pt-0 ${className}`}
+    >
       <View className="absolute right-1.5 top-1.5 flex-row  gap-x-1">
         {item.kind !== 'ingredient' ? (
           <Icon name="Zap" size={12} color="yellow" hasBgColor />
@@ -43,7 +45,7 @@ export default function SelectableItemCard({
         numberOfLines={2}
         lineBreakStrategyIOS="hangul-word"
         textBreakStrategy="balanced"
-        className={`text-center ${textClassName}`}
+        className={` text-center ${textClassName}`}
       >
         {item.label}
       </Text>

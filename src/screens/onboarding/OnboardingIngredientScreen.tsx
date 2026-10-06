@@ -12,6 +12,7 @@ import { Ingredient, IngredientKey } from '@/types/selectableItem';
 import { searchSelectableItem } from '@/utils';
 import { ingredientInStockAtom } from '@/atom/onboardingIngredientInStockAtom';
 import { useAtom } from 'jotai';
+import { ScrollView } from 'react-native-gesture-handler';
 import Text from '@/components/common/ui/Text';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import TextInput from '@/components/common/ui/TextInput';
@@ -24,7 +25,6 @@ import ViewContentContainer from '@/components/common/container/ViewContentConta
 import Icon from '@/components/common/ui/Icon';
 import AddIngredientInStockSheet from '@/components/onBoarding/AddIngredientInStockSheet';
 import SquareBtn from '@/components/common/SquareBtn';
-import { ScrollView } from 'react-native-gesture-handler';
 
 type Filter = IngredientCategoryKey | 'recommended';
 

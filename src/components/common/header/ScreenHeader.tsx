@@ -9,7 +9,7 @@ interface ScreenHeaderProps {
   isDetailPage?: boolean;
   onLeftPress?: (event: GestureResponderEvent) => void;
   className?: string;
-  right?: { icon: 'Edit' | 'CheckCircle'; onRightPress: () => void };
+  right?: { icon: 'Edit' | 'CheckCircle2'; onRightPress: () => void };
 }
 
 export default function ScreenHeader({
@@ -23,14 +23,14 @@ export default function ScreenHeader({
 
   return (
     <View
-      className={`flex-row items-end justify-between px-6 pb-4 pt-3 ${isDetailPage ? 'border-b border-border' : ''} ${className}`}
+      className={`flex-row items-end justify-between px-6 pb-2 pt-1 ${isDetailPage ? 'border-b border-border' : ''} ${className}`}
     >
       {isDetailPage ? (
         !right ? (
           <IconWithText
             icon="ChevronLeft"
             iconSize={28}
-            className="w-fit flex-row items-center justify-center"
+            className="w-fit flex-row items-center justify-center py-2"
             onPress={onLeftPress ?? goBack}
             text={title}
             textClassName="text-xl"

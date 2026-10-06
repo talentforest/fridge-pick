@@ -11,12 +11,15 @@ import { StorageItemWithExpiration } from '@/utils';
 import { useMemo } from 'react';
 import { useOverlay } from '@/hooks';
 import StorageItemSheet from '@/components/trackedItem/storage/StorageItemSheet';
+import SectionContainer from '@/components/common/container/SectionContainer';
+import SectionTitle from '@/components/common/header/SectionTitle';
 
 interface CautionStorageItemListProps {
   storageType?: StorageTypeId;
   isGridType?: boolean;
   type?: 'expiredSoon' | 'expired' | 'caution';
   hasFoodListByExpiredSoonFood?: boolean;
+  title?: string;
 }
 
 export default function CautionStorageItemList({
@@ -24,6 +27,7 @@ export default function CautionStorageItemList({
   type = 'caution',
   isGridType,
   hasFoodListByExpiredSoonFood,
+  title,
 }: CautionStorageItemListProps) {
   const storageItemListByStatus = useAtomValue(
     storageItemListByExpirationStatusAtom(type),
@@ -47,7 +51,13 @@ export default function CautionStorageItemList({
   };
 
   return storageItemListByStorage.length > 0 ? (
-    <>
+    <SectionContainer>
+      <SectionTitle
+        icon="ClockAlert"
+        title={title || '가장 먼저 관리해야해요'}
+        color="red"
+      />
+
       {isGridType ? (
         <GridContainer columns={4} gap={8} horizontalInset={24}>
           {storageItemListByStorage.map((item, index) => (
@@ -117,7 +127,7 @@ export default function CautionStorageItemList({
             : undefined}
         </CarouselContainer>
       )}
-    </>
+    </SectionContainer>
   ) : (
     <></>
   );

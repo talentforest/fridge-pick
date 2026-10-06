@@ -4,6 +4,7 @@ import { useSetAtom } from 'jotai';
 import { View } from 'react-native';
 import SquareBtn from '@/components/common/SquareBtn';
 import ModalHeader from '@/components/common/header/ModalHeader';
+import FoodImage from '@/components/common/FoodImage';
 
 interface FoodDetailSheetProps {
   food: EnrichedFoodWithFilter;
@@ -54,6 +55,10 @@ export default function FoodDetailSheet({ food }: FoodDetailSheetProps) {
     <>
       <View className="pb-3">
         <ModalHeader title="메뉴 상세 정보" />
+
+        <View>
+          <FoodImage selectableItem={food} />
+        </View>
 
         <View className="mt-6 gap-y-2">
           {!isTodayFood ? (

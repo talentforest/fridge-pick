@@ -17,9 +17,32 @@ import {
 
 import { ko } from 'date-fns/locale';
 
-export function calculateExpiresAt(storedAt: Date, recommendedDurations: number) {
-  return formatDateString(addDays(storedAt, recommendedDurations), 'yyyy-MM-dd');
-}
+type Duration = {
+  value: number;
+  unit: 'day' | 'week' | 'month' | 'year';
+};
+
+export const calculateExpiresAt = (date: Date, duration: Duration) => {
+  const { value, unit } = duration;
+
+  switch (unit) {
+    case 'day':
+      return formatDateString(addDays(date, value), 'yyyy-MM-dd');
+
+    case 'week':
+      return formatDateString(addWeeks(date, value), 'yyyy-MM-dd');
+
+    case 'month':
+      return formatDateString(addMonths(date, value), 'yyyy-MM-dd');
+
+    case 'year':
+      return formatDateString(addYears(date, value), 'yyyy-MM-dd');
+  }
+};
+
+// export function calculateExpiresAt(storedAt: Date, recommendedDurations: number) {
+//   return formatDateString(addDays(storedAt, recommendedDurations), 'yyyy-MM-dd');
+// }
 
 /** "오늘부터" 소비일수를 통해 "소비기한 날짜"를 구하는 함수  */
 export function getExpirationDate(

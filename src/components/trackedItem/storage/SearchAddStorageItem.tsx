@@ -21,7 +21,7 @@ import { useMemo } from 'react';
 import { useAtomValue } from 'jotai';
 import { allStorageItemListAtom } from '@/atom/storageAtom';
 import { useOverlay } from '@/hooks';
-import { allFoodList, allIngredientList, DEFAULT_EXPIRATION_DAYS } from '@/constants';
+import { allFoodList, allIngredientList, DEFAULT_EXPIRATION_DURATION } from '@/constants';
 import { nanoid } from 'nanoid/non-secure';
 import GridContainer from '@/components/common/container/GridContainer';
 import IconWithText from '@/components/common/IconWithText';
@@ -34,7 +34,7 @@ import { suggestItemCategory } from '@/utils/suggestItemCategory';
 import { customSelectableItemListAtom } from '@/atom/customSelectableItemAtom';
 
 interface SearchAddStorageItemProps {
-  currStorageType: StorageTypeId;
+  currStorageType?: StorageTypeId;
   searchKeyword: string;
   setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
   setCurrStorageItem: React.Dispatch<React.SetStateAction<EnrichedStorageItem | null>>;
@@ -122,9 +122,9 @@ export default function SearchAddStorageItem({
       id: nanoid(),
       storedAt: formatDateString(now, 'yyyy-MM-dd'),
       storage: {
-        type: currStorageType,
+        type: currStorageType || 'fridge',
       },
-      expiresAt: calculateExpiresAt(now, DEFAULT_EXPIRATION_DAYS),
+      expiresAt: calculateExpiresAt(now, DEFAULT_EXPIRATION_DURATION),
     } as const;
 
     let initialCustomStorageItem: EnrichedStorageItem;
@@ -197,7 +197,7 @@ export default function SearchAddStorageItem({
 
       {/* 추천 식재료 */}
       {list.length ? (
-        <GridContainer columns={3} gap={10} horizontalInset={21} className="mt-3">
+        <GridContainer columns={4} gap={10} horizontalInset={21} className="mt-3">
           {list.map((item) => (
             <TouchableOpacity
               key={item.id}
@@ -207,7 +207,7 @@ export default function SearchAddStorageItem({
                 item={item}
                 className={`h-[100px] ${item.label === searchKeyword ? '!border-blue-3' : ''}`}
                 textClassName="!text-[13px]"
-                imageSize={63}
+                imageSize={50}
               />
             </TouchableOpacity>
           ))}

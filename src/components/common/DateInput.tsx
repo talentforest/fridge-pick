@@ -48,7 +48,7 @@ export default function DateInput({
 
           <FilterTag
             name={`${formatRemainingDays(remainingDays)}`}
-            className="!rounded-md !px-1.5 !py-1"
+            className="!rounded-md !px-2 !py-1.5"
             isActive
             textClassName="!text-sm font-extrabold"
             color={expirationStatusObj[expirationStatus].color}
