@@ -9,6 +9,7 @@ export * from '@/utils/getStorageItemListByExpirationStatus';
 
 export * from '@/utils/searchItem';
 export * from '@/utils/findItem';
+export * from '@/utils/findDuration';
 export * from '@/utils/getItemData';
 
 export * from '@/utils/getStyleByPercentage';

@@ -32,7 +32,7 @@ export default function FormIngredient({
         label="보관위치"
         onItemChange={onItemChange}
         currStorageType={currStorageItem.storage.type}
-        expirationPeriods={recommendedDurations}
+        recommendedDurations={recommendedDurations}
       />
 
       <FormDateInput
@@ -42,7 +42,7 @@ export default function FormIngredient({
           onChangeDate(newData.expiresAt ? new Date(newData.expiresAt) : new Date())
         }
         currStorageType={currStorageItem ? currStorageItem.storage.type : undefined}
-        expirationPeriods={recommendedDurations}
+        recommendedDurations={recommendedDurations}
       />
 
       <FormMemo

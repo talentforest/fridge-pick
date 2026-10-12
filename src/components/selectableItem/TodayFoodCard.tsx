@@ -41,7 +41,7 @@ export default function TodayFoodCard({ food }: TodayFoodCardProps) {
         />
 
         <View className="-mt-2 items-center justify-center p-0.5">
-          <FoodImage food={food} imageSize={70} />
+          <FoodImage selectableItem={food} imageSize={70} />
         </View>
 
         <View className="-mt-0.5 items-center justify-center gap-y-2 px-1 pb-1">

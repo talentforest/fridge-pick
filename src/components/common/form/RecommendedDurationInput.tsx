@@ -45,35 +45,26 @@ export default function RecommendedDurationInput({
   ];
 
   const onChangeRecommendedDuration = (newDuration: Partial<Duration>) => {
-    if (!newSelectableItem.expiration) return;
+    if (!newSelectableItem.recommendedDurations) return;
 
-    const {
-      expiration: { mode, recommendedDurations },
-    } = newSelectableItem;
+    const { recommendedDurations } = newSelectableItem;
 
-    const expiration = {
-      mode,
-      recommendedDurations: {
-        ...recommendedDurations,
-        [storageType]: { ...recommendedDurations![storageType], ...newDuration },
-      },
-    };
-
-    onSelectableItemChange({ expiration });
+    onSelectableItemChange({ recommendedDurations });
   };
 
-  if (!newSelectableItem.expiration || !newSelectableItem.expiration.recommendedDurations)
-    return null;
+  if (!newSelectableItem || !newSelectableItem.recommendedDurations) return null;
+
+  const { recommendedDurations } = newSelectableItem;
 
   const recommendedDurationsByStorageType =
-    newSelectableItem.expiration.recommendedDurations[storageType];
+    Object.values(recommendedDurations)[0]?.[storageType];
 
   return !recommendedDurationsByStorageType ? (
     <IconWithText
       text={`${storageObj[storageType].label} 보관기간 추가`}
       icon="Plus"
       textClassName="font-extrabold text-neutral-7"
-      className="ml-2 mr-auto h-9 py-1"
+      className="mr-auto h-9 px-2 py-1"
       iconSize={14}
       onPress={() => onChangeRecommendedDuration({ value: 1, unit: 'day' })}
     />
@@ -159,10 +150,10 @@ export default function RecommendedDurationInput({
                 strokeWidth={2.8}
                 className="aspect-square !rounded-full !bg-neutral-3"
                 onPress={() => {
-                  delete newSelectableItem.expiration?.recommendedDurations![storageType];
+                  delete newSelectableItem?.recommendedDurations;
 
                   onSelectableItemChange({
-                    expiration: newSelectableItem.expiration,
+                    recommendedDurations: newSelectableItem.recommendedDurations,
                   });
                 }}
               />

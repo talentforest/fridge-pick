@@ -2,7 +2,7 @@ import IconWithText from '@/components/common/IconWithText';
 import SelectBtn from '@/components/common/SelectBtn';
 import RecommendedDurationInput from '@/components/common/form/RecommendedDurationInput';
 import Text from '@/components/common/ui/Text';
-import { DEFAULT_EXPIRATION_DURATION, storageObj } from '@/constants';
+import { storageObj } from '@/constants';
 import { View } from 'react-native';
 import { Food, Ingredient, SelectableItem } from '@/types/selectableItem';
 import { josa } from 'es-hangul';
@@ -20,9 +20,10 @@ export default function FormRecommendedDuration({
   newSelectableItem,
   onSelectableItemChange,
 }: FormRecommendedDurationProps) {
-  if (!newSelectableItem.expiration || !newSelectableItem.defaultStorage) return null;
+  if (!newSelectableItem.recommendedDurations || !newSelectableItem.defaultStorage)
+    return null;
 
-  const { label, expiration, defaultStorage } = newSelectableItem;
+  const { label, recommendedDurations, defaultStorage } = newSelectableItem;
 
   const storageTypeList: StorageTypeId[] = [
     defaultStorage,
@@ -31,8 +32,8 @@ export default function FormRecommendedDuration({
       .filter((id) => id !== defaultStorage)
       .sort(
         (a, b) =>
-          Number(b in (expiration.recommendedDurations ?? {})) -
-          Number(a in (expiration.recommendedDurations ?? {})),
+          Number(b in (recommendedDurations ?? {})) -
+          Number(a in (recommendedDurations ?? {})),
       ),
   ];
 
@@ -50,55 +51,41 @@ export default function FormRecommendedDuration({
               iconName={item.icon}
               iconSize={14}
               name={item.label}
-              color={item.id === defaultStorage ? 'black' : 'neutral'}
+              color={item.id === defaultStorage ? item.color : 'neutral'}
               className="!px-3 !py-3.5"
-              onPress={() =>
-                onSelectableItemChange({
-                  defaultStorage: item.id,
-                  expiration: {
-                    mode: 'recommended',
-                    recommendedDurations: {
-                      [item.id]: DEFAULT_EXPIRATION_DURATION,
-                    },
-                  },
-                })
-              }
+              onPress={() => onSelectableItemChange({ defaultStorage: item.id })}
             />
           ))}
         </View>
       </View>
 
-      {expiration.mode === 'recommended' ? (
-        <View className="gap-y-4">
-          <View className="ml-1 gap-y-2">
-            <Text className="font-extrabold !text-[15px] text-yellow-7">
-              4. 위치별 보관기관을 작성해주세요
-            </Text>
+      <View className="gap-y-4">
+        <View className="ml-1 gap-y-2">
+          <Text className="font-extrabold !text-[15px] text-yellow-7">
+            4. 위치별 보관기관을 작성해주세요
+          </Text>
 
-            <IconWithText
-              icon="Info"
-              iconSize={13}
-              className="mt-1"
-              textClassName="text-neutral-7 !text-[13px]"
-              iconColor="neutral"
-              text={`앞으로 ${josa(label, '을/를')} 추가할 때 사용할 기본값이에요`}
-            />
-          </View>
-
-          <View className="gap-y-2">
-            {storageTypeList.map((storageType) => (
-              <RecommendedDurationInput
-                key={storageType}
-                storageType={storageType}
-                newSelectableItem={newSelectableItem}
-                onSelectableItemChange={onSelectableItemChange}
-              />
-            ))}
-          </View>
+          <IconWithText
+            icon="Info"
+            iconSize={13}
+            className="mt-1"
+            textClassName="text-neutral-7 !text-[13px]"
+            iconColor="neutral"
+            text={`앞으로 ${josa(label, '을/를')} 추가할 때 사용할 기본값이에요`}
+          />
         </View>
-      ) : (
-        <></>
-      )}
+
+        <View className="gap-y-2">
+          {storageTypeList.map((storageType) => (
+            <RecommendedDurationInput
+              key={storageType}
+              storageType={storageType}
+              newSelectableItem={newSelectableItem}
+              onSelectableItemChange={onSelectableItemChange}
+            />
+          ))}
+        </View>
+      </View>
     </View>
   );
 }

@@ -57,7 +57,7 @@ export default function FoodCard({ food, filterList, className = '' }: FoodCardP
       <TouchableOpacity onPress={onPress} className="">
         <View className="flex-row items-start justify-between">
           <View className="flex-1 items-center rounded-t-2xl bg-border py-3">
-            <FoodImage food={food} imageSize={100} />
+            <FoodImage selectableItem={food} imageSize={100} />
           </View>
 
           <View className="absolute right-2 top-2">

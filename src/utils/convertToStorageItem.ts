@@ -1,5 +1,5 @@
 import { DEFAULT_EXPIRATION_DURATION } from '@/constants';
-import { Ingredient, Food, FoodKey } from '@/types/selectableItem';
+import { Ingredient, Food, FoodKey, ExpirationDuration } from '@/types/selectableItem';
 
 import { IngredientStorageItem, FoodStorageItem, StorageTypeId } from '@/types/storage';
 import { formatDateString } from '@/utils/formatDate';
@@ -21,12 +21,16 @@ export const convertIngredientToStorageItem = (
     storedAt: formatDateString(now, 'yyyy-MM-dd'),
   } as const;
 
-  const { id, defaultStorage, expiration } = ingredient;
+  const { id, defaultStorage, recommendedDurations } = ingredient;
 
   const storage = currStorage ?? defaultStorage;
 
-  const duration =
-    expiration.recommendedDurations?.[storage] ?? DEFAULT_EXPIRATION_DURATION;
+  // NOTE: Ingredient는 defaultStorage 값이 무조건 있고 이 값에 대한 권장값을 찾아야함. 보통 'raw'만 있음.
+  const duration: ExpirationDuration = recommendedDurations
+    ? (Object.values(recommendedDurations).find((item) => item[storage]?.value)?.[
+        storage
+      ] ?? DEFAULT_EXPIRATION_DURATION)
+    : DEFAULT_EXPIRATION_DURATION;
 
   return {
     ...baseData,
@@ -43,23 +47,22 @@ export const convertFoodToStorageItem = (
 ): FoodStorageItem & { food: Food } => {
   const now = new Date();
 
-  const { id } = food;
+  const { id, recommendedDurations, defaultStorage } = food;
 
-  // 보관위치별 소비기한 설정
-  const convenienceDuration = {
-    freezer: { value: 1, unit: 'year' },
-    fridge: { value: 1, unit: 'week' },
-    pantry: { value: 1, unit: 'year' },
-  } as const;
+  const storage = currStorage || defaultStorage || 'fridge';
 
-  const storage = currStorage || 'fridge';
+  const foodDuration = Object.values(recommendedDurations || {}).find(
+    (item) => item[storage]?.value,
+  )?.[storage];
+
+  const duration: ExpirationDuration = foodDuration ?? DEFAULT_EXPIRATION_DURATION;
 
   return {
     type: 'food',
     id: nanoid(),
     foodId: id as FoodKey,
     storage: { type: storage },
-    expiresAt: calculateExpiresAt(now, convenienceDuration[storage]),
+    expiresAt: calculateExpiresAt(now, duration),
     storedAt: formatDateString(now, 'yyyy-MM-dd'),
     food,
   };

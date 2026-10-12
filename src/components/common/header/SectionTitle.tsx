@@ -33,7 +33,7 @@ export default function SectionTitle({
     red: 'text-red-5',
   };
 
-  const textSizeObj = { main: '!text-[17px]', sub: 'text-base' };
+  const textSizeObj = { main: 'text-base', sub: '!text-[15px]' };
 
   return (
     <View className={`flex-row items-center gap-x-1.5 pl-2 ${className}`}>

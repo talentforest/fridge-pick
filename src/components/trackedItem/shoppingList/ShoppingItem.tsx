@@ -4,10 +4,10 @@ import { EnrichedShoppingItem } from '@/types/shoppingItem';
 import { createTrackedItemKey, getTrackedItemData } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Pressable, View } from 'react-native';
+import { useHandleNavigate } from '@/hooks';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import NavigateToStorageBtn from '@/components/common/NavigateToStorageBtn';
-import { useHandleNavigate } from '@/hooks';
 
 interface ShoppingItemProps {
   shoppingItem: EnrichedShoppingItem;
@@ -34,12 +34,12 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
         className={`flex-1 flex-row items-center px-1 ${isError ? 'my-2.5  rounded-lg bg-red-0' : ''}`}
       >
         <View className="flex-1 flex-row gap-x-1.5">
-          <Icon name={isPurchased ? 'SquareCheck' : 'Square'} size={16} />
+          <Icon name={isPurchased ? 'SquareCheck' : 'Square'} strokeWidth={2} size={16} />
 
           <Text
             className={`line-clamp-1 flex-1 ${isPurchased ? 'line-through' : ''} ${isError ? 'font-extrabold text-red-5' : ''}`}
           >
-            {getTrackedItemData(shoppingItem).label}
+            {getTrackedItemData(shoppingItem)?.label}
           </Text>
         </View>
 

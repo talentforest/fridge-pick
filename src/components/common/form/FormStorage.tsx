@@ -1,17 +1,15 @@
 import LabelContainer from '@/components/common/container/LabelContainer';
 import SelectBtn from '@/components/common/SelectBtn';
-import { DEFAULT_EXPIRATION_DAYS, storageObj } from '@/constants';
-import { StorageDurations } from '@/types/selectableItem';
+import { storageObj } from '@/constants';
+import { RecommendedDurations } from '@/types/selectableItem';
 import { EditableStorageItem, StorageTypeId } from '@/types/storage';
-import { formatDateString } from '@/utils';
-import { addDays } from 'date-fns';
 import { View } from 'react-native';
 
 interface FormStorageProps {
   label?: string;
   currStorageType: StorageTypeId;
   onItemChange: (newData: EditableStorageItem) => void;
-  expirationPeriods?: StorageDurations;
+  recommendedDurations?: RecommendedDurations;
   containerClassName?: string;
 }
 
@@ -19,7 +17,7 @@ export default function FormStorage({
   label,
   currStorageType,
   onItemChange,
-  expirationPeriods,
+  recommendedDurations,
   containerClassName = '',
 }: FormStorageProps) {
   return (
@@ -34,12 +32,12 @@ export default function FormStorage({
             iconSize={16}
             color={currStorageType === storageType ? color : 'inActive'}
             onPress={() => {
-              const date = addDays(
-                new Date(),
-                expirationPeriods?.[storageType]?.value || DEFAULT_EXPIRATION_DAYS,
-              );
-              const expiresAt = formatDateString(date, 'yyyy-MM-dd');
-              onItemChange({ storage: { type: storageType }, expiresAt });
+              // const date = addDays(
+              //   new Date(),
+              //   recommendedDurations.[storageType]?.value || DEFAULT_EXPIRATION_DAYS,
+              // );
+              // const expiresAt = formatDateString(date, 'yyyy-MM-dd');
+              // onItemChange({ storage: { type: storageType }, expiresAt });
             }}
           />
         ))}

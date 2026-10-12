@@ -1,14 +1,11 @@
-import Text from '@/components/common/ui/Text';
 import LabelContainer from '@/components/common/container/LabelContainer';
-import { formatDateString, getRemainingDays } from '@/utils';
+import { findDuration, formatDateString, getRemainingDays } from '@/utils';
 import { View } from 'react-native';
 import { EditableStorageItem, StorageTypeId } from '@/types/storage';
-import Icon from '@/components/common/ui/Icon';
-import { storageObj } from '@/constants';
 import { useAtomValue } from 'jotai';
 import { findStorageItemById } from '@/atom/storageAtom';
 import DateInputWithQuickBtn from '@/components/common/DateInputWithQuickBtn';
-import { StorageDurations } from '@/types/selectableItem';
+import { RecommendedDurations } from '@/types/selectableItem';
 
 type InitialDateProps = {
   initialDate: string;
@@ -25,7 +22,7 @@ type FormDateInputProps = (InitialDateProps | StorageItemProps) & {
   defaultExpirationDays?: number;
   hasLabel?: boolean;
   currStorageType?: StorageTypeId;
-  expirationPeriods?: StorageDurations;
+  recommendedDurations?: RecommendedDurations;
 };
 
 export default function FormDateInput({
@@ -34,7 +31,7 @@ export default function FormDateInput({
   onItemChange,
   hasLabel,
   currStorageType,
-  expirationPeriods,
+  recommendedDurations,
 }: FormDateInputProps) {
   const currStorageItem = useAtomValue(findStorageItemById(storageItemId));
 
@@ -47,18 +44,16 @@ export default function FormDateInput({
 
   if (!currDate) return null;
 
-  const expirationDaysByStorage = currStorageType
-    ? expirationPeriods?.[currStorageType]?.value
-    : null;
+  const durations = recommendedDurations ? findDuration(recommendedDurations) : null;
 
   const remainingDays = getRemainingDays(currDate);
 
   return (
     <LabelContainer label={hasLabel ? '소비기한' : undefined} labelColor="neutral">
       <View className="gap-y-1.5">
-        {currStorageType &&
-          expirationDaysByStorage &&
-          expirationDaysByStorage === remainingDays && (
+        {/* {currStorageType &&
+          recommendedDuration &&
+          recommendedDuration === remainingDays && (
             <View className="flex-row items-center gap-x-1 rounded-xl bg-green-1 p-4">
               <Icon name="Info" size={13} color="green" />
               <Text className="text-sm">
@@ -69,7 +64,7 @@ export default function FormDateInput({
                 이 적용되었습니다.
               </Text>
             </View>
-          )}
+          )} */}
 
         <DateInputWithQuickBtn
           hasDateInput

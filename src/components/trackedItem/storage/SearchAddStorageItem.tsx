@@ -23,6 +23,8 @@ import { allStorageItemListAtom } from '@/atom/storageAtom';
 import { useOverlay } from '@/hooks';
 import { allFoodList, allIngredientList, DEFAULT_EXPIRATION_DURATION } from '@/constants';
 import { nanoid } from 'nanoid/non-secure';
+import { suggestItemCategory } from '@/utils/suggestItemCategory';
+import { customSelectableItemListAtom } from '@/atom/customSelectableItemAtom';
 import GridContainer from '@/components/common/container/GridContainer';
 import IconWithText from '@/components/common/IconWithText';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
@@ -30,8 +32,6 @@ import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
 import TextInput from '@/components/common/ui/TextInput';
 import LabelContainer from '@/components/common/container/LabelContainer';
 import SelectSelectableTypeSheet from '@/components/trackedItem/storage/SelectSelectableTypeSheet';
-import { suggestItemCategory } from '@/utils/suggestItemCategory';
-import { customSelectableItemListAtom } from '@/atom/customSelectableItemAtom';
 
 interface SearchAddStorageItemProps {
   currStorageType?: StorageTypeId;
@@ -111,10 +111,6 @@ export default function SearchAddStorageItem({
       isActive: true,
       label: searchKeyword,
       defaultStorage: 'fridge',
-      expiration: {
-        mode: 'recommended',
-        recommendedDurations: { fridge: { value: 3, unit: 'day' } },
-      },
       defaultUnitLabel: '개',
     } as const;
 
@@ -137,6 +133,7 @@ export default function SearchAddStorageItem({
         kind: 'food',
         id: foodId,
         category: suggestion.category,
+        recommendedDurations: { packaged: { fridge: { value: 3, unit: 'day' } } },
       };
 
       initialCustomStorageItem = {
@@ -153,6 +150,7 @@ export default function SearchAddStorageItem({
         kind: 'ingredient',
         id: ingredientId,
         category: suggestion?.category ?? 'vegetable',
+        recommendedDurations: { raw: { fridge: { value: 3, unit: 'day' } } },
       };
 
       initialCustomStorageItem = {

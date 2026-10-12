@@ -11,7 +11,6 @@ import TextInput from '@/components/common/ui/TextInput';
 import NavigateBtn from '@/components/common/NavigateBtn';
 import SectionTitle from '@/components/common/header/SectionTitle';
 import SectionContainer from '@/components/common/container/SectionContainer';
-import TodayFood from '@/components/home/TodayFood';
 
 export default function FoodScreen() {
   const {
@@ -36,8 +35,6 @@ export default function FoodScreen() {
 
       {/* 전체 식사 메뉴 리스트 */}
       <ScrollViewContainer contentContainerClassName="mt-3">
-        <TodayFood type="list" hasHeader />
-
         <CautionStorageItemList
           title="소비기한 임박 식재료를 활용한 메뉴"
           type="expiredSoon"

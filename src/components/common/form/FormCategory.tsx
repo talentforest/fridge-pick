@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import { foodCategoryObj, ingredientCategoryObj } from '@/constants';
 import { Food, Ingredient, SelectableItem } from '@/types/selectableItem';
 import { SelectableItemKindOptions } from '@/hooks';
+import { josa } from 'es-hangul';
 
 type FormCategoryProps = {
   newSelectableItem: SelectableItem;
@@ -62,7 +63,7 @@ export default function FormCategory({
         <IconWithText
           iconSize={14}
           icon="ArrowRightLeft"
-          text={`${oppositeLabel} 카테고리로 변경`}
+          text={`${josa(oppositeLabel, '으로/로')} 변경`}
           textClassName={`font-extrabold`}
           onPress={() => {
             if (newSelectableItem.kind === 'ingredient') {
@@ -76,7 +77,7 @@ export default function FormCategory({
               category: 'vegetable',
               defaultStorage: 'fridge',
               recommendedDurations: {
-                fridge: { value: 7, unit: 'day' },
+                raw: { fridge: { value: 7, unit: 'day' } },
               },
             });
           }}

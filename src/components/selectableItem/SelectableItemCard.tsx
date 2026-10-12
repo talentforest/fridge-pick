@@ -4,6 +4,7 @@ import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import Icon from '@/components/common/ui/Icon';
 import FoodImage from '@/components/common/FoodImage';
+import { allCategoryObj } from '@/constants';
 
 interface SelectableItemCardProps {
   item: SelectableItem;
@@ -22,23 +23,23 @@ export default function SelectableItemCard({
 
   return (
     <Card
-      className={`!pb- items-center justify-center gap-y-0.5 !px-1 !pt-0 ${className}`}
+      className={`items-center justify-center gap-y-0.5 !px-1 !pb-1 !pt-0 ${className}`}
     >
       <View className="absolute right-1.5 top-1.5 flex-row  gap-x-1">
         {item.kind !== 'ingredient' ? (
-          <Icon name="Zap" size={12} color="yellow" hasBgColor />
+          <Icon
+            name={allCategoryObj[item.category].icon}
+            size={12}
+            color="yellow"
+            hasBgColor
+          />
         ) : (
           <></>
         )}
       </View>
 
       {/* 이미지 */}
-      <FoodImage
-        selectableItem={item}
-        imageSize={imageSize}
-        iconSize={14}
-        iconClassName="-right-1 -top-1"
-      />
+      <FoodImage selectableItem={item} imageSize={imageSize} />
 
       {/* 라벨 */}
       <Text

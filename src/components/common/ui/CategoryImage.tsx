@@ -31,7 +31,9 @@ export default function CategoryImage({
   } as const;
 
   return (
-    <View className={`items-center justify-center rounded-full bg-border ${className}`}>
+    <View
+      className={`items-center justify-center rounded-full border bg-border ${className}`}
+    >
       <Image
         source={image}
         style={{ width: imageSize, height: imageSize }}
@@ -41,7 +43,7 @@ export default function CategoryImage({
         name={icon}
         hasBgColor
         color={color}
-        className={`absolute !rounded-full border ${borderObj[color]} p-2 ${iconClassName}`}
+        className={`absolute !rounded-full border ${borderObj[color]} p-1.5 ${iconClassName}`}
         size={iconSize}
       />
     </View>

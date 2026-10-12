@@ -1,21 +1,29 @@
 import { ingredientCategoryObj, foodCategoryObj } from '@/constants';
-import { Food, Ingredient, SelectableItem } from '@/types/selectableItem';
+import {
+  Durations,
+  Food,
+  Ingredient,
+  RecommendedDurations,
+  SelectableItem,
+} from '@/types/selectableItem';
 import { EnrichedShoppingItem } from '@/types/shoppingItem';
 import { EnrichedStorageItem } from '@/types/storage';
 
 export const getTrackedItemData = (item: EnrichedShoppingItem | EnrichedStorageItem) => {
   const initialExpirationDays = {
-    fridge: undefined,
+    fridge: { value: 1, unit: 'week' },
     freezer: undefined,
     pantry: undefined,
-  };
+  } as Durations;
+
+  const initialDurations: RecommendedDurations = { packaged: initialExpirationDays };
 
   switch (item.type) {
     case 'food':
       return {
         label: item.food?.label || '찾을 수 없음',
         categoryLabel: foodCategoryObj[item.food.category].label,
-        recommendedDurations: initialExpirationDays,
+        recommendedDurations: item.food.recommendedDurations || initialDurations,
       };
 
     case 'ingredient':

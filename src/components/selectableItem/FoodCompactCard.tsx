@@ -66,7 +66,7 @@ export default function FoodCompactCard({
       )}
 
       <View className="items-center justify-center bg-neutral-3 pb-5 pt-2">
-        <FoodImage food={food} imageSize={90} />
+        <FoodImage selectableItem={food} imageSize={90} />
         <Text className="-mt-1">{food.label}</Text>
       </View>
 
@@ -111,7 +111,7 @@ export default function FoodCompactCard({
       )}
 
       <View className="items-center justify-center bg-neutral-3 pb-5 pt-1">
-        <FoodImage food={food} imageSize={90} />
+        <FoodImage selectableItem={food} imageSize={90} />
         <Text className="-mt-1">{food.label}</Text>
       </View>
 

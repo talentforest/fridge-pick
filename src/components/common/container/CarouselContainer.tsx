@@ -171,7 +171,9 @@ export default function CarouselContainer<T>({
           ref={listRef}
           data={flatListData}
           horizontal
-          pagingEnabled
+          snapToInterval={ITEM_SIZE}
+          decelerationRate="fast"
+          disableIntervalMomentum
           showsHorizontalScrollIndicator={false}
           initialScrollIndex={startIndex}
           ItemSeparatorComponent={() => <View style={{ width: spacing }} />}
@@ -215,8 +217,8 @@ export default function CarouselContainer<T>({
               ? `${keyExtractor(item, index % data.length)}-${index}`
               : keyExtractor(item, index);
           }}
-          snapToInterval={centerFocus ? ITEM_SIZE : undefined}
-          decelerationRate={centerFocus ? 'fast' : 'normal'}
+          // snapToInterval={centerFocus ? ITEM_SIZE : undefined}
+          // decelerationRate={centerFocus ? 'fast' : 'normal'}
         />
 
         {/* Navigation Button */}
@@ -303,8 +305,8 @@ const HandleBtn = ({
   onPress: () => void;
 }) => {
   const directionIcon = {
-    prev: <ChevronLeft size={20} />,
-    next: <ChevronRight size={20} />,
+    prev: <ChevronLeft pointerEvents="none" size={20} />,
+    next: <ChevronRight pointerEvents="none" size={20} />,
   };
 
   const commonClassName =

@@ -23,7 +23,7 @@ export default function ScreenHeader({
 
   return (
     <View
-      className={`flex-row items-end justify-between px-6 pb-2 pt-1 ${isDetailPage ? 'border-b border-border' : ''} ${className}`}
+      className={`flex-row items-end justify-between px-6 pb-2 pt-5 ${isDetailPage ? 'border-b border-border' : ''} ${className}`}
     >
       {isDetailPage ? (
         !right ? (

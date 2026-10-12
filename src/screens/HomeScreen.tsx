@@ -13,6 +13,7 @@ import SectionContainer from '@/components/common/container/SectionContainer';
 import QuickAddFoodBtn from '@/components/home/QuickAddFoodBtn';
 import { useAtomValue } from 'jotai';
 import { storageItemListByExpirationStatusAtom } from '@/atom/storageAtom';
+import TodayFood from '@/components/home/TodayFood';
 
 // ① 나의 보관함 — 전체 상태
 // ② 관리가 필요한 식재료 — 지금 처리할 것
@@ -37,6 +38,10 @@ export default function HomeScreen() {
           <SpaceGrid />
         </View>
 
+        <SectionContainer>
+          <TodayFood type="dashboard" hasHeader />
+        </SectionContainer>
+
         {storageItemListByStatus.length > 0 ? (
           <CautionStorageItemList title="소비기한이 임박했어요!" type="expiredSoon" />
         ) : (
@@ -46,12 +51,17 @@ export default function HomeScreen() {
         <InsightCard />
 
         <SectionContainer>
-          <SectionTitle title="나의픽" hasShowAllBtn onShowAllPress={goMyPickScreen} />
+          <SectionTitle
+            title="나의픽"
+            icon="Heart"
+            hasShowAllBtn
+            onShowAllPress={goMyPickScreen}
+          />
           <MyPickList />
         </SectionContainer>
 
         <SectionContainer>
-          <SectionTitle title="이번달 기록" />
+          <SectionTitle title="이번달 기록" icon="ChartColumnBig" />
           <ThisMonthRecord />
         </SectionContainer>
       </ScrollViewContainer>

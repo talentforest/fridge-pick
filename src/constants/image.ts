@@ -488,7 +488,7 @@ export const foodImageObj: {
   //convenienece
   cereal: require('../../assets/images/food/cereal.png'),
   granola: require('../../assets/images/food/granola.png'),
-  yubu: require('../../assets/images/food/yubu.png'),
+  // yubu: require('../../assets/images/food/yubu.png'),
   natto: require('../../assets/images/food/natto.png'),
 
   // dessert
@@ -569,7 +569,7 @@ export const foodImageObj: {
   drink_yogurt: require('../../assets/images/food/drink_yogurt.png'),
   tea_bag: require('../../assets/images/food/tea_bag.png'),
   // side_dish
-  frozen_mandu: require('../../assets/images/food/frozen_mandu.png'),
+  mandu: require('../../assets/images/food/mandu.png'),
   mattang: require('../../assets/images/food/mattang.png'),
   egg_baked: require('../../assets/images/food/egg_baked.png'),
   egg_soft_boiled: require('../../assets/images/food/egg_soft_boiled.png'),
@@ -586,7 +586,7 @@ export const foodImageObj: {
   cheongpo_muk_muchim: require('../../assets/images/food/cheongpo_muk_muchim.png'),
   chicken_nuggets: require('../../assets/images/food/chicken_nuggets.png'),
   chonggak_kimchi: require('../../assets/images/food/chonggak_kimchi.png'),
-  chwi_namul: require('../../assets/images/food/chwi_namul.png'),
+  chwi_namul_muchim: require('../../assets/images/food/chwi_namul.png'),
   cooked_rice: require('../../assets/images/food/cooked_rice.png'),
   corn_cheese: require('../../assets/images/food/corn_cheese.png'),
   dak_kkochi: require('../../assets/images/food/dak_kkochi.png'),
@@ -620,7 +620,7 @@ export const foodImageObj: {
   mechurial_jang_jorim: require('../../assets/images/food/mechurial_jang_jorim.png'),
   menbosha: require('../../assets/images/food/menbosha.png'),
   mul_mandu: require('../../assets/images/food/mul_mandu.png'),
-  mumallaengi: require('../../assets/images/food/mumallaengi.png'),
+  mumallaengi_muchim: require('../../assets/images/food/mumallaengi.png'),
   musaengchae: require('../../assets/images/food/musaengchae.png'),
   myeolchi_bokkeum: require('../../assets/images/food/myeolchi_bokkeum.png'),
   myeongran_jeotgal: require('../../assets/images/food/myeongran_jeotgal.png'),

@@ -35,7 +35,7 @@ export default function FoodHorizontalCard({ food }: FoodHorizontalCardProps) {
   return (
     <Card key={food.id} className="flex-row overflow-hidden !px-0 !py-0">
       <View className="items-center justify-center bg-neutral-1 px-3 py-5">
-        <FoodImage food={food} imageSize={70} />
+        <FoodImage selectableItem={food} imageSize={70} />
       </View>
 
       <View className="flex-1 justify-between gap-y-2 px-3 py-4">
@@ -60,7 +60,7 @@ export default function FoodHorizontalCard({ food }: FoodHorizontalCardProps) {
                 key={item.id}
                 className={`flex-row items-center gap-x-0.5 rounded-md bg-red-0 p-1.5`}
               >
-                <FoodImage imageSize={14} selectableItem={item} />
+                <FoodImage selectableItem={item} imageSize={14} />
                 <Text className="!text-[11px]">{item.label}</Text>
               </View>
             ))}

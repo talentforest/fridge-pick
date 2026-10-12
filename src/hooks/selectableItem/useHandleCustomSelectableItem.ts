@@ -1,10 +1,11 @@
 import { addCustomSelectableItemAtom } from '@/atom/customSelectableItemAtom';
+import { DEFAULT_EXPIRATION_DURATION } from '@/constants';
 import { FoodCategoryKey, IngredientCategoryKey } from '@/types/category';
 import {
   Food,
   Ingredient,
+  RecommendedDurations,
   SelectableItem,
-  StorageDurations,
 } from '@/types/selectableItem';
 import { StorageTypeId } from '@/types/storage';
 import { useSetAtom } from 'jotai';
@@ -19,7 +20,7 @@ export type SelectableItemKindOptions =
       kind: 'ingredient';
       category: IngredientCategoryKey;
       defaultStorage: StorageTypeId;
-      recommendedDurations: StorageDurations;
+      recommendedDurations: RecommendedDurations;
     };
 
 export const useHandleCustomSelectableItem = ({
@@ -68,6 +69,11 @@ export const useHandleCustomSelectableItem = ({
 
         return {
           ...commonAndStorageMeta,
+          recommendedDurations: {
+            packaged: {
+              fridge: DEFAULT_EXPIRATION_DURATION,
+            },
+          },
           ...options,
           id: `custom:food:${customId}` as const,
         };
@@ -85,33 +91,18 @@ export const useHandleCustomSelectableItem = ({
         // Food 전용 속성 제거
         difficulty: _d,
         servingTemperature: _s,
-        availableFoodForm: _a,
+        availableFoodForms: _a,
         foodStructure: _f,
 
         // 보관 정보는 아래에서 다시 조립
         defaultStorage,
-        expiration,
+        recommendedDurations,
         ...commonProp
       } = prev;
 
       const customId = id.replace('custom:food:', '');
 
       const nextDefaultStorage = defaultStorage ?? options.defaultStorage;
-
-      /**
-       * 기존 Food가 printed_date였던 경우
-       */
-      if (expiration?.mode === 'printed') {
-        return {
-          ...commonProp,
-
-          kind: 'ingredient',
-          id: `custom:ingredient:${customId}` as const,
-          category: options.category,
-          defaultStorage: nextDefaultStorage,
-          expiration,
-        };
-      }
 
       /**
        * 기존 Food가 recommended_days이거나
@@ -123,11 +114,7 @@ export const useHandleCustomSelectableItem = ({
         id: `custom:ingredient:${customId}` as const,
         category: options.category,
         defaultStorage: nextDefaultStorage,
-        expiration: {
-          mode: 'recommended',
-          recommendedDurations:
-            expiration?.recommendedDurations ?? options.recommendedDurations,
-        },
+        recommendedDurations,
       };
     });
   };

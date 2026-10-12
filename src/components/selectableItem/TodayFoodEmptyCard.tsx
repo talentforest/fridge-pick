@@ -14,7 +14,7 @@ export default function TodayFoodEmptyCard({ className }: TodayFoodEmptyCardProp
     <Card className={commonClassName}>
       <Image source={image_empty_plate} className="aspect-[1/1] h-40 opacity-60" />
 
-      <Text className="mt-4 leading-5 text-neutral-5">오늘 먹을 메뉴가 아직 없어요</Text>
+      <Text className="mt-4 leading-5 text-neutral-5">오늘 정한 메뉴가 아직 없어요</Text>
     </Card>
   );
 }

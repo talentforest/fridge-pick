@@ -92,11 +92,11 @@ export default function TodayFood({ hasHeader = false, type = 'list' }: TodayFoo
         </SectionTitle>
       )}
 
-      <View className="min-h-[288px]">
+      <View className="">
         {foodList.length > 0 ? (
           <>
             {type === 'list' && (
-              <Card className="gap-y-5 !bg-card !py-6">
+              <Card className="min-h-[288px] gap-y-5 !bg-card !py-6">
                 <View className="flex-row items-center justify-center gap-y-2">
                   <View className="items-center gap-y-1.5 border-r border-orange-3 px-4">
                     <Text className="font-heavy !text-[28px] text-red-5">
@@ -160,7 +160,7 @@ export default function TodayFood({ hasHeader = false, type = 'list' }: TodayFoo
                     {foodList.map((item) => (
                       <View key={item.food.id} className="gap-y-1.5">
                         <View className="items-center rounded-xl bg-neutral-1 py-1">
-                          <FoodImage food={item.food} imageSize={65} />
+                          <FoodImage selectableItem={item.food} imageSize={65} />
                         </View>
                         <Text className="text-center text-sm">{item.food.label}</Text>
 
@@ -179,22 +179,24 @@ export default function TodayFood({ hasHeader = false, type = 'list' }: TodayFoo
             )}
 
             {type === 'dashboard' && (
-              <Card className="gap-y-4 !py-3">
-                <View className="gap-y-1.5 border">
-                  <GridContainer columns={4} horizontalInset={30} gap={6}>
+              <Card className="flex-1 gap-y-4 !px-3 !py-3">
+                <View className="">
+                  <GridContainer columns={5} horizontalInset={36} gap={6}>
                     <View className="flex-1 items-center justify-center gap-y-2">
-                      <Text className="text-center font-heavy !text-[28px] text-orange-9">
+                      <Text className="text-center font-heavy !text-[24px] text-orange-9">
                         {todayFoodList.length}
                       </Text>
                       <Text className="text-sm text-yellow-7">개 메뉴</Text>
                     </View>
 
                     {foodList.map((item) => (
-                      <View key={item.food.id} className="gap-y-1.5 border">
+                      <View key={item.food.id} className="gap-y-1.5">
                         <View className="items-center rounded-xl bg-neutral-1 py-1">
-                          <FoodImage food={item.food} imageSize={65} />
+                          <FoodImage selectableItem={item.food} imageSize={60} />
                         </View>
-                        <Text className="text-center text-sm">{item.food.label}</Text>
+                        <Text className="text-center font-extrabold text-sm">
+                          {item.food.label}
+                        </Text>
                       </View>
                     ))}
                   </GridContainer>

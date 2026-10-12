@@ -39,7 +39,7 @@ export default function FoodCookTabDetail({ food }: FoodCookTabDetailProps) {
         <>
           <View className="flex-row items-center gap-x-2">
             <View className="items-center rounded-xl bg-neutral-1 p-1">
-              <FoodImage food={food} imageSize={95} />
+              <FoodImage selectableItem={food} imageSize={95} />
             </View>
 
             <View className="flex-1 flex-row items-start justify-between gap-y-3">

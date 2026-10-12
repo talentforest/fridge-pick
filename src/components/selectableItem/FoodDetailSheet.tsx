@@ -49,8 +49,6 @@ export default function FoodDetailSheet({ food }: FoodDetailSheetProps) {
     closeSheet();
   };
 
-  // const selectableFood: SelectableItem = findFood(food.id);
-
   return (
     <>
       <View className="pb-3">

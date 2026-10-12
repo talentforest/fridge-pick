@@ -58,7 +58,7 @@ export default function InsightCard() {
   return (
     <LinearGradient
       colors={[
-        colorTokens[colorScheme ?? 'light']['neutral'][3],
+        colorTokens[colorScheme ?? 'light']['blue'][3],
         colorTokens[colorScheme ?? 'light'][color][1],
       ]}
       start={{ x: 0, y: 0 }}

@@ -1,5 +1,4 @@
 import CarouselContainer from '@/components/common/container/CarouselContainer';
-import CautionStorageItem from '@/components/trackedItem/storage/CautionStorageItem';
 import FoodListByExpiredSoonFood from '@/components/selectableItem/FoodListByExpiredSoonFood';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import GridContainer from '@/components/common/container/GridContainer';
@@ -13,6 +12,7 @@ import { useOverlay } from '@/hooks';
 import StorageItemSheet from '@/components/trackedItem/storage/StorageItemSheet';
 import SectionContainer from '@/components/common/container/SectionContainer';
 import SectionTitle from '@/components/common/header/SectionTitle';
+import CautionStorageItem from '@/components/trackedItem/storage/CautionStorageItem';
 
 interface CautionStorageItemListProps {
   storageType?: StorageTypeId;
@@ -55,7 +55,7 @@ export default function CautionStorageItemList({
       <SectionTitle
         icon="ClockAlert"
         title={title || '가장 먼저 관리해야해요'}
-        color="red"
+        highlight="임박"
       />
 
       {isGridType ? (
@@ -98,20 +98,20 @@ export default function CautionStorageItemList({
                   }
                 }}
               >
-                <CautionStorageItem cautionStorageItem={item} />
+                {/* <CautionStorageItem cautionStorageItem={item} /> */}
               </TouchableOpacity>
             ) : (
               <View
                 className={`${hasFoodListByExpiredSoonFood && isCurrIndex ? 'rounded-t-xl bg-indigo-1' : ''} `}
               >
-                <CautionStorageItem
+                {/* <CautionStorageItem
                   cautionStorageItem={item}
                   className={
                     isCurrIndex
                       ? '!rounded-b-none !rounded-t-xl !border-0 !bg-transparent'
                       : ''
                   }
-                />
+                /> */}
               </View>
             )
           }

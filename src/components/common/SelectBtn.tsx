@@ -43,7 +43,7 @@ export default function SelectBtn({
     yellow: 'bg-yellow-0 border-yellow-5',
     indigo: 'bg-indigo-1 border-indigo-3',
     inActive: 'bg-inactive-bg border-neutral-3',
-    neutral: 'bg-neutral-0 border-line',
+    neutral: 'bg-neutral-0 border-neutral-5',
     transparent: 'border border-neutral-1 bg-white',
     black: 'bg-neutral-1 border-neutral-7',
   };
@@ -57,7 +57,7 @@ export default function SelectBtn({
     yellow: 'text-yellow-7',
     indigo: 'text-indigo-5',
     inActive: 'text-neutral-5',
-    neutral: 'text-neutral-5',
+    neutral: 'text-neutral-7',
     transparent: 'border border-neutral-9 bg-white',
     black: 'text-neutral-9',
   };

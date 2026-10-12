@@ -88,24 +88,15 @@ export type StorageDurations = {
   pantry: ExpirationDuration;
 };
 
+type Durations = Partial<StorageDurations>;
+
+type RecommendedDurations =
+  | { raw: Durations; packaged?: Durations; homemade?: Durations }
+  | { raw?: Durations; packaged: Durations; homemade?: Durations }
+  | { raw?: Durations; packaged?: Durations; homemade: Durations };
+
 type ExpirationMeta = {
-  expiration:
-    | {
-        /** 소비기한 표시 여부
-         * - printed: 특정 소비기한이 표시된 제품
-         */
-        mode: 'printed';
-        /** 직접 만든 형태로 사용할 가능성을 위해 존재할 수 있지만 필수는 아님 */
-        recommendedDurations?: Partial<StorageDurations>;
-      }
-    | {
-        /** 소비기한 표시 여부
-         * - recommended: 원물이거나 음식으로 특정 소비기한 없는 SelectableItem
-         */
-        mode: 'recommended';
-        /** 권장 기간 방식에서는 필수 */
-        recommendedDurations: Partial<StorageDurations>;
-      };
+  recommendedDurations?: RecommendedDurations;
 };
 
 /* -------------------------------------------------------------------------- */
@@ -147,10 +138,14 @@ export type Food = Omit<ItemBase, 'defaultStorage'> & {
   kind: 'food';
   id: FoodId;
   category: FoodCategoryKey;
-  defaultStorage?: StorageTypeId;
   difficulty?: Difficulty;
   servingTemperature?: ServingTemperature;
-  availableFoodForm?: readonly FoodForm[];
+  /**
+   * 대표적인 기본 보관 방법이 명확한 경우에만 지정한다.
+   * 제품 형태에 따라 보관 방법이 달라지는 음식은 생략한다.
+   */
+  defaultStorage?: StorageTypeId;
+  availableFoodForms?: readonly FoodForm[];
   foodStructure?: FoodStructure;
 
   /** 같은 음식의 분화형
@@ -160,7 +155,7 @@ export type Food = Omit<ItemBase, 'defaultStorage'> & {
     label: string;
     essential: readonly FoodComponentItem[];
   }[];
-} & Partial<ExpirationMeta>;
+} & ExpirationMeta;
 
 export type CustomFoodId = `custom:food:${string}`;
 export type FoodId = FoodKey | CustomFoodId;
@@ -180,20 +175,27 @@ export type Difficulty = 'easy' | 'medium' | 'hard';
 
 export type ServingTemperature = 'hot' | 'warm' | 'cold' | 'room_temperature' | 'either';
 
-/** 음식이 어떤 형태인지
- * - meal_kit
- *   신선편의식품: 손질 된 식재료와 레시피가 동봉되어 있어 조리하기 쉽게 만든 제품입니다.
+/** 음식이 어떤 형태인지, 제품인지
+ * meal_kit
+ * - 손질된 재료와 조리법이 함께 제공됨
+ * - 여러 재료를 조합하여 음식을 완성해야 함
  *
- * - frozen
- *   반조리식품: 간단한 조리 과정을 거친 후 섭취 가능한 음식으로 냉동만두, 냉동돈까스 등이 있습니다.
+ * ready_to_cook
+ * - 조리 전 또는 반조리 상태의 음식
+ * - 냉장·냉동 여부는 defaultStorage로 구분함
+ * - 굽기, 튀기기, 찌기, 끓이기 등의 조리가 필요함
+ * - 예: 만두, 돈까스, 핫도그
  *
- * - ready_to_heat
- *   완조리식품: 전자레인지나 뜨거운 물에 단시간 데운 후 섭취하는 음식으로 햇반, 즉석죽, 짜장, 카레 등이 있습니다.
+ * ready_to_heat
+ * - 이미 완성된 음식
+ * - 전자레인지, 중탕 등으로 데우기만 하면 됨
+ * - 예: 즉석밥, 즉석죽, 완제품 카레
  *
- * - ready_to_eat
- *   즉석섭취식품: 별도의 조리 없이 바로 섭취 가능한 음식으로 도시락, 김밥, 샌드위치가 있습니다.
+ * ready_to_eat
+ * - 별도의 조리나 가열 없이 먹을 수 있음
+ * - 예: 김밥, 샌드위치, 도시락, 그래놀라
  */
-export type FoodForm = 'meal_kit' | 'frozen' | 'ready_to_heat' | 'ready_to_eat';
+export type FoodForm = 'meal_kit' | 'ready_to_cook' | 'ready_to_heat' | 'ready_to_eat';
 
 /* -------------------------------------------------------------------------- */
 /*                               Food Structure                               */
@@ -216,7 +218,7 @@ export type FoodStructure = {
    * 양념 재료
    * 예: 간장, 고춧가루
    */
-  readonly seasoning: readonly SeasoningComponentItem[];
+  readonly seasoning: readonly (SeasoningComponentItem | FoodComponentItem)[];
 
   /** 있으면 좋은 재료 */
   readonly optional: readonly (SeasoningComponentItem | FoodComponentItem)[];

@@ -1,8 +1,12 @@
-import CategoryImage from '@/components/common/ui/CategoryImage';
-import { image_empty_basket, ingredientImageObj, foodImageObj } from '@/constants';
+import Icon from '@/components/common/ui/Icon';
+import {
+  image_empty_basket,
+  ingredientImageObj,
+  foodImageObj,
+  allCategoryObj,
+} from '@/constants';
 import { CategoryKey } from '@/types/category';
 import {
-  Food,
   FoodWithEnrichedFoodStructure,
   FoodKey,
   SelectableItem,
@@ -14,46 +18,44 @@ import { Image, ImageSourcePropType, View } from 'react-native';
 type SelectableItemProps = {
   selectableItem: SelectableItem;
   trackedItem?: never;
-  food?: never;
 };
 
 type TrackedItemProps = {
   trackedItem: EnrichedShoppingItem | EnrichedStorageItem;
   selectableItem?: never;
-  food?: never;
-};
-
-type FoodProps = {
-  food?: Food | FoodWithEnrichedFoodStructure;
-  selectableItem?: never;
-  trackedItem?: never;
 };
 
 type FoodImageProps = {
+  hasCategoryIcon?: boolean;
   imageSize?: number;
-  iconSize?: number;
   className?: string;
+  iconSize?: number;
   iconClassName?: string;
-} & (SelectableItemProps | TrackedItemProps | FoodProps);
+} & (SelectableItemProps | TrackedItemProps);
 
-type Result = { source: ImageSourcePropType } | { categoryKey?: CategoryKey };
+type ImageResult = {
+  source?: ImageSourcePropType;
+  category: CategoryKey;
+};
 
 export default function FoodImage({
   selectableItem,
   trackedItem,
-  food,
+  hasCategoryIcon = false,
   imageSize = 55,
-  iconSize = 16,
+  iconSize = 12,
   className = '',
   iconClassName = '',
 }: FoodImageProps) {
-  /** 만약 사고로 이미지가 없는 경우 */
+  /** 대표 카테고리 이미지로 표시되는 경우
+   * - 사용자 정의 항목
+   * - 만약 사고로 이미지가 없는 경우 */
   const getFoodImageByKind = (
     item: SelectableItem | FoodWithEnrichedFoodStructure,
-  ): Result => {
-    const key = item?.imageName || item.id;
+  ): ImageResult => {
+    const imageName = item?.imageName || item.id;
 
-    const categoryKey = { categoryKey: item.category };
+    const categoryKey = { category: item.category };
 
     if (item.id.includes('custom:')) {
       return categoryKey;
@@ -61,24 +63,26 @@ export default function FoodImage({
 
     switch (item.kind) {
       case 'food':
-        const foodSource = foodImageObj[key as FoodKey];
-        return foodSource ? { source: foodSource } : categoryKey;
+        const foodSource = foodImageObj[imageName as FoodKey];
+        return foodSource ? { source: foodSource, ...categoryKey } : categoryKey;
 
       case 'ingredient':
-        const ingredientSource = ingredientImageObj[item.category][key];
-        return ingredientSource ? { source: ingredientSource } : categoryKey;
+        const ingredientSource = ingredientImageObj[item.category][imageName];
+        return ingredientSource
+          ? { source: ingredientSource, ...categoryKey }
+          : categoryKey;
     }
   };
 
   const getSelectableItemImage = (
     item: SelectableItem | FoodWithEnrichedFoodStructure,
-  ): Result => {
+  ): ImageResult => {
     return getFoodImageByKind(item);
   };
 
   const getTrackedItemImage = (
     item: EnrichedShoppingItem | EnrichedStorageItem,
-  ): Result => {
+  ): ImageResult => {
     switch (item.type) {
       case 'food':
         return getFoodImageByKind(item.food);
@@ -88,26 +92,46 @@ export default function FoodImage({
     }
   };
 
-  const getSource = () => {
+  const getSource = (): ImageResult => {
     if (trackedItem) return getTrackedItemImage(trackedItem);
 
     if (selectableItem) return getSelectableItemImage(selectableItem);
 
-    if (food) return getSelectableItemImage(food);
-
-    return image_empty_basket;
+    return { source: image_empty_basket, category: 'vegetable' };
   };
 
-  const { source, categoryKey } = getSource();
+  const { source, category } = getSource();
 
-  return categoryKey ? (
-    <CategoryImage
-      categoryKey={categoryKey}
-      imageSize={imageSize}
-      iconSize={iconSize}
-      className={className}
-      iconClassName={iconClassName}
-    />
+  const borderObj = {
+    green: 'border-green-3',
+    blue: 'border-green-3',
+    yellow: 'border-yellow-3',
+    red: 'border-red-3',
+    orange: 'border-orange-3',
+  } as const;
+
+  const categoryObj = allCategoryObj[category];
+
+  return !source ? (
+    <View className={className}>
+      <Image
+        source={allCategoryObj[category].image}
+        style={{ width: imageSize, height: imageSize }}
+        className={`aspect-square`}
+      />
+
+      {hasCategoryIcon ? (
+        <Icon
+          name={categoryObj.icon}
+          color={categoryObj.color}
+          hasBgColor
+          className={`absolute !rounded-full border ${borderObj[categoryObj.color]} p-1.5 ${iconClassName}`}
+          size={iconSize}
+        />
+      ) : (
+        <></>
+      )}
+    </View>
   ) : (
     <View className={className}>
       <Image
@@ -115,6 +139,18 @@ export default function FoodImage({
         style={{ width: imageSize, height: imageSize }}
         className={`aspect-square`}
       />
+
+      {hasCategoryIcon ? (
+        <Icon
+          name={categoryObj.icon}
+          color={categoryObj.color}
+          hasBgColor
+          className={`absolute !rounded-full border ${borderObj[categoryObj.color]} p-1.5 ${iconClassName}`}
+          size={iconSize}
+        />
+      ) : (
+        <></>
+      )}
     </View>
   );
 }

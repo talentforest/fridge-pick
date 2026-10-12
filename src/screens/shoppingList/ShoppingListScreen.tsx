@@ -186,52 +186,13 @@ export default function ShoppingListScreen() {
     <KeyboardAvoidingViewContainer>
       <SafeAreaViewContainer>
         <ScreenHeader title="장보기" isDetailPage={false} />
+
         <ScrollViewContainer
           ref={scrollViewRef}
           contentContainerClassName="!gap-y-10 pt-2 !pb-40"
         >
-          {recommendShoppingList ? (
-            <SectionContainer>
-              <SectionTitle title="장보기 추천" />
-              <CarouselContainer
-                data={recommendShoppingList}
-                initialIndex={recommendShoppingList.length}
-                itemWidth={0.29}
-                hasNavigation
-                spacing={10}
-                requiredMinimum={3}
-                keyExtractor={(_, index) => `${index}`}
-                renderItem={({ item }) => (
-                  <RecommendedShoppingItem key={item.selectableItem.id} item={item} />
-                )}
-              />
-            </SectionContainer>
-          ) : (
-            <></>
-          )}
-
           <SectionContainer>
             <SectionTitle title="장보기 목록" />
-
-            {canAvailableFoodList.length > 0 ? (
-              <Card className="flex-row gap-x-4 !bg-indigo-1 !px-5">
-                <Icon name="TrendingUp" color="indigo" />
-                <View className="gap-y-2">
-                  <Text className="!text-[13px] text-blue-7">
-                    장보기 목록을 모두 구매하면
-                  </Text>
-                  <Text className="font-extrabold text-blue-7">
-                    만들 수 있는 메뉴가{' '}
-                    <Text className="font-extrabold text-blue-9">
-                      {canAvailableFoodList.length}개
-                    </Text>{' '}
-                    늘어나요!
-                  </Text>
-                </View>
-              </Card>
-            ) : (
-              <></>
-            )}
 
             <Card
               className={`!p-3 !pt-2`}
@@ -253,13 +214,9 @@ export default function ShoppingListScreen() {
 
                 <View className="flex-row">
                   {purchasedCount > 0 ? (
-                    <Text className="font-extrabold !text-[13px] text-blue-7">
-                      {purchasedCount}개 선택
-                    </Text>
+                    <Text className="text-blue-7">{purchasedCount}개 선택</Text>
                   ) : (
-                    <Text className="!text-[13px] text-neutral-5">
-                      총 {shoppingList.length}개
-                    </Text>
+                    <Text className="text-neutral-7">총 {shoppingList.length}개</Text>
                   )}
                 </View>
               </View>
@@ -292,6 +249,47 @@ export default function ShoppingListScreen() {
               )}
             </Card>
           </SectionContainer>
+
+          {recommendShoppingList ? (
+            <SectionContainer>
+              <CarouselContainer
+                data={recommendShoppingList}
+                itemWidth={0.5}
+                centerFocus={false}
+                infinite={false}
+                hasNavigation
+                spacing={10}
+                requiredMinimum={1}
+                keyExtractor={(_, index) => `${index}`}
+                renderItem={({ item }) => (
+                  <RecommendedShoppingItem key={item.selectableItem.id} item={item} />
+                )}
+              />
+            </SectionContainer>
+          ) : (
+            <></>
+          )}
+
+          {canAvailableFoodList.length > 0 ? (
+            <Card className="flex-row gap-x-4 !bg-indigo-1 !px-5 !py-5">
+              <Icon name="TrendingUp" color="indigo" />
+
+              <View className="gap-y-2.5">
+                <Text className="!text-[13px] text-blue-7">
+                  장보기 목록을 모두 구매하면
+                </Text>
+                <Text className="font-extrabold text-blue-7">
+                  만들 수 있는 메뉴가{' '}
+                  <Text className="font-extrabold text-blue-9">
+                    {canAvailableFoodList.length}개
+                  </Text>{' '}
+                  늘어나요!
+                </Text>
+              </View>
+            </Card>
+          ) : (
+            <></>
+          )}
         </ScrollViewContainer>
 
         {/* 아래 컨트롤 버튼: 체크표시된게 있을 때 + 인풋이 포커스 안됐을 때 */}

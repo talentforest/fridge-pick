@@ -3,9 +3,7 @@ import { EnrichedStorageItem } from '@/types/storage';
 import { View } from 'react-native';
 import { getTrackedItemData } from '@/utils';
 import FoodImage from '@/components/common/FoodImage';
-import ConvenienceFoodTag from '@/components/common/ConvenienceFoodTag';
 import { EnrichedShoppingItem } from '@/types/shoppingItem';
-import Card from '@/components/common/ui/Card';
 
 interface TrackedItemImageLabelProps {
   item: EnrichedStorageItem | EnrichedShoppingItem;
@@ -16,24 +14,23 @@ interface TrackedItemImageLabelProps {
 
 export default function TrackedItemImageLabel({
   item,
-  imageSize = 70,
+  imageSize = 65,
   className = '',
   textClassName = '',
 }: TrackedItemImageLabelProps) {
   return (
     <View className={`flex-row items-center gap-x-3 ${className}`}>
-      <Card className="!px-0 !py-0">
-        <FoodImage
-          trackedItem={item}
-          imageSize={imageSize}
-          className="p-2"
-          iconSize={14}
-          iconClassName="-right-0 top-0"
-        />
-      </Card>
+      <FoodImage
+        trackedItem={item}
+        imageSize={imageSize}
+        className="rounded-full bg-card p-1"
+        hasCategoryIcon
+        iconSize={12}
+        iconClassName="right-0 top-0.5"
+      />
 
       <View className="gap-y-2.5">
-        {item.type !== 'ingredient' ? <ConvenienceFoodTag /> : <></>}
+        {/* {item.type !== 'ingredient' ? <ConvenienceFoodTag /> : <></>} */}
 
         <Text className={`mt-1 line-clamp-1 font-extrabold text-base ${textClassName}`}>
           {getTrackedItemData(item).label}

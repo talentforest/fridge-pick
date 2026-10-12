@@ -72,9 +72,9 @@ export default function SpaceGrid() {
     <View className="gap-y-[10px]">
       {/* 나의 냉장고 */}
       <Card className="w-full !p-3">
-        <View className="mx-4 flex-row items-center justify-between pt-4">
+        <View className="mx-4 flex-row items-start justify-between pt-4">
           <Text className="font-extrabold text-base">나의 냉장고 상태</Text>
-          <Text className="font-extrabold text-blue-5">
+          <Text className="font-extrabold !text-[13px] text-blue-5">
             식재료 총 {allStorageItemList.length}개
           </Text>
         </View>
