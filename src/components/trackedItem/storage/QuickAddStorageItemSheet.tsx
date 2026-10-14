@@ -7,7 +7,7 @@ import {
 } from '@/types/storage';
 import {
   formatDateString,
-  formatRemainingDays,
+  formatRemaining,
   getExpirationStatus,
   getRemainingDays,
 } from '@/utils';
@@ -261,7 +261,7 @@ export default function QuickAddStorageItemSheet() {
                             <Text
                               className={`font-extrabold text-base ${expirationStatusObj[status].textColor}`}
                             >
-                              {formatRemainingDays(
+                              {formatRemaining(
                                 getRemainingDays(currStorageItem.expiresAt),
                               )}
                             </Text>

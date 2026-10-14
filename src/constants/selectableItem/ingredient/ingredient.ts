@@ -1,5 +1,6 @@
-import { Ingredient } from '@/types/selectableItem';
+import { Food, Ingredient } from '@/types/selectableItem';
 import { DEFAULT_EXPIRATION_DURATION } from '@/constants/storage/storageObj';
+import { nanoid } from 'nanoid/non-secure';
 
 export const vegetableObj: { [key in string]: Ingredient } = {
   chonggak_mu: {
@@ -1836,9 +1837,6 @@ export const meatObj: { [key in string]: Ingredient } = {
     defaultStorage: 'fridge',
     recommendedDurations: {
       raw: {
-        fridge: { value: 3, unit: 'week' },
-      },
-      packaged: {
         fridge: { value: 3, unit: 'week' },
       },
     },
@@ -6385,17 +6383,31 @@ export const allIngredientList: Ingredient[] = Object.values(ingredientObj).flat
 export const initialCustomIngredient: Ingredient = {
   isActive: true,
   kind: 'ingredient',
-  id: `custom:ingredient:`,
+  id: `custom:ingredient:${nanoid()}`,
   label: '',
-  category: 'can',
+  category: 'vegetable',
   recommendLevel: 'general',
   defaultStorage: 'fridge',
-
   recommendedDurations: {
     raw: {
       fridge: DEFAULT_EXPIRATION_DURATION,
     },
   },
+  defaultUnitLabel: '개',
+};
 
+export const initialCustomFood: Food = {
+  isActive: true,
+  kind: 'food',
+  id: `custom:food:${nanoid()}`,
+  label: '',
+  category: 'rice_meal',
+  recommendLevel: 'general',
+  defaultStorage: 'fridge',
+  recommendedDurations: {
+    raw: {
+      fridge: DEFAULT_EXPIRATION_DURATION,
+    },
+  },
   defaultUnitLabel: '개',
 };

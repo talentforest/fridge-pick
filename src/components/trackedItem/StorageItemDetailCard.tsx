@@ -5,7 +5,7 @@ import { expirationStatusObj, storageObj } from '@/constants';
 import { View } from 'react-native';
 import {
   formatDateString,
-  formatRemainingDays,
+  formatRemaining,
   getExpirationStatus,
   getRemainingDays,
   getTrackedItemData,
@@ -27,7 +27,7 @@ export default function StorageItemDetailCard({
 
   const status = getExpirationStatus(remainingDays);
 
-  const formattedRemainingdays = formatRemainingDays(remainingDays);
+  const formattedRemainingdays = formatRemaining(remainingDays);
 
   return (
     <View className="flex-row gap-x-3">

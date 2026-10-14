@@ -92,6 +92,7 @@ export default function SearchedStorageItemForm({
           hasLabel
           onItemChange={onItemChange}
           initialDate={currStorageItem.expiresAt}
+          currStorageType={currStorageItem.storage.type}
         />
 
         {/* 메모 (선택) */}

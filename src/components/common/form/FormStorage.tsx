@@ -1,8 +1,9 @@
 import LabelContainer from '@/components/common/container/LabelContainer';
 import SelectBtn from '@/components/common/SelectBtn';
-import { storageObj } from '@/constants';
+import { DEFAULT_EXPIRATION_DURATION, storageObj } from '@/constants';
 import { RecommendedDurations } from '@/types/selectableItem';
 import { EditableStorageItem, StorageTypeId } from '@/types/storage';
+import { findDurationByStorageType, getExpirationDate } from '@/utils';
 import { View } from 'react-native';
 
 interface FormStorageProps {
@@ -20,25 +21,30 @@ export default function FormStorage({
   recommendedDurations,
   containerClassName = '',
 }: FormStorageProps) {
+  const onPress = (storageTypeId: StorageTypeId) => {
+    const durationByStorageTypeId = recommendedDurations
+      ? findDurationByStorageType(recommendedDurations, storageTypeId)
+      : undefined;
+
+    const expiresAt = getExpirationDate(
+      durationByStorageTypeId ?? DEFAULT_EXPIRATION_DURATION,
+    );
+
+    onItemChange({ storage: { type: storageTypeId }, expiresAt });
+  };
+
   return (
     <LabelContainer label={label} labelColor="neutral">
       <View className={`flex-row gap-x-2.5 ${containerClassName}`}>
-        {Object.values(storageObj).map(({ id: storageType, label, icon, color }) => (
+        {Object.values(storageObj).map(({ id: storageTypeId, label, icon, color }) => (
           <SelectBtn
-            key={storageType}
+            key={storageTypeId}
             name={label}
-            className="h-14 flex-1 !rounded-xl"
+            className="h-12 flex-1 !rounded-xl !py-0"
             iconName={icon}
-            iconSize={16}
-            color={currStorageType === storageType ? color : 'inActive'}
-            onPress={() => {
-              // const date = addDays(
-              //   new Date(),
-              //   recommendedDurations.[storageType]?.value || DEFAULT_EXPIRATION_DAYS,
-              // );
-              // const expiresAt = formatDateString(date, 'yyyy-MM-dd');
-              // onItemChange({ storage: { type: storageType }, expiresAt });
-            }}
+            iconSize={14}
+            color={currStorageType === storageTypeId ? color : 'inActive'}
+            onPress={() => onPress(storageTypeId)}
           />
         ))}
       </View>

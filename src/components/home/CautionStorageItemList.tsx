@@ -98,7 +98,7 @@ export default function CautionStorageItemList({
                   }
                 }}
               >
-                {/* <CautionStorageItem cautionStorageItem={item} /> */}
+                <CautionStorageItem cautionStorageItem={item} />
               </TouchableOpacity>
             ) : (
               <View

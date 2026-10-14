@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Appearance, View } from 'react-native';
 import { useMemo, useRef, useState } from 'react';
 import {
   allIngredientList,
@@ -25,6 +25,7 @@ import ViewContentContainer from '@/components/common/container/ViewContentConta
 import Icon from '@/components/common/ui/Icon';
 import AddIngredientInStockSheet from '@/components/onBoarding/AddIngredientInStockSheet';
 import SquareBtn from '@/components/common/SquareBtn';
+import { colorTokens } from '@/theme/color';
 
 type Filter = IngredientCategoryKey | 'recommended';
 
@@ -103,6 +104,8 @@ export default function OnboardingIngredientScreen() {
     });
   };
 
+  const colorScheme = Appearance.getColorScheme() ?? 'light';
+
   return (
     <SafeAreaViewContainer>
       <ViewContentContainer className="gap-y-6 py-6">
@@ -178,12 +181,12 @@ export default function OnboardingIngredientScreen() {
             shadowOffset: { width: 0, height: -10 },
             shadowOpacity: 0.1,
             shadowRadius: 10,
-            shadowColor: '#333',
+            shadowColor: colorTokens[colorScheme]['neutral'][7],
           }}
-          className="absolute bottom-0 right-0 w-full gap-y-4 rounded-t-3xl bg-white px-5 pb-12 pt-6"
+          className="absolute bottom-0 right-0 w-full gap-y-4 rounded-t-3xl bg-neutral-3 px-5 pb-12 pt-6"
         >
           <Text className="ml-1 font-extrabold text-base">
-            <Text className="font-heavy text-base text-orange-7">
+            <Text className="font-heavy text-base text-yellow-7">
               {pickedItemList.length}개
             </Text>
             의 식재료를 선택했어요

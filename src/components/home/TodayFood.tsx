@@ -92,7 +92,7 @@ export default function TodayFood({ hasHeader = false, type = 'list' }: TodayFoo
         </SectionTitle>
       )}
 
-      <View className="">
+      <View>
         {foodList.length > 0 ? (
           <>
             {type === 'list' && (
@@ -205,7 +205,7 @@ export default function TodayFood({ hasHeader = false, type = 'list' }: TodayFoo
             )}
           </>
         ) : (
-          <TodayFoodEmptyCard className="flex-1" />
+          <TodayFoodEmptyCard />
         )}
       </View>
     </View>

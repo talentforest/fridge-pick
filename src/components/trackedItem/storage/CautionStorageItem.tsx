@@ -1,6 +1,6 @@
 import { expirationStatusObj, iosShadowStyle } from '@/constants';
 import {
-  formatDdayRemainingDays,
+  formatRemaining,
   getExpirationStatus,
   getTrackedItemData,
   StorageItemWithExpiration,
@@ -29,7 +29,7 @@ export default function CautionStorageItem({
 
   const label = getTrackedItemData(storageItem).label;
 
-  const days = formatDdayRemainingDays(remainingDays);
+  const days = formatRemaining(remainingDays, 'dday');
 
   return (
     <Card

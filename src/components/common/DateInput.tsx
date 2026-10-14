@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import {
   formatDateString,
-  formatRemainingDays,
+  formatRemaining,
   getExpirationStatus,
   getRemainingDays,
 } from '@/utils';
@@ -47,7 +47,7 @@ export default function DateInput({
           </Text>
 
           <FilterTag
-            name={`${formatRemainingDays(remainingDays)}`}
+            name={`${formatRemaining(remainingDays)}`}
             className="!rounded-md !px-2 !py-1.5"
             isActive
             textClassName="!text-sm font-extrabold"

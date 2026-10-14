@@ -25,7 +25,7 @@ export default function EditPurchasedItemSheet({
 
   return (
     <View className="gap-y-5">
-      <TrackedItemImageLabel item={currStorageItem} />
+      <TrackedItemImageLabel item={currStorageItem} imageSize={70} />
 
       <FormIngredient
         currStorageItem={currStorageItem}

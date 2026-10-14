@@ -8,7 +8,7 @@ interface SectionTitleProps {
   title: string;
   className?: string;
   icon?: IconName;
-  color?: 'yellow' | 'red' | 'neutral';
+  color?: 'yellow' | 'red' | 'neutral' | 'ice' | 'blue';
   children?: ReactNode;
   highlight?: string;
   type?: 'main' | 'sub';
@@ -31,6 +31,8 @@ export default function SectionTitle({
     neutral: 'text-neutral-9',
     yellow: 'text-yellow-7',
     red: 'text-red-5',
+    ice: 'text-ice-5',
+    blue: 'text-blue-7',
   };
 
   const textSizeObj = { main: 'text-base', sub: '!text-[15px]' };

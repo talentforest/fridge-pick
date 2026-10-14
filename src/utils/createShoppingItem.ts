@@ -1,6 +1,11 @@
-import { allIngredientList, allFoodList } from '@/constants';
-import { SelectableItem } from '@/types/selectableItem';
-import { EnrichedShoppingItem, ShoppingItem } from '@/types/shoppingItem';
+import {
+  allIngredientList,
+  allFoodList,
+  initialCustomIngredient,
+  initialCustomFood,
+} from '@/constants';
+import { EnrichedShoppingItem } from '@/types/shoppingItem';
+import { suggestItemCategory } from '@/utils/suggestItemCategory';
 import { nanoid } from 'nanoid/non-secure';
 
 export const createShoppingItem = (inputValue: string): EnrichedShoppingItem => {
@@ -30,38 +35,43 @@ export const createShoppingItem = (inputValue: string): EnrichedShoppingItem => 
     };
   }
 
-  return {
-    ...baseItem,
-    type: 'custom',
-    customLabel: inputValue,
-  };
-};
+  // 앱데이터가 없는 사용자 정의 항목인 경우
+  const suggestion = suggestItemCategory(inputValue);
 
-export const convertToShoppingItem = (item: SelectableItem): ShoppingItem => {
-  const baseItem = {
-    id: nanoid(),
-    isPurchased: false,
-  };
-
-  if (item.kind === 'ingredient') {
-    return {
-      ...baseItem,
-      type: 'ingredient',
-      ingredientId: item.id,
-    };
+  if (suggestion) {
+    if (suggestion.kind === 'food') {
+      return {
+        ...baseItem,
+        type: suggestion.kind,
+        foodId: initialCustomFood.id,
+        food: {
+          ...initialCustomFood,
+          label: inputValue,
+          category: suggestion.category,
+        },
+      };
+    }
+    if (suggestion.kind === 'ingredient') {
+      return {
+        ...baseItem,
+        type: suggestion.kind,
+        ingredientId: initialCustomIngredient.id,
+        ingredient: {
+          ...initialCustomIngredient,
+          label: inputValue,
+          category: suggestion.category,
+        },
+      };
+    }
   }
 
-  if (item.kind === 'food') {
-    return {
-      ...baseItem,
-      type: 'food',
-      foodId: item.id,
-    };
-  }
-
   return {
     ...baseItem,
-    type: 'custom',
-    customLabel: '', // NOTE: 여기 체크
+    type: 'ingredient',
+    ingredientId: initialCustomIngredient.id,
+    ingredient: {
+      ...initialCustomIngredient,
+      label: inputValue,
+    },
   };
 };

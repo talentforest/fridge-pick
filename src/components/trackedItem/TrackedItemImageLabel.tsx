@@ -10,6 +10,7 @@ interface TrackedItemImageLabelProps {
   imageSize?: number;
   className?: string;
   textClassName?: string;
+  hasCategoryIcon?: boolean;
 }
 
 export default function TrackedItemImageLabel({
@@ -17,6 +18,7 @@ export default function TrackedItemImageLabel({
   imageSize = 65,
   className = '',
   textClassName = '',
+  hasCategoryIcon = false,
 }: TrackedItemImageLabelProps) {
   return (
     <View className={`flex-row items-center gap-x-3 ${className}`}>
@@ -24,14 +26,12 @@ export default function TrackedItemImageLabel({
         trackedItem={item}
         imageSize={imageSize}
         className="rounded-full bg-card p-1"
-        hasCategoryIcon
+        hasCategoryIcon={hasCategoryIcon}
         iconSize={12}
         iconClassName="right-0 top-0.5"
       />
 
       <View className="gap-y-2.5">
-        {/* {item.type !== 'ingredient' ? <ConvenienceFoodTag /> : <></>} */}
-
         <Text className={`mt-1 line-clamp-1 font-extrabold text-base ${textClassName}`}>
           {getTrackedItemData(item).label}
         </Text>

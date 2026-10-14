@@ -46,9 +46,9 @@ export default function IngredientInStockItem({
   };
 
   return (
-    <Card className="flex-row overflow-hidden !bg-indigo-1 !px-3 !py-3">
-      <View className="aspect-square w-20 items-center justify-center gap-y-1 rounded-2xl bg-card p-0">
-        <FoodImage selectableItem={ingredient} imageSize={45} />
+    <Card className="flex-row overflow-hidden !bg-border !px-3 !py-2.5">
+      <View className="aspect-square w-20 items-center justify-center gap-y-1 rounded-2xl bg-neutral-3 p-0">
+        <FoodImage selectableItem={ingredient} imageSize={40} />
         <Text className="line-clamp-1 font-extrabold !text-sm">
           {getSelectableItemLabelAndCategory(ingredient).label}
         </Text>
@@ -56,7 +56,7 @@ export default function IngredientInStockItem({
 
       {/* 인덱스 넘버 */}
       {index >= 0 && (
-        <View className="absolute left-0 top-0 h-10 w-7 items-center justify-center rounded-br-xl bg-indigo-1">
+        <View className="absolute left-0 top-0 h-10 w-7 items-center justify-center rounded-br-xl bg-neutral-1">
           <Text className="font-heavy text-[13px] text-blue-7">{index + 1}</Text>
         </View>
       )}

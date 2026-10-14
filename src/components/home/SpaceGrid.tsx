@@ -1,5 +1,4 @@
 import { image_fridge, image_fridge_dark, storageObj } from '@/constants';
-import { getAddedFormatLabel } from '@/utils';
 import { Image, useColorScheme, View } from 'react-native';
 import { Fragment } from 'react';
 import { useStorageItemList, useHandleNavigate } from '@/hooks';
@@ -191,7 +190,7 @@ const TouchableSpaceCard = ({
           </View>
         ) : recentlyUpdateDays > -1 && recentlyUpdateDays <= 3 ? (
           <Text className="!text-[13px] text-neutral-5">
-            {getAddedFormatLabel(recentlyUpdateDays)} 추가
+            {/* {formatRelativeDate(recentlyUpdateDays)} 추가 */}
           </Text>
         ) : (
           <Text className="w-24 text-sm text-neutral-5">최근 추가 없음</Text>

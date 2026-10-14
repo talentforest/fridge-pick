@@ -14,7 +14,7 @@ import {
   findTrackedItemWithKey,
   searchSelectableItem,
   formatDateString,
-  calculateExpiresAt,
+  getExpirationDate,
 } from '@/utils';
 import { Keyboard, View } from 'react-native';
 import { useMemo } from 'react';
@@ -120,7 +120,7 @@ export default function SearchAddStorageItem({
       storage: {
         type: currStorageType || 'fridge',
       },
-      expiresAt: calculateExpiresAt(now, DEFAULT_EXPIRATION_DURATION),
+      expiresAt: getExpirationDate(DEFAULT_EXPIRATION_DURATION),
     } as const;
 
     let initialCustomStorageItem: EnrichedStorageItem;

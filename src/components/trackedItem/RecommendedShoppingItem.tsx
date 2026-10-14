@@ -8,11 +8,11 @@ import {
 import { josa } from 'es-hangul';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { View } from 'react-native';
-import FilterTag from '@/components/common/FilterTag';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
 import FoodImage from '@/components/common/FoodImage';
 import SelectBtn from '@/components/common/SelectBtn';
+import FilterTag from '@/components/common/FilterTag';
 
 type RecommendedShoppingItemProps = {
   item: ShoppingInsightResult;
@@ -58,7 +58,7 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
     food: {
       filterName: '마지막재료',
       color: 'blue',
-      description: `만 있으면 -<${item.foodList.length > 2 ? `${foodLabels} 등 ${item.foodList.length - 2}개` : foodLabels}>- 가능`,
+      description: `만 있으면 -<${item.foodList.length > 2 ? `${foodLabels}` : foodLabels}>- 가능`,
       textColor: 'text-blue-5',
     },
     myPick: {
@@ -71,22 +71,12 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
 
   return (
     <Card
-      className={`min-h-[120px] justify-between !px-3 !py-3 ${!!isInShoppingListItem ? 'opacity-90' : ''}`}
+      className={`min-h-[105px] justify-between gap-y-2 !px-3 !py-3 ${!!isInShoppingListItem ? 'opacity-90' : ''}`}
     >
-      {/* <FilterTag
-        name={dataObj[item.type].filterName}
-        color={dataObj[item.type].color}
-        className="mr-auto !rounded-md !px-2 !py-2"
-        textClassName="!text-[10px] !font-extrabold"
-        isActive
-      /> */}
+      <View className="flex-row items-center gap-x-1">
+        <FoodImage selectableItem={item.selectableItem} imageSize={35} />
 
-      <View className="flex-row items-center gap-x-1.5">
-        <Card className="border-0 !bg-neutral-1 !px-1 !py-1">
-          <FoodImage selectableItem={item.selectableItem} imageSize={50} />
-        </Card>
-
-        <View className="flex-1 flex-row flex-wrap items-center gap-y-1.5">
+        <View className="flex-1 flex-row flex-wrap items-center gap-y-0.5">
           <Text className="font-extrabold text-sm">
             {getSelectableItemLabelAndCategory(item.selectableItem).label}
           </Text>
@@ -101,9 +91,9 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
                     <FilterTag
                       key={item}
                       name={item}
-                      className="!rounded-md !px-1.5 !py-1.5"
+                      className="!rounded-md !px-1 !py-1"
                       isActive
-                      textClassName="!text-[10px] font-extrabold"
+                      textClassName="!text-[11px] font-extrabold"
                       color="orange"
                     />
                   ))}
@@ -123,12 +113,12 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
       <SelectBtn
         name={`장보기 ${!!isInShoppingListItem ? '담김' : '담기'}`}
         className="!rounded-md !bg-transparent !py-2"
-        textClassName="text-sm"
+        textClassName="!text-[11px]"
         color={
           !!isInShoppingListItem ? 'lightGreen' : item.type === 'food' ? 'blue' : 'red'
         }
         iconName={!!isInShoppingListItem ? 'CheckCircle2' : 'ShoppingBasket'}
-        iconSize={13}
+        iconSize={11}
         disabled={!!isInShoppingListItem}
         onPress={onAddShoppingItemPress}
       />

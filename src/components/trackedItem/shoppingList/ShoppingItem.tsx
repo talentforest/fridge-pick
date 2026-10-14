@@ -28,7 +28,7 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
   return (
     <Pressable
       onPress={() => togglePurchased(id)}
-      className={`h-14 ${isPurchased ? 'opacity-40' : ''}`}
+      className={`h-[45px] ${isPurchased ? 'opacity-40' : ''}`}
     >
       <View
         className={`flex-1 flex-row items-center px-1 ${isError ? 'my-2.5  rounded-lg bg-red-0' : ''}`}

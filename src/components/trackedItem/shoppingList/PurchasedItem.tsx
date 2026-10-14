@@ -2,12 +2,13 @@ import Card from '@/components/common/ui/Card';
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
 import EditPurchasedItemSheet from '@/components/trackedItem/shoppingList/EditPurchasedItemSheet';
-import { storageObj } from '@/constants';
 import { useOverlay } from '@/hooks';
 import { EditableStorageItem, EnrichedStorageItem } from '@/types/storage';
-import { formatDateString, getRemainingDays, getTrackedItemData } from '@/utils';
+import { formatDateString, getTrackedItemData } from '@/utils';
 import { View } from 'react-native';
 import FoodImage from '@/components/common/FoodImage';
+import { formatDistanceToNowStrict } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 interface PurchasedItemProps {
   storageItem: EnrichedStorageItem;
@@ -23,23 +24,6 @@ export default function PurchasedItem({
   const { openSheet, closeSheet } = useOverlay();
 
   const date = new Date(storageItem.expiresAt);
-
-  const currentStorage = storageObj[storageItem.storage.type];
-
-  const infoByItem = [
-    {
-      label: '보관위치',
-      value: currentStorage?.label,
-      icon: currentStorage.icon,
-      color: currentStorage.color,
-    },
-    {
-      label: '소비기한',
-      value: formatDateString(date, 'yy년 M월 d일'),
-      icon: 'CalendarDays' as const,
-      color: 'text' as const,
-    },
-  ];
 
   const onEditSubmit = (id: string, newData: EditableStorageItem) => {
     setStorageItemList((prev) => {
@@ -63,49 +47,40 @@ export default function PurchasedItem({
       ),
     });
 
+  const remaining = formatDistanceToNowStrict(date, {
+    locale: ko,
+    addSuffix: true,
+  });
+
   return (
-    <Card className={`flex-row overflow-hidden px-2 py-4`}>
+    <Card className={`items-center overflow-hidden !pt-3`}>
       {/* 인덱스 넘버 */}
-      {index && (
+      {/* {index && (
         <View className="absolute left-0 top-0 items-center justify-center rounded-br-xl bg-blue-1 p-2.5">
           <Text className="font-extrabold text-blue-7">{index}</Text>
         </View>
-      )}
+      )} */}
 
-      <View className="w-24 items-center justify-center pt-0.5">
-        <FoodImage trackedItem={storageItem} imageSize={55} />
-        <Text className="line-clamp-1 !text-[13px]">
-          {getTrackedItemData(storageItem).label}
-        </Text>
-      </View>
+      <FoodImage trackedItem={storageItem} imageSize={40} />
 
-      {/* 중간선 */}
-      <View className="ml-1 mr-3.5 border-r border-neutral-3" />
+      <Text className="mt-1.5 line-clamp-1 font-extrabold text-sm">
+        {getTrackedItemData(storageItem).label}
+      </Text>
 
       {/* 식재료 정보 */}
-      <View className="flex-1 gap-y-4">
-        {infoByItem.map(({ label, value, icon, color }) => (
-          <View key={label} className="flex-1 justify-center ">
-            <View className="gap-y-2">
-              <Text className="text-sm !text-neutral-7">{label}</Text>
+      <View className="mt-3 items-center gap-y-1.5">
+        <Text className="font-extrabold !text-sm text-blue-7">{remaining}</Text>
 
-              <View className="flex-row items-center gap-x-1">
-                <Icon name={icon} size={14} color={color} />
-                <Text>{value}</Text>
-                {label === '소비기한' && (
-                  <Text className="text-red-5">(+{getRemainingDays(date)}일)</Text>
-                )}
-              </View>
-            </View>
-          </View>
-        ))}
+        <Text className="!text-sm tracking-[-0.06em] text-neutral-7">
+          {formatDateString(date, 'yy. MM. dd')}
+        </Text>
       </View>
 
       {/* 수정버튼 */}
       <Icon
         name="Edit3"
-        size={15}
-        className="absolute bottom-1 right-1 size-9 items-center justify-center rounded-full bg-neutral-5 opacity-50"
+        size={10}
+        className="absolute right-1.5 top-1.5 size-7 items-center justify-center rounded-full bg-neutral-5 opacity-50"
         color="white"
         onPress={onEditPress}
       />

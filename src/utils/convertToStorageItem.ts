@@ -3,7 +3,7 @@ import { Ingredient, Food, FoodKey, ExpirationDuration } from '@/types/selectabl
 
 import { IngredientStorageItem, FoodStorageItem, StorageTypeId } from '@/types/storage';
 import { formatDateString } from '@/utils/formatDate';
-import { calculateExpiresAt } from '@/utils/getExpirationDate';
+import { getExpirationDate } from '@/utils/getExpirationDate';
 import { nanoid } from 'nanoid/non-secure';
 
 /** 등록식재료 아이템 => 보관함 아이템으로 변환
@@ -35,7 +35,7 @@ export const convertIngredientToStorageItem = (
   return {
     ...baseData,
     storage: { type: storage },
-    expiresAt: calculateExpiresAt(now, duration),
+    expiresAt: getExpirationDate(duration),
     ingredientId: id,
     ingredient,
   };
@@ -62,7 +62,7 @@ export const convertFoodToStorageItem = (
     id: nanoid(),
     foodId: id as FoodKey,
     storage: { type: storage },
-    expiresAt: calculateExpiresAt(now, duration),
+    expiresAt: getExpirationDate(duration),
     storedAt: formatDateString(now, 'yyyy-MM-dd'),
     food,
   };

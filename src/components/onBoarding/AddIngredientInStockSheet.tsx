@@ -67,7 +67,7 @@ export default function AddIngredientInStockSheet({
           <SelectBtn
             name={isOpen ? '접기' : `그외 ${pickedItemList.length - MAX_LENGTH}개 더보기`}
             iconName={isOpen ? 'ChevronUp' : 'ChevronDown'}
-            className="w-full !rounded-lg border-0 !bg-inactive-bg !py-3.5"
+            className="w-full !rounded-lg border-0 !bg-neutral-0 !py-3.5"
             iconSize={12}
             textClassName="!text-sm"
             iconStrokeWidth={3}

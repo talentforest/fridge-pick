@@ -17,9 +17,10 @@ import {
 } from '@/utils';
 import { ShoppingItem as ShoppingItemType } from '@/types/shoppingItem';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Image, ScrollView, View } from 'react-native';
+import { Appearance, Image, ScrollView, View } from 'react-native';
 import { useErrorHandler, useOverlay, useHandleNavigate } from '@/hooks';
 import { allStorageItemListAtom } from '@/atom/storageAtom';
+import { isNotInStorageFavoriteListAtom } from '@/atom/favoritesAtom';
 import React, { useMemo, useRef, useState } from 'react';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
@@ -29,32 +30,24 @@ import KeyboardAvoidingViewContainer from '@/components/common/container/Keyboar
 import Card from '@/components/common/ui/Card';
 import IconWithText from '@/components/common/IconWithText';
 import Icon from '@/components/common/ui/Icon';
-import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
-import SectionTitle from '@/components/common/header/SectionTitle';
 import CarouselContainer from '@/components/common/container/CarouselContainer';
 import RecommendedShoppingItem from '@/components/trackedItem/RecommendedShoppingItem';
-import { isNotInStorageFavoriteListAtom } from '@/atom/favoritesAtom';
 import SquareBtn from '@/components/common/SquareBtn';
 import SelectableItemCard from '@/components/selectableItem/SelectableItemCard';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import TextInput from '@/components/common/ui/TextInput';
 import SectionContainer from '@/components/common/container/SectionContainer';
+import ViewContentContainer from '@/components/common/container/ViewContentContainer';
+import { colorTokens } from '@/theme/color';
+import SectionTitle from '@/components/common/header/SectionTitle';
 
 export default function ShoppingListScreen() {
   const [inputValue, setInputValue] = useState<string>('');
   const [shoppingListY, setShoppingListY] = useState(0);
-  // const [isInputFocused, setIsInputFocused] = useState(false);
 
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const { error, setError, clearError } = useErrorHandler<ShoppingItemType>();
-
-  const { alert } = useOverlay();
-
-  const { goNavigate } = useHandleNavigate();
-
   const isNotInStorageFavoriteList = useAtomValue(isNotInStorageFavoriteListAtom);
-
   const shoppingList = useAtomValue(shoppingListAtom);
   const purchasedCount = useAtomValue(purchasedCountAtom);
   const isAllPurchased = useAtomValue(isAllPurchasedAtom);
@@ -64,6 +57,12 @@ export default function ShoppingListScreen() {
   const addShoppingItem = useSetAtom(addShoppingItemAtom);
   const deleteShoppingItemList = useSetAtom(deleteShoppingItemListAtom);
   const toggleAllPurchased = useSetAtom(toggleAllPurchasedAtom);
+
+  const { error, setError, clearError } = useErrorHandler<ShoppingItemType>();
+
+  const { alert } = useOverlay();
+
+  const { goNavigate } = useHandleNavigate();
 
   const recommendedIngredientList = useMemo(() => {
     const searchedIngredientList = searchSelectableItem(
@@ -182,20 +181,17 @@ export default function ShoppingListScreen() {
     })
     .flat();
 
+  const colorScheme = Appearance.getColorScheme() ?? 'light';
+
   return (
     <KeyboardAvoidingViewContainer>
       <SafeAreaViewContainer>
-        <ScreenHeader title="장보기" isDetailPage={false} />
+        <ScreenHeader title="장보기 목록" isDetailPage={false} />
 
-        <ScrollViewContainer
-          ref={scrollViewRef}
-          contentContainerClassName="!gap-y-10 pt-2 !pb-40"
-        >
+        <ViewContentContainer className="!gap-y-4 !pb-40 pt-2">
           <SectionContainer>
-            <SectionTitle title="장보기 목록" />
-
             <Card
-              className={`!p-3 !pt-2`}
+              className={`border !p-3 !pt-2`}
               onLayout={(e) => {
                 setShoppingListY(e.nativeEvent.layout.y);
               }}
@@ -207,7 +203,7 @@ export default function ShoppingListScreen() {
                   icon={isAllPurchased ? 'SquareCheck' : 'Square'}
                   iconSize={16}
                   iconColor={isAllPurchased ? 'blue' : 'lightBlue'}
-                  className="flex-row items-center gap-x-1.5 px-1 py-4"
+                  className="flex-row items-center gap-x-1.5 px-1 pb-3 pt-3"
                   onPress={onAllPurchasedClick}
                   textClassName={isAllPurchased ? 'text-blue-7' : 'text-blue-5'}
                 />
@@ -221,8 +217,8 @@ export default function ShoppingListScreen() {
                 </View>
               </View>
 
-              {shoppingList.length > 0 ? (
-                <View className="min-h-[27vh]">
+              <View className="h-[44vh]">
+                {shoppingList.length > 0 ? (
                   <ScrollView showsVerticalScrollIndicator={false}>
                     {sortedShoppingList.map((item, index) => (
                       <View key={item.id}>
@@ -237,24 +233,49 @@ export default function ShoppingListScreen() {
                       </View>
                     ))}
                   </ScrollView>
-                </View>
-              ) : (
-                <View className="h-[27vh] items-center justify-center pb-4">
-                  <Image
-                    source={image_empty_basket}
-                    className="aspect-square size-24 opacity-60"
-                  />
-                  <Text className="text-inactive-text">장볼 식재료가 없어요</Text>
-                </View>
-              )}
+                ) : (
+                  <View className="flex-1 items-center justify-center">
+                    <Image
+                      source={image_empty_basket}
+                      className="aspect-square size-24 opacity-60"
+                    />
+                    <Text className="mb-10 text-inactive-text">장볼 식재료가 없어요</Text>
+                  </View>
+                )}
+
+                {canAvailableFoodList.length > 0 ? (
+                  <Card className="flex-row gap-x-4 !bg-indigo-1 !px-5">
+                    <Icon name="CookingPot" color="indigo" />
+
+                    <View className="gap-y-1.5">
+                      <Text className="!text-[13px] text-indigo-5">
+                        장보기 목록을 모두 구매하면
+                      </Text>
+                      <Text className="font-extrabold text-indigo-5">
+                        만들 수 있는 메뉴가{' '}
+                        <Text className="font-extrabold text-blue-9">
+                          {canAvailableFoodList.length}개
+                        </Text>{' '}
+                        늘어나요!
+                      </Text>
+                    </View>
+                  </Card>
+                ) : (
+                  <></>
+                )}
+              </View>
             </Card>
           </SectionContainer>
 
           {recommendShoppingList ? (
             <SectionContainer>
+              <SectionTitle
+                title={`추천 식재료 ${recommendShoppingList.length}개`}
+                type="sub"
+              />
               <CarouselContainer
                 data={recommendShoppingList}
-                itemWidth={0.5}
+                itemWidth={0.35}
                 centerFocus={false}
                 infinite={false}
                 hasNavigation
@@ -269,32 +290,36 @@ export default function ShoppingListScreen() {
           ) : (
             <></>
           )}
-
-          {canAvailableFoodList.length > 0 ? (
-            <Card className="flex-row gap-x-4 !bg-indigo-1 !px-5 !py-5">
-              <Icon name="TrendingUp" color="indigo" />
-
-              <View className="gap-y-2.5">
-                <Text className="!text-[13px] text-blue-7">
-                  장보기 목록을 모두 구매하면
-                </Text>
-                <Text className="font-extrabold text-blue-7">
-                  만들 수 있는 메뉴가{' '}
-                  <Text className="font-extrabold text-blue-9">
-                    {canAvailableFoodList.length}개
-                  </Text>{' '}
-                  늘어나요!
-                </Text>
-              </View>
-            </Card>
-          ) : (
-            <></>
-          )}
-        </ScrollViewContainer>
+        </ViewContentContainer>
 
         {/* 아래 컨트롤 버튼: 체크표시된게 있을 때 + 인풋이 포커스 안됐을 때 */}
         <View className="absolute bottom-4 w-full gap-y-2 px-[24px]">
-          {purchasedCount > 0 && ( //&& !isInputFocused
+          {error?.message && (
+            <Text className="pl-1 text-sm text-red-5">{error?.message}</Text>
+          )}
+
+          {recommendedIngredientList.length > 0 && (
+            <ScrollView
+              horizontal
+              className="rounded-lg"
+              contentContainerClassName="gap-x-1.5"
+              showsHorizontalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+            >
+              {recommendedIngredientList.map((item) => (
+                <TouchableOpacity key={item.id} onPress={() => onSubmitPress(item.label)}>
+                  <SelectableItemCard
+                    item={item}
+                    className="h-[40px] min-w-[65px] flex-row items-center gap-x-0.5 !bg-border !px-2"
+                    textClassName="!text-sm"
+                    imageSize={24}
+                  />
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          )}
+
+          {purchasedCount > 0 ? (
             <View className="flex-row items-start gap-x-2">
               <SquareBtn
                 onPress={onAddToStoragePress}
@@ -313,66 +338,39 @@ export default function ShoppingListScreen() {
                 className="!py-4"
               />
             </View>
-          )}
-
-          {error?.message && (
-            <Text className="pl-1 text-sm text-red-5">{error?.message}</Text>
-          )}
-
-          {recommendedIngredientList.length > 0 && (
-            <ScrollView
-              horizontal
-              className="rounded-lg"
-              contentContainerClassName="gap-x-2"
-              showsHorizontalScrollIndicator={false}
-              keyboardShouldPersistTaps="handled"
-            >
-              {recommendedIngredientList.map((item) => (
-                <TouchableOpacity key={item.id} onPress={() => onSubmitPress(item.label)}>
-                  <SelectableItemCard
-                    item={item}
-                    className="h-20 min-w-20 !bg-yellow-3 !pt-1 pb-2.5"
-                    textClassName="text-sm"
-                    imageSize={35}
-                  />
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          )}
-
-          <View
-            className="relative"
-            style={{
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 8,
-              },
-              shadowOpacity: 0.1,
-              shadowRadius: 12,
-            }}
-          >
-            <TextInput
-              value={inputValue}
-              className="!rounded-full !border-blue-3 !pl-6 pr-12"
-              onChangeText={onChangeText}
-              onFocus={() => {
-                // setIsInputFocused(true);
-                scrollViewRef.current?.scrollTo({
-                  y: shoppingListY + 160,
-                  animated: true,
-                });
+          ) : (
+            <View
+              className="relative"
+              style={{
+                shadowColor: colorTokens[colorScheme].neutral[9],
+                shadowOffset: {
+                  width: 0,
+                  height: 8,
+                },
+                shadowOpacity: 0.1,
+                shadowRadius: 12,
               }}
-              // onBlur={() => setIsInputFocused(false)}
-              placeholder="장볼 식재료가 작성해주세요"
-            />
-            <Icon
-              name="ArrowUp"
-              size={20}
-              className="absolute right-[8px] top-[8px] z-10 size-11 h-fit items-center justify-center rounded-full border border-blue-5 bg-neutral-3"
-              onPress={() => onSubmitPress(inputValue)}
-            />
-          </View>
+            >
+              <TextInput
+                value={inputValue}
+                className="!rounded-full !border-blue-3 !pl-6 pr-12"
+                onChangeText={onChangeText}
+                onFocus={() => {
+                  scrollViewRef.current?.scrollTo({
+                    y: shoppingListY + 160,
+                    animated: true,
+                  });
+                }}
+                placeholder="장볼 식재료가 작성해주세요"
+              />
+              <Icon
+                name="ArrowUp"
+                size={20}
+                className="absolute right-[8px] top-[8px] z-10 size-11 h-fit items-center justify-center rounded-full border border-blue-5 bg-indigo-1"
+                onPress={() => onSubmitPress(inputValue)}
+              />
+            </View>
+          )}
         </View>
       </SafeAreaViewContainer>
       {/* 태그들과 인풋 */}

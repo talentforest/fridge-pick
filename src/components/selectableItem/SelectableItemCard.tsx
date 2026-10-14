@@ -11,6 +11,7 @@ interface SelectableItemCardProps {
   className?: string;
   textClassName?: string;
   imageSize?: number;
+  hasCategoryIcon?: boolean;
 }
 
 export default function SelectableItemCard({
@@ -18,6 +19,7 @@ export default function SelectableItemCard({
   className = '',
   textClassName = '',
   imageSize = 50,
+  hasCategoryIcon = false,
 }: SelectableItemCardProps) {
   if (!item) return null;
 
@@ -25,18 +27,22 @@ export default function SelectableItemCard({
     <Card
       className={`items-center justify-center gap-y-0.5 !px-1 !pb-1 !pt-0 ${className}`}
     >
-      <View className="absolute right-1.5 top-1.5 flex-row  gap-x-1">
-        {item.kind !== 'ingredient' ? (
-          <Icon
-            name={allCategoryObj[item.category].icon}
-            size={12}
-            color="yellow"
-            hasBgColor
-          />
-        ) : (
-          <></>
-        )}
-      </View>
+      {hasCategoryIcon ? (
+        <View className="absolute right-1.5 top-1.5 flex-row gap-x-1">
+          {item.kind !== 'ingredient' ? (
+            <Icon
+              name={allCategoryObj[item.category].icon}
+              size={12}
+              color="yellow"
+              hasBgColor
+            />
+          ) : (
+            <></>
+          )}
+        </View>
+      ) : (
+        <></>
+      )}
 
       {/* 이미지 */}
       <FoodImage selectableItem={item} imageSize={imageSize} />

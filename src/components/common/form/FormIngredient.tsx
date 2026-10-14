@@ -1,9 +1,9 @@
 import { EditableStorageItem, EnrichedStorageItem } from '@/types/storage';
-import { formatDateString, getTrackedItemData } from '@/utils';
+import { getTrackedItemData } from '@/utils';
 import { View } from 'react-native';
-import FormDateInput from '@/components/common/form/FormDateInput';
 import FormMemo from '@/components/common/form/FormMemo';
 import FormStorage from '@/components/common/form/FormStorage';
+import FormDateInput from '@/components/common/form/FormDateInput';
 
 interface FormIngredientProps {
   currStorageItem: EnrichedStorageItem;
@@ -20,12 +20,6 @@ export default function FormIngredient({
 }: FormIngredientProps) {
   const { recommendedDurations } = getTrackedItemData(currStorageItem);
 
-  const onChangeDate = (date: Date) => {
-    const expiresAt = formatDateString(date, 'yyyy-MM-dd');
-    const storage = { type: currStorageItem.storage.type };
-    onItemChange({ storage, expiresAt });
-  };
-
   return (
     <View className="gap-y-8">
       <FormStorage
@@ -38,10 +32,8 @@ export default function FormIngredient({
       <FormDateInput
         hasLabel
         initialDate={currStorageItem.expiresAt}
-        onItemChange={(newData) =>
-          onChangeDate(newData.expiresAt ? new Date(newData.expiresAt) : new Date())
-        }
-        currStorageType={currStorageItem ? currStorageItem.storage.type : undefined}
+        onItemChange={onItemChange}
+        currStorageType={currStorageItem.storage.type}
         recommendedDurations={recommendedDurations}
       />
 

@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useOverlay } from '@/hooks';
 import { formatDateString } from '@/utils';
 import { addDays } from 'date-fns';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
 type DateQuickBtnProps = {
@@ -24,6 +24,8 @@ export default function DateInputWithQuickBtn({
   hasDateInput = false,
 }: DateQuickBtnProps) {
   const [currDate, setCurrDate] = useState<Date>(new Date(initialDate));
+
+  const { openDatePicker } = useOverlay();
 
   const onChangeDatePress = (day?: number) => {
     if (!day) {
@@ -85,7 +87,9 @@ export default function DateInputWithQuickBtn({
     },
   ];
 
-  const { openDatePicker } = useOverlay();
+  useEffect(() => {
+    setCurrDate(new Date(initialDate));
+  }, [initialDate]);
 
   return (
     <View className="gap-y-1.5">
