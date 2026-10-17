@@ -1,6 +1,6 @@
 import { favoriteFoodListAtom, favoriteIngredientListAtom } from '@/atom/favoritesAtom';
 import { useAtomValue } from 'jotai';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { allStorageItemListAtom } from '@/atom/storageAtom';
 import { image_mealkit, image_mypick } from '@/constants';
 import { josa } from 'es-hangul';
@@ -10,6 +10,7 @@ import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
 import Icon from '@/components/common/ui/Icon';
 import IconWithText from '@/components/common/IconWithText';
 import { useHandleNavigate } from '@/hooks';
+import EmptyCard from '@/components/common/EmptyCard';
 
 export default function MyPickList() {
   const storageItemList = useAtomValue(allStorageItemListAtom);
@@ -183,7 +184,7 @@ export default function MyPickList() {
                   {item.status.phrase.map(({ text, highlight }) => (
                     <Text
                       key={text}
-                      className={`text-sm leading-5 ${highlight ? 'text-indigo- font-extrabold' : ''}`}
+                      className={`text-sm leading-5 ${highlight ? 'font-extrabold' : ''}`}
                     >
                       {text}
                     </Text>
@@ -201,20 +202,11 @@ export default function MyPickList() {
           ))}
         </View>
       ) : (
-        <Card className="items-center gap-y-6 !py-8">
-          <Image source={image_mypick} className="aspect-[1.45/1.2] h-24 opacity-50" />
-
-          <View className="items-center gap-y-4">
-            <Text className="font-extrabold text-neutral-7">
-              아직 나의픽 식재료가 없어요
-            </Text>
-
-            <View className="items-center gap-y-1.5">
-              <Text className="text-sm text-neutral-7">나의픽 아이템을 등록하고</Text>
-              <Text className="text-sm text-neutral-7">냉장고 맞춤정보를 받아보세요</Text>
-            </View>
-          </View>
-        </Card>
+        <EmptyCard
+          text="아직 나의픽 식재료가 없어요"
+          subText={['나의픽 아이템을 등록하고', '냉장고 맞춤정보를 받아보세요']}
+          source={image_mypick}
+        />
       )}
     </>
   );

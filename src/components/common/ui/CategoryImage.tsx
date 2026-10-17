@@ -25,9 +25,8 @@ export default function CategoryImage({
   const borderObj = {
     green: 'border-green-3',
     blue: 'border-green-3',
-    yellow: 'border-yellow-3',
+    amber: 'border-amber-3',
     red: 'border-red-3',
-    orange: 'border-orange-3',
   } as const;
 
   return (

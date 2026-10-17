@@ -17,7 +17,7 @@ export const filterObj = {
     easy: {
       name: 'easy',
       label: '쉬운 메뉴',
-      color: 'yellow',
+      color: 'amber',
       icon: 'Zap',
     },
 

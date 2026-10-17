@@ -16,12 +16,12 @@ export const servingTemperatureObj: {
   },
   warm: {
     label: '따뜻함',
-    color: 'orange',
+    color: 'amber',
     icon: 'ThermometerSun',
   },
   room_temperature: {
     label: '상온',
-    color: 'yellow',
+    color: 'amber',
     icon: 'Thermometer',
   },
   cold: {

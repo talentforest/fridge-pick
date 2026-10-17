@@ -174,7 +174,7 @@ export const ingredientImageObj: {
   fruit: {
     apple_mango: require('../../assets/images/ingredient/fruit/apple_mango.png'),
     bam: require('../../assets/images/ingredient/fruit/bam.png'),
-    orange: require('../../assets/images/ingredient/fruit/orange.png'),
+    amber: require('../../assets/images/ingredient/fruit/orange.png'),
     dried_mango: require('../../assets/images/ingredient/fruit/dried_mango.png'),
     kiwi: require('../../assets/images/ingredient/fruit/kiwi.png'),
     chamoe: require('../../assets/images/ingredient/fruit/chamoe.png'),

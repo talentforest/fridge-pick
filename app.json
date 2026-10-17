@@ -6,7 +6,6 @@
     "orientation": "portrait",
     "icon": "./assets/images/app/app_icon_256.png",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
 
     "ios": {
       "supportsTablet": true,
@@ -18,7 +17,7 @@
         "foregroundImage": "./assets/images/fridge.png",
         "backgroundColor": "#FFF8EB"
       },
-      "edgeToEdgeEnabled": true,
+
       "predictiveBackGestureEnabled": false
     },
 

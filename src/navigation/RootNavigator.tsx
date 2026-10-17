@@ -1,3 +1,4 @@
+import { useAppTheme } from '@/hooks/common/useAppTheme';
 import BottomTabNavigator from '@/navigation/BottomTabNavigator';
 import AllFoodListScreen from '@/screens/food/AllFoodListScreen';
 import MyPickScreen from '@/screens/MyPickScreen';
@@ -12,12 +13,12 @@ import { colorTokens, theme } from '@/theme/color';
 import { RootStackParamList } from '@/types/RootStackParamList';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Appearance, View } from 'react-native';
+import { View } from 'react-native';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootNavigator() {
-  const colorScheme = Appearance.getColorScheme() ?? 'light';
+  const { colorScheme } = useAppTheme();
 
   // const isLoggedIn = true; => LoginScreen
   const isOnboardingCompleted = true;
@@ -27,13 +28,13 @@ export default function RootNavigator() {
     : 'Main';
 
   return (
-    <View style={[theme[colorScheme]]} className={`flex-1 bg-bg`}>
+    <View style={[theme[colorScheme]]} className={`flex-1 bg-screen`}>
       <NavigationContainer
         theme={{
           ...DefaultTheme,
           colors: {
             ...DefaultTheme.colors,
-            background: colorTokens[colorScheme].bg,
+            background: colorTokens[colorScheme].screen,
           },
         }}
       >

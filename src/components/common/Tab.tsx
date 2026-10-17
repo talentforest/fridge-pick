@@ -9,24 +9,21 @@ type TabProps = {
 };
 
 export default function Tab({ name, isSelected, subName, onPress }: TabProps) {
+  const textClassName = `!text-[15px] ${
+    isSelected ? 'text-primary font-extrabold' : 'text-textDescription'
+  }`;
+
+  const borderClassName = isSelected ? 'border-primary' : 'border-primaryBorder';
+
   return (
     <TouchableOpacity
       onPress={onPress}
-      className={`flex-1 flex-row items-center justify-center gap-x-0.5 border-b-2 px-4 py-4  ${isSelected ? 'border-indigo-5' : 'border-neutral-3'}`}
+      className={`flex-1 flex-row items-center justify-center gap-x-0.5 border-b-2 px-4 py-4 ${borderClassName}`}
     >
-      <Text
-        className={`!text-[15px] text-indigo-5 ${isSelected ? 'text-indigo-7 font-heavy' : 'text-neutral-7'}`}
-      >
+      <Text className={textClassName}>
         {name}
 
-        {subName && (
-          <Text
-            className={`!text-[15px] ${isSelected ? 'font-extrabold  text-indigo-5' : 'text-neutral-7'}`}
-          >
-            {' '}
-            {subName}
-          </Text>
-        )}
+        {subName && <Text className={textClassName}> {subName}</Text>}
       </Text>
     </TouchableOpacity>
   );

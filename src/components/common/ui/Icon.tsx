@@ -1,4 +1,5 @@
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import { useAppTheme } from '@/hooks/common/useAppTheme';
 import { colorTokens } from '@/theme/color';
 import {
   CalendarCheck,
@@ -66,7 +67,6 @@ import {
   Plus,
   Database,
   Dessert,
-  Edit,
   Edit3,
   Fish,
   GlassWater,
@@ -105,7 +105,7 @@ import {
   Wind,
   X,
 } from 'lucide-react-native';
-import { useColorScheme, View } from 'react-native';
+import { View } from 'react-native';
 
 export type IconName =
   | 'CalendarCheck'
@@ -176,7 +176,6 @@ export type IconName =
   | 'ChevronRight'
   | 'ChevronUp'
   | 'ChevronDown'
-  | 'Edit'
   | 'Edit3'
   | 'Timer'
   | 'RotateCcw'
@@ -216,11 +215,10 @@ export type IconName =
   | 'CookingPot';
 
 export type IconColor =
-  | 'orange'
+  | 'amber'
   | 'text'
   | 'lightestGray'
-  | 'lightYellow'
-  | 'yellow'
+  | 'amber'
   | 'neutral'
   | 'inactive'
   | 'red'
@@ -251,7 +249,7 @@ export default function Icon({
   hasBgColor,
   ...props
 }: IconProps & LucideProps) {
-  const colorScheme = useColorScheme() ?? 'light';
+  const { colorScheme } = useAppTheme();
 
   const scheme = colorTokens[colorScheme];
 
@@ -260,14 +258,11 @@ export default function Icon({
     black: scheme.neutral[9],
     text: scheme.text,
     red: scheme.red[5],
-    orange: scheme.orange[7],
-    // yellow
-    lightYellow: scheme.yellow[3],
-    yellow: scheme.yellow[7],
+    amber: scheme.amber[7],
     // neutral
     neutral: scheme.neutral[7],
     darkGray: scheme.neutral[5],
-    gray: scheme.inactive.bg,
+    gray: scheme.disabledBackground,
     lightestGray: scheme.neutral[1],
     // blue
     lightBlue: scheme.blue[5],
@@ -275,29 +270,27 @@ export default function Icon({
     // green
     green: scheme.green[7],
     lightGreen: scheme.green[3],
-    ice: scheme.ice[5],
-    indigo: scheme.indigo[5],
-    inactive: scheme.inactive.text,
+    ice: scheme.ice[7],
+    indigo: scheme.primary,
+    inactive: scheme.disabledText,
   };
 
   const bgColorMap = {
     lightestGray: 'bg-neutral-3',
-    orange: 'bg-orange-1',
+    amber: 'bg-amber-1',
     white: '#fff',
     text: 'bg-neutral-1',
-    lightYellow: 'bg-yellow-1',
-    yellow: 'bg-yellow-1',
     neutral: 'bg-neutral-1',
     red: 'bg-red-1',
     lightBlue: 'bg-blue-1',
     blue: 'bg-blue-1',
     darkGray: 'bg-neutral-1',
     black: 'bg-neutral-9',
-    gray: 'bg-inactive-bg',
+    gray: 'bg-disabledBackground',
     green: 'bg-green-1',
     lightGreen: 'bg-green-1',
     ice: 'bg-ice-1',
-    indigo: 'bg-indigo-1',
+    indigo: 'bg-primary',
     inactive: 'bg-border',
   };
 
@@ -372,7 +365,6 @@ export default function Icon({
     PlusCircle,
     RotateCcw,
     Grid2X2Plus,
-    Edit,
     Edit3,
     ChevronLeft,
     ChevronRight,
@@ -414,27 +406,29 @@ export default function Icon({
     shadowRadius: 6,
   };
 
+  const bigIcon = ['Edit3'];
+
+  const commonClassName = `${hasBgColor ? `${bgColorMap[color]} rounded-lg p-1.5` : ''} items-center justify-center ${props.className}`;
+
   return props.onPress ? (
     <TouchableOpacity
-      className={`${hasBgColor ? `${bgColorMap[color]} rounded-lg p-1.5` : ''} items-center justify-center ${props.className}`}
+      className={commonClassName}
       style={hasShadow ? shadowStyle : undefined}
       onPress={props.onPress}
     >
       <Component
-        strokeWidth={2.8}
+        strokeWidth={2.5}
         {...props}
+        size={bigIcon.includes(name) ? +props.size! - 2 : props.size}
         stroke={colorMap[color]}
         fill={hasFill ? colorMap[color] : 'transparent'}
         pointerEvents="none"
       />
     </TouchableOpacity>
   ) : (
-    <View
-      style={hasShadow ? shadowStyle : undefined}
-      className={`${hasBgColor ? `${bgColorMap[color]} rounded-lg p-1.5` : ''} items-center justify-center ${props.className}`}
-    >
+    <View className={commonClassName} style={hasShadow ? shadowStyle : undefined}>
       <Component
-        strokeWidth={2.8}
+        strokeWidth={2.5}
         {...props}
         stroke={colorMap[color]}
         fill={hasFill ? colorMap[color] : 'transparent'}

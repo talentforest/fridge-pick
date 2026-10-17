@@ -17,7 +17,7 @@ import {
 } from '@/utils';
 import { ShoppingItem as ShoppingItemType } from '@/types/shoppingItem';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Appearance, Image, ScrollView, View } from 'react-native';
+import { Image, ScrollView, View } from 'react-native';
 import { useErrorHandler, useOverlay, useHandleNavigate } from '@/hooks';
 import { allStorageItemListAtom } from '@/atom/storageAtom';
 import { isNotInStorageFavoriteListAtom } from '@/atom/favoritesAtom';
@@ -39,7 +39,7 @@ import TextInput from '@/components/common/ui/TextInput';
 import SectionContainer from '@/components/common/container/SectionContainer';
 import ViewContentContainer from '@/components/common/container/ViewContentContainer';
 import { colorTokens } from '@/theme/color';
-import SectionTitle from '@/components/common/header/SectionTitle';
+import { useAppTheme } from '@/hooks/common/useAppTheme';
 
 export default function ShoppingListScreen() {
   const [inputValue, setInputValue] = useState<string>('');
@@ -181,7 +181,7 @@ export default function ShoppingListScreen() {
     })
     .flat();
 
-  const colorScheme = Appearance.getColorScheme() ?? 'light';
+  const { colorScheme } = useAppTheme();
 
   return (
     <KeyboardAvoidingViewContainer>
@@ -202,22 +202,24 @@ export default function ShoppingListScreen() {
                   text="전체 선택"
                   icon={isAllPurchased ? 'SquareCheck' : 'Square'}
                   iconSize={16}
-                  iconColor={isAllPurchased ? 'blue' : 'lightBlue'}
-                  className="flex-row items-center gap-x-1.5 px-1 pb-3 pt-3"
+                  iconColor={isAllPurchased ? 'indigo' : 'indigo'}
+                  className="flex-row items-center gap-x-1.5 px-1 pb-2 pt-3"
                   onPress={onAllPurchasedClick}
-                  textClassName={isAllPurchased ? 'text-blue-7' : 'text-blue-5'}
+                  textClassName={`${isAllPurchased ? 'text-primary' : 'text-primary'}`}
                 />
 
                 <View className="flex-row">
                   {purchasedCount > 0 ? (
-                    <Text className="text-blue-7">{purchasedCount}개 선택</Text>
+                    <Text className="text-primary">{purchasedCount}개 선택</Text>
                   ) : (
-                    <Text className="text-neutral-7">총 {shoppingList.length}개</Text>
+                    <Text className="text-unselectedText">
+                      총 {shoppingList.length}개
+                    </Text>
                   )}
                 </View>
               </View>
 
-              <View className="h-[44vh]">
+              <View className="h-[52vh]">
                 {shoppingList.length > 0 ? (
                   <ScrollView showsVerticalScrollIndicator={false}>
                     {sortedShoppingList.map((item, index) => (
@@ -228,7 +230,7 @@ export default function ShoppingListScreen() {
                         />
 
                         {index < sortedShoppingList.length - 1 && (
-                          <View className="border-b border-dashed border-neutral-3" />
+                          <View className="border-b border-dashed border-primaryBorder" />
                         )}
                       </View>
                     ))}
@@ -239,27 +241,29 @@ export default function ShoppingListScreen() {
                       source={image_empty_basket}
                       className="aspect-square size-24 opacity-60"
                     />
-                    <Text className="mb-10 text-inactive-text">장볼 식재료가 없어요</Text>
+                    <Text className="mb-10 text-disabledText">장볼 식재료가 없어요</Text>
                   </View>
                 )}
 
-                {canAvailableFoodList.length > 0 ? (
-                  <Card className="flex-row gap-x-4 !bg-indigo-1 !px-5">
-                    <Icon name="CookingPot" color="indigo" />
-
-                    <View className="gap-y-1.5">
-                      <Text className="!text-[13px] text-indigo-5">
-                        장보기 목록을 모두 구매하면
-                      </Text>
-                      <Text className="font-extrabold text-indigo-5">
-                        만들 수 있는 메뉴가{' '}
-                        <Text className="font-extrabold text-blue-9">
-                          {canAvailableFoodList.length}개
-                        </Text>{' '}
-                        늘어나요!
-                      </Text>
-                    </View>
-                  </Card>
+                {recommendShoppingList ? (
+                  <SectionContainer>
+                    <Text className="pl-1 font-extrabold !text-[13px] text-primary">{`추천 식재료 ${recommendShoppingList.length}개`}</Text>
+                    <CarouselContainer
+                      data={recommendShoppingList}
+                      itemWidth={0.25}
+                      centerFocus={false}
+                      infinite={false}
+                      spacing={10}
+                      requiredMinimum={1}
+                      keyExtractor={(_, index) => `${index}`}
+                      renderItem={({ item }) => (
+                        <RecommendedShoppingItem
+                          key={item.selectableItem.id}
+                          item={item}
+                        />
+                      )}
+                    />
+                  </SectionContainer>
                 ) : (
                   <></>
                 )}
@@ -267,33 +271,30 @@ export default function ShoppingListScreen() {
             </Card>
           </SectionContainer>
 
-          {recommendShoppingList ? (
-            <SectionContainer>
-              <SectionTitle
-                title={`추천 식재료 ${recommendShoppingList.length}개`}
-                type="sub"
-              />
-              <CarouselContainer
-                data={recommendShoppingList}
-                itemWidth={0.35}
-                centerFocus={false}
-                infinite={false}
-                hasNavigation
-                spacing={10}
-                requiredMinimum={1}
-                keyExtractor={(_, index) => `${index}`}
-                renderItem={({ item }) => (
-                  <RecommendedShoppingItem key={item.selectableItem.id} item={item} />
-                )}
-              />
-            </SectionContainer>
+          {canAvailableFoodList.length > 0 ? (
+            <Card className="flex-row gap-x-4 bg-neutral-0 !px-5">
+              <Icon name="CookingPot" color="indigo" />
+
+              <View className="gap-y-1.5">
+                <Text className="!text-[13px] text-primary">
+                  장보기 목록을 모두 구매하면
+                </Text>
+                <Text className="font-extrabold text-primary">
+                  만들 수 있는 메뉴가{' '}
+                  <Text className="font-extrabold text-blue-9">
+                    {canAvailableFoodList.length}개
+                  </Text>{' '}
+                  늘어나요!
+                </Text>
+              </View>
+            </Card>
           ) : (
             <></>
           )}
         </ViewContentContainer>
 
         {/* 아래 컨트롤 버튼: 체크표시된게 있을 때 + 인풋이 포커스 안됐을 때 */}
-        <View className="absolute bottom-4 w-full gap-y-2 px-[24px]">
+        <View className="absolute bottom-4 w-full gap-y-2 px-[20px]">
           {error?.message && (
             <Text className="pl-1 text-sm text-red-5">{error?.message}</Text>
           )}
@@ -326,7 +327,6 @@ export default function ShoppingListScreen() {
                 name="냉장고에 넣기"
                 iconName="Grid2X2Plus"
                 iconSize={16}
-                bgColor="blue"
                 className="!py-4"
               />
               <SquareBtn
@@ -366,7 +366,7 @@ export default function ShoppingListScreen() {
               <Icon
                 name="ArrowUp"
                 size={20}
-                className="absolute right-[8px] top-[8px] z-10 size-11 h-fit items-center justify-center rounded-full border border-blue-5 bg-indigo-1"
+                className="absolute right-[8px] top-[8px] z-10 size-11 h-fit items-center justify-center rounded-full border border-blue-5 bg-primary"
                 onPress={() => onSubmitPress(inputValue)}
               />
             </View>

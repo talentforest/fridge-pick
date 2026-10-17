@@ -40,7 +40,7 @@ export default function FormRecommendedDuration({
   return (
     <View className="gap-y-8">
       <View className="gap-y-4">
-        <Text className="ml-1 font-extrabold !text-[15px] text-yellow-7">
+        <Text className="ml-1 font-extrabold !text-[15px] text-amber-7">
           3. 주로 어디에 보관하나요?
         </Text>
 
@@ -61,7 +61,7 @@ export default function FormRecommendedDuration({
 
       <View className="gap-y-4">
         <View className="ml-1 gap-y-2">
-          <Text className="font-extrabold !text-[15px] text-yellow-7">
+          <Text className="font-extrabold !text-[15px] text-amber-7">
             4. 위치별 보관기관을 작성해주세요
           </Text>
 

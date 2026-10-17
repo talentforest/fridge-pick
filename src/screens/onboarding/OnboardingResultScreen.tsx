@@ -54,7 +54,7 @@ export default function OnboardingResultScreen() {
                   <Text className="font-extrabold !text-[13px]">
                     🍳 지금 만들 수 있는 메뉴
                   </Text>
-                  <Text className="pr-1 font-heavy text-lg text-indigo-5">
+                  <Text className="pr-1 font-heavy text-lg text-primary">
                     {currentlyCompletableFoodList.length}개
                   </Text>
                 </View>

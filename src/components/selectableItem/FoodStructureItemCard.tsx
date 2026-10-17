@@ -71,7 +71,7 @@ export default function FoodStructureItemCard({
           {item.label}
         </Text>
 
-        {isExpiredSoon && <Icon name="BadgeAlert" color="yellow" size={16} />}
+        {isExpiredSoon && <Icon name="BadgeAlert" color="amber" size={16} />}
       </View>
 
       {/* 현재 보유 상태 */}
@@ -90,10 +90,10 @@ export default function FoodStructureItemCard({
           text=""
           icon="ShoppingBasket"
           iconSize={14}
-          iconColor="orange"
+          iconColor="amber"
           textClassName="text-blue-5 text-sm"
           onPress={onPress}
-          className="!gap-x-0 rounded-full border border-orange-1 bg-neutral-1 !p-1.5"
+          className="!gap-x-0 rounded-full border border-amber-1 bg-neutral-1 !p-1.5"
         />
       )}
     </Card>

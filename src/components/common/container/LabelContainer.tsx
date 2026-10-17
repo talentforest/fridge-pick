@@ -5,21 +5,21 @@ import { View } from 'react-native';
 interface LabelContainerProps {
   children: ReactNode;
   label?: string;
-  labelColor?: 'neutral' | 'yellow' | 'blue' | 'indigo';
+  labelColor?: 'neutral' | 'amber' | 'blue' | 'indigo';
   tailLabel?: string;
 }
 
 export default function LabelContainer({
   children,
   label,
-  labelColor = 'yellow',
+  labelColor = 'amber',
   tailLabel,
 }: LabelContainerProps) {
   const textColor = {
-    yellow: 'text-yellow-7',
+    amber: 'text-amber-7',
     neutral: 'text-neutral-9',
     blue: 'text-blue-7',
-    indigo: 'text-indigo-5',
+    indigo: 'text-primary',
   };
   return (
     <View>

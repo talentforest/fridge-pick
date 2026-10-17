@@ -45,7 +45,7 @@ export default function RecommendedDurationInput({
   ];
 
   const onChangeRecommendedDuration = (newDuration: Partial<Duration>) => {
-    if (!newSelectableItem.recommendedDurations) return;
+    if (!newSelectableItem.recommendedDurations || !newDuration) return;
 
     const { recommendedDurations } = newSelectableItem;
 
@@ -161,8 +161,8 @@ export default function RecommendedDurationInput({
               <FilterTag
                 name="필수"
                 isActive
-                color="orange"
-                className="aspect-square items-center justify-center !rounded-full !bg-orange-3 !px-0 !py-0"
+                color="amber"
+                className="aspect-square items-center justify-center !rounded-full !bg-amber-3 !px-0 !py-0"
                 textClassName="text-sm font-heavy"
               />
             )}

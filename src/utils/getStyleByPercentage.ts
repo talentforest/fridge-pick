@@ -16,17 +16,17 @@ export const styleByPercentageObj = {
   },
 
   good: {
-    icon: 'yellow',
-    bg: 'bg-yellow-5',
-    border: 'border-yellow-3',
-    text: 'text-yellow-7',
+    icon: 'amber',
+    bg: 'bg-amber-5',
+    border: 'border-amber-3',
+    text: 'text-amber-7',
   },
 
   partial: {
-    icon: 'yellow',
-    bg: 'bg-yellow-5',
-    border: 'border-yellow-3',
-    text: 'text-yellow-7',
+    icon: 'amber',
+    bg: 'bg-amber-5',
+    border: 'border-amber-3',
+    text: 'text-amber-7',
   },
 
   poor: {

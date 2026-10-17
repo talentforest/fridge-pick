@@ -1,7 +1,7 @@
 import { togglePurchasedAtom } from '@/atom/shoppingListAtom';
 import { findStorageItemWithKeyAtom } from '@/atom/storageAtom';
 import { EnrichedShoppingItem } from '@/types/shoppingItem';
-import { createTrackedItemKey, getTrackedItemData } from '@/utils';
+import { createTrackedItemKey, formatDateString, getTrackedItemData } from '@/utils';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Pressable, View } from 'react-native';
 import { useHandleNavigate } from '@/hooks';
@@ -28,22 +28,26 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
   return (
     <Pressable
       onPress={() => togglePurchased(id)}
-      className={`h-[45px] ${isPurchased ? 'opacity-40' : ''}`}
+      className={`h-[42px] ${isPurchased ? 'opacity-40' : ''}`}
     >
       <View
-        className={`flex-1 flex-row items-center px-1 ${isError ? 'my-2.5  rounded-lg bg-red-0' : ''}`}
+        className={`flex-1 flex-row items-center px-1 ${isError ? 'my-2.5 rounded-lg bg-red-0' : ''}`}
       >
         <View className="flex-1 flex-row gap-x-1.5">
-          <Icon name={isPurchased ? 'SquareCheck' : 'Square'} strokeWidth={2} size={16} />
+          <Icon
+            name={isPurchased ? 'SquareCheck' : 'Square'}
+            strokeWidth={2.3}
+            size={16}
+          />
 
           <Text
-            className={`line-clamp-1 flex-1 ${isPurchased ? 'line-through' : ''} ${isError ? 'font-extrabold text-red-5' : ''}`}
+            className={`line-clamp-1  flex-1 ${isPurchased ? 'line-through' : ''} ${isError ? 'font-extrabold text-red-5' : ''}`}
           >
             {getTrackedItemData(shoppingItem)?.label}
           </Text>
         </View>
 
-        {isInStorageShoppingItem && (
+        {isInStorageShoppingItem ? (
           <NavigateToStorageBtn
             onPress={() =>
               goNavigate('StorageDetailScreen', {
@@ -52,6 +56,10 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
             }
             storageType={isInStorageShoppingItem.storage.type}
           />
+        ) : (
+          <Text className="px-2 text-sm tracking-[-0.06em] text-textDescription">
+            {formatDateString(new Date(), 'yy. MM. dd')}
+          </Text>
         )}
       </View>
     </Pressable>

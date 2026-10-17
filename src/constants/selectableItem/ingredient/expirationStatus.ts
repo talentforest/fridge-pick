@@ -14,10 +14,10 @@ export const expirationStatusObj = {
   /** 임박 (0~3일) */
   expiredSoon: {
     label: '임박',
-    color: 'orange',
-    textColor: '!text-orange-7',
-    bgColor: 'bg-orange-5',
-    filterColor: 'bg-orange-3',
+    color: 'amber',
+    textColor: '!text-amber-7',
+    bgColor: 'bg-amber-5',
+    filterColor: 'bg-amber-3',
     priority: 3,
     icon: 'AlertTriangle',
     isExpired: false,

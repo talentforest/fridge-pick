@@ -14,6 +14,7 @@ import QuickAddFoodBtn from '@/components/home/QuickAddFoodBtn';
 import { useAtomValue } from 'jotai';
 import { storageItemListByExpirationStatusAtom } from '@/atom/storageAtom';
 import TodayFood from '@/components/home/TodayFood';
+import Text from '@/components/common/ui/Text';
 
 // ① 나의 보관함 — 전체 상태
 // ② 관리가 필요한 식재료 — 지금 처리할 것
@@ -31,10 +32,18 @@ export default function HomeScreen() {
   const goMyPickScreen = () => goNavigate('MyPickScreen', { type: 'ingredient' });
 
   return (
-    <SafeAreaViewContainer edges={['top']}>
-      <ScrollViewContainer>
+    <SafeAreaViewContainer>
+      <ScrollViewContainer className="">
         <View>
           <HomeHeader />
+          {/* 이번주 소비 추천 섹션 추가 */}
+          <View className="mb-4 mt-2 gap-y-1.5 pl-2">
+            <Text className="font-extrabold text-lg">안녕하세요, 엘리님 👋</Text>
+            <Text className="font-extrabold text-primary">
+              오늘도 든든히 챙겨먹는 하루되세요!
+            </Text>
+          </View>
+
           <SpaceGrid />
         </View>
 

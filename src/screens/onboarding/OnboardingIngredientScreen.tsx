@@ -1,4 +1,4 @@
-import { Appearance, View } from 'react-native';
+import { View } from 'react-native';
 import { useMemo, useRef, useState } from 'react';
 import {
   allIngredientList,
@@ -26,6 +26,7 @@ import Icon from '@/components/common/ui/Icon';
 import AddIngredientInStockSheet from '@/components/onBoarding/AddIngredientInStockSheet';
 import SquareBtn from '@/components/common/SquareBtn';
 import { colorTokens } from '@/theme/color';
+import { useAppTheme } from '@/hooks/common/useAppTheme';
 
 type Filter = IngredientCategoryKey | 'recommended';
 
@@ -104,7 +105,7 @@ export default function OnboardingIngredientScreen() {
     });
   };
 
-  const colorScheme = Appearance.getColorScheme() ?? 'light';
+  const { colorScheme } = useAppTheme();
 
   return (
     <SafeAreaViewContainer>
@@ -155,14 +156,14 @@ export default function OnboardingIngredientScreen() {
                     <SelectableItemCard
                       item={ingredient}
                       key={ingredient.id}
-                      className={`h-full gap-y-2 !px-2 !pb-1 !pt-0 ${checkHasItem(ingredient.id) ? '!bg-yellow-3' : 'border-neutral-1'}`}
+                      className={`h-full gap-y-2 !px-2 !pb-1 !pt-0 ${checkHasItem(ingredient.id) ? '!bg-amber-3' : 'border-neutral-1'}`}
                       textClassName="!text-[13px]"
                     />
                     {checkHasItem(ingredient.id) && (
                       <Icon
                         name="CheckCircle2"
                         className="absolute left-1.5 top-1.5"
-                        color="yellow"
+                        color="amber"
                         size={18}
                       />
                     )}
@@ -186,7 +187,7 @@ export default function OnboardingIngredientScreen() {
           className="absolute bottom-0 right-0 w-full gap-y-4 rounded-t-3xl bg-neutral-3 px-5 pb-12 pt-6"
         >
           <Text className="ml-1 font-extrabold text-base">
-            <Text className="font-heavy text-base text-yellow-7">
+            <Text className="font-heavy text-base text-amber-7">
               {pickedItemList.length}개
             </Text>
             의 식재료를 선택했어요

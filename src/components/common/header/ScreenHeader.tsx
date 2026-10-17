@@ -9,7 +9,7 @@ interface ScreenHeaderProps {
   isDetailPage?: boolean;
   onLeftPress?: (event: GestureResponderEvent) => void;
   className?: string;
-  right?: { icon: 'Edit' | 'CheckCircle2'; onRightPress: () => void };
+  right?: { icon: 'Edit3' | 'CheckCircle2'; onRightPress: () => void };
 }
 
 export default function ScreenHeader({
@@ -48,9 +48,8 @@ export default function ScreenHeader({
             <Icon
               name={right.icon}
               size={20}
-              strokeWidth={2.5}
               onPress={right.onRightPress}
-              className="p-1.5"
+              className="w-8"
             />
           </View>
         )

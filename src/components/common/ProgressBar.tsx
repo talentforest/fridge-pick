@@ -1,8 +1,7 @@
 import Text from '@/components/common/ui/Text';
-import { colorTokens } from '@/theme/color';
 import { getPossessionStatus, styleByPercentageObj } from '@/utils';
 import { ReactNode } from 'react';
-import { useColorScheme, View } from 'react-native';
+import { View } from 'react-native';
 // import CircularProgress from 'react-native-circular-progress-indicator';
 
 interface ProgressBarProps {
@@ -12,7 +11,7 @@ interface ProgressBarProps {
   requiredCount: number;
   children?: ReactNode;
   type?: 'bar' | 'circular';
-  color?: 'red' | 'yellow' | 'green';
+  color?: 'red' | 'amber' | 'green';
 }
 
 export default function ProgressBar({
@@ -22,20 +21,12 @@ export default function ProgressBar({
   requiredCount,
   children,
   type = 'bar',
-  color = 'red',
+  // color = 'red',
 }: ProgressBarProps) {
-  const colorScheme = useColorScheme() ?? 'light';
-
-  const scheme = colorTokens[colorScheme];
+  // const { colorScheme } = useAppTheme();
 
   const status = getPossessionStatus(percentage);
   const colorObj = styleByPercentageObj[status];
-
-  const schemeObj = {
-    green: scheme.green[5],
-    red: scheme.red[5],
-    yellow: scheme.yellow[5],
-  };
 
   const requiredBoxList = Array.from({ length: requiredCount }, (_, index) => index);
 
@@ -64,7 +55,7 @@ export default function ProgressBar({
               {requiredBoxList.map((box) => (
                 <View
                   key={box}
-                  className={`h-3 flex-1 ${box === 0 ? 'rounded-l-sm' : ''} ${box === requiredBoxList.length - 1 ? 'rounded-r-sm' : ''} ${possessedCount > box ? colorObj.bg : 'bg-inactive-bg'}`}
+                  className={`h-3 flex-1 ${box === 0 ? 'rounded-l-sm' : ''} ${box === requiredBoxList.length - 1 ? 'rounded-r-sm' : ''} ${possessedCount > box ? colorObj.bg : 'bg-disabledBackground'}`}
                 />
               ))}
             </View>

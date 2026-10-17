@@ -1,17 +1,18 @@
 import Icon from '@/components/common/ui/Icon';
 import Text from '@/components/common/ui/Text';
-import { Appearance, useColorScheme, View } from 'react-native';
+import { useAppTheme } from '@/hooks/common/useAppTheme';
+import { Appearance, View } from 'react-native';
 
 export default function HomeHeader() {
-  const scheme = useColorScheme();
-
-  const color = scheme === 'light' ? 'dark' : 'light';
+  const { colorScheme } = useAppTheme();
 
   const iconCommonClassName = 'p-1';
 
   return (
     <View className="h-16 flex-row items-center justify-between pl-2">
-      <Text className="font-extrabold text-2xl italic !text-blue-7">프리지픽</Text>
+      <Text className="font-heavy text-xl">
+        Fridge<Text className="font-heavy text-xl !text-primary">Pick!</Text>
+      </Text>
 
       <View className="flex-row gap-x-2.5">
         {/* 알림 버튼 */}
@@ -22,7 +23,7 @@ export default function HomeHeader() {
           size={25}
           className={iconCommonClassName}
           color="text"
-          onPress={() => Appearance.setColorScheme(color)}
+          onPress={() => Appearance.setColorScheme(colorScheme)}
         />
       </View>
     </View>

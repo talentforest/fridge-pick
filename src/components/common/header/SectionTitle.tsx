@@ -8,7 +8,7 @@ interface SectionTitleProps {
   title: string;
   className?: string;
   icon?: IconName;
-  color?: 'yellow' | 'red' | 'neutral' | 'ice' | 'blue';
+  color?: 'amber' | 'red' | 'neutral' | 'ice' | 'blue';
   children?: ReactNode;
   highlight?: string;
   type?: 'main' | 'sub';
@@ -28,10 +28,10 @@ export default function SectionTitle({
   onShowAllPress,
 }: SectionTitleProps) {
   const colorObj = {
-    neutral: 'text-neutral-9',
-    yellow: 'text-yellow-7',
+    neutral: 'text-text',
+    amber: 'text-amber-7',
     red: 'text-red-5',
-    ice: 'text-ice-5',
+    ice: 'text-ice-7',
     blue: 'text-blue-7',
   };
 
@@ -88,7 +88,7 @@ const TitleWithHighlight = ({ text, highlight, textSize }: HighlightProps) => {
     const regex = new RegExp(`(${highlight})`, 'gi');
     return text.split(regex).map((part: string) =>
       part.toLowerCase() === highlight?.toLowerCase() ? (
-        <Text key={part} className={`${textSize} font-extrabold text-yellow-7`}>
+        <Text key={part} className={`${textSize} font-extrabold text-amber-7`}>
           {part}
         </Text>
       ) : (

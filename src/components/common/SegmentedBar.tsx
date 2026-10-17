@@ -5,19 +5,19 @@ import { Fragment } from 'react';
 type SegmentedBarProps = {
   label: string;
   total: number;
-  dataList: { label: string; count: number; color: 'green' | 'yellow' | 'red' }[];
+  dataList: { label: string; count: number; color: 'green' | 'amber' | 'red' }[];
 };
 
 export default function SegmentedBar({ label, total, dataList }: SegmentedBarProps) {
   const bgColorObj = {
     green: 'bg-green-5',
-    yellow: 'bg-yellow-5',
+    amber: 'bg-amber-5',
     red: 'bg-red-5',
   } as const;
 
   const textColorObj = {
     green: 'text-green-7',
-    yellow: 'text-yellow-7',
+    amber: 'text-amber-7',
     red: 'text-red-5',
   } as const;
 

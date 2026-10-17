@@ -5,7 +5,7 @@ export const difficultyObj = {
   },
   medium: {
     label: '보통',
-    color: 'yellow',
+    color: 'amber',
   },
   easy: {
     label: '쉬움',

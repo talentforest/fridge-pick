@@ -37,7 +37,7 @@ export const useGetFoodDetail = (food: EnrichedFoodWithFilter) => {
         seasoning: {
           label: '양념 재료',
           itemList: seasoning,
-          color: 'yellow' as const,
+          color: 'amber' as const,
           possessedListByType: seasoning.filter((item) => {
             return possessedList.find(({ storageItem }) => {
               const key = createSelectableItemKey(item);
@@ -91,13 +91,13 @@ export const useGetFoodDetail = (food: EnrichedFoodWithFilter) => {
     good: {
       label: `필수 식재료 ${needMoreIngredientNum}개만 더 있으면 돼요`,
       icon: 'Info',
-      iconColor: 'yellow',
+      iconColor: 'amber',
     },
 
     partial: {
       label: `식재료 ${needMoreIngredientNum}개가 부족해요`,
       icon: 'Info',
-      iconColor: 'yellow',
+      iconColor: 'amber',
     },
 
     poor: {

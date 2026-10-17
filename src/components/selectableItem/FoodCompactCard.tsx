@@ -95,7 +95,7 @@ export default function FoodCompactCard({
                   ? 'text-blue-7'
                   : storageObj[foodStorageItem.storage.type].color === 'ice'
                     ? 'text-ice-5'
-                    : 'text-yellow-7'
+                    : 'text-amber-7'
               }
             />
           </View>
@@ -140,7 +140,7 @@ export default function FoodCompactCard({
                   ? 'text-blue-7'
                   : storageObj[foodStorageItem.storage.type].color === 'ice'
                     ? 'text-ice-5'
-                    : 'text-yellow-7'
+                    : 'text-amber-7'
               }
             />
           </View>

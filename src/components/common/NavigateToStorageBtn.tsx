@@ -16,13 +16,13 @@ export default function NavigateToStorageBtn({
   return (
     <TouchableOpacity
       onPress={() => onPress(storageType)}
-      className="ml-2 flex-row items-center gap-x-1 rounded-full bg-blue-1 px-2 py-2"
+      className="ml-2 flex-row items-center gap-x-1 rounded-full bg-blue-1 px-3 py-2"
     >
-      <Text className="text-sm text-blue-7">
+      <Text className="!text-[11px] text-blue-7">
         {storageObj[storageType].label}에 있어요
       </Text>
 
-      <Icon name="ExternalLink" size={14} color="blue" />
+      <Icon name="ExternalLink" size={12} color="blue" />
     </TouchableOpacity>
   );
 }

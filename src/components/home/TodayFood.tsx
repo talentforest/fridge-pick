@@ -1,9 +1,8 @@
 import { deleteTodayFoodAtom, todayFoodListAtom } from '@/atom/todayFoodAtom';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { ScrollView, View } from 'react-native';
-import { foodCategoryObj } from '@/constants';
+import { foodCategoryObj, image_empty_plate } from '@/constants';
 import { FoodCategoryKey } from '@/types/category';
-import TodayFoodEmptyCard from '@/components/selectableItem/TodayFoodEmptyCard';
 import GridContainer from '@/components/common/container/GridContainer';
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
@@ -13,6 +12,7 @@ import SectionTitle from '@/components/common/header/SectionTitle';
 import IconWithText from '@/components/common/IconWithText';
 import SegmentedBar from '@/components/common/SegmentedBar';
 import ProgressBar from '@/components/common/ProgressBar';
+import EmptyCard from '@/components/common/EmptyCard';
 
 interface TodayFoodProps {
   hasHeader?: boolean;
@@ -73,7 +73,7 @@ export default function TodayFood({ hasHeader = false, type = 'list' }: TodayFoo
     },
     [
       { label: '바로가능', count: 0, color: 'green' as const },
-      { label: '조금부족', count: 0, color: 'yellow' as const },
+      { label: '조금부족', count: 0, color: 'amber' as const },
       { label: '많이부족', count: 0, color: 'red' as const },
     ],
   );
@@ -98,7 +98,7 @@ export default function TodayFood({ hasHeader = false, type = 'list' }: TodayFoo
             {type === 'list' && (
               <Card className="min-h-[288px] gap-y-5 !bg-card !py-6">
                 <View className="flex-row items-center justify-center gap-y-2">
-                  <View className="items-center gap-y-1.5 border-r border-orange-3 px-4">
+                  <View className="items-center gap-y-1.5 border-r border-amber-3 px-4">
                     <Text className="font-heavy !text-[28px] text-red-5">
                       {todayFoodList.length}
                     </Text>
@@ -123,7 +123,7 @@ export default function TodayFood({ hasHeader = false, type = 'list' }: TodayFoo
                 </View>
 
                 <View className="gap-y-3 px-1">
-                  <View className="flex-row gap-x-3 border-t border-orange-3 pt-5">
+                  <View className="flex-row gap-x-3 border-t border-amber-3 pt-5">
                     <IconWithText
                       icon="LayoutGrid"
                       text="메뉴구성"
@@ -183,10 +183,10 @@ export default function TodayFood({ hasHeader = false, type = 'list' }: TodayFoo
                 <View className="">
                   <GridContainer columns={5} horizontalInset={36} gap={6}>
                     <View className="flex-1 items-center justify-center gap-y-2">
-                      <Text className="text-center font-heavy !text-[24px] text-orange-9">
+                      <Text className="text-center font-heavy !text-[24px] text-amber-9">
                         {todayFoodList.length}
                       </Text>
-                      <Text className="text-sm text-yellow-7">개 메뉴</Text>
+                      <Text className="text-sm text-amber-7">개 메뉴</Text>
                     </View>
 
                     {foodList.map((item) => (
@@ -205,7 +205,7 @@ export default function TodayFood({ hasHeader = false, type = 'list' }: TodayFoo
             )}
           </>
         ) : (
-          <TodayFoodEmptyCard />
+          <EmptyCard text="오늘 정한 메뉴가 아직 없어요" source={image_empty_plate} />
         )}
       </View>
     </View>

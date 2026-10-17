@@ -1,4 +1,4 @@
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   favoriteFoodListAtom,
@@ -12,16 +12,16 @@ import { josa } from 'es-hangul';
 import { image_mypick, ingredientCategoryObj } from '@/constants';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '@/types/RootStackParamList';
-import Text from '@/components/common/ui/Text';
 import ScreenHeader from '@/components/common/header/ScreenHeader';
 import GridContainer from '@/components/common/container/GridContainer';
 import MyPickItemCard from '@/components/selectableItem/MyPickItemCard';
-import Card from '@/components/common/ui/Card';
 import SafeAreaViewContainer from '@/components/common/container/SafeAreaViewContainer';
 import ScrollViewContainer from '@/components/common/container/ScrollViewContainer';
 import Tab from '@/components/common/Tab';
 import FilterTag from '@/components/common/FilterTag';
 import FavoriteBtn from '@/components/common/FavoriteBtn';
+import EmptyCard from '@/components/common/EmptyCard';
+import ViewContentContainer from '@/components/common/container/ViewContentContainer';
 
 type MyPickItemLocation = {
   tab: 'ingredient' | 'food';
@@ -130,12 +130,12 @@ export default function MyPickScreen() {
       <ScreenHeader
         title="나의 픽"
         right={{
-          icon: !editCurrList.isEditing ? 'Edit' : 'CheckCircle2',
+          icon: !editCurrList.isEditing ? 'Edit3' : 'CheckCircle2',
           onRightPress: toggleEditing,
         }}
       />
 
-      <ScrollViewContainer contentContainerClassName="pt-1 gap-y-4">
+      <ViewContentContainer>
         {/* Tab */}
         <View className="mx-1 flex-row">
           {myPickTabList.map(({ id, label }) => (
@@ -164,40 +164,39 @@ export default function MyPickScreen() {
           ))}
         </View>
 
-        {/* PickItemList */}
         {getFilteredList(currTabAndFilter).length > 0 ? (
-          <GridContainer columns={4} gap={8} horizontalInset={24}>
-            {getFilteredList(currTabAndFilter).map((myPickItem) => (
-              <View key={myPickItem.id}>
-                <MyPickItemCard item={myPickItem} imageSize={55} />
+          <ScrollViewContainer contentContainerClassName="pt-1 !px-0 gap-y-4">
+            {/* PickItemList */}
+            <GridContainer columns={4} gap={8} horizontalInset={24}>
+              {getFilteredList(currTabAndFilter).map((myPickItem) => (
+                <View key={myPickItem.id}>
+                  <MyPickItemCard item={myPickItem} imageSize={55} />
 
-                {editCurrList.isEditing ? (
-                  // TODO: 흔들리며 나타나는 애니메이션 적용
-                  <FavoriteBtn
-                    isFavorite={editCurrList.list.includes(myPickItem.id)}
-                    selectableItem={myPickItem}
-                    className="absolute right-2.5 top-1.5 rounded-full bg-neutral-1 p-1.5"
-                    size={15}
-                    hasShadow
-                    onBtnPress={() => onFavoriteBtnPress(myPickItem.id)}
-                  />
-                ) : (
-                  <></>
-                )}
-              </View>
-            ))}
-          </GridContainer>
+                  {editCurrList.isEditing ? (
+                    // TODO: 흔들리며 나타나는 애니메이션 적용
+                    <FavoriteBtn
+                      isFavorite={editCurrList.list.includes(myPickItem.id)}
+                      selectableItem={myPickItem}
+                      className="!bg-primaryActionBackground absolute right-2.5 top-1.5 rounded-full p-1.5"
+                      size={15}
+                      hasShadow
+                      onBtnPress={() => onFavoriteBtnPress(myPickItem.id)}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </View>
+              ))}
+            </GridContainer>
+          </ScrollViewContainer>
         ) : (
-          <Card className="h-48 items-center justify-center gap-y-5 pb-6">
-            <Image source={image_mypick} className="aspect-[1.45/1.2] h-20 opacity-50" />
-
-            <Text className="text-neutral-5">
-              나의 픽 {josa(myPickTabObj[currTabAndFilter.tab].label, '이/가')} 아직
-              없어요
-            </Text>
-          </Card>
+          <EmptyCard
+            source={image_mypick}
+            text={`나의 픽 ${josa(myPickTabObj[currTabAndFilter.tab].label, '이/가')} 아직 없어요`}
+            className="flex-1 !pb-40"
+          />
         )}
-      </ScrollViewContainer>
+      </ViewContentContainer>
     </SafeAreaViewContainer>
   );
 }

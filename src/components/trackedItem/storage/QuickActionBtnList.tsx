@@ -19,7 +19,7 @@ export type QuickAction = {
   id: 'consume' | 'discard' | 'freeze' | 'extendExpiration';
   title: string;
   icon: IconName;
-  color: 'green' | 'red' | 'blue' | 'yellow';
+  color: 'green' | 'red' | 'blue' | 'amber';
   onPress: () => void;
 };
 
@@ -126,7 +126,7 @@ export default function QuickActionBtnList({
             id: 'extendExpiration' as const,
             title: '연장할게요',
             icon: 'CalendarClock' as const,
-            color: 'yellow' as const,
+            color: 'amber' as const,
             onPress: onChangeDatePress,
           },
         ]
@@ -135,7 +135,7 @@ export default function QuickActionBtnList({
             id: 'extendExpiration' as const,
             title: '수정할게요',
             icon: 'Edit3' as const,
-            color: 'yellow' as const,
+            color: 'amber' as const,
             onPress: toggleEditPress,
           },
         ]),

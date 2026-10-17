@@ -3,7 +3,7 @@ import HomeScreen from '@/screens/HomeScreen';
 import ShoppingListScreen from '@/screens/shoppingList/ShoppingListScreen';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Appearance, View } from 'react-native';
+import { View } from 'react-native';
 
 import type {
   BottomTabBarProps,
@@ -13,11 +13,12 @@ import Icon from '@/components/common/ui/Icon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Text from '@/components/common/ui/Text';
 import TouchableOpacity from '@/components/common/ui/TouchableOpacity';
+import { useAppTheme } from '@/hooks/common/useAppTheme';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
-  const colorScheme = Appearance.getColorScheme() ?? 'light';
+  const { colorScheme } = useAppTheme();
 
   return (
     <Tab.Navigator
@@ -25,7 +26,7 @@ export default function BottomTabNavigator() {
       initialRouteName="HomeScreen"
       screenOptions={{
         tabBarStyle: { backgroundColor: 'transparent' },
-        tabBarBackground: () => <View className="flex-1 bg-bg" />,
+        tabBarBackground: () => <View className="flex-1 bg-screen" />,
       }}
       tabBar={(props) => <CustomTabBar {...props} />}
     >
@@ -88,7 +89,7 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   return (
     <View
       style={{ paddingBottom: insets.bottom }}
-      className="flex-row border-t border-border bg-bg px-5"
+      className="flex-row border-t border-border bg-screen px-5"
     >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key] as {
@@ -127,7 +128,7 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
               {/* 라벨 */}
               <Text
-                className={`!text-[11px] ${isFocused ? 'font-extrabold text-text' : 'text-inactive-text'}`}
+                className={`!text-[11px] ${isFocused ? 'font-extrabold text-text' : 'text-disabledText'}`}
               >
                 {label}
               </Text>

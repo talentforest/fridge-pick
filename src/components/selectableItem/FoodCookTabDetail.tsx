@@ -69,8 +69,8 @@ export default function FoodCookTabDetail({ food }: FoodCookTabDetailProps) {
                 text="장보기 담기"
                 icon="ShoppingBasket"
                 iconSize={14}
-                iconColor="orange"
-                textClassName="text-sm text-orange-7 font-extrabold"
+                iconColor="amber"
+                textClassName="text-sm text-amber-7 font-extrabold"
                 className="-mb-1.5 rounded-lg bg-neutral-1 px-2 py-2.5"
               />
             </View>

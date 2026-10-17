@@ -18,7 +18,7 @@ export type QuickAction = {
   id: 'consume' | 'discard' | 'freeze' | 'extendExpiration';
   title: string;
   icon: IconName;
-  color: 'green' | 'red' | 'blue' | 'yellow';
+  color: 'green' | 'red' | 'blue' | 'amber';
   onPress: () => void;
 };
 

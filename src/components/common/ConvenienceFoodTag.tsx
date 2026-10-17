@@ -13,8 +13,8 @@ export default function ConvenienceFoodTag() {
 
   return (
     <TouchableOpacity onPress={showInfo} className="flex-row items-center">
-      <Icon name="Zap" size={12} color="yellow" hasBgColor className="!p-1" />
-      <Text className="text-sm text-yellow-7">간편식</Text>
+      <Icon name="Zap" size={12} color="amber" hasBgColor className="!p-1" />
+      <Text className="text-sm text-amber-7">간편식</Text>
     </TouchableOpacity>
   );
 }

@@ -31,7 +31,7 @@ interface CarouselContainerProps<T> {
   horizontalInset?: number;
   scrollEnabled?: boolean;
   paginationDotSize?: 'sm' | 'md' | 'lg';
-  paginationDotColor?: 'blue' | 'indigo' | 'orange';
+  paginationDotColor?: 'blue' | 'indigo' | 'amber';
 }
 
 export default function CarouselContainer<T>({
@@ -157,8 +157,8 @@ export default function CarouselContainer<T>({
 
   const dotColor = {
     blue: 'bg-blue-5',
-    indigo: 'bg-indigo-5',
-    orange: 'bg-orange-5',
+    indigo: 'bg-primary',
+    amber: 'bg-amber-5',
   };
 
   /**
@@ -248,7 +248,7 @@ export default function CarouselContainer<T>({
               className={`aspect-square ${paginationDotSize === 'sm' ? 'h-2.5' : paginationDotSize === 'md' ? 'h-3.5' : 'h-6'} rounded-full ${
                 currentIndex % data.length === index
                   ? dotColor[paginationDotColor]
-                  : 'bg-inactive-bg'
+                  : 'bg-disabledBackground'
               }`}
             />
           ))}

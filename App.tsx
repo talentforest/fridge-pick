@@ -6,11 +6,12 @@ import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
-import { useColorScheme, View } from 'react-native';
+import { View } from 'react-native';
 import { theme } from '@/theme/color';
 import './global.css';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { useAppTheme } from '@/hooks/common/useAppTheme';
 
 // App 컴포넌트가 실행되기 전에 자동으로 사라지는 것을 방지
 SplashScreen.preventAutoHideAsync();
@@ -22,7 +23,7 @@ SplashScreen.setOptions({
 });
 
 export default function App() {
-  const scheme = useColorScheme();
+  const { colorScheme } = useAppTheme();
 
   const [fontLoaded, fontError] = useFonts({
     NanumSquareNeoExtraBold: require('./assets/fonts/NanumSquareNeoExtraBold.ttf'),
@@ -43,10 +44,12 @@ export default function App() {
     return null;
   }
 
+  // console.log(scheme, '??');
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <View style={theme[scheme ?? 'light']} className="flex-1">
+        <View style={theme[colorScheme]} className="flex-1">
           <BottomSheetModalProvider>
             <OverlayContainer>
               <RootNavigator />

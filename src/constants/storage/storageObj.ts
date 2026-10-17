@@ -78,8 +78,8 @@ export const storageObj = {
       },
     },
     order: 3,
-    color: 'yellow',
-    textColor: 'text-yellow-7',
+    color: 'amber',
+    textColor: 'text-amber-7',
     icon: 'ThermometerSun',
   },
 } as const;

@@ -7,7 +7,7 @@ import {
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { Appearance, Keyboard, Modal, Platform, Pressable, View } from 'react-native';
+import { Keyboard, Modal, Platform, Pressable, View } from 'react-native';
 import { useEffect, useRef } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
@@ -19,6 +19,7 @@ import {
   sheetRefAtom,
 } from '@/atom/overlayAtom';
 import { colorTokens } from '@/theme/color';
+import { useAppTheme } from '@/hooks/common/useAppTheme';
 
 export function OverlayContainer({ children }: { children: React.ReactNode }) {
   const insets = useSafeAreaInsets();
@@ -31,7 +32,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
   const closeModal = useSetAtom(closeModalAtom);
   const closeDatePicker = useSetAtom(closeDatePickerAtom);
 
-  const colorScheme = Appearance.getColorScheme() ?? 'light';
+  const { colorScheme } = useAppTheme();
 
   const setSheetRef = useSetAtom(sheetRefAtom);
 
@@ -73,12 +74,12 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
         enablePanDownToClose
         style={iosShadowStyle}
         backgroundStyle={{
-          backgroundColor: colorTokens[colorScheme].bg,
+          backgroundColor: colorTokens[colorScheme].bottomSheet,
           borderRadius: 30,
         }}
         maxDynamicContentSize={780}
         handleIndicatorStyle={{
-          backgroundColor: colorTokens[colorScheme].neutral[3],
+          backgroundColor: colorTokens[colorScheme].errorText,
           width: 80,
           height: 10,
         }}
@@ -94,7 +95,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
                   appearsOnIndex={0}
                   disappearsOnIndex={-1}
                   opacity={0.3}
-                  style={{ backgroundColor: colorTokens[colorScheme].neutral[5] }}
+                  style={{ backgroundColor: colorTokens[colorScheme].overlay }}
                 />
               )
             : undefined
@@ -122,7 +123,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
               // 배경
               <Pressable
                 style={{
-                  backgroundColor: colorTokens[colorScheme].neutral[7],
+                  backgroundColor: colorTokens[colorScheme].overlay,
                 }}
                 className="flex-1 opacity-70"
                 onPress={closeModal}
@@ -133,9 +134,9 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
               {modalProps?.children && (
                 <View
                   style={{
-                    backgroundColor: colorTokens[colorScheme].bg,
+                    backgroundColor: colorTokens[colorScheme].successText,
                     ...iosShadowStyle,
-                    shadowColor: colorTokens[colorScheme].neutral[9],
+                    shadowColor: colorTokens[colorScheme].errorBackground,
                   }}
                   className={`max-h-[85%] w-[85%] rounded-3xl p-6`}
                 >
@@ -153,7 +154,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
           <View className="flex-1 justify-end">
             {datePickerProps?.hasDim !== false && (
               <Pressable
-                style={{ backgroundColor: colorTokens[colorScheme].neutral[5] }}
+                style={{ backgroundColor: colorTokens[colorScheme].overlay }}
                 className="absolute h-full w-full opacity-30"
                 onPress={closeDatePicker}
               />
@@ -161,7 +162,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
 
             {datePickerProps?.render && (
               <View
-                style={{ backgroundColor: colorTokens[colorScheme].bg }}
+                style={{ backgroundColor: colorTokens[colorScheme].bottomSheet }}
                 className="rounded-t-[36px] pt-10"
               >
                 <View className="mx-8" style={{ paddingBottom: insets.bottom }}>
@@ -187,7 +188,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
 
             <View className="absolute h-full w-full items-center justify-center">
               <View
-                className={`max-h-[85%] w-[75%] rounded-3xl bg-neutral-1 p-1`}
+                className={`max-h-[85%] w-[75%] rounded-3xl bg-overlay p-1`}
                 style={{
                   ...iosShadowStyle,
                   shadowOffset: { width: 0, height: 4 },

@@ -3,10 +3,11 @@ import Text from '@/components/common/ui/Text';
 import { allFoodList } from '@/constants';
 import { useStorageItemList } from '@/hooks';
 import { getInsightData, getTopInsight } from '@/utils';
-import { Image, useColorScheme, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colorTokens } from '@/theme/color';
 import SquareBtn from '@/components/common/SquareBtn';
+import { useAppTheme } from '@/hooks/common/useAppTheme';
 
 /** 
   🚨 긴급 관리
@@ -44,8 +45,7 @@ export default function InsightCard() {
   const textColorMap = {
     red: '!text-red-7',
     green: '!text-green-7',
-    yellow: '!text-orange-7',
-    indigo: '!text-indigo-7',
+    amber: '!text-amber-7',
     blue: '!text-blue-7',
     neutral: '!text-neutral-5',
   } as const;
@@ -53,17 +53,14 @@ export default function InsightCard() {
   const { title, color, btn, description, image, isReverse } =
     getInsightData(insightProps);
 
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useAppTheme();
 
   return (
     <LinearGradient
-      colors={[
-        colorTokens[colorScheme ?? 'light']['blue'][3],
-        colorTokens[colorScheme ?? 'light'][color][1],
-      ]}
-      start={{ x: 0, y: 0 }}
+      colors={[colorTokens[colorScheme]['blue'][3], colorTokens[colorScheme][color][3]]}
+      start={{ x: 0.3, y: 0.2 }}
+      end={{ x: 0.5, y: 0.8 }}
       style={{ borderRadius: 20 }}
-      end={{ x: 1, y: 0 }}
     >
       <Card
         className={`items-center gap-x-1 !bg-transparent !py-6 ${isReverse ? 'flex-row-reverse !pr-7' : 'flex-row !pl-7'}`}

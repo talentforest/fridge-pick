@@ -102,7 +102,7 @@ export default function CautionStorageItemList({
               </TouchableOpacity>
             ) : (
               <View
-                className={`${hasFoodListByExpiredSoonFood && isCurrIndex ? 'rounded-t-xl bg-indigo-1' : ''} `}
+                className={`${hasFoodListByExpiredSoonFood && isCurrIndex ? 'rounded-t-xl bg-primary' : ''} `}
               >
                 {/* <CautionStorageItem
                   cautionStorageItem={item}

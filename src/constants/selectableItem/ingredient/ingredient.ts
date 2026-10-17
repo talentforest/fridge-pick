@@ -4636,8 +4636,8 @@ export const fruitObj: { [key in string]: Ingredient } = {
     defaultUnitLabel: '개',
     unitOptions: ['개', '팩'],
   },
-  orange: {
-    id: 'orange',
+  amber: {
+    id: 'amber',
     label: '오렌지',
     isActive: true,
     kind: 'ingredient',

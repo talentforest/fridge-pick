@@ -80,7 +80,7 @@ type TopInsightData = {
 };
 
 type InsightData = {
-  color: 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'neutral';
+  color: 'red' | 'amber' | 'green' | 'blue' | 'neutral';
   icon: IconName;
   title: { text: string; highlight?: boolean }[];
   subTitle?: { text: string; highlight?: boolean }[];
@@ -120,7 +120,7 @@ export const getInsightData = (props: InsightDataProps): InsightData => {
     case 'shopping':
       return {
         isReverse: true,
-        color: 'yellow',
+        color: 'amber',
         icon: 'ShoppingBasket',
         title: [
           { text: `${props.ingredientName}만 사면` },
@@ -133,7 +133,7 @@ export const getInsightData = (props: InsightDataProps): InsightData => {
 
     case 'favoriteFood':
       return {
-        color: 'yellow',
+        color: 'amber',
         icon: 'Heart',
         title: [
           { text: `${props.ingredientName}`, highlight: true },
@@ -148,7 +148,7 @@ export const getInsightData = (props: InsightDataProps): InsightData => {
 
     case 'frequentFood':
       return {
-        color: 'yellow',
+        color: 'amber',
         icon: 'ChefHat',
         title: [
           { text: `${props.ingredientName}`, highlight: true },
@@ -163,7 +163,7 @@ export const getInsightData = (props: InsightDataProps): InsightData => {
 
     case 'shoppingList':
       return {
-        color: 'yellow',
+        color: 'amber',
         icon: 'ChefHat',
         title: [
           {
@@ -243,7 +243,7 @@ export const getInsightData = (props: InsightDataProps): InsightData => {
 
     case 'favoriteIngredient':
       return {
-        color: 'indigo',
+        color: 'green',
         icon: 'Heart',
         title: [
           { text: `일주일간 가장 자주 먹은 식재료는 ${props.ingredientName}이에요` },
@@ -257,7 +257,7 @@ export const getInsightData = (props: InsightDataProps): InsightData => {
 
     case 'mostCookedFood':
       return {
-        color: 'indigo',
+        color: 'green',
         icon: 'CookingPot',
         title: [{ text: `가장 많이 만든 메뉴는 ${props.foodName}이에요` }],
         description: [{ text: '이번 달 가장 자주 만든 메뉴예요.' }],

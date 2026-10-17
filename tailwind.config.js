@@ -24,15 +24,63 @@ module.exports = {
       },
 
       colors: {
-        bg: 'var(--color-bg)',
-        card: 'var(--color-card)',
-        text: 'var(--color-text)',
-        border: 'var(--color-border)',
-        line: 'var(--color-line)',
+        // Primary
+        primary: 'var(--color-primary)',
+        primaryBackground: 'var(--color-primaryBackground)',
 
-        inactive: {
-          bg: 'var(--color-inactive-bg)',
-          text: 'var(--color-inactive-text)',
+        // Background
+        screen: 'var(--color-screen)',
+        card: 'var(--color-card)',
+        bottomSheet: 'var(--color-bottomSheet)',
+        overlay: 'var(--color-overlay)',
+
+        // Border
+        divider: 'var(--color-divider)',
+        border: 'var(--color-border)',
+        inputBorder: 'var(--color-inputBorder)',
+        focusBorder: 'var(--color-focusBorder)',
+        primaryBorder: 'var(--color-primaryBorder)',
+
+        // Text
+        text: 'var(--color-text)',
+        textDescription: 'var(--color-textDescription)',
+        textPlaceholder: 'var(--color-textPlaceholder)',
+
+        // Unselected
+        unselectedBackground: 'var(--color-unselectedBackground)',
+        unselectedText: 'var(--color-unselectedText)',
+        unselectedBorder: 'var(--color-unselectedBorder)',
+
+        // Disabled
+        disabledBackground: 'var(--color-disabledBackground)',
+        disabledText: 'var(--color-disabledText)',
+        disabledBorder: 'var(--color-disabledBorder)',
+
+        // Input
+        input: 'var(--color-input)',
+
+        // Status
+        successText: 'var(--color-successText)',
+        successBackground: 'var(--color-successBackground)',
+        warningText: 'var(--color-warningText)',
+        warningBackground: 'var(--color-warningBackground)',
+        errorText: 'var(--color-errorText)',
+        errorBackground: 'var(--color-errorBackground)',
+
+        green: {
+          9: 'var(--color-green-9)',
+          7: 'var(--color-green-7)',
+          5: 'var(--color-green-5)',
+          3: 'var(--color-green-3)',
+          1: 'var(--color-green-1)',
+        },
+
+        amber: {
+          9: 'var(--color-amber-9)',
+          7: 'var(--color-amber-7)',
+          5: 'var(--color-amber-5)',
+          3: 'var(--color-amber-3)',
+          1: 'var(--color-amber-1)',
         },
 
         red: {
@@ -50,21 +98,14 @@ module.exports = {
           5: 'var(--color-blue-5)',
           3: 'var(--color-blue-3)',
           1: 'var(--color-blue-1)',
-          0: 'var(--color-blue-0)',
         },
 
         ice: {
+          9: 'var(--color-ice-9)',
           7: 'var(--color-ice-7)',
           5: 'var(--color-ice-5)',
           3: 'var(--color-ice-3)',
           1: 'var(--color-ice-1)',
-          0: 'var(--color-ice-0)',
-        },
-
-        indigo: {
-          5: 'var(--color-indigo-5)',
-          3: 'var(--color-indigo-3)',
-          1: 'var(--color-indigo-1)',
         },
 
         neutral: {
@@ -74,31 +115,6 @@ module.exports = {
           3: 'var(--color-neutral-3)',
           1: 'var(--color-neutral-1)',
           0: 'var(--color-neutral-0)',
-        },
-
-        yellow: {
-          9: 'var(--color-yellow-9)',
-          7: 'var(--color-yellow-7)',
-          5: 'var(--color-yellow-5)',
-          3: 'var(--color-yellow-3)',
-          1: 'var(--color-yellow-1)',
-          0: 'var(--color-yellow-0)',
-        },
-
-        orange: {
-          9: 'var(--color-orange-9)',
-          7: 'var(--color-orange-7)',
-          5: 'var(--color-orange-5)',
-          3: 'var(--color-orange-3)',
-          1: 'var(--color-orange-1)',
-        },
-
-        green: {
-          9: 'var(--color-green-9)',
-          7: 'var(--color-green-7)',
-          5: 'var(--color-green-5)',
-          3: 'var(--color-green-3)',
-          1: 'var(--color-green-1)',
         },
       },
 

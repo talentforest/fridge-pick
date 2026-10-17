@@ -41,7 +41,7 @@ export default function AvailableFoodList({
                 className="flex-row items-center gap-x-3 px-5 py-7"
                 onPress={() => setIsExpanded((prev) => !prev)}
               >
-                <Icon name="ChefHat" color="orange" size={35} />
+                <Icon name="ChefHat" color="amber" size={35} />
 
                 <View className="flex-1 gap-y-2.5">
                   <Text className="font-extrabold !text-[15px]">

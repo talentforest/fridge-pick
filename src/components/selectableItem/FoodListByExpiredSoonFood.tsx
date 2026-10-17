@@ -23,7 +23,7 @@ export default function FoodListByExpiredSoonFood({
   const { label } = getTrackedItemData(focusedItem);
 
   return (
-    <View className="-z-10 -mx-[48px] -mt-1 h-[170px] border border-indigo-1 bg-indigo-1 py-4 pl-[24px]">
+    <View className="-z-10 -mx-[48px] -mt-1 h-[170px] border py-4 pl-[24px]">
       <View className={`mb-1 ml-2 mr-[24px] flex-row items-center gap-x-1`}>
         <FilterTag
           name={label}
@@ -51,7 +51,7 @@ export default function FoodListByExpiredSoonFood({
         />
       ) : (
         <Card className="mr-[24px] flex-1 items-center justify-center border">
-          <Text className="text-inactive-text">식재료를 이용한 메뉴 데이터가 없어요</Text>
+          <Text className="text-disabledText">식재료를 이용한 메뉴 데이터가 없어요</Text>
         </Card>
       )}
     </View>

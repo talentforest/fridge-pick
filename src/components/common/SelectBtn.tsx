@@ -15,7 +15,7 @@ interface SelectBtnProps {
     | 'blue'
     | 'lightGreen'
     | 'green'
-    | 'yellow'
+    | 'amber'
     | 'ice'
     | 'indigo'
     | 'inActive'
@@ -36,13 +36,13 @@ export default function SelectBtn({
 }: SelectBtnProps & TouchableOpacityProps) {
   const bgColorStyle = {
     red: 'bg-card border-red-3',
-    blue: 'bg-blue-0 border-blue-5',
+    blue: 'bg-blue-1 border-blue-7',
     ice: 'bg-ice-0 border-ice-5',
     green: 'bg-green-1 border-green-3',
     lightGreen: 'bg-green-1 border-green-3',
-    yellow: 'bg-yellow-0 border-yellow-5',
-    indigo: 'bg-indigo-1 border-indigo-3',
-    inActive: 'bg-inactive-bg border-neutral-3',
+    amber: 'bg-amber-0 border-amber-5',
+    indigo: 'bg-primaryActionBackground border-primaryBorder',
+    inActive: 'bg-disabledBackground border-neutral-3',
     neutral: 'bg-neutral-0 border-neutral-5',
     transparent: 'border border-neutral-1 bg-white',
     black: 'bg-neutral-1 border-neutral-7',
@@ -54,8 +54,8 @@ export default function SelectBtn({
     ice: 'text-ice-7',
     green: 'text-green-7',
     lightGreen: 'text-green-3',
-    yellow: 'text-yellow-7',
-    indigo: 'text-indigo-5',
+    amber: 'text-amber-7',
+    indigo: 'text-primary',
     inActive: 'text-neutral-5',
     neutral: 'text-neutral-7',
     transparent: 'border border-neutral-9 bg-white',

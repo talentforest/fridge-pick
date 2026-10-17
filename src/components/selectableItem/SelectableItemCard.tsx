@@ -33,7 +33,7 @@ export default function SelectableItemCard({
             <Icon
               name={allCategoryObj[item.category].icon}
               size={12}
-              color="yellow"
+              color="amber"
               hasBgColor
             />
           ) : (

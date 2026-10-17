@@ -9,7 +9,7 @@ export default function TextInput({
   isSheetInput,
   ...props
 }: { icon?: IconName; children?: ReactNode; isSheetInput?: boolean } & TextInputProps) {
-  const inputClassName = `flex-1 py-5 font-bold text-base tracking-tightest text-text placeholder:text-inactive-text ${children ? '' : 'mr-4'}`;
+  const inputClassName = `flex-1 py-5 font-bold text-base tracking-tightest text-text placeholder:text-disabledText ${children ? '' : 'mr-4'}`;
 
   return (
     <View

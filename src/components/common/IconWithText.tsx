@@ -27,40 +27,22 @@ export default function IconWithText({
       className={`flex-row items-center gap-x-1 ${props.className}`}
     >
       {icon ? (
-        <Icon
-          name={icon}
-          size={iconSize}
-          color={iconColor}
-          strokeWidth={2.5}
-          pointerEvents="none"
-        />
+        <Icon name={icon} size={iconSize} color={iconColor} pointerEvents="none" />
       ) : (
         <></>
       )}
 
       {text ? <Text className={textClassName}>{text}</Text> : <></>}
 
-      {tailIcon ? (
-        <Icon name={tailIcon} size={iconSize} color={iconColor} strokeWidth={2.5} />
-      ) : (
-        <></>
-      )}
+      {tailIcon ? <Icon name={tailIcon} size={iconSize} color={iconColor} /> : <></>}
     </TouchableOpacity>
   ) : (
     <View className={`flex-row items-center gap-x-1 ${props.className}`}>
-      {icon ? (
-        <Icon name={icon} size={iconSize} color={iconColor} strokeWidth={2.5} />
-      ) : (
-        <></>
-      )}
+      {icon ? <Icon name={icon} size={iconSize} color={iconColor} /> : <></>}
 
       {text ? <Text className={textClassName}>{text}</Text> : <></>}
 
-      {tailIcon ? (
-        <Icon name={tailIcon} size={iconSize} color={iconColor} strokeWidth={2.5} />
-      ) : (
-        <></>
-      )}
+      {tailIcon ? <Icon name={tailIcon} size={iconSize} color={iconColor} /> : <></>}
     </View>
   );
 }

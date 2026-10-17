@@ -41,7 +41,7 @@ export default function FormCategory({
 
   return (
     <View className="gap-y-4">
-      <Text className="ml-1 font-extrabold !text-[15px] text-yellow-7">{`1. ${label}의 카테고리를 선택해주세요`}</Text>
+      <Text className="ml-1 font-extrabold !text-[15px] text-amber-7">{`1. ${label}의 카테고리를 선택해주세요`}</Text>
 
       <View className="flex-row flex-wrap gap-1.5">
         {Object.values(kindCategory).map((item) => (

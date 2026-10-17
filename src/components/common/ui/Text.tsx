@@ -1,11 +1,12 @@
+import { colorTokens } from '@/theme/color';
 import { Text as RNText, TextProps } from 'react-native';
 
 export default function Text({ ...props }: TextProps) {
   const hasTextSize = props.className?.match(/text-(xs|sm|md|base|lg|xl|2xl)/);
 
-  const hasTextColor = props.className?.match(
-    /text-(bg|card|text|border|inactive|red|blue|indigo|neutral|green|ice|orange)/,
-  );
+  const color = Object.keys(colorTokens.light).join('|');
+
+  const hasTextColor = props.className?.match(new RegExp(`text-(${color})`));
 
   return (
     <RNText

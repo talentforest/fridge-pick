@@ -1,4 +1,4 @@
-import { changeMainFoodAtom, deleteTodayFoodAtom } from '@/atom/todayFoodAtom';
+import { deleteTodayFoodAtom } from '@/atom/todayFoodAtom';
 import { useOverlay, EnrichedFoodWithFilter, useHandleTodayFood } from '@/hooks';
 import { useSetAtom } from 'jotai';
 import { View } from 'react-native';
@@ -10,22 +10,22 @@ interface FoodDetailSheetProps {
   food: EnrichedFoodWithFilter;
 }
 
-const tabObj = {
-  cook: {
-    icon: 'ChefHat',
-    label: '직접 조리해요',
-  },
-  convenience: {
-    icon: 'Zap',
-    label: '간편하게 먹어요',
-  },
-} as const;
+// const tabObj = {
+//   cook: {
+//     icon: 'ChefHat',
+//     label: '직접 조리해요',
+//   },
+//   convenience: {
+//     icon: 'Zap',
+//     label: '간편하게 먹어요',
+//   },
+// } as const;
 
 export default function FoodDetailSheet({ food }: FoodDetailSheetProps) {
-  const { cook, convenience } = tabObj;
+  // const { cook, convenience } = tabObj;
 
   const deleteTodayFood = useSetAtom(deleteTodayFoodAtom);
-  const changeMainFood = useSetAtom(changeMainFoodAtom);
+  // const changeMainFood = useSetAtom(changeMainFoodAtom);
 
   const { isTodayFood, onAddTodayFoodPress } = useHandleTodayFood(food);
 
@@ -44,10 +44,10 @@ export default function FoodDetailSheet({ food }: FoodDetailSheetProps) {
   };
 
   // 메인메뉴로 변경하기
-  const onChangeMainFoodPress = () => {
-    changeMainFood(food.id);
-    closeSheet();
-  };
+  // const onChangeMainFoodPress = () => {
+  //   changeMainFood(food.id);
+  //   closeSheet();
+  // };
 
   return (
     <>
@@ -83,7 +83,7 @@ export default function FoodDetailSheet({ food }: FoodDetailSheetProps) {
                 name="오늘 먹을 메뉴에서 삭제"
                 iconName="Trash2"
                 onPress={onDeletePress}
-                bgColor="yellow"
+                bgColor="amber"
               />
 
               {/* {type === 'sideFood' ? (

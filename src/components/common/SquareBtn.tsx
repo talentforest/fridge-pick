@@ -11,10 +11,10 @@ interface SquareBtnProps {
   textClassName?: string;
   bgColor?:
     | 'red'
-    | 'orange'
+    | 'amber'
     | 'blue'
     | 'green'
-    | 'yellow'
+    | 'amber'
     | 'ice'
     | 'indigo'
     | 'inActive'
@@ -37,10 +37,9 @@ export default function SquareBtn({
     red: '!bg-[#aa2525]',
     ice: 'bg-ice-5',
     green: 'bg-green-700',
-    yellow: 'bg-amber-600',
-    orange: 'bg-orange-7',
-    indigo: 'bg-indigo-600',
-    inActive: 'bg-inactive-bg',
+    amber: 'bg-amber-600',
+    indigo: 'bg-primary',
+    inActive: 'bg-disabledBackground',
     neutral: 'bg-neutral-3',
     transparent: 'border border-neutral-9 bg-white',
     black: 'bg-[#333]',
@@ -50,7 +49,7 @@ export default function SquareBtn({
     bgColor === 'transparent'
       ? ''
       : bgColor === 'inActive'
-        ? 'text-inactive-text'
+        ? 'text-disabledText'
         : 'text-white';
 
   const iconStyle =

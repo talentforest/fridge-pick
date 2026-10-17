@@ -70,7 +70,7 @@ export default function FoodCard({ food, filterList, className = '' }: FoodCardP
                 food.requiredPossessionPercent === 100
                   ? 'green'
                   : food.requiredPossessionPercent >= 30
-                    ? 'yellow'
+                    ? 'amber'
                     : 'red'
               }
             />
@@ -81,7 +81,7 @@ export default function FoodCard({ food, filterList, className = '' }: FoodCardP
           {hasNotIngredientList.length > 0 ? (
             <View className="flex-row items-center gap-x-1.5">
               <View
-                className={`size-2 rounded-full ${hasNotIngredientList.length >= 3 ? 'bg-red-5' : 'bg-orange-7'} `}
+                className={`size-2 rounded-full ${hasNotIngredientList.length >= 3 ? 'bg-red-5' : 'bg-amber-7'} `}
               />
 
               <Text className="line-clamp-2 flex-1 leading-4">
@@ -93,7 +93,7 @@ export default function FoodCard({ food, filterList, className = '' }: FoodCardP
                   </Text>
                 ) : (
                   <>
-                    <Text className="font-extrabold !text-[11px] text-orange-9">
+                    <Text className="font-extrabold !text-[11px] text-amber-9">
                       {hasNotIngredientList.length}개
                     </Text>
                     <Text className="!text-[11px] text-neutral-7">만 있으면 돼요</Text>

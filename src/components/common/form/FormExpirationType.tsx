@@ -44,9 +44,9 @@ export default function FormExpirationType({
 
   return (
     <View className="gap-y-4">
-      <Text className="ml-1 font-extrabold !text-[15px] text-yellow-7">
+      <Text className="ml-1 font-extrabold !text-[15px] text-amber-7">
         2. 포장에{' '}
-        <Text className="font-heavy !text-[15px] text-yellow-9">특정 소비기한</Text>이
+        <Text className="font-heavy !text-[15px] text-amber-9">특정 소비기한</Text>이
         적혀있나요?
       </Text>
 
@@ -82,7 +82,7 @@ export default function FormExpirationType({
               }}
             >
               <Card
-                className={`items-center justify-center gap-y-3 !py-5 ${currForm === id || (id === 'recommended' && (currForm === 'raw' || currForm === 'homemade')) ? 'border border-yellow-5 bg-yellow-0' : ''}`}
+                className={`items-center justify-center gap-y-3 !py-5 ${currForm === id || (id === 'recommended' && (currForm === 'raw' || currForm === 'homemade')) ? 'bg-amber-0 border border-amber-5' : ''}`}
               >
                 <Icon name={icon} size={34} strokeWidth={2} color={color} />
                 <Text className="font-extrabold">{label}</Text>
@@ -98,7 +98,7 @@ export default function FormExpirationType({
           ))}
         </GridContainer>
 
-        <Card className="flex-row items-center gap-x-3 !bg-inactive-bg px-7 py-5">
+        <Card className="flex-row items-center gap-x-3 !bg-disabledBackground px-7 py-5">
           <Icon name="Info" size={16} color="neutral" />
           <View className="flex-1 gap-y-1.5">
             <Text className="font-extrabold">

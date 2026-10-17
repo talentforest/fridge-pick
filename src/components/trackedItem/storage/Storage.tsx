@@ -44,7 +44,7 @@ export default function Storage({ storageType, openItemPress }: StorageProps) {
             source={image_empty_basket}
             className="aspect-square size-1/5 opacity-60"
           />
-          <Text className="mb-16 text-inactive-text">갖고있는 식재료가 없어요.</Text>
+          <Text className="mb-16 text-disabledText">갖고있는 식재료가 없어요.</Text>
         </View>
       )}
     </Card>

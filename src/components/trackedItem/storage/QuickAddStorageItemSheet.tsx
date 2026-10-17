@@ -78,7 +78,7 @@ export default function QuickAddStorageItemSheet() {
     {
       id: 'pantry',
       label: '실온',
-      color: 'yellow',
+      color: 'amber',
       onPress: () => {
         onItemChange({ storage: { type: 'pantry' } });
       },
@@ -277,8 +277,8 @@ export default function QuickAddStorageItemSheet() {
                       <IconWithText
                         text="빠른변경"
                         icon="Zap"
-                        iconColor="yellow"
-                        textClassName="!text-[11px] text-yellow-7"
+                        iconColor="amber"
+                        textClassName="!text-[11px] text-amber-7"
                         iconSize={11}
                       />
                       <View className="flex-row flex-wrap gap-1">

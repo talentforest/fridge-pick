@@ -36,7 +36,7 @@ export default function DateInput({
       {/* 달력 아이콘 */}
       <View className="flex-row items-center gap-x-0.5 !py-1 pl-0.5">
         <Icon name="CalendarDays" size={15} color="darkGray" />
-        <Text className="text-neutral-5">소비기한</Text>
+        <Text className="text-textDescription">소비기한</Text>
       </View>
 
       {/* 날짜와 남은 일수 */}
