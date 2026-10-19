@@ -203,7 +203,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
                   )}
 
                   {modalProps.message && (
-                    <Text className="text-base leading-[25px] tracking-tighter !text-text">
+                    <Text className="text-base leading-[25px] !text-text">
                       {modalProps.message}
                     </Text>
                   )}

@@ -119,10 +119,16 @@ module.exports = {
       },
 
       letterSpacing: {
-        tightest: '-0.05em',
-        normal: '0em',
-        wide: '0.02em',
+        tight: '-0.08em',
+        normal: '-0.04em',
+        wide: '0em',
         wider: '0.04em',
+      },
+
+      opacity: {
+        disabled: 0.4,
+        pressed: 0.72,
+        overlay: 0.48,
       },
     },
   },

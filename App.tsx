@@ -1,24 +1,28 @@
 import RootNavigator from '@/navigation/RootNavigator';
 import Toast from '@/components/common/Toast';
 import { OverlayContainer } from '@/components/common/container/OverlayContainer';
+
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
+
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
+
 import { View } from 'react-native';
+import { useEffect, useState } from 'react';
+
 import { theme } from '@/theme/color';
-import './global.css';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
 import { useAppTheme } from '@/hooks/common/useAppTheme';
 
-// App 컴포넌트가 실행되기 전에 자동으로 사라지는 것을 방지
+import './global.css';
+import CustomSplashScreen from '@/screens/CustomSplashScreen';
+
 SplashScreen.preventAutoHideAsync();
 
-// 선택 사항: 스플래시가 사라질 때 페이드
 SplashScreen.setOptions({
-  duration: 500,
+  duration: 300,
   fade: true,
 });
 
@@ -32,33 +36,63 @@ export default function App() {
     NanumSquareNeoHeavy: require('./assets/fonts/NanumSquareNeoHeavy.ttf'),
   });
 
-  useEffect(() => {
-    // 폰트 로딩에 성공하거나 실패하면 앱을 표시
-    if (fontLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontLoaded, fontError]);
+  const [isAppReady, setIsAppReady] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
 
-  // 이 동안에는 네이티브 스플래시가 계속 표시됨
-  if (!fontLoaded && !fontError) {
+  // 앱 초기화
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Firebase Auth 초기화 등
+      } finally {
+        setIsAppReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const isReady = (fontLoaded || !!fontError) && isAppReady;
+
+  // 커스텀 스플래시 표시 시간
+  useEffect(() => {
+    if (!isReady) return;
+
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [isReady]);
+
+  // 초기화 전에는 네이티브 스플래시 유지
+  if (!isReady) {
     return null;
   }
-
-  // console.log(scheme, '??');
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <View style={theme[colorScheme]} className="flex-1">
-          <BottomSheetModalProvider>
-            <OverlayContainer>
-              <RootNavigator />
-              <StatusBar style="auto" />
-            </OverlayContainer>
-          </BottomSheetModalProvider>
+        <View
+          style={[theme[colorScheme], { flex: 1 }]}
+          onLayout={() => {
+            SplashScreen.hideAsync();
+          }}
+        >
+          {showSplash ? (
+            <CustomSplashScreen />
+          ) : (
+            <>
+              <BottomSheetModalProvider>
+                <OverlayContainer>
+                  <RootNavigator />
+                  <StatusBar style="auto" />
+                </OverlayContainer>
+              </BottomSheetModalProvider>
 
-          {/* 토스트 */}
-          <Toast />
+              <Toast />
+            </>
+          )}
         </View>
       </SafeAreaProvider>
     </GestureHandlerRootView>

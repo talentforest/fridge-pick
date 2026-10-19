@@ -57,7 +57,7 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
             storageType={isInStorageShoppingItem.storage.type}
           />
         ) : (
-          <Text className="px-2 text-sm tracking-[-0.06em] text-textDescription">
+          <Text className="px-2 text-sm text-textDescription">
             {formatDateString(new Date(), 'yy. MM. dd')}
           </Text>
         )}

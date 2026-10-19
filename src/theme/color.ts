@@ -105,7 +105,7 @@ export const colorTokens = {
 
   dark: {
     // Primary
-    primary: palette.indigo[500],
+    primary: palette.indigo[200],
     primaryBackground: palette.indigo[950],
 
     // Background

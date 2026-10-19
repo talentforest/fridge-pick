@@ -81,9 +81,7 @@ export default function ProgressBar({
           /> */}
 
           <View className="absolute left-0 right-0 aspect-square flex-row items-center justify-center rounded-full">
-            <Text
-              className={`font-heavy !text-[11px] !tracking-[-0.08em] ${colorObj.text}`}
-            >
+            <Text className={`font-heavy !text-[11px] ${colorObj.text}`}>
               {percentage}
             </Text>
             <Text className="mt-0.5 !text-[7px] text-neutral-5">%</Text>

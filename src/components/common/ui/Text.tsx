@@ -11,7 +11,7 @@ export default function Text({ ...props }: TextProps) {
   return (
     <RNText
       {...props}
-      className={`font-bold tracking-tightest ${hasTextColor ? hasTextColor[0] : 'text-text'} ${
+      className={`font-bold tracking-normal ${hasTextColor ? hasTextColor[0] : 'text-text'} ${
         hasTextSize ? props.className : `text-md ${props.className ?? ''}`
       }`}
     />

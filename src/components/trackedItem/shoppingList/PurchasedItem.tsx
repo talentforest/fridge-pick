@@ -71,7 +71,7 @@ export default function PurchasedItem({
       <View className="mt-3 items-center gap-y-1.5">
         <Text className="font-extrabold !text-sm text-blue-7">{remaining}</Text>
 
-        <Text className="!text-sm tracking-[-0.06em] text-neutral-7">
+        <Text className="!text-sm text-neutral-7">
           {formatDateString(date, 'yy. MM. dd')}
         </Text>
       </View>

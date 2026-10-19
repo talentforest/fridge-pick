@@ -8,7 +8,7 @@ export default function TextArea({
   const hasTextSize = props.className?.match(/text-(xs|sm|md|base|lg|xl|2xl)/);
 
   const commonClassName =
-    'min-h-[80px] w-full rounded-2xl border border-border bg-card px-5 pt-4 pb-6 font-bold leading-[20px] tracking-tightest text-text placeholder:text-disabledText';
+    'min-h-[80px] w-full rounded-2xl border border-border bg-card px-5 pt-4 pb-6 font-bold leading-[20px] text-text placeholder:text-disabledText';
 
   return isSheetInput ? (
     <BottomSheetTextInput
