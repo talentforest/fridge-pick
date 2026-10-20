@@ -10,7 +10,6 @@ export const colorTokens = {
     // Background
     screen: palette.neutral[50],
     card: palette.neutral[0],
-    bottomSheet: palette.neutral[0],
     overlay: palette.neutral[1000],
 
     // Border
@@ -111,7 +110,6 @@ export const colorTokens = {
     // Background
     screen: palette.neutral[950],
     card: palette.neutral[900],
-    bottomSheet: palette.neutral[850],
     overlay: palette.neutral[1000],
 
     // Border
@@ -218,7 +216,6 @@ const createTheme = (mode: ThemeMode) => {
     // Background
     '--color-screen': colors.screen,
     '--color-card': colors.card,
-    '--color-bottomSheet': colors.bottomSheet,
     '--color-overlay': colors.overlay,
 
     // Border

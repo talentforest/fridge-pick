@@ -182,7 +182,7 @@ export default function SearchAddStorageItem({
   };
 
   return (
-    <View className="mt-5">
+    <View>
       <LabelContainer label="식재료·음식 검색">
         <TextInput
           isSheetInput={isSheetInput}
@@ -195,7 +195,7 @@ export default function SearchAddStorageItem({
 
       {/* 추천 식재료 */}
       {list.length ? (
-        <GridContainer columns={4} gap={10} horizontalInset={21} className="mt-3">
+        <GridContainer columns={4} gap={10} horizontalInset={20} className="mt-3">
           {list.map((item) => (
             <TouchableOpacity
               key={item.id}

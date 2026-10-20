@@ -88,9 +88,9 @@ export default function App() {
                   <RootNavigator />
                   <StatusBar style="auto" />
                 </OverlayContainer>
-              </BottomSheetModalProvider>
 
-              <Toast />
+                <Toast />
+              </BottomSheetModalProvider>
             </>
           )}
         </View>

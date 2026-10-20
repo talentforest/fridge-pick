@@ -59,7 +59,7 @@ export default function FavoriteBtn({
       type: 'normal',
       text1: `${!favoriteItem ? '❤️ 나의 픽에 추가' : '🗑️ 나의 픽에서 삭제'}되었습니다!`,
       props: {
-        bgColor: favoriteItem ? 'red' : 'blue',
+        bgColor: favoriteItem ? 'red' : 'neutral',
       },
     });
   };

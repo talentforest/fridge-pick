@@ -23,9 +23,7 @@ export default function FoodScreen() {
   } = useGetFoodList({ maxLength: 30 });
 
   const filteredChildrenData = useCallback(
-    (food: EnrichedFoodWithFilter) => (
-      <FoodCard key={food.id} food={food} className="flex-1" />
-    ),
+    (food: EnrichedFoodWithFilter) => <FoodCard key={food.id} food={food} />,
     [],
   );
 
@@ -42,7 +40,7 @@ export default function FoodScreen() {
         />
 
         {/* 메뉴 검색바 */}
-        <SectionContainer className="min-h-[800px]">
+        <SectionContainer className="min-h-[82vh]">
           <SectionTitle title="메뉴 검색" />
 
           <TextInput

@@ -8,11 +8,12 @@ export default function QuickAddFoodBtn() {
   const onPlusPress = () => {
     openSheet({
       enableDynamicSizing: false,
-      snapPoints: [520],
+      snapPoints: [480],
       keyboardBehavior: 'extend',
       render: () => <QuickAddStorageItemSheet />,
     });
   };
+
   return (
     <Icon
       name="Plus"

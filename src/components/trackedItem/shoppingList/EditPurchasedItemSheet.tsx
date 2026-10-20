@@ -37,7 +37,7 @@ export default function EditPurchasedItemSheet({
         name="수정완료"
         iconName="CheckCircle2"
         onPress={() => onEditSubmit(currStorageItem.id, currStorageItem)}
-        className="mb-3 mt-5"
+        className="mt-5"
       />
     </View>
   );

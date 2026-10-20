@@ -17,6 +17,7 @@ import {
   datePickerAtom,
   closeDatePickerAtom,
   sheetRefAtom,
+  closeSheetAtom,
 } from '@/atom/overlayAtom';
 import { colorTokens } from '@/theme/color';
 import { useAppTheme } from '@/hooks/common/useAppTheme';
@@ -29,6 +30,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
   const modalProps = useAtomValue(modalAtom);
   const datePickerProps = useAtomValue(datePickerAtom);
 
+  const closeSheet = useSetAtom(closeSheetAtom);
   const closeModal = useSetAtom(closeModalAtom);
   const closeDatePicker = useSetAtom(closeDatePickerAtom);
 
@@ -42,11 +44,13 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
 
   /* ---------------- BottomSheet open/close ---------------- */
 
+  const hasPresentedRef = useRef(false);
+
   useEffect(() => {
     if (sheetProps) {
+      hasPresentedRef.current = true;
       sheetRef.current?.present();
-    }
-    if (sheetProps === null) {
+    } else if (hasPresentedRef.current) {
       sheetRef.current?.dismiss();
     }
   }, [sheetProps]);
@@ -65,53 +69,51 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
     <>
       {children}
 
-      {/* BottomSheet */}
       <BottomSheetModal
         ref={sheetRef}
+        handleIndicatorStyle={{
+          backgroundColor: colorTokens[colorScheme].focusBorder,
+          width: 80,
+          height: 8,
+          borderRadius: 999,
+        }}
         keyboardBehavior="interactive"
         keyboardBlurBehavior="restore"
         enableDynamicSizing={sheetProps?.enableDynamicSizing ?? true}
         enablePanDownToClose
         style={iosShadowStyle}
-        backgroundStyle={{
-          backgroundColor: colorTokens[colorScheme].bottomSheet,
-          borderRadius: 30,
-        }}
-        maxDynamicContentSize={780}
-        handleIndicatorStyle={{
-          backgroundColor: colorTokens[colorScheme].errorText,
-          width: 80,
-          height: 10,
-        }}
         snapPoints={sheetProps?.snapPoints}
-        onDismiss={() => {
-          sheetRef.current?.dismiss();
+        handleStyle={{
+          paddingTop: 12,
+          paddingBottom: 12,
         }}
-        backdropComponent={
-          sheetProps?.hasDim !== false
-            ? (props) => (
-                <BottomSheetBackdrop
-                  {...props}
-                  appearsOnIndex={0}
-                  disappearsOnIndex={-1}
-                  opacity={0.3}
-                  style={{ backgroundColor: colorTokens[colorScheme].overlay }}
-                />
-              )
-            : undefined
-        }
+        maxDynamicContentSize={900}
+        backgroundStyle={{
+          backgroundColor: colorTokens[colorScheme].screen,
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+        }}
+        backdropComponent={(props) => (
+          <BottomSheetBackdrop
+            {...props}
+            appearsOnIndex={0}
+            disappearsOnIndex={-1}
+            pressBehavior="close"
+            opacity={0.2}
+          />
+        )}
+        onDismiss={() => {
+          hasPresentedRef.current = false;
+          closeSheet();
+        }}
         {...sheetProps}
       >
         <BottomSheetScrollView
           keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBottom: insets.bottom + 10,
-            paddingHorizontal: 20,
-            paddingTop: 12,
-          }}
+          className="bg-screen"
+          contentContainerClassName="px-[20px] pb-[4vh] pt-4"
         >
-          {sheetProps && sheetProps.render()}
+          {sheetProps?.render()}
         </BottomSheetScrollView>
       </BottomSheetModal>
 
@@ -134,7 +136,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
               {modalProps?.children && (
                 <View
                   style={{
-                    backgroundColor: colorTokens[colorScheme].successText,
+                    backgroundColor: colorTokens[colorScheme].screen,
                     ...iosShadowStyle,
                     shadowColor: colorTokens[colorScheme].errorBackground,
                   }}
@@ -162,7 +164,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
 
             {datePickerProps?.render && (
               <View
-                style={{ backgroundColor: colorTokens[colorScheme].bottomSheet }}
+                style={{ backgroundColor: colorTokens[colorScheme].screen }}
                 className="rounded-t-[36px] pt-10"
               >
                 <View className="mx-8" style={{ paddingBottom: insets.bottom }}>
@@ -188,7 +190,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
 
             <View className="absolute h-full w-full items-center justify-center">
               <View
-                className={`max-h-[85%] w-[75%] rounded-3xl bg-overlay p-1`}
+                className={`max-h-[85%] w-[75%] rounded-3xl bg-card p-1`}
                 style={{
                   ...iosShadowStyle,
                   shadowOffset: { width: 0, height: 4 },
@@ -197,15 +199,11 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
               >
                 <View className="mx-5 mt-5">
                   {modalProps.title && (
-                    <Text className="mb-5 font-bold text-lg !text-neutral-1">
-                      {modalProps.title}
-                    </Text>
+                    <Text className="mb-5 font-bold text-lg">{modalProps.title}</Text>
                   )}
 
                   {modalProps.message && (
-                    <Text className="text-base leading-[25px] !text-text">
-                      {modalProps.message}
-                    </Text>
+                    <Text className="text-base leading-[25px]">{modalProps.message}</Text>
                   )}
                 </View>
 
@@ -218,7 +216,7 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
                       }}
                       className="p-4"
                     >
-                      <Text className="font-extrabold !text-[15px] !text-neutral-5">
+                      <Text className="font-extrabold !text-[15px] !text-textPlaceholder">
                         취소
                       </Text>
                     </TouchableOpacity>
@@ -234,7 +232,9 @@ export function OverlayContainer({ children }: { children: React.ReactNode }) {
                     }}
                     className="p-4"
                   >
-                    <Text className="font-heavy !text-[15px] !text-green-5">확인</Text>
+                    <Text className="font-heavy !text-[15px] !text-successText">
+                      확인
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>

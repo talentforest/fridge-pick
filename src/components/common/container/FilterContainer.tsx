@@ -1,9 +1,10 @@
 import Text from '@/components/common/ui/Text';
 import GridContainer from '@/components/common/container/GridContainer';
-import Card from '@/components/common/ui/Card';
 import { ReactElement } from 'react';
 import { FlatList, View } from 'react-native';
 import FilterList, { FilterItem } from '@/components/common/FilterList';
+import EmptyCard from '@/components/common/EmptyCard';
+import { image_empty_plate } from '@/constants';
 
 type HasFilter<K> = {
   id: string;
@@ -56,13 +57,15 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
           }
           renderItem={({ item }) => children(item)}
           ListEmptyComponent={
-            <Card className="h-[420px] items-center justify-center">
-              <Text className="text-blue-5">식사메뉴가 없어요</Text>
-            </Card>
+            <EmptyCard
+              source={image_empty_plate}
+              text="식사메뉴가 없어요"
+              className="flex-1"
+            />
           }
         />
       ) : (
-        <View className="gap-y-4">
+        <View className="flex-1 gap-y-4">
           <FilterList
             filterList={filterList}
             activeFilter={activeFilter}
@@ -76,13 +79,15 @@ export default function FilterContainer<T extends HasFilter<K>, K>({
           </View>
 
           {dataList.length > 0 && children ? (
-            <GridContainer columns={columns} gap={14}>
+            <GridContainer columns={columns} horizontalInset={20} gap={14}>
               {dataList.map(children)}
             </GridContainer>
           ) : (
-            <Card className="h-[400px] items-center justify-center">
-              <Text className="text-blue-5">식사메뉴가 없어요</Text>
-            </Card>
+            <EmptyCard
+              source={image_empty_plate}
+              text="식사메뉴가 없어요"
+              className="flex-1"
+            />
           )}
         </View>
       )}

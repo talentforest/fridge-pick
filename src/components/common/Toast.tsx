@@ -4,13 +4,18 @@ import ConfigToast, { ToastConfigParams } from 'react-native-toast-message';
 import Text from '@/components/common/ui/Text';
 import Icon from '@/components/common/ui/Icon';
 
-export type ToastBgColor = 'blue' | 'amber' | 'red';
+export type ToastBgColor = 'neutral' | 'blue' | 'amber' | 'red';
 
-const getContainerCommonClassName = ({ bgColor = 'blue' }: { bgColor: ToastBgColor }) => {
+const getContainerCommonClassName = ({
+  bgColor = 'neutral',
+}: {
+  bgColor: ToastBgColor;
+}) => {
   const color = {
-    blue: 'bg-blue-9',
-    red: 'bg-red-9',
-    amber: 'bg-amber-9',
+    neutral: 'bg-neutral-9',
+    blue: 'bg-blue-7',
+    red: 'bg-red-7',
+    amber: 'bg-amber-7',
   };
   return `max-w-[80%] rounded-2xl px-6 py-5 ${color[bgColor]}`;
 };
@@ -47,7 +52,7 @@ export default function Toast() {
   return (
     <ConfigToast
       position="bottom"
-      bottomOffset={100}
+      bottomOffset={140}
       visibilityTime={2000}
       config={toastConfig}
     />

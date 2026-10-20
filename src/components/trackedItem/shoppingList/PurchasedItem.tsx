@@ -38,7 +38,6 @@ export default function PurchasedItem({
 
   const onEditPress = () =>
     openSheet({
-      snapPoints: ['80%'],
       render: () => (
         <EditPurchasedItemSheet
           initialStorageItem={storageItem}
@@ -54,13 +53,6 @@ export default function PurchasedItem({
 
   return (
     <Card className={`items-center overflow-hidden !pt-3`}>
-      {/* 인덱스 넘버 */}
-      {/* {index && (
-        <View className="absolute left-0 top-0 items-center justify-center rounded-br-xl bg-blue-1 p-2.5">
-          <Text className="font-extrabold text-blue-7">{index}</Text>
-        </View>
-      )} */}
-
       <FoodImage trackedItem={storageItem} imageSize={40} />
 
       <Text className="mt-1.5 line-clamp-1 font-extrabold text-sm">
@@ -79,7 +71,7 @@ export default function PurchasedItem({
       {/* 수정버튼 */}
       <Icon
         name="Edit3"
-        size={10}
+        size={13}
         className="absolute right-1.5 top-1.5 size-7 items-center justify-center rounded-full bg-neutral-5 opacity-50"
         color="white"
         onPress={onEditPress}

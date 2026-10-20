@@ -31,7 +31,6 @@ module.exports = {
         // Background
         screen: 'var(--color-screen)',
         card: 'var(--color-card)',
-        bottomSheet: 'var(--color-bottomSheet)',
         overlay: 'var(--color-overlay)',
 
         // Border

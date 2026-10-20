@@ -173,14 +173,10 @@ export default function QuickAddStorageItemSheet() {
   };
 
   return (
-    <View className="">
+    <View>
       <ModalHeader title="빠른 식재료 추가" />
 
-      <Text className="my-2 text-sm text-neutral-7">
-        식재료 기본 정보로 빠르게 추가해요!
-      </Text>
-
-      <View className="gap-y-3">
+      <View className="mt-3 gap-y-3">
         {currStorageItem === null ? (
           <SearchAddStorageItem
             isSheetInput
@@ -190,7 +186,7 @@ export default function QuickAddStorageItemSheet() {
             maxLength={8}
           />
         ) : (
-          <View className="mt-3 gap-y-3">
+          <>
             <View className="flex-row items-start justify-between">
               <View className="flex-1 flex-row items-center gap-x-3">
                 <TrackedItemImageLabel item={currStorageItem} />
@@ -206,136 +202,128 @@ export default function QuickAddStorageItemSheet() {
               />
             </View>
 
-            <View className="gap-y-3">
-              <View className="flex-1 flex-row justify-between gap-x-0">
-                {propertyList.map((item) => (
-                  <Card
-                    key={item.label}
-                    className="w-[48.5%] gap-y-5 overflow-hidden !px-0 !pb-0"
-                  >
-                    <View className="flex-row items-center gap-x-2 px-3">
-                      <Text className={`ml-1 text-sm text-neutral-7`}>{item.label}</Text>
-                      {item.label === '현재 소비기한' && (
-                        <Icon
-                          name="Edit3"
-                          size={12}
-                          className="absolute right-0 mr-1.5 p-2.5"
-                          onPress={onEditDatePickerPress}
-                        />
+            <View className="flex-row justify-between">
+              {propertyList.map((item) => (
+                <Card
+                  key={item.label}
+                  className="w-[48.5%] gap-y-5 overflow-hidden !px-0 !pb-0"
+                >
+                  <View className="flex-row items-center gap-x-2 px-3">
+                    <Text className={`ml-1 text-sm text-neutral-7`}>{item.label}</Text>
+                    {item.label === '현재 소비기한' && (
+                      <Icon
+                        name="Edit3"
+                        size={14}
+                        className="absolute right-0 mr-1.5 p-2.5"
+                        onPress={onEditDatePickerPress}
+                      />
+                    )}
+                  </View>
+
+                  <View className="flex-row items-center gap-x-2 px-4">
+                    <Icon
+                      name={item.icon}
+                      color="neutral"
+                      hasBgColor
+                      size={16}
+                      className="!rounded-full p-3.5"
+                    />
+                    <View className="justify-center gap-y-3">
+                      {item.label === '현재 보관위치' ? (
+                        <View className="gap-y-2">
+                          <View className="flex-row items-center gap-x-0.5">
+                            <Icon
+                              name={storageObj[item.currData].icon}
+                              color={storageObj[item.currData].color}
+                              size={16}
+                            />
+                            <Text
+                              className={`${storageObj[item.currData].textColor} font-extrabold text-base`}
+                            >
+                              {storageObj[item.currData].label}
+                            </Text>
+                          </View>
+
+                          <Text className="text-sm text-neutral-7">
+                            {item.currData === currStorageItem.storage.type
+                              ? '권장'
+                              : '변경된'}{' '}
+                            보관위치
+                          </Text>
+                        </View>
+                      ) : (
+                        <View className="gap-y-2">
+                          <Text
+                            className={`font-extrabold text-base ${expirationStatusObj[status].textColor}`}
+                          >
+                            {formatRemaining(getRemainingDays(currStorageItem.expiresAt))}
+                          </Text>
+                          <Text className="text-sm text-neutral-7">{item.currData}</Text>
+                        </View>
                       )}
                     </View>
+                  </View>
 
-                    <View className="flex-row items-center gap-x-2 px-4">
-                      <Icon
-                        name={item.icon}
-                        color="neutral"
-                        hasBgColor
-                        size={16}
-                        className="!rounded-full p-3.5"
-                      />
-                      <View className="justify-center gap-y-3">
-                        {item.label === '현재 보관위치' ? (
-                          <View className="gap-y-2">
-                            <View className="flex-row items-center gap-x-0.5">
-                              <Icon
-                                name={storageObj[item.currData].icon}
-                                color={storageObj[item.currData].color}
-                                size={16}
-                              />
-                              <Text
-                                className={`${storageObj[item.currData].textColor} font-extrabold text-base`}
-                              >
-                                {storageObj[item.currData].label}
-                              </Text>
-                            </View>
-
-                            <Text className="text-sm text-neutral-7">
-                              {item.currData === currStorageItem.storage.type
-                                ? '권장'
-                                : '변경된'}{' '}
-                              보관위치
-                            </Text>
-                          </View>
-                        ) : (
-                          <View className="gap-y-2">
-                            <Text
-                              className={`font-extrabold text-base ${expirationStatusObj[status].textColor}`}
-                            >
-                              {formatRemaining(
-                                getRemainingDays(currStorageItem.expiresAt),
-                              )}
-                            </Text>
-                            <Text className="text-sm text-neutral-7">
-                              {item.currData}
-                            </Text>
-                          </View>
-                        )}
-                      </View>
+                  <View className="mt-1 gap-y-2.5 bg-primaryBorder px-3 py-5">
+                    <IconWithText
+                      text="빠른변경"
+                      icon="Zap"
+                      iconColor="amber"
+                      textClassName="!text-[11px] text-amber-7"
+                      iconSize={11}
+                    />
+                    <View className="flex-row flex-wrap gap-1">
+                      {item.quickBtnList.map((btn) => (
+                        <SelectBtn
+                          key={btn.id}
+                          onPress={btn.onPress}
+                          name={
+                            item.label === '현재 보관위치'
+                              ? storageObj[btn.id as StorageTypeId].label
+                              : btn.label
+                          }
+                          color={btn.color}
+                          iconName={
+                            item.label === '현재 보관위치' ? 'ArrowRightLeft' : undefined
+                          }
+                          iconSize={11}
+                          textClassName="!text-[11px] font-extrabold"
+                          className="!bg-neutral-0 !px-3 !py-2.5"
+                        />
+                      ))}
                     </View>
-
-                    <View className="mt-1 flex-1 gap-y-2.5 bg-border px-3 pb-5 pt-5">
-                      <IconWithText
-                        text="빠른변경"
-                        icon="Zap"
-                        iconColor="amber"
-                        textClassName="!text-[11px] text-amber-7"
-                        iconSize={11}
-                      />
-                      <View className="flex-row flex-wrap gap-1">
-                        {item.quickBtnList.map((btn) => (
-                          <SelectBtn
-                            key={btn.id}
-                            onPress={btn.onPress}
-                            name={
-                              item.label === '현재 보관위치'
-                                ? storageObj[btn.id as StorageTypeId].label
-                                : btn.label
-                            }
-                            color={btn.color}
-                            iconName={
-                              item.label === '현재 보관위치'
-                                ? 'ArrowRightLeft'
-                                : undefined
-                            }
-                            iconSize={11}
-                            textClassName="!text-[11px] font-extrabold"
-                            className="!bg-neutral-0 !px-3 !py-2.5"
-                          />
-                        ))}
-                      </View>
-                    </View>
-                  </Card>
-                ))}
-              </View>
-
-              <SquareBtn
-                iconName="Plus"
-                name={`${storageObj[currStorageItem.storage.type].label}에 추가하기`}
-                className="mt-6"
-                onPress={() => {
-                  const result = addStorageItem(currStorageItem);
-
-                  if (result.type === 'duplicate') {
-                    showToast({
-                      type: 'normal',
-                      text1: `⚠️ ${storageObj[(result.item as StorageItem).storage.type].label}에 이미 보유하고 있습니다.`,
-                      props: {
-                        bgColor: 'red',
-                      },
-                    });
-                  }
-
-                  if (result.type === 'success') {
-                    closeSheet();
-                    showToast({
-                      type: 'normal',
-                      text1: `${storageObj[currStorageItem.storage.type].label}에 추가되었습니다!`,
-                    });
-                  }
-                }}
-              />
+                  </View>
+                </Card>
+              ))}
             </View>
-          </View>
+
+            <SquareBtn
+              iconName="Plus"
+              name={`${storageObj[currStorageItem.storage.type].label}에 추가하기`}
+              className="mt-5"
+              onPress={() => {
+                const result = addStorageItem(currStorageItem);
+
+                if (result.type === 'duplicate') {
+                  showToast({
+                    type: 'normal',
+                    text1: `⚠️ ${storageObj[(result.item as StorageItem).storage.type].label}에 이미 보유하고 있습니다.`,
+                    props: {
+                      bgColor: 'red',
+                    },
+                  });
+                }
+
+                if (result.type === 'success') {
+                  closeSheet();
+                  showToast({
+                    type: 'normal',
+                    text1: `${storageObj[currStorageItem.storage.type].label}에 추가되었습니다!`,
+                  });
+                }
+              }}
+            />
+          </>
         )}
       </View>
     </View>
