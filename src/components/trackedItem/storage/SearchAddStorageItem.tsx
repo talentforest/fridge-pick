@@ -183,12 +183,12 @@ export default function SearchAddStorageItem({
 
   return (
     <View className="mt-5">
-      <LabelContainer label="식재료 검색">
+      <LabelContainer label="식재료·음식 검색">
         <TextInput
           isSheetInput={isSheetInput}
           value={searchKeyword}
           onChangeText={setSearchKeyword}
-          placeholder="식재료를 검색해주세요."
+          placeholder="식재료나 음식을 검색해주세요."
           icon="Search"
         />
       </LabelContainer>

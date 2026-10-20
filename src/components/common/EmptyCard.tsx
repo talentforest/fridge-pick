@@ -1,5 +1,6 @@
 import Card from '@/components/common/ui/Card';
 import Text from '@/components/common/ui/Text';
+import { initialShadowStyle, iosShadowStyle } from '@/constants';
 import { Image, ImageSourcePropType, View } from 'react-native';
 
 type EmptyCardProps = {
@@ -7,6 +8,7 @@ type EmptyCardProps = {
   text: string;
   subText?: string[];
   className?: string;
+  hasBox?: boolean;
 };
 
 export default function EmptyCard({
@@ -14,11 +16,15 @@ export default function EmptyCard({
   text,
   className = '',
   subText,
+  hasBox = true,
 }: EmptyCardProps) {
   const commonClassName = `items-center gap-y-3 !py-6 justify-center ${className}`;
 
   return (
-    <Card className={commonClassName}>
+    <Card
+      style={hasBox ? iosShadowStyle : initialShadowStyle}
+      className={commonClassName}
+    >
       <Image source={source} className="-mt-2 aspect-[1/1] h-28 opacity-60" />
 
       <Text className="text-textDescription">{text}</Text>

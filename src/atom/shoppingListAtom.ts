@@ -132,7 +132,7 @@ export const addShoppingItemAtom = atom(
 
     const newItem = createShoppingItem(inputValue);
 
-    set(shoppingListAtom, [newItem, ...shoppingList]);
+    set(shoppingListAtom, [...shoppingList, newItem]);
 
     return {
       type: 'success',

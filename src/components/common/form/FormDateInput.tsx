@@ -45,7 +45,7 @@ export default function FormDateInput({
   const remainingDays = getRemainingDays(initialDate);
 
   return (
-    <LabelContainer label={hasLabel ? '소비기한' : undefined} labelColor="neutral">
+    <LabelContainer label={hasLabel ? '소비기한' : undefined}>
       <View className="gap-y-1.5">
         {currStorageType && durations && durationToDays === remainingDays ? (
           <View className="flex-row items-center gap-x-1 rounded-xl bg-green-1 p-4">

@@ -31,7 +31,7 @@ export default function FilterTag({
     blue: 'bg-blue-1 border-blue-3',
     amber: 'bg-amber-1 border-amber-3',
     neutral: 'bg-neutral-3 border-neutral-5',
-    indigo: 'bg-primaryActionBackgroundPressed border-primaryBorder',
+    indigo: 'bg-primaryBackgroundPressed border-primaryBorder',
     ice: 'bg-ice-1 border-ice-3',
   };
 

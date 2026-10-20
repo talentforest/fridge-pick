@@ -177,7 +177,7 @@ export default function MyPickScreen() {
                     <FavoriteBtn
                       isFavorite={editCurrList.list.includes(myPickItem.id)}
                       selectableItem={myPickItem}
-                      className="!bg-primaryActionBackground absolute right-2.5 top-1.5 rounded-full p-1.5"
+                      className="absolute right-2.5 top-1.5 rounded-full !bg-primaryBackground p-1.5"
                       size={15}
                       hasShadow
                       onBtnPress={() => onFavoriteBtnPress(myPickItem.id)}

@@ -11,6 +11,9 @@ export * from '@/hooks/selectableItem/useHandleCustomSelectableItem';
 export * from '@/hooks/storage/useCurrStorageItemList';
 export * from '@/hooks/storage/useStorageItemList';
 
+/** ShoppingItem */
+export * from '@/hooks/shoppingItem/useHandleShoppingItem';
+
 /** Food */
 export * from '@/hooks/food/useGetFoodDetail';
 export * from '@/hooks/food/useGetFoodList';

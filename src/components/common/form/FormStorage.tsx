@@ -34,7 +34,7 @@ export default function FormStorage({
   };
 
   return (
-    <LabelContainer label={label} labelColor="neutral">
+    <LabelContainer label={label}>
       <View className={`flex-row gap-x-2.5 ${containerClassName}`}>
         {Object.values(storageObj).map(({ id: storageTypeId, label, icon, color }) => (
           <SelectBtn

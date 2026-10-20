@@ -21,29 +21,31 @@ export default function ScreenHeader({
 }: ScreenHeaderProps) {
   const { goBack } = useHandleNavigate();
 
+  const textClassName = 'text-lg';
+
   return (
     <View
-      className={`flex-row items-end justify-between px-6 pb-2 pt-5 ${isDetailPage ? 'border-b border-border' : ''} ${className}`}
+      className={`flex-row items-end justify-between px-6 pb-2 pt-3 ${isDetailPage ? 'border-b border-border' : ''} ${className}`}
     >
       {isDetailPage ? (
         !right ? (
           <IconWithText
             icon="ChevronLeft"
-            iconSize={28}
+            iconSize={25}
             className="w-fit flex-row items-center justify-center py-2"
             onPress={onLeftPress ?? goBack}
             text={title}
-            textClassName="text-xl"
+            textClassName={textClassName}
           />
         ) : (
           <View className="flex-1 flex-row justify-between">
             <IconWithText
               icon="ChevronLeft"
-              iconSize={28}
+              iconSize={25}
               className="w-fit flex-row items-center justify-center"
               onPress={onLeftPress ?? goBack}
               text={title}
-              textClassName="text-xl"
+              textClassName={textClassName}
             />
             <Icon
               name={right.icon}
@@ -54,7 +56,7 @@ export default function ScreenHeader({
           </View>
         )
       ) : (
-        <Text className="pl-2 text-xl">{title}</Text>
+        <Text className={`pl-2 ${textClassName}`}>{title}</Text>
       )}
     </View>
   );

@@ -48,11 +48,6 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
     }
   };
 
-  // const foodLabels = item.foodList
-  //   .slice(0, 2)
-  //   .map((item) => item.label)
-  //   .join(', ');
-
   // const dataObj = {
   //   food: {
   //     filterName: '마지막재료',
@@ -70,7 +65,7 @@ export default function RecommendedShoppingItem({ item }: RecommendedShoppingIte
 
   return (
     <Card
-      className={`min-h-[30px] flex-row justify-between gap-y-2 !px-2 !py-3 ${!!isInShoppingListItem ? 'opacity-90' : ''}`}
+      className={`min-h-[30px] flex-row justify-between gap-x-5 !bg-primaryBackground !px-2 !py-3 ${!!isInShoppingListItem ? 'opacity-90' : ''}`}
     >
       <View className="flex-row items-center gap-x-1">
         <FoodImage selectableItem={item.selectableItem} imageSize={25} />

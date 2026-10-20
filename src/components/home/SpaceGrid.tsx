@@ -130,7 +130,7 @@ export default function SpaceGrid() {
         </View>
       </View>
 
-      <View className="bg-primaryActionBackground flex-row overflow-hidden rounded-2xl">
+      <View className="flex-row overflow-hidden rounded-2xl bg-primaryBackground">
         {storageList.map((spaceInfo, index) => (
           <Fragment key={spaceInfo.id}>
             <TouchableSpaceCard spaceInfo={spaceInfo} />

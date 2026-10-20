@@ -41,7 +41,7 @@ export default function SelectBtn({
     green: 'bg-green-1 border-green-3',
     lightGreen: 'bg-green-1 border-green-3',
     amber: 'bg-amber-0 border-amber-5',
-    indigo: 'bg-primaryActionBackground border-primaryBorder',
+    indigo: 'bg-primaryBackground border-primaryBorder',
     inActive: 'bg-disabledBackground border-neutral-3',
     neutral: 'bg-neutral-0 border-neutral-5',
     transparent: 'border border-neutral-1 bg-white',

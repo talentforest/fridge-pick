@@ -17,11 +17,10 @@ export default function QuickAddFoodBtn() {
     <Icon
       name="Plus"
       hasBgColor
-      strokeWidth={2.8}
-      color="lightestGray"
+      color="white"
       onPress={onPlusPress}
       size={28}
-      className="absolute bottom-6 right-6 !rounded-full !bg-blue-7 p-4"
+      className="absolute bottom-6 right-6 !rounded-full bg-primary p-4"
     />
   );
 }

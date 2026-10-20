@@ -31,7 +31,7 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
       className={`h-[42px] ${isPurchased ? 'opacity-40' : ''}`}
     >
       <View
-        className={`flex-1 flex-row items-center px-1 ${isError ? 'my-2.5 rounded-lg bg-red-0' : ''}`}
+        className={`flex-1 flex-row items-center ${isError ? 'my-2.5 rounded-lg bg-red-0' : ''}`}
       >
         <View className="flex-1 flex-row gap-x-1.5">
           <Icon
@@ -57,7 +57,7 @@ export default function ShoppingItem({ shoppingItem, isError }: ShoppingItemProp
             storageType={isInStorageShoppingItem.storage.type}
           />
         ) : (
-          <Text className="px-2 text-sm text-textDescription">
+          <Text className="text-sm text-textDescription">
             {formatDateString(new Date(), 'yy. MM. dd')}
           </Text>
         )}

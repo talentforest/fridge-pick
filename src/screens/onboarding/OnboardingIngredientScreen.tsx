@@ -4,7 +4,7 @@ import {
   allIngredientList,
   ingredientCategoryObj,
   ingredientObj,
-  iosShadowStyle,
+  onBoardingShadowStyle,
 } from '@/constants';
 import { IngredientCategoryKey } from '@/types/category';
 import { useHandleNavigate, useOverlay } from '@/hooks';
@@ -25,7 +25,6 @@ import ViewContentContainer from '@/components/common/container/ViewContentConta
 import Icon from '@/components/common/ui/Icon';
 import AddIngredientInStockSheet from '@/components/onBoarding/AddIngredientInStockSheet';
 import SquareBtn from '@/components/common/SquareBtn';
-import { colorTokens } from '@/theme/color';
 import { useAppTheme } from '@/hooks/common/useAppTheme';
 
 type Filter = IngredientCategoryKey | 'recommended';
@@ -177,13 +176,7 @@ export default function OnboardingIngredientScreen() {
 
       {pickedItemList.length > 0 ? (
         <View
-          style={{
-            ...iosShadowStyle,
-            shadowOffset: { width: 0, height: -10 },
-            shadowOpacity: 0.1,
-            shadowRadius: 10,
-            shadowColor: colorTokens[colorScheme]['neutral'][7],
-          }}
+          style={onBoardingShadowStyle(colorScheme)}
           className="absolute bottom-0 right-0 w-full gap-y-4 rounded-t-3xl bg-neutral-3 px-5 pb-12 pt-6"
         >
           <Text className="ml-1 font-extrabold text-base">

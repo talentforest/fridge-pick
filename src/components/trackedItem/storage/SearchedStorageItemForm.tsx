@@ -65,7 +65,7 @@ export default function SearchedStorageItemForm({
         keyboardShouldPersistTaps="handled"
       >
         {/* 선택한 식재료 정보 */}
-        <LabelContainer label="선택한 식재료 정보" labelColor="neutral">
+        <LabelContainer label="선택한 식재료 정보">
           <TrackedItemImageLabel item={currStorageItem} />
 
           {/* 초기화버튼 */}

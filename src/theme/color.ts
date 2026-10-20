@@ -43,7 +43,7 @@ export const colorTokens = {
     successBackground: palette.green[50],
     warningText: palette.amber[600],
     warningBackground: palette.amber[50],
-    errorText: palette.red[600],
+    errorText: palette.red[500],
     errorBackground: palette.red[50],
 
     // Neutral scale
@@ -144,7 +144,7 @@ export const colorTokens = {
     successBackground: '#123523',
     warningText: palette.amber[400],
     warningBackground: '#3B2B0E',
-    errorText: palette.red[400],
+    errorText: palette.red[500],
     errorBackground: '#3B1818',
 
     // Neutral scale
